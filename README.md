@@ -1,5 +1,5 @@
 __WARNING in heavy development!!__
-
+[![Build Status](https://travis-ci.org/data-cleaning/validate.errloc.svg)](https://travis-ci.org/data-cleaning/validate.errloc)
 # Error localization
 
 Find erronous fields based on validation rules from `validate`
