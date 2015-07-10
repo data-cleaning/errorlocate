@@ -1,0 +1,13 @@
+Package: validate.errloc
+Type: Package
+Title: Locate Errors with Validation Rules
+Version: 0.0.1.9000
+Date: 2015-02-02
+Authors@R: c(person("Edwin", "de Jonge", email = "edwindjonge@gmail.com", role = c("aut", "cre")),
+             person("Mark", "van der Loo", email = "mark.vanderloo@gmail.com", role = c("aut")))
+Description: Locate Errors with Validation Rules
+License: GPL3
+LazyData: TRUE
+Depends: validate
+Imports: lpSolveAPI
+Suggests: testthat
