@@ -3,7 +3,8 @@
 language: r
 warnings_are_errors: false
 sudo: required
-r_github_packages: data-cleaning/validate
+r_github_packages:
+  - data-cleaning/validate
 
 env:
  global:
