@@ -27,6 +27,7 @@ as.mip <- function( E, x=NULL, weight=NULL, M=1e7, epsilon=1e-3, prefix="delta."
              , softEdits(editmatrix(invert(as.character(E$mixnum))), prefix="")
   )
 
+
   if (!missing(x)){
     if (is.null(weight)){
       weight <- rep(1.0, length(x))
