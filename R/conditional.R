@@ -1,6 +1,10 @@
 is_condition <- function(expr, ...){
-  op <- expr[[1]]
-  op == 'if' || op == '|'
+  op <- op(expr)
+  if (op == 'if' || op == '|'){
+
+  } else {
+    FALSE
+  }
 }
 
 #' @export

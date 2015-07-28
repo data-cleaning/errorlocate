@@ -17,7 +17,7 @@ is_cat <- function(expr, or=TRUE, ...){
   conj2 <- if (or) "||" else "&&"
 
   switch (op,
-    "%in%" = is.character(r),
+    "%in%" = TRUE,  # allow all literals (should check for character and logical)
     "("    = is_cat(l, or),
     "!"    = is_cat(l, !or),
     "=="   = is.character(r) || is.logical(r),
@@ -31,8 +31,7 @@ is_cat <- function(expr, or=TRUE, ...){
 
 # cat var info, utility function for collecting info with get_catvar
 cvi <- function(var, value, not){
-  var <- deparse(var)
-  list(list(var = var, value = value, not = not))
+  list(list(var = deparse(var), value = eval(value), not = not)) # we might want to evaluate in higher frame!
 }
 
 # collect variable information within a rule, assumes that is_cat has been used to check wether
@@ -61,49 +60,67 @@ get_catvar <- function(expr, not = FALSE){
   )
 }
 
-# utility function for retrieving all variable information of all rules
-get_catvars <- function(rules, ...){
-  cvs <- lapply(rules$rules, function(rule){
-    get_catvar(rule@expr)
-  })
-  setNames(cvs, names(rules))
-#   vars <- sapply(csv, `[[`, "var")
-#   tapply(csv, vars, c)
+bin_var_name <- function(x, infix=":"){
+  if (is.character(x$value)){
+    paste0(x$var, infix, x$value)
+  } else {
+    x$var
+  }
 }
 
-# utility function for retrieving all binary variables, needed for mip
+# utility function for retrieving binary variables, needed for mip
 get_binary_vars <- function(cvs, infix=":"){
-  var_list <- unlist(csv, recursive = FALSE, use.names = FALSE)
-  bin_vars <- sapply(var_list, function(x){
-    if (is.character(x$value)){
-      paste0(x$var, infix, x$value)
-    } else {
-      x$var
-    }
-  })
+  var_list <- unlist(cvs, recursive = FALSE, use.names = FALSE)
+  bin_vars <- sapply(var_list, bin_var_name, infix)
   unique(bin_vars)
 }
 
 #' @export
-#' @param rules validator object
+#' @param x validator object
 #' @return logical indicating which rules are purely categorical/logical
-is_categorical <- function(rules, ...){
-  sapply(rules$rules, function(rule){
+is_categorical <- function(x, ...){
+  sapply(x$rules, function(rule){
     is_cat(rule@expr)
   })
 }
 
+#' @export
+cat_coefficients <- function(x, ...){
+  cat_rules <- x[is_categorical(x)]
+  mr <- lapply(cat_rules$rules, cat_coef)
+  get_mr_matrix(mr)
+}
+
+cat_coef <- function(rule, ...){
+  rule_l <- get_catvar(rule@expr)
+  a <- unlist(lapply(rule_l, function(x){
+    vars <- bin_var_name(x)
+    coef <- rep(if(x$not) -1L else 1L, length(vars))
+    names(coef) <- vars
+    coef
+  })
+  )
+  b <- 1 - sum(sapply(rule_l, function(x){
+    x$not
+  }))
+  op = ">="
+  mip_rule(a, op, b, rule@name)
+}
+
+
 # test
-# e <- expression(
-#   if (A) B,
-#   A | B,
-#   !(A)|B,
-#   x > 1
-# )
-#
-# sapply(e, is_conditional)
-# rules <- validator( x>1, if (y>2) x>1, a %in% c("A1", "A2"), if (a %in% "A") b %in% "B", if (c==TRUE) d==TRUE)
-# is_categorical(rules)
-# cat_rules <- rules[is_categorical(rules)]
-# csv <- get_catvars(cat_rules)
-# get_binary_vars(csv)
+e <- expression(
+  if (A) B,
+  A | B,
+  !(A)|B,
+  x > 1
+)
+
+#sapply(e, is_conditional)
+rules <- validator( x>1, if (y>2) x>1, a %in% c("A1", "A2"), if (a %in% c("A1","A2")) b %in% "B", if (c==TRUE) d==TRUE)
+is_categorical(rules)
+cat_rules <- rules[is_categorical(rules)]
+cvs <- get_catvars(cat_rules)
+get_binary_vars(cvs)
+cat_coef(cat_rules[[2]])
+cat_coefficients(cat_rules)
