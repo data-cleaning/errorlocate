@@ -6,7 +6,7 @@ op <- function(e){
 }
 
 op_to_s <- function(e){
-  as.character(op(e))
+  deparse(op(e))
 }
 
 
@@ -39,7 +39,7 @@ invert_ <- function(e, ...){
     ">=" = "<",
     # "==" = "!==",
     #"!==" = "==",
-    stop(op, " not  supported")
+    stop(op, " not supported")
   )
   substitute(a %op% b, list(a=left(e), b=right(e), "%op%"=as.symbol(s)))
 }
@@ -90,14 +90,12 @@ contains_op_ <- function(e, op, ...){
 }
 
 ### testing
-
 # e <- quote(x < 1)
 # contains_string_(e)
 # e <- quote(x == "A")
 # contains_string_(e)
 # contains_op_(e,"==")
 # contains_value_(e, 'A')
-
 #e <- quote(if( (x<1) | z> 3) y> 3)
-e <- quote(x >= 3)
-invert_(e)
+# e <- quote(x >= 3)
+# invert_(e)
