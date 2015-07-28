@@ -1,7 +1,10 @@
 is_condition <- function(expr, ...){
   op <- op(expr)
-  if (op == 'if' || op == '|'){
+  l <- left(expr)
+  r <- right(expr)
 
+  if (op == 'if' || op == '|'){
+    is_linear(expr)
   } else {
     FALSE
   }

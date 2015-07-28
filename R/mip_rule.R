@@ -10,14 +10,17 @@ print.mip_rule <- function(x, ...){
   cat(paste0(x$a, "*", names(x$a), collapse= ' + '), x$op, x$b)
 }
 
+# get variables from a list of mip_rule objects
 get_mr_vars <- function(x, ...){
   unique(unlist(lapply(x, function(r) names(r$a))))
 }
 
+# get rules names from a list of mip_rule objects
 get_mr_rules <- function(x, ...){
   sapply(x, function(r){r$rule})
 }
 
+# get a coefficient matrix from a list of mip_rule objects
 get_mr_matrix <- function(x, ...){
   variable <- get_mr_vars(x, ...)
   rule <- get_mr_rules(x, ...)

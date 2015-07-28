@@ -31,7 +31,10 @@ is_cat <- function(expr, or=TRUE, ...){
 
 # cat var info, utility function for collecting info with get_catvar
 cvi <- function(var, value, not){
-  list(list(var = deparse(var), value = eval(value), not = not)) # we might want to evaluate in higher frame!
+  list(list(
+    var = deparse(var),
+    value = eval(value), # we might want to evaluate in higher frame!
+    not = not)) # this indicates if "var %in% value" or "!(var %in% value)"
 }
 
 # collect variable information within a rule, assumes that is_cat has been used to check wether
@@ -60,6 +63,7 @@ get_catvar <- function(expr, not = FALSE){
   )
 }
 
+# generate binary variable names from vars and there values.
 bin_var_name <- function(x, infix=":"){
   if (is.character(x$value)){
     paste0(x$var, infix, x$value)
@@ -84,8 +88,16 @@ is_categorical <- function(x, ...){
   })
 }
 
+#' Get coefficient matrix from categorical edits
+#'
+#' Get coefficient matrix from categorical edits, similar to
+#' linear_coefficients.
+#'
+#' TODO explain mapping to coefficients
+#' @param x validator object
 #' @export
 cat_coefficients <- function(x, ...){
+  stopifnot(inherits(x, "expressionset"))
   cat_rules <- x[is_categorical(x)]
   mr <- lapply(cat_rules$rules, cat_coef)
   get_mr_matrix(mr)
@@ -109,18 +121,18 @@ cat_coef <- function(rule, ...){
 
 
 # test
-e <- expression(
-  if (A) B,
-  A | B,
-  !(A)|B,
-  x > 1
-)
-
+# e <- expression(
+#   if (A) B,
+#   A | B,
+#   !(A)|B,
+#   x > 1
+# )
+#
 #sapply(e, is_conditional)
-rules <- validator( x>1, if (y>2) x>1, a %in% c("A1", "A2"), if (a %in% c("A1","A2")) b %in% "B", if (c==TRUE) d==TRUE)
-is_categorical(rules)
-cat_rules <- rules[is_categorical(rules)]
-cvs <- get_catvars(cat_rules)
-get_binary_vars(cvs)
-cat_coef(cat_rules[[2]])
-cat_coefficients(cat_rules)
+# rules <- validator( x>1, if (y>2) x>1, a %in% c("A1", "A2"), if (a %in% c("A1","A2")) b %in% "B", if (c==TRUE) d==TRUE)
+# is_categorical(rules)
+# cat_rules <- rules[is_categorical(rules)]
+# cvs <- get_catvars(cat_rules)
+# get_binary_vars(cvs)
+# cat_coef(cat_rules[[2]])
+# cat_coefficients(cat_rules)

@@ -1,8 +1,9 @@
 language: r
 warnings_are_errors: false
 sudo: required
-r_github_packages:
-  - data-cleaning/validate
+
+install:
+ - bash ./validate.sh
 
 env:
  global:
