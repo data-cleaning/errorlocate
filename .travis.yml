@@ -2,7 +2,11 @@ language: r
 warnings_are_errors: false
 sudo: required
 
-before_script:
+r_packages:
+ - devtools
+ - roxygen2
+
+install:
  - bash ./validate.sh
 
 env:
