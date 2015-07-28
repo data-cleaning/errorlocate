@@ -2,6 +2,7 @@
 % Please edit documentation in R/mip_rule.R
 \name{mip_rule}
 \alias{mip_rule}
+\title{Create a rule used by mip}
 \usage{
 mip_rule(a, op, b, rule, ...)
 }
@@ -10,4 +11,8 @@ mip_rule(a, op, b, rule, ...)
 
 \item{op}{operator in ("<=", "==", ">=", ">", "<")}
 }
+\description{
+Create a rule used by mip
+}
+\keyword{internal}
 

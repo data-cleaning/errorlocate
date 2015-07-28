@@ -2,6 +2,7 @@
 % Please edit documentation in R/conditional.R
 \name{is_conditional}
 \alias{is_conditional}
+\title{Check if rules are conditional rules}
 \usage{
 is_conditional(rules, ...)
 }
@@ -10,5 +11,8 @@ is_conditional(rules, ...)
 }
 \value{
 logical indicating which rules are conditional
+}
+\description{
+Check if rules are conditional rules
 }
 

@@ -79,6 +79,9 @@ get_binary_vars <- function(cvs, infix=":"){
   unique(bin_vars)
 }
 
+#' Check if rules are categorical
+#'
+#' Check if rules are categorical
 #' @export
 #' @param x validator object
 #' @return logical indicating which rules are purely categorical/logical

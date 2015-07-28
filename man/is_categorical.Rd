@@ -2,6 +2,7 @@
 % Please edit documentation in R/categorical.R
 \name{is_categorical}
 \alias{is_categorical}
+\title{Check if rules are categorical}
 \usage{
 is_categorical(x, ...)
 }
@@ -10,5 +11,8 @@ is_categorical(x, ...)
 }
 \value{
 logical indicating which rules are purely categorical/logical
+}
+\description{
+Check if rules are categorical
 }
 

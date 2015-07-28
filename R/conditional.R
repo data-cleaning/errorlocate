@@ -10,7 +10,10 @@ is_condition <- function(expr, ...){
   }
 }
 
-#' @export
+#' Check if rules are conditional rules
+#'
+#' Check if rules are conditional rules
+#'  @export
 #' @param rules validator object
 #' @return logical indicating which rules are conditional
 is_conditional <- function(rules, ...){

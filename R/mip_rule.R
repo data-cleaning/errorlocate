@@ -1,5 +1,9 @@
+#' Create a rule used by mip
+#'
+#' Create a rule used by mip
 #' @param a named vector with coefficients
 #' @param op operator in ("<=", "==", ">=", ">", "<")
+#' @keywords internal
 mip_rule <- function(a, op, b, rule, ...){
   structure( list(a=a, op=op, b=b, rule=rule)
            , class="mip_rule")
