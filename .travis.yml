@@ -2,7 +2,7 @@ language: r
 warnings_are_errors: false
 sudo: required
 
-install:
+before_script:
  - bash ./validate.sh
 
 env:
