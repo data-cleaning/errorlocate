@@ -2,6 +2,9 @@ language: r
 warnings_are_errors: false
 sudo: required
 
+install:
+ - Rscript -e "install.packages('validate', repos=c('http://cran.rstudio.com', 'http://data-cleaning.github.io/drat/'))"
+
 env:
  global:
    - CRAN: http://cran.rstudio.com
