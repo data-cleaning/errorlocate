@@ -2,16 +2,11 @@ language: r
 warnings_are_errors: false
 sudo: required
 
-r_packages:
- - devtools
- - roxygen2
-
-install:
- - bash ./validate.sh
-
 env:
  global:
-   - CRAN: http://cran.rstudio.com
+   - CRAN:
+     - http://cran.rstudio.com
+     - http://data-cleaning.github.io/drat/
 
 notifications:
   email:

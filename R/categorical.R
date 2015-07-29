@@ -72,13 +72,6 @@ bin_var_name <- function(x, infix=":"){
   }
 }
 
-# utility function for retrieving binary variables, needed for mip
-get_binary_vars <- function(cvs, infix=":"){
-  var_list <- unlist(cvs, recursive = FALSE, use.names = FALSE)
-  bin_vars <- sapply(var_list, bin_var_name, infix)
-  unique(bin_vars)
-}
-
 #' Check if rules are categorical
 #'
 #' Check if rules are categorical
