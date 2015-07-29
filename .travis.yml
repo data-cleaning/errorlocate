@@ -4,10 +4,7 @@ sudo: required
 
 r_binary_packages:
  - lpSolveAPI
-
-cran:
- - http://cran.rstudio.com
- - http://data-cleaning.github.io/drat/
+ - drat
 
 env:
  global:
