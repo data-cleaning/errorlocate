@@ -3,7 +3,6 @@
 export(cat_coefficients)
 export(is_categorical)
 export(is_conditional)
-export(localize_errors)
 export(mip)
 export(soft_edits)
 exportClasses(Mip)
