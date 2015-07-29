@@ -2,10 +2,6 @@ language: r
 warnings_are_errors: false
 sudo: required
 
-r_packages:
- - lpSolveAPI
- - drat
-
 env:
  global:
    - CRAN: http://cran.rstudio.com

@@ -1,3 +1,3 @@
-if (requireNamespace("drat")){
-  drat::addRepo("data-cleaning")
+if (!require("validate", quietly = TRUE)){
+  install.packages('validate', repos='http://data-cleaning.github.io/drat/')
 }
