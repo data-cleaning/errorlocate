@@ -2,7 +2,7 @@ language: r
 warnings_are_errors: false
 sudo: required
 
-r_binary_packages:
+r_packages:
  - lpSolveAPI
  - drat
 
