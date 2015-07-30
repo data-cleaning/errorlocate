@@ -14,6 +14,14 @@ print.mip_rule <- function(x, ...){
   cat(paste0(x$a, "*", names(x$a), collapse= ' + '), x$op, x$b)
 }
 
+normalize_mip_rule <- function(x, ...){
+  switch(x$op,
+    ">=" = list(a= -x$a, op="<=", b=-x$b),
+    ">" = list(a= -x$a, op="<", b=-x$b),
+    x
+  )
+}
+
 # get variables from a list of mip_rule objects
 get_mr_vars <- function(x, ...){
   unique(unlist(lapply(x, function(r) names(r$a))))

@@ -1,8 +1,6 @@
-#' Derive editmatrix with soft constraints based on boundaries of variables. This is a utility function that is used for
-#' constructing a mip/lp problem.
-#' @param E normalized \code{editmatrix}
-#' @param prefix \code{character} used for naming dummy variables in matrix.
-#' @export
-soft_edits <- function(E, prefix="delta.", ...){
-  UseMethod("soft_edits")
+soft_edits <- function(){
 }
+
+v <- validator( x> 1, x < 10, y >=3, y <= 40, if (A) B %in% c('b1','b2'))
+v$linear_coefficients()
+cat_coefficients(v)

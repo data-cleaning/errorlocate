@@ -6,13 +6,11 @@ env:
  global:
    - CRAN: http://cran.rstudio.com
 
-r_binary_packages:
- - covr
-
 before_install:
  - Rscript -e "install.packages('validate', repos=c('http://cran.rstudio.com', 'http://data-cleaning.github.io/drat/'))"
 
 after_succes:
+ - Rscript -e "install.packages('covr', repos=c('http://cran.rstudio.com')"
  - Rscript -e 'library(covr);coveralls()'
 
 notifications:

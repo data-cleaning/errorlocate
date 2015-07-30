@@ -103,16 +103,24 @@ cat_coef <- function(rule, ...){
   rule_l <- get_catvar(rule@expr)
   a <- unlist(lapply(rule_l, function(x){
     vars <- bin_var_name(x)
+    # if (x %in% set) +1, if (!(x %in% set)) -1
     coef <- rep(if(x$not) -1L else 1L, length(vars))
     names(coef) <- vars
     coef
   })
   )
+
+  # sum(a_pos) + sum(1-a_neg) >= 1
+  # condition is that at least one of the variable is true, extract the negated memberships
   b <- 1 - sum(sapply(rule_l, function(x){
     x$not
   }))
-  op = ">="
-  mip_rule(a, op, b, rule@name)
+
+  if (length(rule_l) ==1){ # this is a strict(er) version and allows for some optimization
+    mip_rule(a, "==", b, rule@name)
+  } else {
+    mip_rule(-a, "<=", -b, rule@name) # normalized version of a*x >= b
+  }
 }
 
 

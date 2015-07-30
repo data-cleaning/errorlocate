@@ -24,5 +24,5 @@ mip <- setRefClass("Mip",
 
 
 ### testing
-v <- validator(x>3, y>2)
-m <- mip(v)
+# v <- validator(x>3, y>2)
+# m <- mip(v)
