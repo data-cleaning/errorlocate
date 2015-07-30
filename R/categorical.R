@@ -1,3 +1,5 @@
+INFIX_CAT_NAME <- ":"
+
 # determine if a rule is categorical
 is_cat <- function(expr, or=TRUE, ...){
   # this allows for logicals such as "if (A) B"
@@ -64,12 +66,18 @@ get_catvar <- function(expr, not = FALSE){
 }
 
 # generate binary variable names from vars and there values.
-bin_var_name <- function(x, infix=":"){
+bin_var_name <- function(x, infix=INFIX_CAT_NAME){
   if (is.character(x$value)){
     paste0(x$var, infix, x$value)
   } else {
     x$var
   }
+}
+
+#' input is mip_rule, results is character vector with infix names
+cat_var_name <- function(x, infix=INFIX_CAT_NAME){
+  suffix <- paste0(infix, ".*$")
+  gsub(suffix,"",names(x$a))
 }
 
 #' Check if rules are categorical
@@ -94,9 +102,19 @@ is_categorical <- function(x, ...){
 #' @export
 cat_coefficients <- function(x, ...){
   stopifnot(inherits(x, "expressionset"))
-  cat_rules <- x[is_categorical(x)]
-  mr <- lapply(cat_rules$rules, cat_coef)
+  m <- cat_as_mip_rules(x, ...)
   get_mr_matrix(mr)
+}
+
+#' get categorical rules as mip_rules
+#'
+#' @param x expressionset object
+#' @param ...
+#' @return list of mip_rule
+#' @keywords internal
+cat_as_mip_rules <- function(x, ...){
+  cat_rules <- x[is_categorical(x)]
+  lapply(cat_rules$rules, cat_coef)
 }
 
 cat_coef <- function(rule, ...){

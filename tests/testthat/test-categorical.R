@@ -16,13 +16,13 @@ describe("categorical", {
     )
     coef <- cat_coefficients(v)
     expect_equal( coef$A
-               ,  matrix( c(1, -1, 1, 0, 0, 1)
+               ,  matrix( c(1, 1, 1, 0, 0, -1)
                         , ncol = 3
                         , dimnames = list(
                             rule = c("V1", "V2"),
                             variable = c("a:a1", "a:a2", "b:b1")
                         )))
-    expect_that(coef$operator, equals(c(">=", ">=")))
+    expect_that(coef$operator, equals(c("==", "<=")))
     expect_that(coef$b, equals(c(1, 0)))
   })
 })

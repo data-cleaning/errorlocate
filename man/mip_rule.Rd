@@ -4,7 +4,7 @@
 \alias{mip_rule}
 \title{Create a rule used by mip}
 \usage{
-mip_rule(a, op, b, rule, ...)
+mip_rule(a, op, b, rule, weight = Inf, ...)
 }
 \arguments{
 \item{a}{named vector with coefficients}
