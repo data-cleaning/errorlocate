@@ -1,7 +1,8 @@
 INFIX_CAT_NAME <- ":"
 
+#TODO may be change the code below to directly generate mip_rules
 # determine if a rule is categorical
-is_cat <- function(expr, or=TRUE, ...){
+is_cat_ <- function(expr, or=TRUE, ...){
   # this allows for logicals such as "if (A) B"
   if (is.symbol(expr)){
     return(TRUE)
@@ -15,18 +16,17 @@ is_cat <- function(expr, or=TRUE, ...){
   l <- left(expr)
   r <- right(expr)
 
-  conj1 <- if (or) "|" else "&"
-  conj2 <- if (or) "||" else "&&"
-
   switch (op,
     "%in%" = TRUE,  # allow all literals (should check for character and logical)
-    "("    = is_cat(l, or),
-    "!"    = is_cat(l, !or),
+    "("    = is_cat_(l, or),
+    "!"    = is_cat_(l, !or),
     "=="   = is.character(r) || is.logical(r),
     "!="   = is.character(r) || is.logical(r),
-    "if"   = is_cat(l, !or) && is_cat(r, or),
-    conj1  = is_cat(l, or) && is_cat(r, or),
-    conj2  = is_cat(l, or) && is_cat(r, or),
+    "if"   = is_cat_(l, !or) && is_cat_(r, or),
+    "|"    = or && is_cat_(l, or) && is_cat_(r, or),
+    "||"   = or && is_cat_(l, or) && is_cat_(r, or),
+    "&"    = !or && is_cat_(l, or) && is_cat_(r, or),
+    "&&"   = !or && is_cat_(l, or) && is_cat_(r, or),
     FALSE
   )
 }
@@ -39,7 +39,7 @@ cvi <- function(var, value, not){
     not = not)) # this indicates if "var %in% value" or "!(var %in% value)"
 }
 
-# collect variable information within a rule, assumes that is_cat has been used to check wether
+# collect variable information within a rule, assumes that is_cat_ has been used to check wether
 # it is categorical
 get_catvar <- function(expr, not = FALSE){
   if (is.symbol(expr)){
@@ -88,7 +88,7 @@ cat_var_name <- function(x, infix=INFIX_CAT_NAME){
 #' @return logical indicating which rules are purely categorical/logical
 is_categorical <- function(x, ...){
   sapply(x$rules, function(rule){
-    is_cat(rule@expr)
+    is_cat_(rule@expr)
   })
 }
 

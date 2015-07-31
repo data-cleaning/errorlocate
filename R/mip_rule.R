@@ -9,9 +9,24 @@ mip_rule <- function(a, op, b, rule, weight=Inf, ...){
            , class="mip_rule")
 }
 
+as.character.mip_rule <- function(x, ...){
+  a <- paste0(x$a, "*", names(x$a), collapse= ' + ')
+
+  # do some simplication
+  a <- gsub("\\b1\\*", "", a) # "1*" => ""
+  a <- gsub("\\+ -", "- ", a) # "+ -" => "- "
+
+  paste0(a, " ",x$op, " ", x$b, sep = "")
+}
 
 print.mip_rule <- function(x, ...){
-  cat(x$rule, ": ", paste0(x$a, "*", names(x$a), collapse= ' + '), x$op, x$b, sep = "")
+  a <- paste0(x$a, "*", names(x$a), collapse= ' + ')
+
+  # do some simplication
+  a <- gsub("\\b1\\*", "", a) # "1*" => ""
+  a <- gsub("\\+ -", "- ", a) # "+ -" => "- "
+
+  cat(x$rule, ": ", a, " ",x$op, " ", x$b, sep = "")
 }
 
 rewrite_mip_rule <- function(x, eps=1e-5, ...){
@@ -49,6 +64,12 @@ get_mr_matrix <- function(x, ...){
   b <- sapply(x, `[[`, 'b')
 
   list(A=A, operator=op, b=b)
+}
+
+get_mr_expression <- function(x, ...){
+  expr <- parse(text=sapply(x, as.character))
+  names(expr) <- get_mr_rules(x, ...)
+  expr
 }
 
 get_mr_weights <- function(x, ...){

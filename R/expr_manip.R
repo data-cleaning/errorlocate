@@ -5,6 +5,9 @@ op <- function(e){
   else { e }
 }
 
+# alias for op
+node <- op
+
 op_to_s <- function(e){
   deparse(op(e))
 }
@@ -18,6 +21,7 @@ left <- function(e) if (length(e) >= 2) e[[2]]
 right <- function(e) if (length(e) >= 3) e[[3]]
 
 negate_ <- function(e, ...){
+  # don't do double negation: that complicates analysis of expressions
   if (op(e) == '!'){
     return(e[[2]])
   }
@@ -44,6 +48,7 @@ invert_ <- function(e, ...){
   substitute(a %op% b, list(a=left(e), b=right(e), "%op%"=as.symbol(s)))
 }
 
+# checks if an expression contains a literal string
 contains_string_ <- function(e, ...){
   if (is.expression(e)){
     return(sapply(e, contains_string_))
@@ -57,8 +62,8 @@ contains_string_ <- function(e, ...){
     return(FALSE)
   }
 
-  return(  contains_char_(left(e))
-        || contains_char_(right(e))
+  return(  contains_string_(left(e))
+        || contains_string_(right(e))
         )
 }
 
