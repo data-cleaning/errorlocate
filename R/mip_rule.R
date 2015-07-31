@@ -88,5 +88,6 @@ get_mr_expression <- function(x, ...){
 
 get_mr_weights <- function(x, ...){
   weight <- sapply(x, function(r){r$weight})
-  setNames(weight, get_mr_rules(x))
+  names(weight) <- get_mr_rules(x)
+  weight
 }
