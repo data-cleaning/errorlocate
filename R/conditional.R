@@ -82,17 +82,3 @@ rep_lin_ <- function(e, or=TRUE, h=new.env()){
     e
   )
 }
-
-# test
-
-# e <- expression(
-#   if (A) B,
-#   A | B,
-#   !(A)|B,
-#   x > 1,
-#   if (x>1 && A %in% "b") y < 2
-# )
-#
-# sapply(e, is_condition_)
-# rules <- validator( x>1, if (y>2) x>1)
-# is_conditional(rules)

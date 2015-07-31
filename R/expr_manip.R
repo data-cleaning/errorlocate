@@ -8,9 +8,7 @@ op <- function(e){
 # alias for op
 node <- op
 
-op_to_s <- function(e){
-  deparse(op(e))
-}
+op_to_s <- function(e) deparse(op(e))
 
 
 # short hand when working with if statement
@@ -22,11 +20,13 @@ right <- function(e) if (length(e) >= 3) e[[3]]
 
 negate_ <- function(e, ...){
   # don't do double negation: that complicates analysis of expressions
-  if (op(e) == '!'){
+  op <- node(e)
+
+  if (op == '!'){
     return(e[[2]])
   }
 
-  expr <- if (is.call(e)){
+  expr <- if (is.call(e) && op != '('){
     substitute( !(e), list(e=e))
   } else {
     substitute( !e, list(e=e))
@@ -37,12 +37,12 @@ negate_ <- function(e, ...){
 invert_ <- function(e, ...){
   op <- op_to_s(e)
   s <- switch (op,
-    "<" = ">=",
-    ">" = "<=",
-    "<=" = ">",
-    ">=" = "<",
-    # "==" = "!==",
-    #"!==" = "==",
+    "<"   = ">=",
+    ">"   = "<=",
+    "<="  = ">",
+    ">="  = "<",
+     "==" = "!=",
+    "!="  = "==",
     stop(op, " not supported")
   )
   substitute(a %op% b, list(a=left(e), b=right(e), "%op%"=as.symbol(s)))

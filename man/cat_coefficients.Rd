@@ -2,7 +2,7 @@
 % Please edit documentation in R/categorical.R
 \name{cat_coefficients}
 \alias{cat_coefficients}
-\title{Get coefficient matrix from categorical edits}
+\title{Get coefficient matrix from categorical rules}
 \usage{
 cat_coefficients(x, ...)
 }

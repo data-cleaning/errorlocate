@@ -4,8 +4,12 @@
 #' @param a named vector with coefficients
 #' @param op operator in ("<=", "==", ">=", ">", "<")
 #' @keywords internal
-mip_rule <- function(a, op, b, rule, weight=Inf, ...){
-  structure( list(a=a, op=op, b=b, rule=rule, weight=Inf)
+mip_rule <- function(a, op, b, rule, type, weight=Inf, ...){
+  if (missing(type)){
+    type <- rep("double", length(a))
+    names(type) <- names(a)
+  }
+  structure( list(a=a, op=op, b=unname(b), rule=rule, type=type, weight=weight)
            , class="mip_rule")
 }
 
@@ -61,9 +65,19 @@ get_mr_matrix <- function(x, ...){
     A[i, names(a)] <- a
   }
   op <- sapply(x, `[[`, 'op')
-  b <- sapply(x, `[[`, 'b')
+  b <- unname(sapply(x, `[[`, 'b'))
 
   list(A=A, operator=op, b=b)
+}
+
+get_mr_type <- function(x, ...){
+  type <- unlist(sapply(x, function(mr){
+    mr$type
+  }))
+
+  vars <- names(type)
+  df <- unique(data.frame(vars=vars, type=type, stringsAsFactors = FALSE))
+  setNames(df$type, df$vars)
 }
 
 get_mr_expression <- function(x, ...){

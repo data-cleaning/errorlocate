@@ -3,7 +3,9 @@
 
 is_linear <- function(x, ...){
   stopifnot(inherits(x, "validator"))
-  x$is_linear()
+  sapply(x$rules, function(rule){
+    is_lin_(rule@expr)
+  })
 }
 
 linear_coefficients <- function(x, ...){
@@ -13,16 +15,22 @@ linear_coefficients <- function(x, ...){
 
 # HACK
 lin_as_mip_rules <- function(x, ...){
-  lc <- x$linear_coefficients()
-  rule_names <- row.names(lc$A)
-  lapply(seq_along(lc$operators), function(i){
-    a <- lc$A[i,]
-    mip_rule( a[a!=0]
-            , lc$op[i]
-            , lc$b[i]
-            , rule_names[i]
-            )
+  lin_rules <- x[is_linear(x)]
+  lapply(lin_rules$rules, function(rule){
+    lin_mip_rule_(rule@expr, name=rule@name)
   })
+#   lc <- x$linear_coefficients()
+#   rule_names <- row.names(lc$A)
+#   var_names <- colnames(lc$A)
+#   lapply(seq_along(lc$operators), function(i){
+#     a <- lc$A[i,]
+#     names(a) <- var_names
+#     mip_rule( a[a!=0]
+#             , lc$op[i]
+#             , lc$b[i]
+#             , rule_names[i]
+#             )
+#   })
 }
 
 is_lin_ <- function(expr, top=TRUE, ...){
@@ -53,8 +61,9 @@ is_lin_ <- function(expr, top=TRUE, ...){
   FALSE
 }
 #
-#
-get_num_var <- function(e, sign=1, ...){
+# create a linear mip_rule from a linear expression.
+# assumes that it is checked with is_lin_
+lin_mip_rule_ <- function(e, sign=1, name, ...){
 
   if (is.symbol(e)){
     return(setNames(sign, deparse(e)))
@@ -73,37 +82,25 @@ get_num_var <- function(e, sign=1, ...){
   r <- right(e)
 
   if (op %in% c("==", ">", ">=", "<=", "<")){
-    coef <- c(get_num_var(l, sign), get_num_var(r, -sign), .b=0) # makes sure that .b exists
+    coef <- c(lin_mip_rule_(l, sign), lin_mip_rule_(r, -sign), .b=0) # makes sure that .b exists
     coef <- tapply(coef, names(coef), sum)
     b <- names(coef) == ".b"
-    return(mip_rule(coef[!b], op, coef[b], ""))
+    return(mip_rule(coef[!b], op, -coef[b], name))
   }
 
   if (op == '-'){
-    if (is.null(r)){ return(get_num_var(l, -sign))}
-    return(c(get_num_var(l, sign), get_num_var(r, -sign)))
+    if (is.null(r)){ return(lin_mip_rule_(l, -sign))}
+    return(c(lin_mip_rule_(l, sign), lin_mip_rule_(r, -sign)))
   }
 
   if (op == '+'){
-    return(c(get_num_var(l, sign), get_num_var(r, sign)))
+    return(c(lin_mip_rule_(l, sign), lin_mip_rule_(r, sign)))
   }
 
   if (op == '*'){
-    if (is.numeric(l)){ return(get_num_var(r, sign*l))}
-    if (is.numeric(r)){return(get_num_var(l, sign*r))}
+    if (is.numeric(l)){ return(lin_mip_rule_(r, sign*l))}
+    if (is.numeric(r)){return(lin_mip_rule_(l, sign*r))}
   }
   stop("Invalid linear statement")
 }
-#
-# is_linear <- function(expr, ...){
-#   stopifnot(is.expression(expr))
-#   sapply(expr, is_lin)
-# }
-#
-# testing
-# e <- expression(x>1, a==2, a=="b", a>b, z==a*b, a==2+a-x, x==-2)
-# is_linear(e)
-
-e <- quote(x + 2*y > z + 3)
-#get_num_var(e)
 

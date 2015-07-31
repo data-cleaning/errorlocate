@@ -92,7 +92,7 @@ is_categorical <- function(x, ...){
   })
 }
 
-#' Get coefficient matrix from categorical edits
+#' Get coefficient matrix from categorical rules
 #'
 #' Get coefficient matrix from categorical edits, similar to
 #' linear_coefficients.
@@ -102,7 +102,7 @@ is_categorical <- function(x, ...){
 #' @export
 cat_coefficients <- function(x, ...){
   stopifnot(inherits(x, "expressionset"))
-  m <- cat_as_mip_rules(x, ...)
+  mr <- cat_as_mip_rules(x, ...)
   get_mr_matrix(mr)
 }
 
@@ -114,11 +114,13 @@ cat_coefficients <- function(x, ...){
 #' @keywords internal
 cat_as_mip_rules <- function(x, ...){
   cat_rules <- x[is_categorical(x)]
-  lapply(cat_rules$rules, cat_coef)
+  lapply(cat_rules$rules, function(rule){
+    cat_mip_rule(rule@expr, name=rule@name)
+  })
 }
 
-cat_coef <- function(rule, ...){
-  rule_l <- get_catvar(rule@expr)
+cat_mip_rule <- function(e, name, ...){
+  rule_l <- get_catvar(e)
   a <- unlist(lapply(rule_l, function(x){
     vars <- bin_var_name(x)
     # if (x %in% set) +1, if (!(x %in% set)) -1
@@ -135,26 +137,8 @@ cat_coef <- function(rule, ...){
   }))
 
   if (length(rule_l) ==1){ # this is a strict(er) version and allows for some optimization
-    mip_rule(a, "==", b, rule@name)
+    mip_rule(a, "==", b, name, type=sapply(a, function(x) 'binary'))
   } else {
-    mip_rule(-a, "<=", -b, rule@name) # normalized version of a*x >= b
+    mip_rule(-a, "<=", -b, name, type=sapply(a, function(x) 'binary')) # normalized version of a*x >= b
   }
 }
-
-
-# test
-# e <- expression(
-#   if (A) B,
-#   A | B,
-#   !(A)|B,
-#   x > 1
-# )
-#
-#sapply(e, is_conditional)
-# rules <- validator( x>1, if (y>2) x>1, a %in% c("A1", "A2"), if (a %in% c("A1","A2")) b %in% "B", if (c==TRUE) d==TRUE)
-# is_categorical(rules)
-# cat_rules <- rules[is_categorical(rules)]
-# cvs <- get_catvars(cat_rules)
-# get_binary_vars(cvs)
-# cat_coef(cat_rules[[2]])
-# cat_coefficients(cat_rules)
