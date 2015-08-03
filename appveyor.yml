@@ -13,7 +13,6 @@ install:
 # Adapt as necessary starting from here
 
 build_script:
-  - Rscript -e 'install.packages("validate", repos=c("http://cran.rstudio.com", "http://data-cleaning.github.io/drat/"))'
   - travis-tool.sh install_deps
 
 test_script:
