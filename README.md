@@ -1,8 +1,6 @@
 __WARNING in heavy development!!__
 ![version](http://www.r-pkg.org/badges/version/validate.errloc)
 [![Build Status](https://travis-ci.org/data-cleaning/validate.errloc.svg)](https://travis-ci.org/data-cleaning/validate.errloc)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/data-cleaning/validate.errloc?branch=master)](https://ci.appveyor.com/project/data-cleaning/validate.errloc)
-
 # Error localization
 
 Find erronous fields based on validation rules from `validate`
