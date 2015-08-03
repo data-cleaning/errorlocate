@@ -33,13 +33,17 @@ print.mip_rule <- function(x, ...){
   cat(x$rule, ": ", a, " ",x$op, " ", x$b, sep = "")
 }
 
-rewrite_mip_rule <- function(x, eps=1e-5, ...){
-  switch(x$op,
-    ">=" = list(a = -x$a, op="<=", b=-x$b),
-    ">"  = list(a = -x$a, op="<=", b=-x$b - eps), # subtract epsilon to simulate strict inequality
-    "<"  = list(a =  x$a, op="<=", b= x$b - eps),
-    x
-  )
+rewrite_mip_rule <- function(x, ...){
+  if (x$op == '>='){
+    x$a <- -x$a
+    x$op <- '<='
+    x$b <- -x$b
+  } else if (x$op == ">"){
+    x$a <- -x$a
+    x$op <- '<'
+    x$b <- -x$b
+  }
+  x
 }
 
 # get variables from a list of mip_rule objects

@@ -16,8 +16,9 @@ linear_coefficients <- function(x, ...){
 # HACK
 lin_as_mip_rules <- function(x, ...){
   lin_rules <- x[is_linear(x)]
+
   lapply(lin_rules$rules, function(rule){
-    lin_mip_rule_(rule@expr, name=rule@name)
+    rewrite_mip_rule(lin_mip_rule_(rule@expr, name=rule@name), eps=0)
   })
 #   lc <- x$linear_coefficients()
 #   rule_names <- row.names(lc$A)

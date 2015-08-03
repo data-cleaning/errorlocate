@@ -1,6 +1,7 @@
 __WARNING in heavy development!!__
 ![version](http://www.r-pkg.org/badges/version/validate.errloc)
 [![Build Status](https://travis-ci.org/data-cleaning/validate.errloc.svg)](https://travis-ci.org/data-cleaning/validate.errloc)
+[![Coverage Status](https://coveralls.io/repos/data-cleaning/validate.errloc/badge.svg?branch=master&service=github)](https://coveralls.io/github/data-cleaning/validate.errloc?branch=master)
 # Error localization
 
 Find erronous fields based on validation rules from `validate`

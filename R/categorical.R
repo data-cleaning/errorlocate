@@ -115,11 +115,11 @@ cat_coefficients <- function(x, ...){
 cat_as_mip_rules <- function(x, ...){
   cat_rules <- x[is_categorical(x)]
   lapply(cat_rules$rules, function(rule){
-    cat_mip_rule(rule@expr, name=rule@name)
+    cat_mip_rule_(rule@expr, name=rule@name)
   })
 }
 
-cat_mip_rule <- function(e, name, ...){
+cat_mip_rule_ <- function(e, name, ...){
   rule_l <- get_catvar(e)
   a <- unlist(lapply(rule_l, function(x){
     vars <- bin_var_name(x)
