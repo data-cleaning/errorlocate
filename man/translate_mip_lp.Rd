@@ -4,8 +4,7 @@
 \alias{translate_mip_lp}
 \title{translate linear rules into an lp problem}
 \usage{
-translate_mip_lp(rules, objective = NULL, eps = 1e-07,
-  bin_vars = integer())
+translate_mip_lp(rules, objective = NULL, eps = 0.001)
 }
 \description{
 translate linear rules into an lp problem

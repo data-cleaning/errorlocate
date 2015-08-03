@@ -1,9 +1,9 @@
 #' Create mip object
 #'
 #' Create mip object
-#' @export mip
+#' @exportClass MipRules
 #' @export
-mip <- setRefClass("MipRules",
+miprules <- setRefClass("MipRules",
    fields = list(
      rules         = "validator",
      objective     = "numeric",
@@ -27,12 +27,29 @@ mip <- setRefClass("MipRules",
      set_values = function(values, weights){
        if (missing(weights)){
          weights <- rep(1, length(values))
+         names(weights) <- names(values)
        }
        ._value_rules <<- expect_values(values, weights)
+       weights <- weights + runif(length(weights), max = 1e-3)
        objective <<- setNames(weights, paste0(".delta_", names(weights)))
      },
+     execute = function(){
+       # TODO see if this can be executed in parallel.
+       lp <- translate_mip_lp(mip_rules(), objective)
+       #TODO set timer, duration etc.
+       s <- solve(lp)
+       values <- lpSolveAPI::get.variables(lp)
+       names(values) <- colnames(lp)
+       adapt <- values[names(objective)] == 1
+       names(adapt) <- gsub(".delta_", "", names(adapt))
+       list(
+         s = s,
+         values = values,
+         lp = lp,
+         adapt = adapt
+       )
+     },
      is_feasible = function(){
-       #browser()
        mr <- .self$mip_rules()
        vars <- get_mr_vars(mr)
 
@@ -42,14 +59,29 @@ mip <- setRefClass("MipRules",
        lp <- translate_mip_lp(mr, obj)
        i <- lpSolveAPI::solve.lpExtPtr(lp)
        feasible <- switch( as.character(i),
-          "0" = TRUE,
-          "1" = TRUE,
-          "3" = TRUE,
-          FALSE
+          "0" = TRUE,  # optimal solution found (so feasible)
+          "1" = TRUE,  # sub optimal solution (so feasible)
+          "2" = FALSE, # infeasible
+          "3" = TRUE,  # unbounded (so feasible)
+          "4" = TRUE,  # degenerate (so feasible)
+          "5" = NA,    # numerical failure, so unknown
+          "6" = NA,    # process aborted
+          "7" = NA,    # timeout
+          "9" = TRUE,  # presolved
+         "10" = FALSE, # branch and bound failed
+         "11" = FALSE, # branch and bound stopped
+         "12" = TRUE,  # a feasible branch and bound found
+         "13" = FALSE, # no feasible branch and bound found
+         FALSE
        )
        feasible
      },
      solution_values = function(){
+     },
+     show = function(){
+       mr <- mip_rules()
+       cat("Mip rules:\n")
+       cat(paste(sapply(mr, as.character), collapse = "\n"))
      }
    )
 )

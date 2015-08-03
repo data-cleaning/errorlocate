@@ -6,8 +6,7 @@
 #'
 translate_mip_lp <- function( rules
                         , objective=NULL
-                        , eps = 1e-7
-                        , bin_vars = integer()
+                        , eps = 1e-3
                         ){
 
   lc <- get_mr_matrix(rules)

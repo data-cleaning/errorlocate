@@ -17,3 +17,29 @@ setRefClass("ErrorLocalizer",
 )
 
 ##
+#' @include mip.R
+#' @exportClass FHLocalizer
+fh_localizer <-
+  setRefClass("FHLocalizer",
+    contains="ErrorLocalizer",
+    fields = list(
+      ._miprules = "ANY"
+    ),
+    methods = list(
+      initialize = function(rules, ref = NULL){
+        rules <<- rules
+        ._miprules <<- miprules(rules)
+      },
+      locate = function(data, ...){
+        row_count <- seq_len(nrow(data))
+        res <- sapply(row_count, function(r){
+          values <- data[r,]
+          ._miprules$set_values(values)
+          el <- ._miprules$execute()
+        })
+        #TODO change to errorlocation
+        res
+      }
+    )
+)
+

@@ -3,7 +3,7 @@
 \docType{class}
 \name{MipRules-class}
 \alias{MipRules-class}
-\alias{mip}
+\alias{miprules}
 \title{Create mip object}
 \description{
 Create mip object

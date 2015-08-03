@@ -8,6 +8,24 @@ Authors@R: c(person("Edwin", "de Jonge", email = "edwindjonge@gmail.com", role =
 Description: Locate Errors with Validation Rules.
 License: GPL-3
 LazyData: TRUE
-Depends: validate
-Imports: lpSolveAPI, methods
-Suggests: testthat
+Depends:
+    validate
+Imports:
+    lpSolveAPI,
+    methods
+Suggests:
+    testthat
+Collate:
+    'categorical.R'
+    'conditional.R'
+    'mip.R'
+    'errorlocalizer.R'
+    'errorlocation.R'
+    'expr_manip.R'
+    'linear.r'
+    'localize-errors.R'
+    'mip_lpsolve.R'
+    'mip_rule.R'
+    'soft-rule.R'
+    'validate.errloc-package.r'
+    'values.R'
