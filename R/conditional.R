@@ -25,9 +25,10 @@ is_condition_ <- function(expr, or=TRUE, top=TRUE, ...){
 #'
 #' Check if rules are conditional rules
 #'  @export
-#' @param rules validator object,
+#' @param rules validator object containing validation rules
 #' @return logical indicating which rules are conditional
 is_conditional <- function(rules, ...){
+  stopifnot(inherits(rules, "validator"))
   sapply(rules$rules, function(rule){
     is_condition_(rule@expr)
   })
@@ -40,8 +41,8 @@ replace_linear <- function(e, prefix=".v"){
   h$prefix <- prefix
   cat <- rep_lin_(e, h=h)
 
-  list( cat=cat,
-        linear=h$expr
+  list( cat    = cat,
+        linear = h$expr
       )
 }
 

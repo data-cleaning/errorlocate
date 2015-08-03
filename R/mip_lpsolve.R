@@ -11,6 +11,7 @@ translate_mip_lp <- function( rules
                         ){
 
   lc <- get_mr_matrix(rules)
+  type <- get_mr_type(rules)
 
   A <- lc$A
   nvar <- ncol(A)
@@ -19,8 +20,6 @@ translate_mip_lp <- function( rules
                             , ncol = nvar
                             )
 
-  # ugly....
-  lpSolveAPI::`dimnames<-.lpExtPtr`(lps, dimnames(A))
   dimnames(lps) <- dimnames(A)
 
   for (v in 1:ncol(A)){
@@ -31,13 +30,27 @@ translate_mip_lp <- function( rules
   ops[ops=="=="] <- "="
   ops[strict <- ops=="<"] <- "<="
 
-  lpSolveAPI::set.constr.type(lps,types=ops)
-
-  if (!is.null(objective)){
-    lpSolveAPI::set.objfn(lps, objective)
+  is_binary <- type  == "binary"
+  if (any(is_binary)){
+    columns <- type[is_binary]
+    columns <- match(names(columns), colnames(A))
+    lpSolveAPI::set.type(lps, columns, "binary")
+  }
+  is_double <- !is_binary
+  if (any(is_double)){
+    columns <- type[is_double]
+    columns <- match(names(columns), colnames(A))
+    lpSolveAPI::set.type(lps, columns, "real")
+    lpSolveAPI::set.bounds(lps, lower=rep(-Inf, length(columns)), columns=columns)
   }
 
-  lpSolveAPI::set.bounds(lps, lower=rep(-Inf, ncol(A)))
+  if (length(objective)){
+    columns <- match(names(objective), colnames(A))
+    lpSolveAPI::set.objfn(lps, objective, columns)
+  }
+
+  lpSolveAPI::set.constr.type(lps,types=ops)
+
   b <- ifelse(strict, lc$b - eps, lc$b)
   lpSolveAPI::set.constr.value(lps, b)
   lps
@@ -45,6 +58,6 @@ translate_mip_lp <- function( rules
 
 ### testing
 
-# v <- validator( a>1, b+4 > c-z)
+# v <- validator( a>1, b+4 > c-z, A %in% "a")
 # rules <- lin_as_mip_rules(v)
-# translate_mip_lp(rules)
+# translate_mip_lp(c(rules, cat_as_mip_rules(v)))

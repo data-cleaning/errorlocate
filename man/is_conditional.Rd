@@ -7,7 +7,7 @@
 is_conditional(rules, ...)
 }
 \arguments{
-\item{rules}{validator object,}
+\item{rules}{validator object containing validation rules}
 }
 \value{
 logical indicating which rules are conditional

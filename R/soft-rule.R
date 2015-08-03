@@ -1,3 +1,4 @@
+#TODO rename to mip_*
 
 # convert statements of A == '1' into A + .delta_A == '1'
 soft_cat_rule <- function(x, prefix=".delta_", name = x$rule,  ...){
@@ -39,7 +40,7 @@ expect_values <- function(values, weights, ...){
   )
 
   is_numeric <- sapply(values, is.numeric)
-
+  # TODO catch NA
   lin_values <- values[is_numeric]
   lin_rules1 <- lapply(names(lin_values), function(n){
     a <- setNames(1, n)
