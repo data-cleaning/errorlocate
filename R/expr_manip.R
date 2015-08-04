@@ -1,4 +1,4 @@
-# expression manipuliation
+# expression manipulation
 
 op <- function(e){
   if (is.call(e)){ e[[1]] }
@@ -27,7 +27,7 @@ negate_ <- function(e, ...){
   }
 
   expr <- if (is.call(e) && op != '('){
-    substitute( !(e), list(e=e))
+    substitute( !(e), list(e=e) )
   } else {
     substitute( !e, list(e=e))
   }

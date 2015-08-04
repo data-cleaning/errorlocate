@@ -30,15 +30,30 @@ fh_localizer <-
         rules <<- rules
         ._miprules <<- miprules(rules)
       },
-      locate = function(data, ...){
-        row_count <- seq_len(nrow(data))
-        res <- sapply(row_count, function(r){
+      locate = function(data, weight, ...){
+
+        if (missing(weight)){
+          weight <- matrix(1, nrow=nrow(data), ncol=ncol(data))
+          colnames(weight) <- colnames(data)
+        } else {
+          stopifnot( names(weight) == names(data))
+          if (is.null(dim(weight))){
+            # use recycling to fill a weight matrix
+            weight <- t(matrix(weight, nrow=ncol(data), ncol=nrow(data)))
+            colnames(weight) <- colnames(data)
+          }
+        }
+
+        rows <- seq_len(nrow(data))
+        res <- sapply(rows, function(r){
           values <- data[r,]
           ._miprules$set_values(values)
           el <- ._miprules$execute()
+          el$adapt
         })
-        #TODO change to errorlocation
-        res
+        # TODO change to errorlocation
+        # browser()
+        errorlocation(values=t(res))
       }
     )
 )

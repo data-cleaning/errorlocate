@@ -4,6 +4,6 @@
 #'
 #'
 #' @name validate.errloc
-#' @import methods
+#' @import methods validate
 #' @docType package
 NULL

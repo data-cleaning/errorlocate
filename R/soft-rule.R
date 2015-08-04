@@ -63,20 +63,3 @@ expect_values <- function(values, weights, ...){
 
   c(lin_rules1, lin_rules2, cat_rules)
 }
-
-### testing
-# a <- c("A:a1"=1)
-# mr <- mip_rule(a, "==", 1, "A")
-# soft_cat_rule(mr)
-#
-# x <- c(x=1)
-# mr <- mip_rule(x, "<=", 2, "x")
-# soft_lin_rule(mr)
-#
-#
-# v1 <- validator(x == 1, y+1==z)
-# x <- lin_as_mip_rules(v1)
-# ##replace_equal_mip_rules(x)
-#
-# expect_values(list(x=1, a="A"))
-#

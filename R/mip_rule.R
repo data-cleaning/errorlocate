@@ -78,7 +78,6 @@ get_mr_type <- function(x, ...){
   type <- unlist(sapply(x, function(mr){
     mr$type
   }))
-
   vars <- names(type)
   df <- unique(data.frame(vars=vars, type=type, stringsAsFactors = FALSE))
   setNames(df$type, df$vars)

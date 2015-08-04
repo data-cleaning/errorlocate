@@ -1,6 +1,6 @@
 INFIX_CAT_NAME <- ":"
 
-#TODO may be change the code below to directly generate mip_rules
+# TODO maybe change the code below to directly generate mip_rules
 # determine if a rule is categorical
 is_cat_ <- function(expr, or=TRUE, ...){
   # this allows for logicals such as "if (A) B"
@@ -39,8 +39,8 @@ cvi <- function(var, value, not){
     not = not)) # this indicates if "var %in% value" or "!(var %in% value)"
 }
 
-# collect variable information within a rule, assumes that is_cat_ has been used to check wether
-# it is categorical
+# collect variable information within a rule, assumes that is_cat_ has been used
+# to check wether it is categorical
 get_catvar <- function(expr, not = FALSE){
   if (is.symbol(expr)){
     return(cvi(expr, TRUE, not))
@@ -50,7 +50,7 @@ get_catvar <- function(expr, not = FALSE){
   l <- left(expr)
   r <- right(expr)
 
-  switch (op,
+  switch ( op,
           "%in%" = cvi(l, r, not),
           "=="   = cvi(l, r, not),
           "!="   = cvi(l, r, !not),
@@ -85,6 +85,7 @@ cat_var_name <- function(x, infix=INFIX_CAT_NAME){
 #' Check if rules are categorical
 #' @export
 #' @param x validator object
+#' @param ... not used
 #' @return logical indicating which rules are purely categorical/logical
 is_categorical <- function(x, ...){
   sapply(x$rules, function(rule){
@@ -136,7 +137,7 @@ cat_mip_rule_ <- function(e, name, ...){
     x$not
   }))
 
-  if (length(rule_l) ==1){ # this is a strict(er) version and allows for some optimization
+  if (length(rule_l) == 1){ # this is a strict(er) version and allows for some optimization
     mip_rule(a, "==", b, name, type=sapply(a, function(x) 'binary'))
   } else {
     mip_rule(-a, "<=", -b, name, type=sapply(a, function(x) 'binary')) # normalized version of a*x >= b

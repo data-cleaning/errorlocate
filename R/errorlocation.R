@@ -8,17 +8,18 @@
 errorlocation <- setRefClass('errorlocation',
   fields=list(
     ._call = 'call',
-    ._values = 'logical',
+    ._values = 'ANY',
     ._status = 'list'
   ),
   methods=list(
-    initialize = function(values=logical(), status=list()){
-      ._call <<- sys.call(4)
+    initialize = function(values=list(), status=list()){
+      ._call <<- sys.call(-5)
       ._values <<- values
       ._status <<- status
     },
     show = function() {
-      cat("call: ", deparse(._call))
+      cat("call: ", deparse(._call), "\n")
+      cat("errors: ", as.character(._values), "\n")
     }
   )
 )
