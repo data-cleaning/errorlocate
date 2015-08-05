@@ -8,6 +8,8 @@ is_categorical(x, ...)
 }
 \arguments{
 \item{x}{validator object}
+
+\item{...}{not used}
 }
 \value{
 logical indicating which rules are purely categorical/logical

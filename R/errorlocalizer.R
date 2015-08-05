@@ -46,7 +46,7 @@ fh_localizer <-
 
         rows <- seq_len(nrow(data))
         res <- sapply(rows, function(r){
-          values <- data[r,]
+          values <- data[r,,drop=FALSE]
           ._miprules$set_values(values)
           el <- ._miprules$execute()
           el$adapt

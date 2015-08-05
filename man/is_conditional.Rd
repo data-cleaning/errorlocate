@@ -8,6 +8,8 @@ is_conditional(rules, ...)
 }
 \arguments{
 \item{rules}{validator object containing validation rules}
+
+\item{...}{not used}
 }
 \value{
 logical indicating which rules are conditional
