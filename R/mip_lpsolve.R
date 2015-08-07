@@ -19,6 +19,13 @@ translate_mip_lp <- function( rules
                             , ncol = nvar
                             )
 
+  # TODO improve!
+  lpSolveAPI::lp.control( lps,
+                          presolve = "rows",
+                          epsint = 1e-15,
+                          epspivot = 1e-15
+                        )
+
   dimnames(lps) <- dimnames(A)
 
   for (v in 1:ncol(A)){

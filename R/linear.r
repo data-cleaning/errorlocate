@@ -8,11 +8,6 @@ is_linear <- function(x, ...){
   })
 }
 
-linear_coefficients <- function(x, ...){
-  stopifnot(inherits(x, "validator"))
-  x$linear_coefficients()
-}
-
 # HACK
 lin_as_mip_rules <- function(x, ...){
   lin_rules <- x[is_linear(x)]
