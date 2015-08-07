@@ -9,8 +9,8 @@ describe("is_lin_",{
 
 describe("is_linear",{
   it("can detect linear rules",{
-    v <- validator(x > 1, y + 2*x <= 3)
-    expect_equal(is_linear(v), c(TRUE, TRUE))
+    v <- validator(x > 1, y + 2*x <= 3, A == "a", A == TRUE)
+    expect_equal(is_linear(v), c(TRUE, TRUE, FALSE, FALSE))
   })
 })
 
