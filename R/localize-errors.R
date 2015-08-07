@@ -1,4 +1,7 @@
 
+#' Locate errors
+#'
+#' Locate errors with validation rules.
 #' @export
 setGeneric("locate_errors", function(data, x, weight, ...){
   standardGeneric("locate_errors")

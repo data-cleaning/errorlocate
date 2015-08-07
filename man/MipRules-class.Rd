@@ -4,8 +4,8 @@
 \name{MipRules-class}
 \alias{MipRules-class}
 \alias{miprules}
-\title{Create mip object}
+\title{Create a mip object from a validator object}
 \description{
-Create mip object
+Create a mip object from validator object
 }
 

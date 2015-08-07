@@ -44,4 +44,24 @@ describe("replace_linear", {
     expect_equal(deparse(rl$linear$.v1), "x > 1")
     expect_equal(deparse(rl$linear$.v2), "y > 1")
   })
+  it ("transforms simple rule", {
+    e <- quote(if(x > 1) y > 2)
+    rl <- replace_linear(e)
+    expect_equal(deparse(rl$cat), "if (.v1) !.v2")
+    expect_equal(length(rl$linear), 2)
+    expect_equal(deparse(rl$linear$.v1), "x > 1")
+    expect_equal(deparse(rl$linear$.v2), "y > 2")
+  })
+})
+
+describe("cond_as_mip_rules",{
+  it("transforms simple rule",{
+    v <- validator(if(x>1) y>2)
+    mr <- cond_as_mip_rules(v)
+    expect_equal(length(mr), 3)
+    expect_equal(mr[[1]]$rule, "V1")
+    expect_equal(mr[[2]]$rule, "V1._lin1")
+    expect_equal(mr[[3]]$rule, "V1._lin2")
+    get_mr_matrix(mr)
+  })
 })

@@ -1,6 +1,6 @@
-#' Create mip object
+#' Create a mip object from a validator object
 #'
-#' Create mip object
+#' Create a mip object from validator object
 #' @exportClass MipRules
 #' @export
 miprules <- setRefClass("MipRules",
@@ -25,6 +25,11 @@ miprules <- setRefClass("MipRules",
        c(._lin_rules, ._cat_rules, ._cond_rules, ._value_rules)
      },
      set_values = function(values, weights){
+       if (missing(values) || length(values) == 0){
+         objective <<- numeric()
+         ._value_rules <<- list()
+         invisible()
+       }
        if (missing(weights)){
          weights <- rep(1, length(values))
          names(weights) <- names(values)
@@ -32,6 +37,9 @@ miprules <- setRefClass("MipRules",
        ._value_rules <<- expect_values(values, weights)
        weights <- weights + runif(length(weights), max = 1e-3)
        objective <<- setNames(weights, paste0(".delta_", names(weights)))
+     },
+     to_lp = function(){
+       translate_mip_lp(mip_rules(), objective)
      },
      execute = function(){
        # TODO see if this can be executed in parallel.
@@ -42,6 +50,7 @@ miprules <- setRefClass("MipRules",
        names(values) <- colnames(lp)
        adapt <- values[names(objective)] == 1
        names(adapt) <- gsub(".delta_", "", names(adapt))
+       #TODO improve the return values based on value of s
        list(
          s = s,
          values = values,
@@ -49,8 +58,8 @@ miprules <- setRefClass("MipRules",
          adapt = adapt
        )
      },
-     is_feasible = function(){
-       mr <- .self$mip_rules()
+     is_infeasible = function(){  # since we only check a subset of the rules,
+       mr <- .self$mip_rules()    # we can only detect infeasiblity
        vars <- get_mr_vars(mr)
 
        obj <- rep(1, length(vars))
@@ -74,9 +83,7 @@ miprules <- setRefClass("MipRules",
          "13" = FALSE, # no feasible branch and bound found
          FALSE
        )
-       feasible
-     },
-     solution_values = function(){
+       !feasible
      },
      show = function(){
        mr <- mip_rules()

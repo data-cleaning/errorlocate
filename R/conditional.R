@@ -26,12 +26,35 @@ is_condition_ <- function(expr, or=TRUE, top=TRUE, ...){
 #' Check if rules are conditional rules
 #'  @export
 #' @param rules validator object containing validation rules
+#' @param ... not used
 #' @return logical indicating which rules are conditional
 is_conditional <- function(rules, ...){
   stopifnot(inherits(rules, "validator"))
   sapply(rules$rules, function(rule){
     is_condition_(rule@expr)
   })
+}
+
+cond_as_mip_rules <- function(x, ...){
+  cond_rules <- x[is_conditional(x)]
+  mr <- lapply(cond_rules$rules, function(rule){
+    #browser()
+    prefix <- paste0(rule@name, "._lin")
+
+    rl <- replace_linear(rule@expr, prefix=prefix)
+    mr_cat <- cat_mip_rule_(rl$cat, rule@name)
+
+    # convert linear expressions to linear mip_rules
+    mr_lin <- mapply( lin_mip_rule_, rl$linear, name=names(rl$linear),
+                      SIMPLIFY = FALSE, USE.NAMES = FALSE
+                    )
+    # normalize them (">", ">=" into "<", "<=")
+    mr_lin <- lapply(mr_lin, rewrite_mip_rule)
+    # make them soft/conditional on the variable <v>._<count> used in mr_cat
+    mr_lin <- lapply(mr_lin, soft_lin_rule, prefix="")
+    append(list(mr_cat), mr_lin)
+  })
+  unlist(mr, recursive = FALSE)
 }
 
 # replaces linear subexpressions with a binary variable

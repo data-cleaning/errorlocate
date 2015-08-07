@@ -51,8 +51,12 @@ translate_mip_lp <- function( rules
   }
 
   if (length(objective)){
-    columns <- match(names(objective), colnames(A))
-    lpSolveAPI::set.objfn(lps, objective, columns)
+    obj <- objective[objective != 0]
+    columns <- match(names(obj), colnames(A))
+    if (any(is.na(columns))){
+      stop("Invalid objective function")
+    }
+    lpSolveAPI::set.objfn(lps, unname(obj), columns)
   }
 
   lpSolveAPI::set.constr.type(lps,types=ops)
