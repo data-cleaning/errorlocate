@@ -3,21 +3,20 @@
 #'
 #' Locate errors with validation rules.
 #' @export
-setGeneric("locate_errors", function(data, x, ref, weight, ...){
+setGeneric("locate_errors", function(data, x, ...){
   standardGeneric("locate_errors")
 })
 
-
 #' @export
-setMethod('locate_errors', c("data.frame", "validator"), function(data, x, ref, weight, ...){
+setMethod('locate_errors', signature = c("data.frame", "validator"), function(data, x, ref=NULL, weight=NULL, ...){
   fh <- fh_localizer(x)
-  locate_errors(data, fh, ref=ref, weight=weight, ...)
+  locate_errors(data=data, fh, ref=ref, weight=weight, ...)
 })
 
 
 #' @export
-setMethod('locate_errors', c("data.frame", "ErrorLocalizer"), function(data, x, ref, weight, ...){
-  x$locate(data, weight, ...)
+setMethod('locate_errors', signature = c("data.frame", "ErrorLocalizer"), function(data, x, weight=NULL, ref=NULL, ...){
+  x$locate(data=data, weight=weight, ...)
 })
 
 

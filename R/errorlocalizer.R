@@ -30,9 +30,9 @@ fh_localizer <-
         rules <<- rules
         ._miprules <<- miprules(rules)
       },
-      locate = function(data, weight, ...){
+      locate = function(data, weight=NULL, ...){
 
-        if (missing(weight)){
+        if (length(weight) == 0){
           weight <- matrix(1, nrow=nrow(data), ncol=ncol(data))
           colnames(weight) <- colnames(data)
         } else {
@@ -42,6 +42,7 @@ fh_localizer <-
             weight <- t(matrix(weight, nrow=ncol(data), ncol=nrow(data)))
             colnames(weight) <- colnames(data)
           }
+          stopifnot(dim(weight) == dim(data))
         }
 
         rows <- seq_len(nrow(data))

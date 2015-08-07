@@ -6,7 +6,6 @@ __WARNING in heavy development!!__
 
 Find erronous fields based on validation rules from `validate`
 
-
 # naming options
 
 For package:
