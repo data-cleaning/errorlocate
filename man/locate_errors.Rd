@@ -4,7 +4,7 @@
 \alias{locate_errors}
 \title{Locate errors}
 \usage{
-locate_errors(data, x, weight, ...)
+locate_errors(data, x, ref, weight, ...)
 }
 \description{
 Locate errors with validation rules.
