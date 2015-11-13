@@ -1,5 +1,5 @@
 # provides an interface to mip solvers.
-# currently only lpSolveAPI
+# currently only lpSolveAPI, should be workable for glpt
 
 #' translate linear rules into an lp problem
 #' @importFrom lpSolveAPI dimnames<-.lpExtPtr
