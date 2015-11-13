@@ -1,4 +1,4 @@
 library(testthat)
-library(validate.errloc)
+library(errorlocate)
 
-test_check("validate.errloc")
+test_check("errorlocate")
