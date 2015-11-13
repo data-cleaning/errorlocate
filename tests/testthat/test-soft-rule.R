@@ -55,7 +55,7 @@ describe("soft_lin_rule",{
     expect_equal(sr$b, -42)
   })
 
-  it ("can transform a list of categorial values into softrules", {
+  it ("can transform a list of categorical values into softrules", {
     values <- list(A="a")
 
     sr <- expect_values(values)[[1]]

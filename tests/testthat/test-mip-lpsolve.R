@@ -1,6 +1,5 @@
 context("lpsolve")
 
-
 describe("lp_solve",{
   it("can translate lin rules to lpsolve object", {
     v <- validator(x > 1, y < 3)
