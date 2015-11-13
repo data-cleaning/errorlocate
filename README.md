@@ -1,7 +1,7 @@
-[![Build Status](https://travis-ci.org/data-cleaning/validate.errloc.svg)](https://travis-ci.org/data-cleaning/validate.errloc)
-[![CRAN](http://www.r-pkg.org/badges/version/validate.errloc)](http://cran.r-project.org/package=validate.errloc/)
-[![Downloads](http://cranlogs.r-pkg.org/badges/validate.errloc)](http://www.r-pkg.org/pkg/validate.errloc) 
-[![Coverage Status](https://coveralls.io/repos/data-cleaning/validate.errloc/badge.svg?branch=master&service=github)](https://coveralls.io/github/data-cleaning/validate.errloc?branch=master)
+[![Build Status](https://travis-ci.org/data-cleaning/errorlocate.svg)](https://travis-ci.org/data-cleaning/errorlocate)
+[![CRAN](http://www.r-pkg.org/badges/version/errorlocate)](http://cran.r-project.org/package=errorlocate/)
+[![Downloads](http://cranlogs.r-pkg.org/badges/errorlocate)](http://www.r-pkg.org/pkg/errorlocate) 
+[![Coverage Status](https://coveralls.io/repos/data-cleaning/errorlocate/badge.svg?branch=master&service=github)](https://coveralls.io/github/data-cleaning/errorlocate?branch=master)
 # Error localization
 
 Find erronous fields based on validation rules from `validate`
@@ -9,10 +9,6 @@ Find erronous fields based on validation rules from `validate`
 # naming options
 
 For package:
-
-- `validate.errloc`
-- `validate.mip`
-- `validate.errors`
 
 For methods:
 
