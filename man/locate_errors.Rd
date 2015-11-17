@@ -2,11 +2,28 @@
 % Please edit documentation in R/localize-errors.R
 \name{locate_errors}
 \alias{locate_errors}
-\title{Locate errors}
+\title{Locate errors in data}
 \usage{
 locate_errors(data, x, ...)
 }
+\arguments{
+\item{data}{data to be checked}
+
+\item{x}{validation rules or errorlocalizer object to be used for finding
+possible errors.}
+}
+\value{
+\code{\link{error}} object describing the errors found.
+
+Locate erronuous fields in rows of data using validation rules or a specific
+errorlocalizer object. This method returns the errors, according to the specified
+method \code{x}, that were found. If these errors are to be removed automatically
+the method \code{\link{errors_as_na}} should be used.
+}
 \description{
-Locate errors with validation rules.
+Locate errors in data
+}
+\seealso{
+locate_errors
 }
 

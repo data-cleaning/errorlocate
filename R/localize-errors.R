@@ -1,7 +1,16 @@
 
-#' Locate errors
+#' Locate errors in data
 #'
-#' Locate errors with validation rules.
+#' @param data data to be checked
+#' @param x validation rules or errorlocalizer object to be used for finding
+#' possible errors.
+#' @return \code{\link{error}} object describing the errors found.
+#'
+#' Locate erronuous fields in rows of data using validation rules or a specific
+#' errorlocalizer object. This method returns the errors, according to the specified
+#' method \code{x}, that were found. If these errors are to be removed automatically
+#' the method \code{\link{errors_as_na}} should be used.
+#' @seealso locate_errors
 #' @export
 setGeneric("locate_errors", function(data, x, ...){
   standardGeneric("locate_errors")
@@ -19,7 +28,15 @@ setMethod('locate_errors', signature = c("data.frame", "ErrorLocalizer"), functi
   x$locate(data=data, weight=weight, ...)
 })
 
-
+#' Set erroneous fields to NA
+#'
+#'  @param data data to be checked
+#'  @param x \code{\link{validator}} object
+#'
+#' Find erronous fields using \code{\link{locate_errors}} and replace these
+#' fields automatically with NA.
+#'
+#' @seealso locate_errors
 #' @export
 setGeneric("errors_as_na", function(data, x, ...){
   standardGeneric("errors_as_na")
@@ -41,5 +58,4 @@ setMethod('errors_as_na', c("data.frame", "errorlocation"), function(data, x, re
 })
 
 .errors_as_na <- function(data, el){
-
 }

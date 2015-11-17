@@ -17,6 +17,7 @@ describe("MipRules",{
     v <- validator(x > 1)
     mr <- miprules(v)
     mr$set_values(list(x=0.1))
-    mr$execute()      })
+    mr$execute()
+  })
 
 })

@@ -110,7 +110,7 @@ cat_coefficients <- function(x, ...){
 #' get categorical rules as mip_rules
 #'
 #' @param x expressionset object
-#' @param ...
+#' @param ... not used
 #' @return list of mip_rule
 #' @keywords internal
 cat_as_mip_rules <- function(x, ...){

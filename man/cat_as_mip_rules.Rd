@@ -8,6 +8,8 @@ cat_as_mip_rules(x, ...)
 }
 \arguments{
 \item{x}{expressionset object}
+
+\item{...}{not used}
 }
 \value{
 list of mip_rule
