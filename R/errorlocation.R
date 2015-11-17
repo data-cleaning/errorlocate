@@ -9,17 +9,23 @@ errorlocation <- setRefClass('errorlocation',
   fields=list(
     ._call = 'call',
     ._values = 'ANY',
-    ._status = 'list'
+    ._weight = 'numeric',
+    ._status = 'list',
+    weight = function(){
+      sum(._weight[._values])
+    }
   ),
   methods=list(
-    initialize = function(values=list(), status=list()){
+    initialize = function(values=list(), status=list(), weight= rep(1, length(values))){
       ._call <<- sys.call(-5)
       ._values <<- values
       ._status <<- status
+      ._weight <<- weight
     },
     show = function() {
       cat("call: ", deparse(._call), "\n")
       cat("errors: ", as.character(._values), "\n")
+      cat("weight: ", weight, "\n")
     }
   )
 )

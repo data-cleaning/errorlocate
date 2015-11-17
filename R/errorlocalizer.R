@@ -16,9 +16,10 @@ setRefClass("ErrorLocalizer",
   )
 )
 
-##
+#' Feligi-Holt Errorlocalizer
 #' @include mip.R
 #' @exportClass FHLocalizer
+#'
 fh_localizer <-
   setRefClass("FHLocalizer",
     contains="ErrorLocalizer",
