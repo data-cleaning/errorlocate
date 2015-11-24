@@ -47,6 +47,10 @@ fh_localizer <-
         }
 
         rows <- seq_len(nrow(data))
+
+        adapt <- matrix(NA, ncol=ncol(data), nrow=nrow(data))
+        colnames(adapt) <- colnames(data)
+
         res <- sapply(rows, function(r){
           values <- data[r,,drop=FALSE]
           ._miprules$set_values(values)

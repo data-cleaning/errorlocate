@@ -28,34 +28,45 @@ setMethod('locate_errors', signature = c("data.frame", "ErrorLocalizer"), functi
   x$locate(data=data, weight=weight, ...)
 })
 
-#' Set erroneous fields to NA
+#'  Replace erroneous fields with NA or suggested value
 #'
 #'  @param data data to be checked
 #'  @param x \code{\link{validator}} object
+#'  @param ref optional reference data set
+#'  @param ... other datasets to be used...
+#'  @param value \code{NA}
 #'
 #' Find erronous fields using \code{\link{locate_errors}} and replace these
 #' fields automatically with NA.
 #'
 #' @seealso locate_errors
 #' @export
-setGeneric("errors_as_na", function(data, x, ...){
-  standardGeneric("errors_as_na")
+setGeneric("replace_errors", function( data, x
+                                     , ref=NULL, ...
+                                     , value = c("NA", "suggestion")){
+  standardGeneric("replace_errors")
 })
 
 #' @export
-setMethod('errors_as_na', c("data.frame", "validator"), function(data, x, ...){
+setMethod('replace_errors', c("data.frame", "validator")
+         , function(data, x, ref=NULL, ..., value = c("NA", "suggestion")){
   fh <- fh_localizer(x)
-  errors_as_na(data, fh, ref, ...)
+  replace_errors(data, fh, ref, ...)
 })
 
-setMethod('errors_as_na', c("data.frame", "ErrorLocalizer"), function(data, x, ref=NULL, ...){
+setMethod('replace_errors', c("data.frame", "ErrorLocalizer")
+         , function(data, x
+                   , ref = NULL
+                   , ...
+                   , value = c("NA", "suggestion")){
   el <- locate_errors(data, x, ref, ...)
-  errors_as_na(data, el, ref, ...)
+  replace_errors(data, el, ref, ...)
 })
 
-setMethod('errors_as_na', c("data.frame", "errorlocation"), function(data, x, ref, ...){
+setMethod('replace_errors', c("data.frame", "errorlocation")
+         , function( data, x
+                   , ref, ...
+                   , value = c("NA", "suggestion")){
   stop("to be implemented")
 })
 
-.errors_as_na <- function(data, el){
-}

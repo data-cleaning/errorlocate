@@ -11,16 +11,18 @@ errorlocation <- setRefClass('errorlocation',
     ._values = 'ANY',
     ._weight = 'numeric',
     ._status = 'list',
+    ._suggestion = 'list',
     weight = function(){
       sum(._weight[._values])
     }
   ),
   methods=list(
-    initialize = function(values=list(), status=list(), weight= rep(1, length(values))){
+    initialize = function(values=list(), status=list(), weight= rep(1, length(values)), suggestion=list()){
       ._call <<- sys.call(-5)
       ._values <<- values
       ._status <<- status
       ._weight <<- weight
+      ._suggestion <<- suggestion
     },
     show = function() {
       cat("call: ", deparse(._call), "\n")

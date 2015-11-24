@@ -1,4 +1,4 @@
-context("localize-errors")
+context("localize-errors (from editrules)")
 
 ## TODO: Add more tests
 describe("Solve editrules checks",{
