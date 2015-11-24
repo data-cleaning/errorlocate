@@ -17,3 +17,9 @@ substitute_values <- function(x, values=list()){
   }
   vals[!is_logical]
 }
+
+
+#' @param x expression or language object!
+substitute_ <- function(x, values=list()){
+  eval(substitute(substitute(x, values), list(x=x)))
+}
