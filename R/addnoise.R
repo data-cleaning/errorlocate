@@ -1,0 +1,33 @@
+#' Add (a small amount of) noise
+#'
+#' Utility function to add some small positive noise to weights.
+#' This is mainly done to randomly choose between solutions
+#' of equal weight.
+#'
+#'
+#' When no \code{max_delta} is supplied, add_noise will use the minimum difference
+#' larger than zero divided by the \code{length(x)}.
+#' @param x \code{numeric} vector or matrix. When \code{x} is a matrix, the function
+#' will be applied to each row of the matrix.
+#' @param max_delta when supplied noise will be drawn from $[0,max_delta]$
+#' otherwise see details
+#' @param ... currently not used
+#' @return \code{numeric} vector/matrix with noise applied.
+add_noise <- function(x, max_delta = NULL, ...){
+  if (is.matrix(x)){
+    return(apply(x, 1, add_noise, max_delta=max_delta, ...))
+  }
+
+  if (is.null(max_delta)){
+    ds <- diff(sort(x))
+    ds <- c(ds[ds > 0])
+    N <- length(x)
+    max_delta <- min(ds, min(x)) / N
+  }
+  x + runif(N, max = max_delta)
+}
+
+
+# testing 1,2 3
+
+#add_noise(c(1,1.4))
