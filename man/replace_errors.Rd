@@ -4,11 +4,13 @@
 \alias{replace_errors}
 \title{Replace erroneous fields with NA or suggested value}
 \usage{
-replace_errors(data, x, value = c("NA", "suggestion"), ...)
+replace_errors(data, x, ref = NULL, ..., value = c("NA", "suggestion"))
 }
 \description{
 @param data data to be checked
  @param x \code{\link{validator}} object
+ @param ref optional reference data set
+ @param ... other datasets to be used...
  @param value \code{NA}
 }
 \details{

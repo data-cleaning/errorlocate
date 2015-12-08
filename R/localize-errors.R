@@ -65,8 +65,9 @@ setMethod('replace_errors', c("data.frame", "ErrorLocalizer")
 
 setMethod('replace_errors', c("data.frame", "errorlocation")
          , function( data, x
-                   , ref, ...
+                   , ref = NULL,
+                   ...
                    , value = c("NA", "suggestion")){
-  stop("to be implemented")
+    x$adapt
 })
 
