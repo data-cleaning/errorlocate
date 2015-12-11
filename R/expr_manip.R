@@ -72,7 +72,7 @@ contains_value_ <- function(e, value, ...){
     op_to_s(e) == value
     contains_value_(left(e), value) || contains_value_(right(e), value)
   } else {
-    e == value
+    e == value # return (TRUE | FALSE)
   }
 }
 

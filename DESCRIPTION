@@ -16,6 +16,7 @@ Imports:
 Suggests:
     testthat
 Collate:
+    'addnoise.R'
     'categorical.R'
     'conditional.R'
     'mip.R'
