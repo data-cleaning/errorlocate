@@ -2,10 +2,11 @@
 % Please edit documentation in R/values.R
 \name{substitute_}
 \alias{substitute_}
+\title{substitute an existing language object}
 \usage{
 substitute_(x, values = list())
 }
-\arguments{
-\item{x}{expression or language object!}
+\description{
+@param x expression or language object!
 }
 

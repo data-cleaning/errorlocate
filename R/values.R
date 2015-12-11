@@ -19,7 +19,9 @@ substitute_values <- function(x, values=list()){
 }
 
 
-#' @param x expression or language object!
+#' substitute an existing language object
+#'
+#'  @param x expression or language object!
 substitute_ <- function(x, values=list()){
   eval(substitute(substitute(x, values), list(x=x)))
 }

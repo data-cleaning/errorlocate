@@ -2,7 +2,8 @@
 #'
 #' Utility function to add some small positive noise to weights.
 #' This is mainly done to randomly choose between solutions
-#' of equal weight.
+#' of equal weight. Without adding noise to weights lp solvers may return
+#' the same solution while there are multiple solutions of equal weight.
 #'
 #'
 #' When no \code{max_delta} is supplied, add_noise will use the minimum difference

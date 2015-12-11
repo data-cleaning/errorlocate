@@ -1,7 +1,7 @@
 #' Error location
 #'
 #' Errors can variable based, and/or record based
-#' Current implementation assumes that it  is record based: errors are a matrix of rows and columns.
+#' Current implementation assumes that they are record based: errors are a matrix of rows and columns.
 #' However it is thinkable that errors are purely column based, or dataset based. This
 #' is currently implemented by settings all rows or all values to TRUE.
 #' @exportClass errorlocation
