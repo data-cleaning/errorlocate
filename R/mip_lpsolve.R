@@ -5,9 +5,9 @@
 #' @importFrom lpSolveAPI dimnames<-.lpExtPtr
 #'
 translate_mip_lp <- function( rules
-                        , objective=NULL
-                        , eps = 1e-3
-                        ){
+                            , objective=NULL
+                            , eps = 1e-3
+                            ){
 
   lc <- get_mr_matrix(rules)
   type <- get_mr_type(rules)

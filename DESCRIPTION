@@ -21,6 +21,7 @@ Collate:
     'conditional.R'
     'mip.R'
     'errorlocalizer.R'
+    'errorlocate-package.r'
     'errorlocation.R'
     'expr_manip.R'
     'expr_simplify.R'
@@ -29,6 +30,5 @@ Collate:
     'mip_lpsolve.R'
     'mip_rule.R'
     'soft-rule.R'
-    'validate.errloc-package.r'
     'values.R'
 RoxygenNote: 5.0.1

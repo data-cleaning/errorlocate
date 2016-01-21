@@ -15,20 +15,9 @@ lin_as_mip_rules <- function(x, ...){
   lapply(lin_rules$rules, function(rule){
     rewrite_mip_rule(lin_mip_rule_(rule@expr, name=rule@name), eps=0)
   })
-#   lc <- x$linear_coefficients()
-#   rule_names <- row.names(lc$A)
-#   var_names <- colnames(lc$A)
-#   lapply(seq_along(lc$operators), function(i){
-#     a <- lc$A[i,]
-#     names(a) <- var_names
-#     mip_rule( a[a!=0]
-#             , lc$op[i]
-#             , lc$b[i]
-#             , rule_names[i]
-#             )
-#   })
 }
 
+# check if a (sub) expression is linear
 is_lin_ <- function(expr, top=TRUE, ...){
 
   op <- op_to_s(expr)
@@ -85,17 +74,22 @@ lin_mip_rule_ <- function(e, sign=1, name, ...){
   }
 
   if (op == '-'){
-    if (is.null(r)){ return(lin_mip_rule_(l, -sign))}
+    if (is.null(r)){ # unary "-l"
+      return(lin_mip_rule_(l, -sign))
+    } # else binary "l-r"
     return(c(lin_mip_rule_(l, sign), lin_mip_rule_(r, -sign)))
   }
 
   if (op == '+'){
+    if (is.null(r)){ # unary "+l"
+      return(lin_mip_rule_(l, sign))
+    } # else binary "l+r"
     return(c(lin_mip_rule_(l, sign), lin_mip_rule_(r, sign)))
   }
 
   if (op == '*'){
-    if (is.numeric(l)){ return(lin_mip_rule_(r, sign*l))}
-    if (is.numeric(r)){return(lin_mip_rule_(l, sign*r))}
+    if (is.numeric(l)){ return(lin_mip_rule_(r, sign*l)) }
+    if (is.numeric(r)){ return(lin_mip_rule_(l, sign*r)) }
   }
   stop("Invalid linear statement")
 }

@@ -7,7 +7,6 @@ op <- function(e){
 
 # alias for op
 node <- op
-
 op_to_s <- function(e) deparse(op(e))
 
 

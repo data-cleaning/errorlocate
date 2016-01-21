@@ -13,10 +13,12 @@ is_condition_ <- function(expr, or=TRUE, top=TRUE, ...){
 
   switch (op,
     'if'  = is_condition_(l, !or, FALSE) && is_condition_(r, or, FALSE),
-    "|"   = or && is_condition_(l, or, FALSE) && is_condition_(r, or, FALSE),
-    "||"  = or && is_condition_(l, or, FALSE) && is_condition_(r, or, FALSE),
+    "|"   = or  && is_condition_(l, or, FALSE) && is_condition_(r, or, FALSE),
+    "||"  = or  && is_condition_(l, or, FALSE) && is_condition_(r, or, FALSE),
     "&"   = !or && is_condition_(l, or, FALSE) && is_condition_(r, or, FALSE),
     "&&"  = !or && is_condition_(l, or, FALSE) && is_condition_(r, or, FALSE),
+    "!"   = is_condition_(l, !or, FALSE),
+    "("   = is_condition_(l, or, FALSE),
     FALSE
   )
 }
@@ -93,18 +95,20 @@ rep_lin_ <- function(e, or=TRUE, h=new.env()){
   }
 
   switch (op,
-    "if" = substitute(if (l) r,
-                      list( l=rep_lin_(l, !or, h), r=rep_lin_(r, or, h))),
-    "|"  = substitute(l | r,
-                      list( l=rep_lin_(l, or, h), r=rep_lin_(r, or, h))),
-    "&&" = substitute(l && r,
-                     list( l=rep_lin_(l, or, h), r=rep_lin_(r, or, h))),
-    "&"  = substitute(l & r,
-                      list( l=rep_lin_(l, or, h), r=rep_lin_(r, or, h))),
-    "||" = substitute(l || r,
-                      list( l=rep_lin_(l, or, h), r=rep_lin_(r, or, h))),
-    "!"  = substitute(!l, list(l=rep_lin_(l, !or, h))),
-    "("  = substitute((l), list(l=rep_lin_(l, or, h))),
+    "if" = substitute( if (l) r,
+                       list( l=rep_lin_(l, !or, h), r=rep_lin_(r, or, h))),
+    "|"  = substitute( l | r,
+                       list( l=rep_lin_(l, or, h), r=rep_lin_(r, or, h))),
+    "&&" = substitute( l && r,
+                       list( l=rep_lin_(l, or, h), r=rep_lin_(r, or, h))),
+    "&"  = substitute( l & r,
+                       list( l=rep_lin_(l, or, h), r=rep_lin_(r, or, h))),
+    "||" = substitute( l || r,
+                       list( l=rep_lin_(l, or, h), r=rep_lin_(r, or, h))),
+    "!"  = substitute( !l,
+                       list(l=rep_lin_(l, !or, h))),
+    "("  = substitute( (l),
+                       list(l=rep_lin_(l, or, h))),
     e
   )
 }

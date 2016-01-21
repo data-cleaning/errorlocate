@@ -6,6 +6,18 @@ describe("is_condition_",{
     e <- quote(y == 1 | z <= 1)
     expect_true(is_condition_(e))
   })
+  it("can use negated expression", {
+    e <- quote(!y == 1 | z <= 1)
+    expect_true(is_condition_(e))
+  })
+  it("can use nested expression", {
+    e <- quote((y == 1) | z <= 1)
+    expect_true(is_condition_(e))
+  })
+  it("can use negated nested expression", {
+    e <- quote(!(y == 1 & x > 1) | z <= 1)
+    expect_true(is_condition_(e))
+  })
 })
 
 describe("conditional", {
