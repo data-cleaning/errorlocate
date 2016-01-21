@@ -3,7 +3,7 @@
 #' Find errors in data using validation rules.
 #'
 #'
-#' @name validate.errloc
+#' @name errorlocate-package
 #' @import methods validate
 #' @docType package
 NULL

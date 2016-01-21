@@ -65,7 +65,7 @@ get_catvar <- function(expr, not = FALSE){
   )
 }
 
-# generate binary variable names from vars and there values.
+# generate binary variable names from vars and their values.
 bin_var_name <- function(x, infix=INFIX_CAT_NAME){
   if (is.character(x$value)){
     paste0(x$var, infix, x$value)

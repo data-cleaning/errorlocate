@@ -59,7 +59,7 @@ miprules <- setRefClass("MipRules",
        )
      },
      is_infeasible = function(){  # since we only check a subset of the rules,
-       mr <- .self$mip_rules()    # we can only detect infeasiblity
+       mr <- .self$mip_rules()    # we can only detect infeasiblity, not feasiblity
        vars <- get_mr_vars(mr)
 
        obj <- rep(1, length(vars))
