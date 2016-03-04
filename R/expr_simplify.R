@@ -87,5 +87,5 @@ simplify_log_expr <- function(expr, ...){
 
 ### testing
 
-sapply( expression( A | TRUE, A, A | FALSE, if (TRUE) A, if (FALSE) B, if (A|TRUE) B, if (A|FALSE) B, !TRUE, !(A|TRUE), !(A|FALSE))
-      , simplify_log_expr)
+# sapply( expression( A | TRUE, A, A | FALSE, if (TRUE) A, if (FALSE) B, if (A|TRUE) B, if (A|FALSE) B, !TRUE, !(A|TRUE), !(A|FALSE))
+#       , simplify_log_expr)

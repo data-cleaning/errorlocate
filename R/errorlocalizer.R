@@ -1,4 +1,9 @@
 #' Base class for class locate errors based on rules and data
+#'
+#' ErrorLocalizer can be used as a base class to implement an new error localization algorithm.
+#' The derived class must implement two methods: \code{initialize}, which is called
+#' before any error localization is done and \code{locate} which operates upon data. The
+#' extra parameter \code{...} can used to supply algoritmic specific parameters.
 #' @export
 setRefClass("ErrorLocalizer",
   fields=list(
@@ -17,6 +22,8 @@ setRefClass("ErrorLocalizer",
 )
 
 #' Feligi-Holt Errorlocalizer
+#'
+#' Implementation of the Feligi-Holt algorithm using the \code{ErrorLocalizer} base class.
 #' @include mip.R
 #' @exportClass FHLocalizer
 #'

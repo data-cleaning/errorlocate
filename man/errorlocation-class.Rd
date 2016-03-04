@@ -6,7 +6,9 @@
 \alias{errorlocation-class}
 \title{Error location}
 \description{
-Errors can variable based, and/or record based
+Errors can variable based, and/or record based. A variable based error is a flaw in  uni- or multivariate
+distribution. To correct this error multiple observations or the aggregated number would have to be adjusted.
+A record based #' errors on the other hand is restricted within one observation.
 Current implementation assumes that they are record based: errors are a matrix of rows and columns.
 However it is thinkable that errors are purely column based, or dataset based. This
 is currently implemented by settings all rows or all values to TRUE.

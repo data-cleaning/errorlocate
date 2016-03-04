@@ -23,6 +23,9 @@ the method \code{\link{errors_as_na}} should be used.
 \description{
 Locate errors in data
 }
+\examples{
+examples/locate_errors.R
+}
 \seealso{
 locate_errors
 }

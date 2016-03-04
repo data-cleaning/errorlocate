@@ -11,6 +11,7 @@
 #' method \code{x}, that were found. If these errors are to be removed automatically
 #' the method \code{\link{errors_as_na}} should be used.
 #' @seealso locate_errors
+#' @examples examples/locate_errors.R
 #' @export
 setGeneric("locate_errors", function(data, x, ...){
   standardGeneric("locate_errors")
