@@ -7,9 +7,11 @@
 expect_values(values, weights, ...)
 }
 \arguments{
-\item{weights}{named numeric of equal length as values}
+\item{values}{named list of values.}
 
-\item{x}{named list of values}
+\item{weights}{named numeric of equal length as values.}
+
+\item{...}{not used}
 }
 \description{
 expect values

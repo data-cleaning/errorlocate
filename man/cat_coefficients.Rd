@@ -8,6 +8,8 @@ cat_coefficients(x, ...)
 }
 \arguments{
 \item{x}{validator object}
+
+\item{...}{not used}
 }
 \description{
 Get coefficient matrix from categorical edits, similar to

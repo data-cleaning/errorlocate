@@ -3,7 +3,9 @@
 
 #' translate linear rules into an lp problem
 #' @importFrom lpSolveAPI dimnames<-.lpExtPtr
-#'
+#' @param  rules mip rules
+#' @param objective function
+#' @param eps accuracy for equality/inequality
 translate_mip_lp <- function( rules
                             , objective=NULL
                             , eps = 1e-3

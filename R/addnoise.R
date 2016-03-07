@@ -14,6 +14,7 @@
 #' otherwise see details
 #' @param ... currently not used
 #' @return \code{numeric} vector/matrix with noise applied.
+#' @export
 add_noise <- function(x, max_delta = NULL, ...){
   if (is.matrix(x)){
     return(apply(x, 1, add_noise, max_delta=max_delta, ...))

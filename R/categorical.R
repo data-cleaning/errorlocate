@@ -74,7 +74,7 @@ bin_var_name <- function(x, infix=INFIX_CAT_NAME){
   }
 }
 
-#' input is mip_rule, results is character vector with infix names
+# input is mip_rule, results is character vector with infix names
 cat_var_name <- function(x, infix=INFIX_CAT_NAME){
   suffix <- paste0(infix, ".*$")
   gsub(suffix,"",names(x$a))
@@ -100,6 +100,7 @@ is_categorical <- function(x, ...){
 #'
 #' TODO explain mapping to coefficients
 #' @param x validator object
+#' @param ... not used
 #' @export
 cat_coefficients <- function(x, ...){
   stopifnot(inherits(x, "expressionset"))

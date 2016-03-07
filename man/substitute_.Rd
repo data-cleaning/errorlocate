@@ -6,7 +6,12 @@
 \usage{
 substitute_(x, values = list())
 }
+\arguments{
+\item{x}{expression or language object!}
+
+\item{values}{list of values}
+}
 \description{
-@param x expression or language object!
+substitute an existing language object
 }
 

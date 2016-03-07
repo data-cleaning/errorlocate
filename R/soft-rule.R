@@ -26,8 +26,9 @@ soft_lin_rule <- function( x, prefix=".delta_", name = x$rule, ...
 
 #' expect values
 #'
-#' @param x named list of values
-#' @param weights named numeric of equal length as values
+#' @param values named list of values.
+#' @param weights named numeric of equal length as values.
+#' @param ... not used
 expect_values <- function(values, weights, ...){
   if (missing(weights)){
     weights <- rep(1, length(values))

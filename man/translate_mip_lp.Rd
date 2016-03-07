@@ -6,6 +6,13 @@
 \usage{
 translate_mip_lp(rules, objective = NULL, eps = 0.001)
 }
+\arguments{
+\item{rules}{mip rules}
+
+\item{objective}{function}
+
+\item{eps}{accuracy for equality/inequality}
+}
 \description{
 translate linear rules into an lp problem
 }
