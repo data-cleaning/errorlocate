@@ -6,6 +6,6 @@
 \alias{fh_localizer}
 \title{Feligi-Holt Errorlocalizer}
 \description{
-Feligi-Holt Errorlocalizer
+Implementation of the Feligi-Holt algorithm using the \code{ErrorLocalizer} base class.
 }
 

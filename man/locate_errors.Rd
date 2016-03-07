@@ -24,7 +24,13 @@ the method \code{\link{errors_as_na}} should be used.
 Locate errors in data
 }
 \examples{
-examples/locate_errors.R
+v <- validator( p + c == t
+                , c - 0.6*t >= 0
+                , c >= 0
+                , p >= 0
+)
+data <- data.frame(p=755, c=125, t=200)
+errors <- locate_errors(data, v)
 }
 \seealso{
 locate_errors
