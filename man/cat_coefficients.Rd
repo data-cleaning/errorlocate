@@ -15,7 +15,5 @@ cat_coefficients(x, ...)
 Get coefficient matrix from categorical edits, similar to
 linear_coefficients.
 }
-\details{
-TODO explain mapping to coefficients
-}
+\keyword{internal}
 

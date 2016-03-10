@@ -98,10 +98,9 @@ is_categorical <- function(x, ...){
 #' Get coefficient matrix from categorical edits, similar to
 #' linear_coefficients.
 #'
-#' TODO explain mapping to coefficients
 #' @param x validator object
 #' @param ... not used
-#' @export
+#' @keywords internal
 cat_coefficients <- function(x, ...){
   stopifnot(inherits(x, "expressionset"))
   mr <- cat_as_mip_rules(x, ...)
@@ -138,8 +137,12 @@ cat_mip_rule_ <- function(e, name, ...){
     x$not
   }))
 
-  if (length(rule_l) == 1){ # this is a strict(er) version and allows for some optimization
-    mip_rule(a, "==", b, name, type=sapply(a, function(x) 'binary'))
+  if ( length(rule_l) == 1){
+    if (length(a) > 1 || op(e) == "=="){  # this is a strict(er) version and allows for some optimization
+      mip_rule(a, "==", b, name, type=sapply(a, function(x) 'binary'))
+    } else {
+      mip_rule(a, "<=", b, name, type=sapply(a, function(x) 'binary')) # needed for logical variables
+    }
   } else {
     mip_rule(-a, "<=", -b, name, type=sapply(a, function(x) 'binary')) # normalized version of a*x >= b
   }

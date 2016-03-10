@@ -1,6 +1,6 @@
 #' Base class for class locate errors based on rules and data
 #'
-#' ErrorLocalizer can be used as a base class to implement an new error localization algorithm.
+#' ErrorLocalizer can be used as a base class to implement a new error localization algorithm.
 #' The derived class must implement two methods: \code{initialize}, which is called
 #' before any error localization is done and \code{locate} which operates upon data. The
 #' extra parameter \code{...} can used to supply algoritmic specific parameters.
@@ -24,6 +24,12 @@ setRefClass("ErrorLocalizer",
 #' Feligi-Holt Errorlocalizer
 #'
 #' Implementation of the Feligi-Holt algorithm using the \code{ErrorLocalizer} base class.
+#' Given a set of validation rules and a dataset the Feligi-Holt algorithm finds for each record
+#' the smallest (weighted) combination of variables that are erroneous (if any).
+#'
+#' \code{errorlocalizer} implements feligi holt using a MIP-solver. For problems in which
+#' coefficients of the validation rules or the data are too different, you should consider scaling
+#' the data.
 #' @include mip.R
 #' @exportClass FHLocalizer
 #'

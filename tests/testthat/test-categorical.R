@@ -25,4 +25,12 @@ describe("categorical", {
     expect_that(coef$operator, equals(c("==", "<=")))
     expect_that(coef$b, equals(c(1, 0)))
   })
+
+  it("can handle logical rules", {
+    v <- validator( married %in% c(TRUE, FALSE)
+                  , adult %in% c(TRUE, FALSE)
+                  , if (married==TRUE) adult==TRUE
+                  )
+    cat_coefficients(v)
+  })
 })

@@ -34,7 +34,7 @@ errorlocation <- setRefClass('errorlocation',
     show = function() {
       cat("call: ", deparse(._call), "\n")
       cat("errors: ", as.character(._values), "\n")
-      cat("weight: ", weight, "\n")
+      cat("weight: ", ._weight, "\n")
     }
   )
 )

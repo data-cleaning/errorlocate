@@ -38,13 +38,20 @@ method \code{x}, that were found. If these errors are to be removed automaticall
 Locate errors in data
 }
 \examples{
-v <- validator( p + c == t
-                , c - 0.6*t >= 0
-                , c >= 0
-                , p >= 0
+v <- validator( profit + cost == turnover
+              , cost - 0.6*turnover >= 0
+              , cost>= 0
+              , profit >= 0
 )
-data <- data.frame(p=755, c=125, t=200)
-errors <- locate_errors(data, v)
+data <- data.frame(profit=755, cost=125, turnover=200)
+locate_errors(data, v)
+
+
+# try a condinational rule
+v <- validator( maried \%in\% c(TRUE, FALSE), if (maried==TRUE) age >= 17 )
+data <- data.frame( married = TRUE, age = 16)
+locate_errors(data, v)
+
 }
 \seealso{
 locate_errors
