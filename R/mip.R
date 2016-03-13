@@ -9,7 +9,7 @@ miprules <- setRefClass("MipRules",
      objective     = "numeric",
      ._lin_rules   = "list",
      ._cat_rules   = "list",
-     ._cond_rules  = "list",
+     ._cond_rules  = "ANY",
      ._value_rules = "list",
      ._lp          = "ANY"
    ),
@@ -19,7 +19,7 @@ miprules <- setRefClass("MipRules",
        objective <<- objective
        ._lin_rules <<- lin_as_mip_rules(rules)
        ._cat_rules <<- cat_as_mip_rules(rules)
-       #._cond_rules <<- cond_as_mip_rules(rules)
+       ._cond_rules <<- cond_as_mip_rules(rules)
        #TODO implement cond_as_mip_rules
      },
      mip_rules = function(){

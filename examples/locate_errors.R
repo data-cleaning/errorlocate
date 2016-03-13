@@ -20,10 +20,10 @@ v_logical <- validator( A %in% c(TRUE, FALSE)
                       )
 
 data <- data.frame(A = TRUE, B = FALSE)
-locate_errors(data, v_logical)
+locate_errors(data, v_logical, weight=c(2,1))
 
 # try a condinational rule
 v <- validator( married %in% c(TRUE, FALSE), if (married==TRUE) age >= 17 )
 data <- data.frame( married = TRUE, age = 16)
-locate_errors(data, v)
+locate_errors(data, v, weight=c(married=1, age=2))
 

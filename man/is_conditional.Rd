@@ -16,7 +16,6 @@ logical indicating which rules are conditional
 }
 \description{
 Check if rules are conditional rules
- @export
 }
 \examples{
 v <- validator( A \%in\% c("a1", "a2")

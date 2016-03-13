@@ -26,7 +26,7 @@ is_condition_ <- function(expr, or=TRUE, top=TRUE, ...){
 #' Check if rules are conditional rules
 #'
 #' Check if rules are conditional rules
-#'  @export
+#' @export
 #' @param rules validator object containing validation rules
 #' @param ... not used
 #' @return logical indicating which rules are conditional

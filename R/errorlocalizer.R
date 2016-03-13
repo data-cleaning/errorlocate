@@ -66,7 +66,7 @@ fh_localizer <-
 
         res <- sapply(rows, function(r){
           values <- data[r,,drop=FALSE]
-          ._miprules$set_values(values)
+          ._miprules$set_values(values, weight[r,])
           el <- ._miprules$execute()
           el$adapt
         })
