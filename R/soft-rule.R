@@ -57,9 +57,18 @@ expect_values <- function(values, weights, ...){
 
   cat_values <- values[!is_numeric]
   cat_rules <- lapply(names(cat_values), function(n){
-    nm <- paste0(n, INFIX_CAT_NAME, cat_values[[n]])
-    a <- setNames(1, nm)
-    soft_cat_rule(mip_rule(a, "==", 1, n, weights[n], type=sapply(a, function(x) "binary")))
+    value <- cat_values[[n]]
+    a <- setNames(1, paste0(n, INFIX_CAT_NAME, value))
+    b <- 1
+
+    if (is.logical(value)){
+      names(a) <- n
+      if (!value){
+        a <- -a
+        b <- 0
+      }
+    }
+    soft_cat_rule(mip_rule(a, "==", b, n, weights[n], type=sapply(a, function(x) "binary")))
   })
 
   c(lin_rules1, lin_rules2, cat_rules)
