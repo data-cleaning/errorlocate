@@ -19,6 +19,7 @@ miprules <- setRefClass("MipRules",
        objective <<- objective
        ._lin_rules <<- lin_as_mip_rules(rules)
        ._cat_rules <<- cat_as_mip_rules(rules)
+       #._cond_rules <<- cond_as_mip_rules(rules)
        #TODO implement cond_as_mip_rules
      },
      mip_rules = function(){
@@ -43,6 +44,7 @@ miprules <- setRefClass("MipRules",
      },
      execute = function(){
        # TODO see if this can be executed in parallel.
+       #browser()
        lp <- translate_mip_lp(mip_rules(), objective)
        #TODO set timer, duration etc.
        s <- solve(lp)

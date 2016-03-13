@@ -30,6 +30,7 @@ is_condition_ <- function(expr, or=TRUE, top=TRUE, ...){
 #' @param rules validator object containing validation rules
 #' @param ... not used
 #' @return logical indicating which rules are conditional
+#' @example examples/conditional.R
 is_conditional <- function(rules, ...){
   stopifnot(inherits(rules, "validator"))
   sapply(rules$rules, function(rule){

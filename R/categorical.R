@@ -87,6 +87,7 @@ cat_var_name <- function(x, infix=INFIX_CAT_NAME){
 #' @param x validator object
 #' @param ... not used
 #' @return logical indicating which rules are purely categorical/logical
+#' @example examples/categorical.R
 is_categorical <- function(x, ...){
   sapply(x$rules, function(rule){
     is_cat_(rule@expr)

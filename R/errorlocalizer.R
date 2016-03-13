@@ -71,7 +71,6 @@ fh_localizer <-
           el$adapt
         })
         # TODO change to errorlocation
-        # browser()
         errorlocation(values=t(res))
       }
     )

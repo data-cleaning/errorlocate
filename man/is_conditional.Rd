@@ -18,4 +18,12 @@ logical indicating which rules are conditional
 Check if rules are conditional rules
  @export
 }
+\examples{
+v <- validator( A \%in\% c("a1", "a2")
+              , B \%in\% c("b1", "b2")
+              , if (A == "a1") B == "b1"
+              )
+
+is_categorical(v)
+}
 

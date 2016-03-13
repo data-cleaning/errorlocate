@@ -10,7 +10,7 @@ translate_mip_lp <- function( rules
                             , objective=NULL
                             , eps = 1e-3
                             ){
-
+  #browser()
   lc <- get_mr_matrix(rules)
   type <- get_mr_type(rules)
 
