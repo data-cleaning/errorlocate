@@ -13,4 +13,12 @@ v <- validator(turnover + other.rev==total.rev)
 #   > # 1st row has missings
 el <- locate_errors(retailers[1,4:6],v)
 el
-# head(el$._values)
+head(el$._values)
+
+
+v <- validator( turnover + other.rev==total.rev
+              , turnover > 0
+              , other.rev>0
+              , total.rev>0)
+
+d1 <- replace_errors(retailers, v)

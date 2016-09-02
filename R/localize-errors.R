@@ -76,5 +76,10 @@ setMethod('replace_errors', c("data.frame", "errorlocation")
                    , ref = NULL,
                    ...
                    , value = c("NA", "suggestion")){
-    x$adapt
+
+    value <- switch ( match.arg(value),
+        "NA" = is.na(data) <- x$._values
+    )
+
+    data
 })
