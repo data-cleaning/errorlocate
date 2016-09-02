@@ -17,5 +17,6 @@
 #' and a set of validation rules.
 #' @name errorlocate-package
 #' @import methods validate
+#' @importFrom stats runif setNames
 #' @docType package
 NULL
