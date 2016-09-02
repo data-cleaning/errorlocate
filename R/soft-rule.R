@@ -24,6 +24,15 @@ soft_lin_rule <- function( x, prefix=".delta_", name = x$rule, ...
   x
 }
 
+suffix <- function(suffix){
+  function(x){
+    paste0(x, suffix)
+  }
+}
+
+eps_plus <- suffix("_eps_plus")
+eps_min <- suffix("_eps_min")
+
 #' expect values
 #'
 #' @param values named list of values.
@@ -41,13 +50,19 @@ expect_values <- function(values, weights, ...){
   )
 
   is_numeric <- sapply(values, is.numeric)
-  # TODO catch NA
+
   lin_values <- values[is_numeric]
+  lin_is_na <- sapply(lin_values, is.na)
+  # set all NA values to -1
+  lin_values[lin_is_na] <- -1
   lin_rules1 <- lapply(names(lin_values), function(n){
     a <- setNames(1, n)
     b <- lin_values[[n]]
     soft_lin_rule(mip_rule(a, "<=", b, n, weights[n]))
   })
+
+  # set all NA values to 1 to create contradictory statement
+  lin_values[lin_is_na] <- 1
 
   lin_rules2 <- lapply(names(lin_values), function(n){
     a <- setNames(1, n)

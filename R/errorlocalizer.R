@@ -45,7 +45,6 @@ fh_localizer <-
         ._miprules <<- miprules(rules)
       },
       locate = function(data, weight=NULL, ...){
-
         if (length(weight) == 0){
           weight <- matrix(1, nrow=nrow(data), ncol=ncol(data))
           colnames(weight) <- colnames(data)

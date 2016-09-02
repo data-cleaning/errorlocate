@@ -11,7 +11,6 @@
 # if (TRUE) x  -> x
 # if (FALSE) x -> TRUE
 
-
 simplify_log_expr <- function(expr, ...){
   sle <- simplify_log_expr # shorthand...
   if (length(expr) <= 1){
