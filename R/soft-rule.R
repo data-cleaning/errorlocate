@@ -49,10 +49,10 @@ expect_values <- function(values, weights, ...){
     all(names(values) %in% names(weights))
   )
 
-  is_numeric <- sapply(values, is.numeric)
+  is_numeric <- vapply(values, is.numeric, TRUE)
 
   lin_values <- values[is_numeric]
-  lin_is_na <- sapply(lin_values, is.na)
+  lin_is_na <- vapply(lin_values, is.na, TRUE)
   # set all NA values to -1
   lin_values[lin_is_na] <- -1
   lin_rules1 <- lapply(names(lin_values), function(n){
