@@ -1,13 +1,19 @@
 #' Error location object
 #'
-#' Error location contains the result of the error detection
-#' Errors can variable based, and/or record based. A variable based error is a flaw in  uni- or multivariate
-#' distribution. To correct this error multiple observations or the aggregated number would have to be adjusted.
-#' A record based #' errors on the other hand is restricted within one observation.
+#' Error location contains the result of the error detection.
+#' Errors can record based or variable based.
+
+#' \itemize{
+#' \item A record based error is restricted within one observation, which is the case. The default
+#' \code{\link{errorlocate}} using the Felligi Holt algorithm assumes errors are record based.
+#' \item A variable based error is a flaw in  uni- or multivariate
+#'  distribution. To correct this error multiple observations or the aggregated number should be adjusted.
+#' }
 #'
-#' Current implementation assumes that they are record based: errors are a matrix of rows and columns.
-#' However it is thinkable that errors are purely column based, or dataset based. This
-#' is currently implemented by settings all rows or all values to TRUE.
+#' Current implementation assumes that errors are record based. The error locations are a matrix of
+#' rows and columns, with the same dimensions are the \code{data.frame} that was checked.
+#' For errors that are purely column based, or dataset based, errorlocations will return a matrix with all
+#' rows or cells set to \code{TRUE}.
 #'
 #' The information contained in error location object is: \code{values} for each variable is noted if the value is erroneous.
 #'
@@ -33,8 +39,10 @@ errorlocation <- setRefClass('errorlocation',
     },
     show = function() {
       cat("call: ", deparse(._call), "\n")
-      cat("errors: ", as.character(._values), "\n")
-      cat("weight: ", ._weight, "\n")
+      cat("errors:\n")
+      print(._values)
+      cat("weight:\n")
+      print(._weight)
     }
   )
 )
@@ -42,3 +50,4 @@ errorlocation <- setRefClass('errorlocation',
 setMethod("values", "errorlocation", function(x, ...){
   x$._values
 })
+

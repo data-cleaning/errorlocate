@@ -22,7 +22,7 @@ add_noise <- function(x, max_delta = NULL, ...){
 
   if (is.null(max_delta)){
     ds <- diff(sort(x))
-    ds <- c(ds[ds > 0])
+    ds <- c(ds[ds > .Machine$double.eps])
     N <- length(x)
     max_delta <- min(ds, min(x)) / N
   }
