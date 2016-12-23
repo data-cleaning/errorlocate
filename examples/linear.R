@@ -4,4 +4,4 @@ v <- validator( A %in% c("a1", "a2")
               , y > x
               )
 
-is_categorical(v)
+is_linear(v)

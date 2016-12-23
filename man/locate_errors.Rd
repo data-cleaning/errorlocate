@@ -48,7 +48,7 @@ locate_errors(data, v)
 
 v_categorical <- validator( A \%in\% c("a1", "a2")
                           , B \%in\% c("b1", "b2")
-                          ,  if (A == "a1") B == "b1"
+                          , if (A == "a1") B == "b1"
 )
 
 data <- data.frame(A = c("a1", "a2"), B = c("b2", "b2"))

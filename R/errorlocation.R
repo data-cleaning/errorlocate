@@ -51,3 +51,15 @@ setMethod("values", "errorlocation", function(x, ...){
   x$._values
 })
 
+#' @export
+as.data.frame.errorlocation <- function(x, ...){
+  as.data.frame(x$._values)
+}
+
+#' @export
+summary.errorlocation <- function(x, ...){
+}
+
+#' @export
+hist.errorlocation <- function(x, ...){
+}

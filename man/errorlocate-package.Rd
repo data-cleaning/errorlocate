@@ -3,24 +3,25 @@
 \docType{package}
 \name{errorlocate-package}
 \alias{errorlocate-package}
-\title{errorlocate}
+\title{Find errors in data given a set of validation rules.}
 \description{
 Find errors in data given a set of validation rules.
 The \code{errorlocate} helps to identify obvious errors in raw datasets.
 }
 \details{
 It works in tandem with the package \code{\link{validate}}.
-With \code{validate} one can formulate data validation rules to which te data must comply.
-For example that age cannot be negative.
-While \code{validate} can identify if a record is valid or not, in general it does not identify
-which of the variables are responsible for the invalidation: a set of validation rules form a web
+With \code{validate} you formulate data validation rules to which te data must comply.
+For example:  "age cannot be negative": \code{age >= 0}
+While \code{validate} can identify if a record is valid or not, it does not identify
+which of the variables are responsible for the invalidation. This may seem a simple task,
+but is actually quite tricky:  a set of validation rules form a web
 of dependent variables: changing the value of an invalid record to repair for rule 1, may invalidate
 the record for rule 2.
 
 Errorlocate provides a small framework for record based error detection and implements the Felligi Holt
 algorithm. This algorithm assumes there is no other information available then the values of a record
-and a set of validation rules. The Feligi Holt algorithm minimizes the (weighted) number of values that need
-to be adjusted to remove the invalidation. Framed differently:
+and a set of validation rules. The algorithm minimizes the (weighted) number of values that need
+to be adjusted to remove the invalidation.
 
 The \code{errorlocate} package translates the validation
 }

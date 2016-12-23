@@ -51,4 +51,9 @@ describe("locate_errors", {
     le <- locate_errors(data, v, weight=c(married=1, age=2))
     #expect_equivalent(values(le)[1,], c(married=TRUE, age = FALSE))
   })
+  it("handles NA values in categorical rules",{
+    rules <- validator(a %in% c("A","B"))
+    data <- data.frame(a=NA)
+    le <- locate_errors(data, rules)
+  })
 })
