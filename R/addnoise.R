@@ -4,7 +4,7 @@
 #' This is mainly done to randomly choose between solutions
 #' of equal weight. Without adding noise to weights lp solvers may return
 #' the same solution while there are multiple solutions of equal weight.
-#'
+#' The generated noise is positive to prevent that weights will be zero or negative.
 #'
 #' When no \code{max_delta} is supplied, add_noise will use the minimum difference
 #' larger than zero divided by the \code{length(x)}.
@@ -17,7 +17,7 @@
 #' @export
 add_noise <- function(x, max_delta = NULL, ...){
   if (is.matrix(x)){
-    return(apply(x, 1, add_noise, max_delta=max_delta, ...))
+    return(t(apply(x, 1, add_noise, max_delta=max_delta, ...)))
   }
 
   if (is.null(max_delta)){
