@@ -14,7 +14,8 @@ Imports:
     lpSolveAPI,
     methods
 Suggests:
-    testthat, magrittr
+    testthat,
+    magrittr
 Collate:
     'addnoise.R'
     'categorical.R'
@@ -26,7 +27,7 @@ Collate:
     'expr_manip.R'
     'expr_simplify.R'
     'linear.r'
-    'localize-errors.R'
+    'locate-errors.R'
     'mip_lpsolve.R'
     'mip_rule.R'
     'soft-rule.R'

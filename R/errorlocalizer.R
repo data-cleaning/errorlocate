@@ -69,8 +69,9 @@ fh_localizer <-
           el <- ._miprules$execute()
           el$adapt
         })
-        # TODO change to errorlocation
-        errorlocation(values=t(res))
+        adapt <- t(res)
+        is.na(adapt) <- is.na(data)
+        errorlocation(values=adapt)
       }
     )
 )

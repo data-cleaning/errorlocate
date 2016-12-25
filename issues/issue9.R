@@ -10,4 +10,7 @@ locate_errors(data, rules)
 data <- data.frame(a=c(NA, "A"), x=1)
 locate_errors(data, rules)
 
+
+data <- data.frame(a=NA, x=1)
+locate_errors(data, rules)
 confront(data, rules) %>% summary
