@@ -56,8 +56,17 @@ as.data.frame.errorlocation <- function(x, ...){
   as.data.frame(x$._values)
 }
 
+#' Summary of errorlocation object
+#'
+#' Summary of errorlocation
 #' @export
-summary.errorlocation <- function(x, ...){
+#' @inheritParams base::summary
+summary.errorlocation <- function(object, ...){
+  errors <- values(object)
+  list(
+    variable_errors = colSums(errors),
+    record_errors = table("#errors" = rowSums(errors))
+  )
 }
 
 #' @export

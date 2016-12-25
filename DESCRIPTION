@@ -14,7 +14,7 @@ Imports:
     lpSolveAPI,
     methods
 Suggests:
-    testthat
+    testthat, magrittr
 Collate:
     'addnoise.R'
     'categorical.R'

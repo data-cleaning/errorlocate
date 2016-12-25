@@ -53,7 +53,7 @@ describe("locate_errors", {
   })
   it("handles NA values in categorical rules",{
     rules <- validator(a %in% c("A","B"))
-    data <- data.frame(a=NA)
+    data <- data.frame(a=NA_character_)
     le <- locate_errors(data, rules)
   })
 })
