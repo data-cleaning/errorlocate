@@ -26,20 +26,27 @@ replace_errors(data, x, ref = NULL, ..., value = c("NA", "suggestion"))
 
 \item{ref}{optional reference data set}
 
-\item{...}{other datasets to be used...}
+\item{...}{these parameters are handed over to \code{\link{locate_errors}}}
 
 \item{value}{\code{NA}}
 }
+\value{
+\code{data} with erronuous values removed.
+}
 \description{
 Find erronous fields using \code{\link{locate_errors}} and replace these
-fields automatically with NA. The error location algorithm may provide a suggestion which
-validates the record against the rules.
+fields automatically with NA or a suggestion that is provided by the error detection algorithm.
 }
 \note{
 In general it is better to replace the erronuous fields with \code{NA} and apply a proper
 imputation methods. Suggested values from the error localization method may introduce an unwanted bias.
+
+The errors that were removed from the \code{data.frame} can be retrieved with the function
+ \code{\link{errors_removed}}. For more control over error localization see \code{\link{locate_errors}}.
 }
 \examples{
+library(magrittr)
+
 rules <- validator( profit + cost == turnover
               , cost - 0.6*turnover >= 0
               , cost>= 0
@@ -50,8 +57,18 @@ data <- data.frame(profit=755, cost=125, turnover=200)
 data_no_error <-
   data \%>\%
   replace_errors(rules)
+
+# faulty data was replaced with NA
+data_no_error
+
+errors_removed(data_no_error)
+
+# a bit more control
+error_locations <- locate_errors(data, rules)
+data \%>\%
+  replace_errors(error_locations)
 }
 \seealso{
-locate_errors
+\code{\link{errorlocation-class}}
 }
 

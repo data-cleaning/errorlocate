@@ -1,6 +1,6 @@
 #' Error location object
 #'
-#' Error location contains the result of the error detection.
+#' Errorlocation contains the result of a error detection.
 #' Errors can record based or variable based.
 
 #' \itemize{
@@ -15,21 +15,32 @@
 #' rows and columns, with the same dimensions are the \code{data.frame} that was checked.
 #' For errors that are purely column based, or dataset based, errorlocations will return a matrix with all
 #' rows or cells set to \code{TRUE}.
-#' The \code{values} return \code{NA} for values that are
+#' The \code{values} return \code{NA} for missing values.
 #'
 #' The information contained in error location object is: \code{values} for each variable is noted if the value is erroneous.
 #'
-#' @export errorlocation
-errorlocation <- setRefClass('errorlocation',
+#' @section Fields:
+#'
+#' \itemize{
+#'   \item \code{$values}: \code{matrix} indicating which values are erronuous (\code{TRUE}),
+#'   missing (\code{NA}) or valid (\code{FALSE})
+#'   \item \code{$weight}: The total weight per record. A weight of 0 means no error were detected.
+#' }
+#'
+#' @exportClass errorlocation
+#' @rdname errorlocation
+create_errorlocation <- setRefClass('errorlocation',
   fields=list(
     ._call = 'call',
     ._values = 'matrix',
     ._weight = 'numeric',
     ._status = 'list',
     ._suggestion = 'list',
-
+    values = function(){
+      ._values
+    },
     weight = function(){
-      ._weight[._values]
+      ._weight
     }
   ),
   methods=list(
@@ -94,6 +105,16 @@ print.summary.errorlocation <- function(x, ...){
 
 setMethod("summary", "errorlocation", summary.errorlocation)
 
+#' Get location of removed errors from a 'cleaned' data set
+#'
+#' \code{errors_removed} retrieves the errors detected by \code{\link{replace_errors}}
+#' @param x \code{data.frame} that was checked for errors
+#' @param ... not used
+#' @return \code{\link{errorlocation-class}} object
+#' @export
+errors_removed <- function(x, ...){
+  attr(x, "errorlocation")
+}
 # #' @export
 # hist.errorlocation <- function(x, ...){
 #   se <- summary(x)

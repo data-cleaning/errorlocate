@@ -82,7 +82,7 @@ fh_localizer <-
 
         is.na(adapt) <- is.na(data)
         #browser()
-        errorlocation(
+        create_errorlocation(
           values = adapt,
           weight = weight_per_record
         )
