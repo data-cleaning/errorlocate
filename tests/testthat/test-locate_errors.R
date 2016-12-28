@@ -35,6 +35,7 @@ describe("locate_errors", {
                              )
                      )
   })
+
   it("works with logical variables",{
     v_logical <- validator( A %in% c(TRUE, FALSE)
                             , B %in% c(TRUE, FALSE)
@@ -45,12 +46,14 @@ describe("locate_errors", {
     le <- locate_errors(data, v_logical, weight=c(A=2,B=1))
     expect_equivalent(values(le)[1,], c(A=FALSE, B=TRUE))
   })
+
   it("works with conditional rules",{
     v <- validator( married %in% c(TRUE, FALSE), if (married==TRUE) age >= 17 )
     data <- data.frame( married = TRUE, age = 16)
     le <- locate_errors(data, v, weight=c(married=1, age=2))
     expect_equivalent(values(le)[1,], c(married=TRUE, age = FALSE))
   })
+
   it("handles NA values in categorical rules",{
     rules <- validator(a %in% c("A","B"))
     data <- data.frame(a=NA_character_)

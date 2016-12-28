@@ -51,13 +51,16 @@ fh_localizer <-
           weight <- matrix(1, nrow=nrow(data), ncol=ncol(data))
           colnames(weight) <- colnames(data)
         } else {
-          stopifnot( names(weight) == names(data))
-          if (is.null(dim(weight))){
+          if (is.null(dim(weight)) && length(weight) == ncol(data)){
             # use recycling to fill a weight matrix
             weight <- t(matrix(weight, nrow=ncol(data), ncol=nrow(data)))
             colnames(weight) <- colnames(data)
           }
           stopifnot(dim(weight) == dim(data))
+          if (is.null(colnames(weight))){
+            colnames(weight) <- colnames(data)
+          }
+          stopifnot(names(weight) == names(data))
         }
         #browser()
 

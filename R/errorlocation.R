@@ -10,19 +10,18 @@
 #'  distribution. To correct this error multiple observations or the aggregated number should be adjusted.
 #' }
 #'
+#'
 #' Current implementation assumes that errors are record based. The error locations can be retrieved
-#' using the method \code{values} and are a matrix of
+#' using the method \code{\link{values}} and are a matrix of
 #' rows and columns, with the same dimensions are the \code{data.frame} that was checked.
 #' For errors that are purely column based, or dataset based, errorlocations will return a matrix with all
 #' rows or cells set to \code{TRUE}.
-#' The \code{values} return \code{NA} for missing values.
-#'
-#' The information contained in error location object is: \code{values} for each variable is noted if the value is erroneous.
-#'
+#' The \code{\link{values}} return \code{NA} for missing values.
+
 #' @section Fields:
 #'
 #' \itemize{
-#'   \item \code{$values}: \code{matrix} indicating which values are erronuous (\code{TRUE}),
+#'   \item \code{$errors}: \code{matrix} indicating which values are erronuous (\code{TRUE}),
 #'   missing (\code{NA}) or valid (\code{FALSE})
 #'   \item \code{$weight}: The total weight per record. A weight of 0 means no error were detected.
 #' }
@@ -36,7 +35,7 @@ create_errorlocation <- setRefClass('errorlocation',
     ._weight = 'numeric',
     ._status = 'list',
     ._suggestion = 'list',
-    values = function(){
+    errors = function(){
       ._values
     },
     weight = function(){

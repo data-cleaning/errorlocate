@@ -1,8 +1,8 @@
 #' Locate errors in data
 #'
 #' Locate erronuous fields in rows of data using validation rules or a specific
-#' errorlocalizer object. This method returns the errors, according to the specified
-#' method \code{x}, that were found. If these errors are to be removed automatically
+#' errorlocalizer object. This method returns found errors, according to the specified
+#' method \code{x}. If these errors are to be removed automatically
 #' use method \code{\link{replace_errors}}.
 #' @param data data to be checked
 #' @param x validation rules or errorlocalizer object to be used for finding
@@ -10,9 +10,8 @@
 #' @param ref \code{data.frame} optional reference data to be used in the rules checking
 #' @param weight \code{numeric} optional weight vector to be used in the error localization.
 #' @param ... optional parameter to be used by a specific method
-#' @return \code{errorlocation} object describing the errors found.
+#' @return \code{\link{errorlocation-class}} object describing the errors found.
 #'
-#' @seealso locate_errors replace_errors
 #' @example examples/locate_errors.R
 #' @export
 setGeneric("locate_errors", function(data, x, ...){

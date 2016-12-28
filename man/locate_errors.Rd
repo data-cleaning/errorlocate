@@ -28,12 +28,12 @@ possible errors.}
 \item{ref}{\code{data.frame} optional reference data to be used in the rules checking}
 }
 \value{
-\code{errorlocation} object describing the errors found.
+\code{\link{errorlocation-class}} object describing the errors found.
 }
 \description{
 Locate erronuous fields in rows of data using validation rules or a specific
-errorlocalizer object. This method returns the errors, according to the specified
-method \code{x}, that were found. If these errors are to be removed automatically
+errorlocalizer object. This method returns found errors, according to the specified
+method \code{x}. If these errors are to be removed automatically
 use method \code{\link{replace_errors}}.
 }
 \examples{
@@ -68,8 +68,5 @@ locate_errors(data, v_logical, weight=c(2,1))
 v <- validator( married \%in\% c(TRUE, FALSE), if (married==TRUE) age >= 17 )
 data <- data.frame( married = TRUE, age = 16)
 locate_errors(data, v, weight=c(married=1, age=2))
-}
-\seealso{
-locate_errors replace_errors
 }
 
