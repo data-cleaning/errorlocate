@@ -15,7 +15,8 @@ Imports:
     methods
 Suggests:
     testthat,
-    magrittr
+    magrittr,
+    covr
 Collate:
     'addnoise.R'
     'categorical.R'
