@@ -1,9 +1,11 @@
 # code is mainly copied from validate, but needed for linear sub expressions in
 # conditional statements.
 
-#' Check which rules are linear rules
+#' Check which rules are linear rules.
 #' @export
 #' @param x \code{\link{validator}} object containing data validation rules
+#' @param ... not used
+#' @return \code{logical} indicating which rules are (purely) linear.
 is_linear <- function(x, ...){
   stopifnot(inherits(x, "validator"))
   sapply(x$rules, function(rule){

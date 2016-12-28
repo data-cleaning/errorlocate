@@ -15,7 +15,6 @@
 #
 context("soft-rule")
 
-
 describe("soft_lin_rule",{
   it("can transform a lin rule into a softrule",{
     e <- quote(x <= 2)

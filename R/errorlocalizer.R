@@ -27,6 +27,8 @@ setRefClass("ErrorLocalizer",
 #' Given a set of validation rules and a dataset the Feligi-Holt algorithm finds for each record
 #' the smallest (weighted) combination of variables that are erroneous (if any).
 #'
+#' @note Most users do not need this class and can use \code{\link{locate_errors}}.
+#'
 #' \code{errorlocalizer} implements feligi holt using a MIP-solver. For problems in which
 #' coefficients of the validation rules or the data are too different, you should consider scaling
 #' the data.
@@ -44,7 +46,7 @@ fh_localizer <-
         rules <<- rules
         ._miprules <<- miprules(rules)
       },
-      locate = function(data, weight=NULL, ...){
+      locate = function(data, weight=NULL, add_noise = TRUE, ...){
         if (length(weight) == 0){
           weight <- matrix(1, nrow=nrow(data), ncol=ncol(data))
           colnames(weight) <- colnames(data)
@@ -57,11 +59,13 @@ fh_localizer <-
           }
           stopifnot(dim(weight) == dim(data))
         }
+        #browser()
+
+        # if (isTRUE(add_noise)){
+        #   weight <- add_noise(weight)
+        # }
 
         rows <- seq_len(nrow(data))
-
-        adapt <- matrix(NA, ncol=ncol(data), nrow=nrow(data))
-        colnames(adapt) <- colnames(data)
 
         res <- sapply(rows, function(r){
           values <- data[r,,drop=FALSE]
@@ -69,9 +73,19 @@ fh_localizer <-
           el <- ._miprules$execute()
           el$adapt
         })
+
+        dim(res) <- dim(weight)[2:1]
         adapt <- t(res)
+        colnames(adapt) <- colnames(weight)
+
+        weight_per_record <- as.numeric(tcrossprod(adapt, weight))
+
         is.na(adapt) <- is.na(data)
-        errorlocation(values=adapt)
+        #browser()
+        errorlocation(
+          values = adapt,
+          weight = weight_per_record
+        )
       }
     )
 )

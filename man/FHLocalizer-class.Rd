@@ -10,7 +10,9 @@ Implementation of the Feligi-Holt algorithm using the \code{ErrorLocalizer} base
 Given a set of validation rules and a dataset the Feligi-Holt algorithm finds for each record
 the smallest (weighted) combination of variables that are erroneous (if any).
 }
-\details{
+\note{
+Most users do not need this class and can use \code{\link{locate_errors}}.
+
 \code{errorlocalizer} implements feligi holt using a MIP-solver. For problems in which
 coefficients of the validation rules or the data are too different, you should consider scaling
 the data.

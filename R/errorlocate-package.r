@@ -32,5 +32,4 @@
 #'  lp_solve and Kjell Konis. (2011). lpSolveAPI: R Interface for
 #'  lp_solve version 5.5.2.0. R package version 5.5.2.0-5.
 #'  http://CRAN.R-project.org/package=lpSolveAPI
-
-NULL
+"_PACKAGE"

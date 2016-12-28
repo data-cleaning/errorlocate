@@ -5,7 +5,7 @@ describe("locate_errors", {
     v <- validator(x > 1)
     dat <- data.frame(x = c(2, 0))
     loc <- fh_localizer(v)
-    inherits("ErrorLocalizer", class(loc))
+    inherits(loc, "ErrorLocalizer")
     locate_errors(dat, loc)
   })
   it("works with linear rules",{

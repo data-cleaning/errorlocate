@@ -30,6 +30,7 @@ Collate:
     'locate-errors.R'
     'mip_lpsolve.R'
     'mip_rule.R'
+    'replace-errors.R'
     'soft-rule.R'
     'values.R'
 RoxygenNote: 5.0.1

@@ -2,6 +2,7 @@
 % Please edit documentation in R/errorlocate-package.r
 \docType{package}
 \name{errorlocate-package}
+\alias{errorlocate}
 \alias{errorlocate-package}
 \title{Find errors in data given a set of validation rules.}
 \description{

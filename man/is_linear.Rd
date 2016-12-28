@@ -2,14 +2,19 @@
 % Please edit documentation in R/linear.r
 \name{is_linear}
 \alias{is_linear}
-\title{Check which rules are linear rules}
+\title{Check which rules are linear rules.}
 \usage{
 is_linear(x, ...)
 }
 \arguments{
 \item{x}{\code{\link{validator}} object containing data validation rules}
+
+\item{...}{not used}
+}
+\value{
+\code{logical} indicating which rules are (purely) linear.
 }
 \description{
-Check which rules are linear rules
+Check which rules are linear rules.
 }
 
