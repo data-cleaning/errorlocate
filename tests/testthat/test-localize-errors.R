@@ -138,12 +138,16 @@ describe("Solve editrules checks",{
   })
   it("works for simple numerical if-else", {
     skip("check this one!")
-    le <- locate_errors(
-      data = data.frame( x = 1
+    rules <- validator(if ( x > 0 ) y > 0)
+    data <-  data.frame( x = 1
                        , y = 0
-                       ),
-      x    = validator(if ( x > 0 ) y > 0)
+                       )
+
+    le <- locate_errors(
+      data = data,
+      x    = rules
     )
+
     expect_equal(sum(le$errors),1)
   })
 })

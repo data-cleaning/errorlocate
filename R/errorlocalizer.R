@@ -70,6 +70,7 @@ fh_localizer <-
 
         rows <- seq_len(nrow(data))
 
+        # TODO add suggestions and status...
         res <- sapply(rows, function(r){
           values <- data[r,,drop=FALSE]
           ._miprules$set_values(values, weight[r,])

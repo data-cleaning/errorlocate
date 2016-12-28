@@ -20,5 +20,14 @@ describe("MipRules",{
     res <- mr$execute()
     expect_equal(res$adapt, c(x=TRUE))
   })
+  it("can handle strict inequalities",{
+    rules <- validator(if ( x > 0 ) y > 0)
+    data <-  data.frame( x = 1
+                         , y = 0
+    )
+
+    mr <- miprules(rules)
+    mr$set_values(data)
+  })
 
 })
