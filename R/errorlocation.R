@@ -23,7 +23,7 @@
 #' \itemize{
 #'   \item \code{$errors}: \code{matrix} indicating which values are erronuous (\code{TRUE}),
 #'   missing (\code{NA}) or valid (\code{FALSE})
-#'   \item \code{$weight}: The total weight per record. A weight of 0 means no error were detected.
+#'   \item \code{$weight}: The total weight per record. A weight of 0 means no errors were detected.
 #' }
 #'
 #' @exportClass errorlocation

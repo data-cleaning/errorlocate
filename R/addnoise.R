@@ -20,10 +20,10 @@ add_noise <- function(x, max_delta = NULL, ...){
     return(t(apply(x, 1, add_noise, max_delta=max_delta, ...)))
   }
 
+  N <- length(x)
   if (is.null(max_delta)){
     ds <- diff(sort(x))
     ds <- c(ds[ds > .Machine$double.eps])
-    N <- length(x)
     max_delta <- min(ds, min(x)) / N
   }
   x + runif(N, max = max_delta)
