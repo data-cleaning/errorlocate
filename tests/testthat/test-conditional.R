@@ -1,4 +1,3 @@
-library(testthat)
 context("conditional rules")
 
 describe("is_condition_",{
@@ -47,21 +46,21 @@ describe("replace_linear", {
     e <- quote(if (x>1) A==TRUE)
     rl <- replace_linear(e)
     expect_equal(deparse(rl$cat), "if (.v1) A == TRUE")
-    expect_equal(deparse(rl$linear$.v1), "x > 1")
+    expect_equal(deparse(rl$linear$.v1), "x <= 1")
   })
   it("can replace linear expressions",{
     e <- quote(if (x>1) !(y > 1))
     rl <- replace_linear(e)
     expect_equal(deparse(rl$cat), "if (.v1) !(.v2)")
-    expect_equal(deparse(rl$linear$.v1), "x > 1")
-    expect_equal(deparse(rl$linear$.v2), "y > 1")
+    expect_equal(deparse(rl$linear$.v1), "x <= 1")
+    expect_equal(deparse(rl$linear$.v2), "y <= 1")
   })
   it ("transforms simple rule", {
     e <- quote(if(x > 1) y > 2)
     rl <- replace_linear(e)
     expect_equal(deparse(rl$cat), "if (.v1) !.v2")
     expect_equal(length(rl$linear), 2)
-    expect_equal(deparse(rl$linear$.v1), "x > 1")
+    expect_equal(deparse(rl$linear$.v1), "x <= 1")
     expect_equal(deparse(rl$linear$.v2), "y > 2")
   })
 })

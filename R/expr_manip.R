@@ -40,8 +40,8 @@ invert_ <- function(e, ...){
     ">"   = "<=",
     "<="  = ">",
     ">="  = "<",
-     "==" = "!=",
-    "!="  = "==",
+    #  "==" = "!=",
+    # "!="  = "==",
     stop(op, " not supported")
   )
   substitute(a %op% b, list(a=left(e), b=right(e), "%op%"=as.symbol(s)))

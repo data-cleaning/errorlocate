@@ -56,7 +56,8 @@ miprules <- setRefClass("MipRules",
          names(weights) <- names(values)
        }
        ._value_rules <<- expect_values(values, weights)
-       weights <- weights + runif(length(weights), max = 1e-3)
+#       weights <- weights + runif(length(weights), max = 1e-3)
+       weights <- add_noise(weights)
        objective <<- setNames(weights, paste0(".delta_", names(weights)))
      },
      to_lp = function(){
@@ -64,7 +65,7 @@ miprules <- setRefClass("MipRules",
      },
      execute = function(){
        # TODO see if this can be executed in parallel.
-       # browser()
+       #browser()
        lp <- translate_mip_lp(mip_rules(), objective)
        #TODO set timer, duration etc.
        s <- solve(lp)

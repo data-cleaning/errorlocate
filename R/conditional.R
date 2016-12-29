@@ -73,6 +73,7 @@ replace_linear <- function(e, prefix=".v"){
 }
 
 rep_lin_ <- function(e, or=TRUE, h=new.env()){
+  #browser()
   op <- op_to_s(e)
   l <- left(e)
   r <- right(e)
@@ -82,6 +83,9 @@ rep_lin_ <- function(e, or=TRUE, h=new.env()){
   }
 
   if (is_lin_(e)){
+    if (!or){
+      e <- invert_(e)
+    }
     h$expr <- append(h$expr, e)
     prefix <- if (is.null(h$prefix)) ".v" else h$prefix
 
@@ -90,7 +94,7 @@ rep_lin_ <- function(e, or=TRUE, h=new.env()){
 
     if (or){
       return(substitute(!name, list(name=as.symbol(name))))
-    } else{
+    } else {
       return(substitute(name, list(name=as.symbol(name))))
     }
   }

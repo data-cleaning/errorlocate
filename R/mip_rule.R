@@ -9,8 +9,13 @@ mip_rule <- function(a, op, b, rule, type, weight=Inf, ...){
     type <- rep("double", length(a))
     names(type) <- names(a)
   }
-  structure( list(a=a, op=op, b=unname(b), rule=rule, type=type, weight=weight)
-           , class="mip_rule")
+  structure( list( a=a, op=op, b=unname(b)
+                 , rule   = rule
+                 , type   = type
+                 , weight = weight
+                 )
+           , class="mip_rule"
+           )
 }
 
 as.character.mip_rule <- function(x, ...){
@@ -63,7 +68,11 @@ get_mr_matrix <- function(x, ...){
   n_rule <- length(rule)
   n_variable <- length(variable)
 
-  A <- matrix(0, nrow=n_rule, ncol=n_variable, dimnames = list(rule=rule, variable=variable))
+  A <- matrix( 0
+             , nrow=n_rule, ncol=n_variable
+             , dimnames = list(rule=rule, variable=variable)
+             )
+
   for (i in seq_len(n_rule)){
     a <- x[[i]]$a
     A[i, names(a)] <- a

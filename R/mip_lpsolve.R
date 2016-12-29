@@ -45,6 +45,7 @@ translate_mip_lp <- function( rules
     lpSolveAPI::set.type(lps, columns, "binary")
   }
   is_double <- !is_binary
+
   if (any(is_double)){
     columns <- type[is_double]
     columns <- match(names(columns), colnames(A))

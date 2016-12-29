@@ -54,7 +54,7 @@ create_errorlocation <- setRefClass('errorlocation',
       cat("call: ", deparse(._call), "\n")
       cat("located ", length(which(._values)), " error(s).\n")
       cat("located ", sum(is.na(._values)), " missing value(s).\n")
-      cat("Use 'summary', 'values' or '$weight', to explore and retrieve the errors.")
+      cat("Use 'summary', 'values', '$errors' or '$weight', to explore and retrieve the errors.")
     }
   )
 )

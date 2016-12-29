@@ -137,7 +137,6 @@ describe("Solve editrules checks",{
     expect_equal(sum(le$errors), 1)
   })
   it("works for simple numerical if-else", {
-    skip("check this one!")
     rules <- validator(if ( x > 0 ) y > 0)
     data <-  data.frame( x = 1
                        , y = 0
