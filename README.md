@@ -28,7 +28,14 @@ to be adjusted to remove the invalidation.
 
 # Installation
 
-The development version of `errorlocate` can be installed from github with `devtools`:
+Beta versions can be install with `drat`:
+
+```R
+drat::addRepo("data-cleaning")
+install.packages("errorlocate")
+```
+
+The latest development version of `errorlocate` can be installed from github with `devtools`:
 
 ```R
 devtools::install_github("data-cleaning/errorlocate")
