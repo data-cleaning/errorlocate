@@ -1,11 +1,11 @@
 Package: errorlocate
 Type: Package
 Title: Locate Errors with Validation Rules
-Version: 0.1.2
+Version: 0.1.2.9000
 Date: 2016-12-29
 Authors@R: c(person("Edwin", "de Jonge", email = "edwindjonge@gmail.com", role = c("aut", "cre")),
              person("Mark", "van der Loo", email = "mark.vanderloo@gmail.com", role = c("aut")))
-Description: Errors in data can be Located and removed using validation rules from package validate.
+Description: Errors in data can be located and removed using validation rules from package 'validate'.
 License: GPL-3
 LazyData: TRUE
 Depends:
