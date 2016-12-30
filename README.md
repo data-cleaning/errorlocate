@@ -13,9 +13,11 @@ With `validate` you formulate data validation rules to which the data must compl
 
 For example:
 
-  "age cannot be negative": `age >= 0`
+- "age cannot be negative": `age >= 0`.
+- "if a person is married, he must be older then 16 years": `if (married ==TRUE) age > 16`.
+- "Profit is turnover minus cost": `profit == turnover - cost`.
 
-While `validate` can identify if a record is valid or not, it does not identify
+While `validate` can check if a record is valid or not, it does not identify
 which of the variables are responsible for the invalidation. This may seem a simple task,
 but is actually quite tricky:  a set of validation rules form a web
 of dependent variables: changing the value of an invalid record to repair for rule 1, may invalidate
@@ -28,7 +30,13 @@ to be adjusted to remove the invalidation.
 
 # Installation
 
-Beta versions can be install with `drat`:
+`errorlocate` can be installed from CRAN:
+
+```R
+install.packages("errorlocate")
+```
+
+Beta versions can be installed with `drat`:
 
 ```R
 drat::addRepo("data-cleaning")
