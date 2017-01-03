@@ -1,6 +1,5 @@
 context("miprule")
 
-
 describe("get_mr_type",{
   it("can return correct type",{
     v <- validator(x > 1, A %in% 'b', x + y==3)

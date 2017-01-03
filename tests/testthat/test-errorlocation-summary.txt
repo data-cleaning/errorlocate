@@ -1,0 +1,8 @@
+Variable:
+  name errors missing
+1    x      1       0
+2    y      0       1
+Errors per record:
+  errors records
+1      0       1
+2      1       1
