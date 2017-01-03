@@ -1,8 +1,0 @@
-Mip rules:
-V1._lin1 + V1._lin2 <= 1
-x - 1e+07*V1._lin1 <= 0
--y - 1e+07*V1._lin2 < 0
-x - 1e+07*.delta_x <= 1
-y - 1e+07*.delta_y <= 0
--x - 1e+07*.delta_x <= -1
--y - 1e+07*.delta_y <= 0

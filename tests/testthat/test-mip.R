@@ -54,6 +54,6 @@ describe("MipRules",{
     mr <- miprules(rules)
     mr$set_values(data)
 
-    expect_output_file(print(mr), "test-mip-print.txt", update = FALSE)
+    expect_output(print(mr))
   })
 })
