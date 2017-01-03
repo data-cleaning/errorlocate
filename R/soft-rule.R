@@ -48,17 +48,23 @@ expect_values <- function(values, weights, ...){
     length(values) == length(weights),
     all(names(values) %in% names(weights))
   )
+  # assure that weights have same order as values
+  #weights <- weights[names(values)]
 
   is_numeric <- vapply(values, is.numeric, TRUE)
-
   lin_values <- values[is_numeric]
   lin_is_na <- vapply(lin_values, is.na, TRUE)
-  # set all NA values to -1
+
   lin_values[lin_is_na] <- -1
   lin_rules1 <- lapply(names(lin_values), function(n){
     a <- setNames(1, n)
     b <- lin_values[[n]]
-    soft_lin_rule(mip_rule(a, "<=", b, n, weights[n]))
+    w <- weights[n]
+    if (is.finite(w)){
+      soft_lin_rule(mip_rule(a, "<=", b, n, w))
+    } else {
+      mip_rule(a, "==", b, n, Inf)
+    }
   })
 
   # set all NA values to 1 to create contradictory statement
@@ -67,7 +73,12 @@ expect_values <- function(values, weights, ...){
   lin_rules2 <- lapply(names(lin_values), function(n){
     a <- setNames(1, n)
     b <- lin_values[[n]]
-    soft_lin_rule(mip_rule(-a, "<=", -b, n, weights[n]))
+    w <- weights[n]
+    if (is.finite(w)){
+      soft_lin_rule(mip_rule(-a, "<=", -b, n, w))
+    } else {
+      NULL
+    }
   })
 
   cat_values <- values[!is_numeric]
