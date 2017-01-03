@@ -43,7 +43,7 @@ create_errorlocation <- setRefClass('errorlocation',
     }
   ),
   methods=list(
-    initialize = function(values=matrix(), status=list(), weight= rep(1, length(values)), suggestion=list()){
+    initialize = function(values=matrix(), status=list(), weight= rep(1, NROW(values)), suggestion=list()){
       ._call <<- sys.call(-5)
       ._values <<- values
       ._status <<- status

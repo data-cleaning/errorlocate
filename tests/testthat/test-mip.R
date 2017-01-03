@@ -48,12 +48,11 @@ describe("MipRules",{
   it("prints", {
     rules <- validator(if ( x > 0 ) y > 0)
     data <-  data.frame( x = 1
-                         , y = 0
+                       , y = 0
     )
 
     mr <- miprules(rules)
     mr$set_values(data)
-
     expect_output(print(mr))
   })
 })
