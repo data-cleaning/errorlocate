@@ -16,8 +16,8 @@ describe("get_mr_type",{
                       , A %in% 'b'
                       , x + y==3
                       )
-    mr <- miprules(rules)$mip_rules()
-    get_mr_expression(mr)
-    get_mr_weights(mr)
+    #mr <- miprules(rules)$mip_rules()
+    #get_mr_expression(mr)
+    #get_mr_weights(mr)
   })
 })
