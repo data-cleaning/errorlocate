@@ -29,5 +29,31 @@ describe("MipRules",{
     mr <- miprules(rules)
     mr$set_values(data)
   })
+  it("can handle empty values",{
+    rules <- validator(if ( x > 0 ) y > 0)
+    mr <- miprules(rules)
+    mr$set_values()
+    mr$set_values(NULL)
+    mr$set_values(list())
+  })
+  it("tests for infeasibility",{
+    rules <- validator(x > 1)
+    mr <- miprules(rules)
+    expect_equal(mr$is_infeasible(), FALSE)
 
+    rules <- validator(x > 1, x < 1)
+    mr <- miprules(rules)
+    expect_equal(mr$is_infeasible(), TRUE)
+  })
+  it("prints", {
+    rules <- validator(if ( x > 0 ) y > 0)
+    data <-  data.frame( x = 1
+                         , y = 0
+    )
+
+    mr <- miprules(rules)
+    mr$set_values(data)
+
+    expect_output_file(print(mr), "test-mip-print.txt", update = FALSE)
+  })
 })

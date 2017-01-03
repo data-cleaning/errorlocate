@@ -46,10 +46,11 @@ miprules <- setRefClass("MipRules",
        c(._lin_rules, ._cat_rules, ._cond_rules, ._value_rules)
      },
      set_values = function(values, weights){
+       #browser()
        if (missing(values) || length(values) == 0){
          objective <<- numeric()
          ._value_rules <<- list()
-         invisible()
+         return(invisible())
        }
        if (missing(weights)){
          weights <- rep(1, length(values))
