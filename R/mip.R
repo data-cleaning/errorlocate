@@ -31,6 +31,7 @@ miprules <- setRefClass("MipRules",
      ._cat_rules   = "list",
      ._cond_rules  = "ANY",
      ._value_rules = "list",
+     ._ignored     = "ANY",
      ._lp          = "ANY"
    ),
    methods = list(
@@ -40,13 +41,24 @@ miprules <- setRefClass("MipRules",
        ._lin_rules <<- lin_as_mip_rules(rules)
        ._cat_rules <<- cat_as_mip_rules(rules)
        ._cond_rules <<- cond_as_mip_rules(rules)
-       #TODO implement cond_as_mip_rules
+       ignored <- !(is_linear(rules) | is_categorical(rules) | is_conditional(rules))
+
+       if (any(ignored)){
+         ._ignored <<- rules[ignored]
+         warning( "Ignoring rules:\n"
+                , paste0( names(._ignored)
+                        , ": "
+                        , ._ignored$exprs()
+                        , collapse = "\n"
+                        )
+                , call. = FALSE
+                )
+       }
      },
      mip_rules = function(){
        c(._lin_rules, ._cat_rules, ._cond_rules, ._value_rules)
      },
      set_values = function(values, weights){
-       #browser()
        if (missing(values) || length(values) == 0){
          objective <<- numeric()
          ._value_rules <<- list()
@@ -57,7 +69,7 @@ miprules <- setRefClass("MipRules",
          names(weights) <- names(values)
        }
        ._value_rules <<- expect_values(values, weights)
-#       weights <- weights + runif(length(weights), max = 1e-3)
+       # TODO move this to the outside
        weights <- add_noise(weights)
        objective <<- setNames(weights, paste0(".delta_", names(weights)))
      },
@@ -66,7 +78,6 @@ miprules <- setRefClass("MipRules",
      },
      execute = function(){
        # TODO see if this can be executed in parallel.
-       #browser()
        lp <- translate_mip_lp(mip_rules(), objective)
        #TODO set timer, duration etc.
        s <- solve(lp)

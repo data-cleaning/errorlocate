@@ -50,9 +50,17 @@ describe("MipRules",{
     data <-  data.frame( x = 1
                        , y = 0
     )
-
     mr <- miprules(rules)
     mr$set_values(data)
     expect_output(print(mr))
+  })
+  it("warns for ignoring rules", {
+    rules <- validator( x > 1
+                      , y > mean(x)
+                      , z < min(x)
+                      , y > 0
+                      )
+    expect_warning(mr <- miprules(rules), "Ignoring rules")
+    expect_equivalent(mr$._ignored$exprs(), rules[2:3]$exprs())
   })
 })
