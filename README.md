@@ -54,12 +54,13 @@ devtools::install_github("data-cleaning/errorlocate")
 ```R
 library(magrittr)
 
-rules <- validator( profit + cost == turnover
-              , cost - 0.6*turnover >= 0
-              , cost>= 0
-              , turnover >= 0
+rules <- validator( profit == turnover - cost
+                  , cost >= 0.6 * turnover
+                  , turnover >= 0
+                  , cost >= 0 # is implied
 )
-data <- data.frame(profit=755, cost=125, turnover=200)
+
+data <- data.frame(profit=750, cost=125, turnover=200)
 
 data_no_error <-
   data %>%
