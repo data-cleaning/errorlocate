@@ -16,4 +16,3 @@ Get coefficient matrix from categorical edits, similar to
 linear_coefficients.
 }
 \keyword{internal}
-

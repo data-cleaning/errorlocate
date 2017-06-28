@@ -3,9 +3,9 @@
 \docType{methods}
 \name{replace_errors}
 \alias{replace_errors}
+\alias{replace_errors,data.frame,validator-method}
 \alias{replace_errors,data.frame,ErrorLocalizer-method}
 \alias{replace_errors,data.frame,errorlocation-method}
-\alias{replace_errors,data.frame,validator-method}
 \title{Replace erroneous fields with NA or a suggested value}
 \usage{
 replace_errors(data, x, ref = NULL, ..., value = c("NA", "suggestion"))
@@ -71,4 +71,3 @@ data \%>\%
 \seealso{
 \code{\link{errorlocation-class}}
 }
-

@@ -2,8 +2,8 @@
 % Please edit documentation in R/errorlocation.R
 \docType{class}
 \name{errorlocation-class}
-\alias{create_errorlocation}
 \alias{errorlocation-class}
+\alias{create_errorlocation}
 \title{Error location object}
 \description{
 Errorlocation contains the result of a error detection.
@@ -23,6 +23,7 @@ For errors that are purely column based, or dataset based, errorlocations will r
 rows or cells set to \code{TRUE}.
 The \code{\link{values}} return \code{NA} for missing values.
 }
+
 \section{Fields}{
 
 

@@ -15,4 +15,3 @@ mip_rule(a, op, b, rule, type, weight = Inf, ...)
 Create a rule used by mip
 }
 \keyword{internal}
-

@@ -16,4 +16,3 @@ translate_mip_lp(rules, objective = NULL, eps = 0.001)
 \description{
 translate linear rules into an lp problem
 }
-

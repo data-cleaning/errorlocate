@@ -12,6 +12,7 @@ can be solved.
 Most users should use \code{\link{locate_errors}} which will handle all translation and execution
 automatically. This class is provided so users can implement or derive a alternative solution.
 }
+
 \section{Methods}{
 
 The \code{MipRules} class contains the following methods:
@@ -22,6 +23,7 @@ The \code{MipRules} class contains the following methods:
   \item \code{$set_values}: set values and weights for variables (determines the objective function).
 }
 }
+
 \examples{
 rules <- validator(x > 1)
 mr <- miprules(rules)
@@ -29,4 +31,3 @@ mr$to_lp()
 mr$set_values(list(x=0, weight=list(x=1)))
 mr$execute()
 }
-

@@ -27,4 +27,3 @@ v <- validator( A \%in\% c("a1", "a2")
 
 is_conditional(v)
 }
-

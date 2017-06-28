@@ -17,4 +17,3 @@ errors_removed(x, ...)
 \description{
 \code{errors_removed} retrieves the errors detected by \code{\link{replace_errors}}
 }
-

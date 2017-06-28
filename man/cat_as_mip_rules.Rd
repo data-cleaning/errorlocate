@@ -18,4 +18,3 @@ list of mip_rule
 get categorical rules as mip_rules
 }
 \keyword{internal}
-

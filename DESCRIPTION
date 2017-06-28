@@ -8,6 +8,7 @@ Authors@R: c(person("Edwin", "de Jonge", email = "edwindjonge@gmail.com", role =
 Description: Errors in data can be located and removed using validation rules from package 'validate'.
 License: GPL-3
 LazyData: TRUE
+Url: https://github.com/data-cleaning/errorlocate
 Depends:
     validate
 Imports:
@@ -34,4 +35,4 @@ Collate:
     'replace-errors.R'
     'soft-rule.R'
     'values.R'
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

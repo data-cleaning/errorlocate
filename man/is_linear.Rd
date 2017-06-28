@@ -17,4 +17,3 @@ is_linear(x, ...)
 \description{
 Check which rules are linear rules.
 }
-

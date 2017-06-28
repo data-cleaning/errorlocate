@@ -29,4 +29,3 @@ The generated noise is positive to prevent that weights will be zero or negative
 When no \code{max_delta} is supplied, add_noise will use the minimum difference
 larger than zero divided by the \code{length(x)}.
 }
-

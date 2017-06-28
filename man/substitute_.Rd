@@ -14,4 +14,3 @@ substitute_(x, values = list())
 \description{
 substitute an existing language object
 }
-

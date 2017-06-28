@@ -16,4 +16,3 @@ expect_values(values, weights, ...)
 \description{
 expect values
 }
-

@@ -3,8 +3,8 @@
 \docType{methods}
 \name{locate_errors}
 \alias{locate_errors}
-\alias{locate_errors,data.frame,ErrorLocalizer-method}
 \alias{locate_errors,data.frame,validator-method}
+\alias{locate_errors,data.frame,ErrorLocalizer-method}
 \title{Locate errors in data}
 \usage{
 locate_errors(data, x, ...)
@@ -69,4 +69,3 @@ v <- validator( married \%in\% c(TRUE, FALSE), if (married==TRUE) age >= 17 )
 data <- data.frame( married = TRUE, age = 16)
 locate_errors(data, v, weight=c(married=1, age=2))
 }
-
