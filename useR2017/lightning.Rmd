@@ -1,13 +1,13 @@
 ---
-title: "Errorlocate"
-subtitle: "Find and replace erroneous fields in data using validation rules" 
+title: "Data error!, but where?"
+subtitle: "Errorlocate: find and replace erroneous fields in data using validation rules" 
 author: "Edwin de Jonge"
 date: "Statistics Netherlands / UseR! 2017"
 output:
   beamer_presentation:
     includes:
       in_header: header.tex
-    keep_tex: no
+    keep_tex: yes
     theme: "Frankfurt"
 ---
 
@@ -60,10 +60,13 @@ check_that( data.frame(age=160, driver_license=TRUE),
 
 ## Explicit validation rules:
 
-- give a clear overview what the data should conform to
-- can be used to reason about
-- can be used to fix/correct data!
-- Find error, and when found try to correct.
+- Give a clear overview what the data must conform to.
+- Can be used to reason about.
+- Can be used to fix/correct data!
+- Find error, and when found correct it.
+
+### Note:
+
 - Manual fix is error prone, not reproducible and not feasible for large data sets.
 - Large rule set have (very) complex behavior, e.g. entangled rules: adjusting one value may 
 invalidate other rules.
@@ -99,13 +102,15 @@ check_that( data.frame( age     = 3
           , if (attends == "kindergarten") age <= 6
           )
 ```
-What is the error? 
+Ok, clear that this is a faulty record, but what is the error? 
 
-## Felligi Holt formalism:
+## Feligi Holt formalism:
 
 > Find the minimal (weighted) number of variables that cause the invalidation of the data rules.
 
 Makes sense! (But there are exceptions...)
+
+Implemented in `errorlocate` (second generation of `editrules`).
 
 ## `errorlocate::locate_errors`
 
@@ -138,7 +143,7 @@ replace_errors(
 
 `errorlocate`:
 
-- translates errorlocation problem into a **mixed integer problem**, which
+- translates error localization problem into a **mixed integer problem**, which
 is solved with `lpsolveAPI`.
 
 - contains a small framework for implementing your own error localization algorithms.

@@ -1,5 +1,5 @@
 ^.*\.Rproj$
-^.*\useR2017
+^useR2017
 ^\.Rproj\.user$
 ^\.travis\.yml$
 ^examples
