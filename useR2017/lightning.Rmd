@@ -43,6 +43,9 @@ A large part of your job is spent in data-cleaning:
   \includegraphics[height=1\paperheight]{img/keep-calm-and-validate}
 \end{center}
 
+\usebackgroundtemplate{Hi}
+
+
 ## Validation rules?
 
 Package `validate` allows to:
