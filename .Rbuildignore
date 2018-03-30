@@ -6,3 +6,4 @@
 ^issues
 ^appveyor\.yml$
 ^codecov\.yml$
+^README\.md$
