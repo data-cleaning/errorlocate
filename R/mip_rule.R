@@ -53,7 +53,7 @@ rewrite_mip_rule <- function(x, ...){
 
 # get variables from a list of mip_rule objects
 get_mr_vars <- function(x, ...){
-  unique(unlist(lapply(x, function(r) names(r$a))))
+  sort(unique(unlist(lapply(x, function(r) names(r$a)))))
 }
 
 # get rules names from a list of mip_rule objects

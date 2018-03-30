@@ -1,7 +1,7 @@
 Package: errorlocate
 Type: Package
 Title: Locate Errors with Validation Rules
-Version: 0.1.2.9000
+Version: 0.1.3
 Date: 2016-12-29
 Authors@R: c(person("Edwin", "de Jonge", email = "edwindjonge@gmail.com", role = c("aut", "cre")),
              person("Mark", "van der Loo", email = "mark.vanderloo@gmail.com", role = c("aut")))

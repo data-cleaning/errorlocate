@@ -98,7 +98,6 @@ describe("Solve editrules checks",{
     )
   })
   it('handles data out-of-datamodel correctly',{
-    skip("fix me!")
 
     # thanks to Elmar Wein for sending us this testcase.
     rules <- validator(
@@ -148,5 +147,14 @@ describe("Solve editrules checks",{
     )
 
     expect_equal(sum(le$errors),1)
+  })
+  it("works for finding 'out of domain' categories",{
+    rules <- validator(a %in% c("A","B"))
+    data <- data.frame(a = c("A","C"))
+    le <- locate_errors(
+      data = data,
+      x = rules
+    )
+    expect_equal(sum(le$errors), 1)
   })
 })
