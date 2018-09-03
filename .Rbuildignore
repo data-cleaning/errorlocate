@@ -1,5 +1,6 @@
 ^.*\.Rproj$
 ^useR2017
+^uRos2018
 ^\.Rproj\.user$
 ^\.travis\.yml$
 ^examples
