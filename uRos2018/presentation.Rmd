@@ -7,7 +7,7 @@ output:
   beamer_presentation:
     includes:
       in_header: tex/header.tex
-    keep_tex: no
+    keep_tex: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -15,6 +15,15 @@ knitr::opts_chunk$set(eval = FALSE)
 library(errorlocate)
 library(magrittr)
 ```
+
+## Who am I?
+
+- Data scientist / Methodologist at Statistics Netherlands (aka CBS).
+- Author of several R-packages, including `whisker`, `validate`, `errorlocate`, `docopt`, `daff`, `tableplot`,  `ffbase`, `chunked`, ...
+- Co-author of _Statistical Data Cleaning with applications in R (2018)_ (together with @markvdloo)
+
+
+
 
 ## {.plain .fragile}
 \begin{centering}
@@ -26,15 +35,15 @@ library(magrittr)
 
 A large part of your job is spent in data-cleaning:
 
-- getting your data in the right shape (e.g. `tidyverse`)
+- getting your data in the right shape (e.g. `tidyverse`, `dplyr`)
 
-- assessing missing data (e.g. `VIM`)
+- assessing missing data (e.g. `VIM`, `datamaid`)
 
 - checking validity (e.g. `validate`)
 
 - locating and removing errors: **`errorlocate`**!
 
-- impute values for missing or erroneous data (e.g. `simputation`)
+- impute values for missing or erroneous data (e.g. `simputation`, `recipes`)
 
 ## {.plain}
 
@@ -42,8 +51,11 @@ A large part of your job is spent in data-cleaning:
   \includegraphics[height=1\paperheight]{img/keep-calm-and-validate}
 \end{center}
 
-\usebackgroundtemplate{Hi}
+## Statistical Value Chain
 
+\begin{center}
+ \includegraphics[width=\textwidth]{img/valuechain.pdf}
+\end{center}
 
 ## Validation rules?
 
@@ -141,6 +153,27 @@ replace_errors(
 )
 ```
 
+### Rule $r_i(x)$
+
+A rule a disjunction of atomic clauses:
+
+$$
+r_i(x) = \bigvee_j C_i^j(x)
+$$
+with: 
+
+$$
+C_i^j(\la{x}) = \left\{
+  \begin{array}{l}
+ \la{a}^T\la{x} \leq b \\
+  \la{a}^T\la{x} = b \\
+  x_j \in F_{ij}  \textrm{with } F_{ij} \subseteq D_j \\
+  x_j \not\in F_{ij} \textrm{with } F_{ij} \subseteq D_j \\
+  \end{array}
+\right.
+$$
+
+
 ## Internal workings:
 
 `errorlocate`:
@@ -165,15 +198,29 @@ data_noerrors <-
 errors_removed(data_noerrors) # contains errors removed
 ```
 
-## Thank you!
 
+## Interested?
 
-\Large{Interested?}
+\begincols
+  \begincol{0.48\textwidth}
+  \includegraphics[width=0.9\textwidth]{img/SDCR.jpg} 
+  \endcol
+  
+  \begincol{0.48\textwidth}
+  \begin{block}{SDCR}
+M. van der Loo and E. de Jonge (2018)
+\emph{Statistical Data Cleaning with applications in R}
+Wiley, Inc.
+\end{block}
+\begin{block}{errorlocate}
+\begin{itemize}
+\item Available on \href{https://CRAN.R-project.org/package=errorlocate}{\underline{CRAN}}
+\end{itemize}
+\end{block}
+\begin{block}{More theory?}
+$\leftarrow$ See book 
+\end{block}
+\endcol
+\endcols
 
-```r
-install.packages("errorlocate")
-```
-
-Or visit:
-
-**[http://github.com/data-cleaning/errorlocate](http://github.com/datacleaning/errorlocate)**
+Thank you for your attention (and enjoy The Hague)!
