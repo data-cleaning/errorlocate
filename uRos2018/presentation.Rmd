@@ -22,15 +22,6 @@ library(magrittr)
 - Author of several R-packages, including `whisker`, `validate`, `errorlocate`, `docopt`, `daff`, `tableplot`,  `ffbase`, `chunked`, ...
 - Co-author of _Statistical Data Cleaning with applications in R (2018)_ (together with @markvdloo)
 
-
-
-
-## {.plain .fragile}
-\begin{centering}
-  \includegraphics[width=0.8\paperwidth]{img/bad-data}
-  \par
-\end{centering}
-
 ## Data cleaning...
 
 A large part of your job is spent in data-cleaning:
@@ -43,7 +34,13 @@ A large part of your job is spent in data-cleaning:
 
 - locating and removing errors: **`errorlocate`**!
 
-- impute values for missing or erroneous data (e.g. `simputation`, `recipes`)
+- impute values for missing or erroneous data (e.g. `simputation`, `VIM`, `recipes`)
+
+## Statistical Value Chain
+
+\begin{center}
+ \includegraphics[width=\textwidth]{img/valuechain.pdf}
+\end{center}
 
 ## {.plain}
 
@@ -51,11 +48,6 @@ A large part of your job is spent in data-cleaning:
   \includegraphics[height=1\paperheight]{img/keep-calm-and-validate}
 \end{center}
 
-## Statistical Value Chain
-
-\begin{center}
- \includegraphics[width=\textwidth]{img/valuechain.pdf}
-\end{center}
 
 ## Validation rules?
 
@@ -126,6 +118,62 @@ Makes sense! (But there are exceptions...)
 
 Implemented in `errorlocate` (second generation of `editrules`).
 
+## Formal description (1)
+
+### Rule $r_i(x)$
+
+A rule a disjunction of atomic clauses:
+
+$$
+r_i(\la{x}) = \bigvee_j C_i^j(\la{x})
+$$
+with: 
+
+$$
+C_i^j(\la{x}) = \left\{
+  \begin{array}{l}
+ \la{a}^T\la{x} \leq b \\
+  \la{a}^T\la{x} = b \\
+  x_j \in F_{ij}  \textrm{with } F_{ij} \subseteq D_j \\
+  x_j \not\in F_{ij} \textrm{with } F_{ij} \subseteq D_j \\
+  \end{array}
+\right.
+$$
+
+## Rule system:
+
+The rules form a system $R(\la{x})$:
+
+$$
+R_H(\la{x}) = \bigwedge_i r_i
+$$
+If $R_H(\la{x})$ is true for record $\la{x}$, then the record is valid, otherwise one (or more) of the rules is violated.
+
+## Mixed Integer Programming to FH
+
+Each rule set $R(\la{x})$ can be translated into a mip problem and solved.
+$$
+\begin{array}{r}
+  \textrm{Minimize } f(\mathbf{x}) = 0; \\
+  \textrm{s.t. }\mathbf{Rx} \leq \mathbf{d} \\
+\end{array}
+$$
+
+- $f(\la{x})$ is the (weighted) number of changed variable: $\delta_i \in {0,1}$
+
+$$
+f(\la{x}) = \sum_{i=1}^N w_i \delta_i
+$$
+
+- $\la{R}$ contains rules: $\la{R}_H(\la{x}) \leq \la{d}_H$  and soft constraints: $\la{R}_0(\la{x}, \la{\delta}) \leq \la{d}_0$ that
+try fix the values of $\la{x}$ to the measured values.
+
+## `errorlocate`
+
+- translates your rules automatically into a mip form.
+- Uses `lpSolveAPI` to solve the problem.
+- contains a small framework for implementing your own error localization algorithms.
+
 ## `errorlocate::locate_errors`
 
 ```{r, eval=TRUE}
@@ -153,38 +201,8 @@ replace_errors(
 )
 ```
 
-### Rule $r_i(x)$
 
-A rule a disjunction of atomic clauses:
-
-$$
-r_i(x) = \bigvee_j C_i^j(x)
-$$
-with: 
-
-$$
-C_i^j(\la{x}) = \left\{
-  \begin{array}{l}
- \la{a}^T\la{x} \leq b \\
-  \la{a}^T\la{x} = b \\
-  x_j \in F_{ij}  \textrm{with } F_{ij} \subseteq D_j \\
-  x_j \not\in F_{ij} \textrm{with } F_{ij} \subseteq D_j \\
-  \end{array}
-\right.
-$$
-
-
-## Internal workings:
-
-`errorlocate`:
-
-- translates error localization problem into a **mixed integer problem**, which
-is solved with `lpsolveAPI`.
-
-- contains a small framework for implementing your own error localization algorithms.
-
-
-## Pipe friendly
+## Pipe %>%  friendly
 
 The `replace_errors` function is pipe friendly:
 
@@ -197,7 +215,6 @@ data_noerrors <-
 
 errors_removed(data_noerrors) # contains errors removed
 ```
-
 
 ## Interested?
 
