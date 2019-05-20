@@ -12,8 +12,8 @@ locate_errors(data, x, ...)
 \S4method{locate_errors}{data.frame,validator}(data, x, weight = NULL,
   ref = NULL, ...)
 
-\S4method{locate_errors}{data.frame,ErrorLocalizer}(data, x, weight = NULL,
-  ref = NULL, ...)
+\S4method{locate_errors}{data.frame,ErrorLocalizer}(data, x,
+  weight = NULL, ref = NULL, ...)
 }
 \arguments{
 \item{data}{data to be checked}

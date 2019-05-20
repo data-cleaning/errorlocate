@@ -13,11 +13,11 @@ replace_errors(data, x, ref = NULL, ..., value = c("NA", "suggestion"))
 \S4method{replace_errors}{data.frame,validator}(data, x, ref = NULL, ...,
   value = c("NA", "suggestion"))
 
-\S4method{replace_errors}{data.frame,ErrorLocalizer}(data, x, ref = NULL, ...,
-  value = c("NA", "suggestion"))
+\S4method{replace_errors}{data.frame,ErrorLocalizer}(data, x, ref = NULL,
+  ..., value = c("NA", "suggestion"))
 
-\S4method{replace_errors}{data.frame,errorlocation}(data, x, ref = NULL, ...,
-  value = c("NA", "suggestion"))
+\S4method{replace_errors}{data.frame,errorlocation}(data, x, ref = NULL,
+  ..., value = c("NA", "suggestion"))
 }
 \arguments{
 \item{data}{data to be checked}

@@ -84,7 +84,6 @@ expect_values <- function(values, weights, ...){
   cat_values <- values[!is_numeric]
   cat_rules <- lapply(names(cat_values), function(n){
     value <- cat_values[[n]]
-    # NOTE: this allows for out of domain values!!! / must be fixed
     a <- setNames(1, paste0(n, INFIX_CAT_NAME, value))
     b <- 1
 

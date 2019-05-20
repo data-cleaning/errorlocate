@@ -18,6 +18,7 @@ is_cat_ <- function(expr, or=TRUE, ...){
 
   switch (op,
     "%in%" = TRUE,  # allow all literals (should check for character and logical)
+    "%vin%" = TRUE, # Added to comply with validate >= 0.2.2
     "("    = is_cat_(l, or),
     "!"    = is_cat_(l, !or),
     "=="   = is.character(r) || is.logical(r),
@@ -52,6 +53,7 @@ get_catvar <- function(expr, not = FALSE){
 
   switch ( op,
           "%in%" = cvi(l, r, not),
+          "%vin%" = cvi(l,r,not),
           "=="   = cvi(l, r, not),
           "!="   = cvi(l, r, !not),
           "if"   = c( get_catvar(l, !not), get_catvar(r, not)),
@@ -126,7 +128,8 @@ cat_mip_rule_ <- function(e, name, ...){
   a <- unlist(lapply(rule_l, function(x){
     vars <- bin_var_name(x)
     # if (x %in% set) +1, if (!(x %in% set)) -1
-    coef <- rep(if(x$not) -1L else 1L, length(vars))
+    #coef <- rep(if(x$not) -1L else 1L, length(vars))
+    coef <- rep(if(x$not || all(x$value == FALSE)) -1L else 1L, length(vars))
     names(coef) <- vars
     coef
   })
@@ -135,14 +138,14 @@ cat_mip_rule_ <- function(e, name, ...){
   # sum(a_pos) + sum(1-a_neg) >= 1
   # condition is that at least one of the variable is true, extract the negated memberships
   b <- 1 - sum(sapply(rule_l, function(x){
-    x$not
+    x$not || all(x$value == FALSE)
   }))
 
   if ( length(rule_l) == 1){
-    if (length(a) > 1 || op(e) == "=="){  # this is a strict(er) version and allows for some optimization
+    if (isTRUE(length(a) > 1) || op(e) == "=="){  # this is a strict(er) version and allows for some optimization
       mip_rule(a, "==", b, name, type=sapply(a, function(x) 'binary'))
     } else {
-      mip_rule(a, "<=", b, name, type=sapply(a, function(x) 'binary')) # needed for logical variables
+      mip_rule(-a, "<=", -b, name, type=sapply(a, function(x) 'binary')) # needed for logical variables
     }
   } else {
     mip_rule(-a, "<=", -b, name, type=sapply(a, function(x) 'binary')) # normalized version of a*x >= b

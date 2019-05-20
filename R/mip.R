@@ -27,9 +27,7 @@ miprules <- setRefClass("MipRules",
    fields = list(
      rules         = "validator",
      objective     = "numeric",
-     ._lin_rules   = "list",
-     ._cat_rules   = "list",
-     ._cond_rules  = "ANY",
+     ._miprules   = "list",
      ._value_rules = "list",
      ._ignored     = "ANY",
      ._lp          = "ANY"
@@ -38,25 +36,10 @@ miprules <- setRefClass("MipRules",
      initialize = function(rules){
        rules <<- rules
        objective <<- objective
-       ._lin_rules <<- lin_as_mip_rules(rules)
-       ._cat_rules <<- cat_as_mip_rules(rules)
-       ._cond_rules <<- cond_as_mip_rules(rules)
-       ignored <- !(is_linear(rules) | is_categorical(rules) | is_conditional(rules))
-
-       if (any(ignored)){
-         ._ignored <<- rules[ignored]
-         warning( "Ignoring rules:\n"
-                , paste0( names(._ignored)
-                        , ": "
-                        , ._ignored$exprs()
-                        , collapse = "\n"
-                        )
-                , call. = FALSE
-                )
-       }
+       ._miprules <<- to_miprules(rules)
      },
      mip_rules = function(){
-       c(._lin_rules, ._cat_rules, ._cond_rules, ._value_rules)
+       c(._miprules, ._value_rules)
      },
      set_values = function(values, weights){
        if (missing(values) || length(values) == 0){
