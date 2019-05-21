@@ -72,4 +72,11 @@ describe("locate_errors", {
     data <- data.frame(profit=100, cost=125, turnover=200)
     le <- locate_errors(data, v, weight=c(profit=Inf, cost=Inf, turnover=1))
   })
+
+  it ("handles equality in condition",{
+    rules <- validator(if (a == 0) b == 0)
+    data <- data.frame(a = 0, b = 1)
+    le <- locate_errors(data, rules, weight=c(a=2, b=1))
+    expect_equivalent(le$errors[1,], c(a = FALSE, b = TRUE))
+  })
 })
