@@ -142,10 +142,10 @@ cat_mip_rule_ <- function(e, name, ...){
   }))
 
   if ( length(rule_l) == 1){
-    if (isTRUE(length(a) > 1) || op(e) == "=="){  # this is a strict(er) version and allows for some optimization
+    if (length(a) > 1 || op(e) == "=="){  # this is a strict(er) version and allows for some optimization
       mip_rule(a, "==", b, name, type=sapply(a, function(x) 'binary'))
     } else {
-      mip_rule(-a, "<=", -b, name, type=sapply(a, function(x) 'binary')) # needed for logical variables
+      mip_rule(a, "<=", b, name, type=sapply(a, function(x) 'binary')) # needed for logical variables
     }
   } else {
     mip_rule(-a, "<=", -b, name, type=sapply(a, function(x) 'binary')) # normalized version of a*x >= b
