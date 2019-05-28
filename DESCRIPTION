@@ -18,12 +18,14 @@ Suggests:
     testthat,
     magrittr,
     covr
-Collate:
+RoxygenNote: 6.1.1
+Encoding: UTF-8
+Collate: 
+    'MipRules.R'
     'addnoise.R'
     'categorical.R'
     'conditional.R'
     'dnf.R'
-    'mip.R'
     'errorlocalizer.R'
     'errorlocate-package.r'
     'errorlocation.R'
@@ -37,4 +39,3 @@ Collate:
     'soft-rule.R'
     'utils.R'
     'values.R'
-RoxygenNote: 6.1.1

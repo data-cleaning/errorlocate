@@ -15,7 +15,7 @@ setRefClass("ErrorLocalizer",
     initialize  = function(...){
       stop("Abstract class: not implemented. Please use an inherited class")
     },
-    locate = function(data, ref=NULL, ...){
+    locate = function(data, ref=NULL, ..., timeout=60){
       stop("Implement locate on subclass of ErrorLocalizer")
     }
   )
@@ -32,7 +32,7 @@ setRefClass("ErrorLocalizer",
 #' \code{errorlocalizer} implements feligi holt using a MIP-solver. For problems in which
 #' coefficients of the validation rules or the data are too different, you should consider scaling
 #' the data.
-#' @include mip.R
+#' @include MipRules.R
 #' @exportClass FHLocalizer
 #'
 fh_localizer <-
@@ -46,7 +46,7 @@ fh_localizer <-
         rules <<- rules
         ._miprules <<- miprules(rules)
       },
-      locate = function(data, weight=NULL, add_noise = TRUE, ...){
+      locate = function(data, weight=NULL, add_noise = TRUE, ..., timeout=60){
         if (length(weight) == 0){
           weight <- matrix(1, nrow=nrow(data), ncol=ncol(data))
           colnames(weight) <- colnames(data)
@@ -71,7 +71,9 @@ fh_localizer <-
         rows <- seq_len(nrow(data))
 
         # TODO add suggestions and status...
+        i <- 0
         res <- sapply(rows, function(r){
+          # cat(".")
           values <- data[r,,drop=FALSE]
           ._miprules$set_values(values, weight[r,])
           el <- ._miprules$execute()
