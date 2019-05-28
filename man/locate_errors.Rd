@@ -7,13 +7,13 @@
 \alias{locate_errors,data.frame,ErrorLocalizer-method}
 \title{Locate errors in data}
 \usage{
-locate_errors(data, x, ...)
+locate_errors(data, x, ..., timeout = 60)
 
 \S4method{locate_errors}{data.frame,validator}(data, x, weight = NULL,
-  ref = NULL, ...)
+  ref = NULL, ..., timeout = 60)
 
 \S4method{locate_errors}{data.frame,ErrorLocalizer}(data, x,
-  weight = NULL, ref = NULL, ...)
+  weight = NULL, ref = NULL, ..., timeout = 60)
 }
 \arguments{
 \item{data}{data to be checked}
@@ -22,6 +22,8 @@ locate_errors(data, x, ...)
 possible errors.}
 
 \item{...}{optional parameter to be used by a specific method}
+
+\item{timeout}{maximum number of seconds that the localizer should use per record.}
 
 \item{weight}{\code{numeric} optional weight vector to be used in the error localization.}
 

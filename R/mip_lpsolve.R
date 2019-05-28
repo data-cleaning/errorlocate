@@ -6,9 +6,11 @@
 #' @param  rules mip rules
 #' @param objective function
 #' @param eps accuracy for equality/inequality
+#' @param ... additional \code{\link{lp.control}} parameters that are set for the mip problem
 translate_mip_lp <- function( rules
                             , objective=NULL
                             , eps = 1e-3
+                            , ...
                             ){
   #browser()
   lc <- get_mr_matrix(rules)
@@ -25,7 +27,8 @@ translate_mip_lp <- function( rules
   lpSolveAPI::lp.control( lps,
                           presolve = "rows",
                           epsint = 1e-15,
-                          epspivot = 1e-15
+                          epspivot = 1e-15,
+                          ...
                         )
 
   dimnames(lps) <- dimnames(A)

@@ -56,12 +56,12 @@ miprules <- setRefClass("MipRules",
        weights <- add_noise(weights)
        objective <<- setNames(weights, paste0(".delta_", names(weights)))
      },
-     to_lp = function(){
-       translate_mip_lp(mip_rules(), objective)
+     to_lp = function(...){
+       translate_mip_lp(mip_rules(), objective, ...)
      },
-     execute = function(){
+     execute = function(...){
        # TODO see if this can be executed in parallel.
-       lp <- translate_mip_lp(mip_rules(), objective)
+       lp <- translate_mip_lp(mip_rules(), objective, ...)
        #TODO set timer, duration etc.
        s <- solve(lp)
        values <- lpSolveAPI::get.variables(lp)

@@ -73,11 +73,14 @@ fh_localizer <-
         # TODO add suggestions and status...
         i <- 0
         res <- sapply(rows, function(r){
-          # cat(".")
+          cat(".")
           values <- data[r,,drop=FALSE]
           ._miprules$set_values(values, weight[r,])
-          el <- ._miprules$execute()
-          el$adapt
+          el <- ._miprules$execute(timeout=timeout, ...)
+          adapt <- el$adapt
+          rm(el)
+          gc()
+          adapt
         })
 
         dim(res) <- dim(weight)[2:1]

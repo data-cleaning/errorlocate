@@ -4,7 +4,7 @@
 \alias{translate_mip_lp}
 \title{translate linear rules into an lp problem}
 \usage{
-translate_mip_lp(rules, objective = NULL, eps = 0.001)
+translate_mip_lp(rules, objective = NULL, eps = 0.001, ...)
 }
 \arguments{
 \item{rules}{mip rules}
@@ -12,6 +12,8 @@ translate_mip_lp(rules, objective = NULL, eps = 0.001)
 \item{objective}{function}
 
 \item{eps}{accuracy for equality/inequality}
+
+\item{...}{additional \code{\link{lp.control}} parameters that are set for the mip problem}
 }
 \description{
 translate linear rules into an lp problem
