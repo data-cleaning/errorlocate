@@ -70,10 +70,10 @@ fh_localizer <-
 
         rows <- seq_len(nrow(data))
 
-        # TODO add suggestions and status...
+        # TODO add suggestions, status and progress bar
         i <- 0
         res <- sapply(rows, function(r){
-          cat(".")
+          # cat(".")
           values <- data[r,,drop=FALSE]
           ._miprules$set_values(values, weight[r,])
           el <- ._miprules$execute(timeout=timeout, ...)
