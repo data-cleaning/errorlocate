@@ -10,6 +10,11 @@ describe("categorical", {
                   )
     expect_equal(is_categorical(v), c(TRUE, TRUE, FALSE, FALSE))
   })
+  it("can detect var_group categorical rules",{
+    v <- validator(var_group(a,b) >= 0, if (var_group(a,b) == "a") c == TRUE)
+    expect_equal(is_categorical(v), c(FALSE, TRUE))
+  })
+
   it("can derive coefficients",{
     v <- validator( a %in% c("a1", "a2"),
                     if (a %in% 'a1') b == "b1"

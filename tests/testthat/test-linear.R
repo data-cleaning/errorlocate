@@ -16,6 +16,10 @@ describe("is_linear",{
     v <- validator(x > 1, y + 2*x <= 3, A == "a", A == TRUE)
     expect_equal(is_linear(v), c(TRUE, TRUE, FALSE, FALSE))
   })
+  it("can detect var_group linear rules",{
+    v <- validator(var_group(a,b) >= 0, if (var_group(a,b) == "a") c == TRUE)
+    expect_equal(is_linear(v), c(TRUE, FALSE))
+  })
 })
 
 describe("lin_mip_rule",{

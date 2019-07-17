@@ -38,7 +38,7 @@ is_lin_ <- function(expr, top=TRUE, ...){
     return(is.numeric(expr) || is.null(expr))
   }
 
-  if (is.symbol(expr)){ return(TRUE) }
+  if (is.symbol(expr) || op == "var_group"){ return(TRUE) }
 
   if (op %in% c("+","-")){
       return( is_lin_(l, FALSE) && is_lin_(r, FALSE))
@@ -97,7 +97,7 @@ lin_mip_rule_ <- function(e, sign=1, name, ...){
       l <- eval(l) # to deal with negative coefficients
     }
     if (is.numeric(l)){ return(lin_mip_rule_(r, sign*l)) }
-    
+
     if (is.numeric(left(r))){
       r <- eval(r) # to deal with negative coefficients
     }

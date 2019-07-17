@@ -71,7 +71,9 @@ fh_localizer <-
         rows <- seq_len(nrow(data))
 
         # TODO add suggestions, status and progress bar
-        i <- 0
+        if (interactive()) {
+          pb <- utils::txtProgressBar(min = 0, max=nrow(data))
+        }
         res <- sapply(rows, function(r){
           # cat(".")
           values <- data[r,,drop=FALSE]
@@ -80,9 +82,13 @@ fh_localizer <-
           adapt <- el$adapt
           rm(el)
           gc()
+          if (interactive()){
+            value <- 1 + pb$getVal()
+            utils::setTxtProgressBar(pb, value)
+          }
           adapt
         })
-
+        if(interactive()){ close(pb) }
         dim(res) <- dim(weight)[2:1]
         adapt <- t(res)
         colnames(adapt) <- colnames(weight)

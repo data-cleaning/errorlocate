@@ -30,6 +30,14 @@ describe("conditional", {
     expect_equal( is_conditional(v)
                 , c(TRUE, TRUE, FALSE, FALSE, FALSE))
   })
+  it("can detect var_group conditional rules",{
+    v <- validator( var_group(a,b) >= 0
+                  , if (var_group(a,b) == "a") c == TRUE
+                  , if (var_group(a,b) > 1) c == TRUE
+                  )
+   expect_equal(is_conditional(v), c(FALSE, FALSE, TRUE))
+  })
+
   it("can detect more complex rules", {
     v <- validator( if ( x > 1 && z >= 1) y == 1,
                     if (x > 1) y == 1 || z <= 1,

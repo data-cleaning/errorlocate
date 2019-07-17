@@ -13,12 +13,14 @@ is_cat_ <- function(expr, or=TRUE, ...){
   }
 
   op = op_to_s(expr)
+
   l <- left(expr)
   r <- right(expr)
 
   switch (op,
     "%in%" = TRUE,  # allow all literals (should check for character and logical)
     "%vin%" = TRUE, # Added to comply with validate >= 0.2.2
+    "var_group" = TRUE, # added for var_group expansion
     "("    = is_cat_(l, or),
     "!"    = is_cat_(l, !or),
     "=="   = is.character(r) || is.logical(r),

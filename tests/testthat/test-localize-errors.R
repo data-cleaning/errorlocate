@@ -156,5 +156,12 @@ describe("Solve editrules checks",{
       x = rules
     )
     expect_equal(sum(le$errors), 1)
+
+  })
+  it("works for var_group rules",{
+    rules <- validator(var_group(a,b) >= 0)
+    data <- data.frame(a = -1, b = 1)
+    le <- locate_errors(data, rules)
+    expect_equal(sum(le$errors), 1)
   })
 })
