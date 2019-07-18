@@ -20,7 +20,7 @@ For example:
 
 While `validate` can check if a record is valid or not, it does not identify
 which of the variables are responsible for the invalidation. This may seem a simple task,
-but is actually quite tricky:  a set of validation rules form a web
+but is actually quite tricky:  a set of validation rules forms a web
 of dependent variables: changing the value of an invalid record to repair for rule 1, may invalidate
 the record for rule 2.
 
