@@ -7,6 +7,10 @@
 #' @param ... not used
 #' @return \code{logical} indicating which rules are (purely) linear.
 is_linear <- function(x, ...){
+  if (is.expression(x)){
+    return(sapply(x, is_lin_))
+  }
+
   stopifnot(inherits(x, "validator"))
   sapply(x$rules, function(rule){
     is_lin_(rule@expr)

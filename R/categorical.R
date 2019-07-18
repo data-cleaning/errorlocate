@@ -88,11 +88,17 @@ cat_var_name <- function(x, infix=INFIX_CAT_NAME){
 #'
 #' Check if rules are categorical
 #' @export
-#' @param x validator object
+#' @param x validator or expression object
 #' @param ... not used
 #' @return logical indicating which rules are purely categorical/logical
 #' @example examples/categorical.R
 is_categorical <- function(x, ...){
+
+  if (is.expression(x)){
+    return(sapply(x, is_cat_))
+  }
+
+  stopifnot(inherits(x, "validator"))
   sapply(x$rules, function(rule){
     is_cat_(rule@expr)
   })

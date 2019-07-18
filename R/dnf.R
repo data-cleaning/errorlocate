@@ -209,12 +209,13 @@ dnf_to_mip_rule <- function(d, name = "", ...){
 # translates the validator rules into mip rules
 to_miprules <- function(x, ...){
   check_validator(x, check_infeasible = FALSE)
-  can_translate <- is_linear(x) | is_categorical(x) | is_conditional(x)
-  if (!all(can_translate)){
-    warning("Ignoring rules: ", paste(names(x)[!can_translate], collapse = ", "))
-  }
-  x <- x[can_translate]
   exprs <- to_exprs(x)
+
+  can_translate <- is_linear(exprs) | is_categorical(exprs) | is_conditional(exprs)
+  if (!all(can_translate)){
+    warning("Ignoring rules: ", paste(names(exprs)[!can_translate], collapse = ", "))
+  }
+  exprs <- exprs[can_translate]
   mr <- lapply(names(exprs), function(name){
     e <- exprs[[name]]
     d <- as_dnf(e)

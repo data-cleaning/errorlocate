@@ -3,7 +3,7 @@ library(validate)
 
 df <- data.frame(a=-1, b=0)
 rules <- validator(var_group(a,b)>=0)
-rules
+to_exprs(rules)
 
 # not expanding var_group
 replace_errors(df, rules)

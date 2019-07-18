@@ -32,6 +32,9 @@ is_condition_ <- function(expr, or=TRUE, top=TRUE, ...){
 #' @return logical indicating which rules are conditional
 #' @example examples/conditional.R
 is_conditional <- function(rules, ...){
+  if (is.expression(rules)){
+    return(sapply(rules, is_condition_))
+  }
   stopifnot(inherits(rules, "validator"))
   sapply(rules$rules, function(rule){
     is_condition_(rule@expr)

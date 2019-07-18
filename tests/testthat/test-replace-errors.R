@@ -60,4 +60,18 @@ describe("replace errors",{
     expect_equivalent(data_no_error, data.frame(A = c(NA, "a2"), B=data$B, stringsAsFactors = FALSE))
   })
 
+  it("works with var_group", {
+    df <- data.frame(a=-1, b=0)
+    rules <- validator(var_group(a,b)>=0)
+    data_no_error <- replace_errors(df, rules)
+    expect_equivalent(data_no_error, data.frame(A = NA_real_, b = 0))
+  })
+
+  it("works with assignment", {
+    df <- data.frame(a=-1, b=0)
+    rules <- validator(G := var_group(a,b), G >= 0)
+    data_no_error <- replace_errors(df, rules)
+    expect_equivalent(data_no_error, data.frame(A = NA_real_, b = 0))
+  })
+
 })
