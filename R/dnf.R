@@ -81,11 +81,12 @@ as_dnf <- function(expr, ...){
     op_and <- op_to_s(cond)
 
     while(op_and %in% c("&", "&&")){
-      clauses[[length(clauses) + 1]] <- invert_or_negate(left(cond))
-      cond <- consume(right(cond))
+      clauses[[length(clauses) + 1]] <- invert_or_negate(consume(right(cond)))
+      cond <- consume(left(cond))
       op_and <- op_to_s(cond)
     }
     clauses[[length(clauses) + 1]] <- invert_or_negate(cond)
+    clauses <- rev(clauses)
   }
 
   # build consequent clauses
@@ -93,7 +94,7 @@ as_dnf <- function(expr, ...){
     cons <- consume(cons)
     op_or <- op_to_s(cons)
     while(op_or %in% c("|", "||")){
-      clauses[[length(clauses) + 1]] <- left(cons)
+      clauses[[length(clauses) + 1]] <- consume(left(cons))
       cons <- consume(right(cons))
       op_or <- op_to_s(cons)
     }

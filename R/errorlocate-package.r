@@ -21,7 +21,7 @@
 #' to be adjusted to remove the invalidation.
 #'
 #' The \code{errorlocate} package translates the validation and error localization problem into
-#' a mixed integer problem and uses  #' a mip solver to find a solution.
+#' a mixed integer problem and uses a mip solver to find a solution.
 #' @name errorlocate-package
 #' @import methods validate
 #' @importFrom stats runif setNames
