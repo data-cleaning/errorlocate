@@ -61,9 +61,9 @@ expect_values <- function(values, weights, ...){
     b <- lin_values[[n]]
     w <- weights[n]
     if (is.finite(w)){
-      soft_lin_rule(mip_rule(a, "<=", b, n, w))
+      soft_lin_rule(mip_rule(a, op="<=", b =  b, rule = n, weight = w))
     } else {
-      mip_rule(a, "==", b, n, Inf)
+      mip_rule(a, op = "==", b = b, rule = n, weight = Inf)
     }
   })
 
@@ -75,7 +75,7 @@ expect_values <- function(values, weights, ...){
     b <- lin_values[[n]]
     w <- weights[n]
     if (is.finite(w)){
-      soft_lin_rule(mip_rule(-a, "<=", -b, n, w))
+      soft_lin_rule(mip_rule(-a, op = "<=", b = -b, rule = n, weight = w))
     } else {
       NULL
     }
@@ -94,7 +94,7 @@ expect_values <- function(values, weights, ...){
         b <- 0
       }
     }
-    soft_cat_rule(mip_rule(a, "==", b, n, weights[n], type=sapply(a, function(x) "binary")))
+    soft_cat_rule(mip_rule(a, op = "==", b = b, rule = n, weight = weights[n], type=sapply(a, function(x) "binary")))
   })
 
   c(lin_rules1, lin_rules2, cat_rules)
