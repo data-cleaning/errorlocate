@@ -3,11 +3,18 @@ negate_ <- function(e, ...){
   op <- node(e)
 
   if (op == '!'){
-    return(e[[2]])
+    return(consume(e[[2]]))
   }
 
   expr <- if (is.call(e) && op != '('){
-    substitute( !(e), list(e=e) )
+    if (op == "!="){
+      substitute( l == r, list(l = left(e), r = right(e)))
+    } else if (op == "=="){
+      substitute( l != r, list(l = left(e), r = right(e)))
+    }
+    else {
+      substitute( !(e), list(e=e) )
+    }
   } else {
     substitute( !e, list(e=e))
   }
