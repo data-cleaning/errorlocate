@@ -28,7 +28,7 @@ and a set of validation rules. The algorithm minimizes the (weighted) number of 
 to be adjusted to remove the invalidation.
 
 The \code{errorlocate} package translates the validation and error localization problem into
-a mixed integer problem and uses  #' a mip solver to find a solution.
+a mixed integer problem and uses a mip solver to find a solution.
 }
 \references{
 T. De Waal (2003) Processing of Erroneous and Unsafe Data. PhD thesis, University of Rotterdam.
@@ -51,7 +51,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Edwin de Jonge \email{edwindjonge@gmail.com}
+\strong{Maintainer}: Edwin de Jonge \email{edwindjonge@gmail.com} (\href{https://orcid.org/0000-0002-6580-4718}{ORCID})
 
 Authors:
 \itemize{

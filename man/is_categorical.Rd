@@ -7,7 +7,7 @@
 is_categorical(x, ...)
 }
 \arguments{
-\item{x}{validator object}
+\item{x}{validator or expression object}
 
 \item{...}{not used}
 }

@@ -18,7 +18,7 @@ Suggests:
     testthat (>= 2.1.0),
     magrittr,
     covr
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 Encoding: UTF-8
 Collate: 
     'MipRules.R'
@@ -30,7 +30,6 @@ Collate:
     'errorlocate-package.r'
     'errorlocation.R'
     'expr_manip.R'
-    'expr_simplify.R'
     'linear.R'
     'locate-errors.R'
     'mip_lpsolve.R'
