@@ -1,3 +1,7 @@
+# errorlocate 0.3.1
+
+* Fixed issue #21, thanks to Sander Scholtus: strict equalities
+
 # errorlocate 0.3.0
 
 * Fixed issue #19 and #20: rules now may contain var_group and assignments

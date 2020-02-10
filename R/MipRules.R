@@ -66,7 +66,10 @@ miprules <- setRefClass("MipRules",
        s <- solve(lp)
        values <- lpSolveAPI::get.variables(lp)
        names(values) <- colnames(lp)
-       adapt <- values[names(objective)] == 1
+       adapt <- objective < 0 # trick to create logical with names
+       adapt_nms <- names(adapt)[names(adapt) %in% names(values)]
+       adapt[adapt_nms] <- values[adapt_nms] == 1
+       # remove prefix
        names(adapt) <- gsub(".delta_", "", names(adapt))
        #TODO improve the return values based on value of s
        list(
