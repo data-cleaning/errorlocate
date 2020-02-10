@@ -41,8 +41,6 @@ The errors that were removed from the \code{data.frame} can be retrieved with th
  \code{\link{errors_removed}}. For more control over error localization see \code{\link{locate_errors}}.
 }
 \examples{
-library(magrittr)
-
 rules <- validator( profit + cost == turnover
               , cost - 0.6*turnover >= 0
               , cost>= 0
@@ -50,9 +48,7 @@ rules <- validator( profit + cost == turnover
 )
 data <- data.frame(profit=755, cost=125, turnover=200)
 
-data_no_error <-
-  data \%>\%
-  replace_errors(rules)
+data_no_error <- replace_errors(data,rules)
 
 # faulty data was replaced with NA
 data_no_error
@@ -61,8 +57,7 @@ errors_removed(data_no_error)
 
 # a bit more control
 error_locations <- locate_errors(data, rules)
-data \%>\%
-  replace_errors(error_locations)
+replace_errors(data, error_locations)
 }
 \seealso{
 \code{\link{errorlocation-class}}
