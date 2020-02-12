@@ -29,6 +29,8 @@ miprules <- setRefClass("MipRules",
      objective     = "numeric",
      ._miprules   = "list",
      ._value_rules = "list",
+     ._vars        = "character",
+     ._vars_num    = "character",
      ._ignored     = "ANY",
      ._lp          = "ANY"
    ),
@@ -37,20 +39,39 @@ miprules <- setRefClass("MipRules",
        rules <<- rules
        objective <<- objective
        ._miprules <<- to_miprules(rules)
+
+       var_num <- sapply(._miprules, function(mr){
+                  names(mr$type)[mr$type == "double"]})
+       ._vars_num <<- unique(as.character(var_num))
+       ._vars <<- validate::variables(rules)
+       # remove variables that are not in data.frame but in the environment
+       ._vars <<- ._vars[!sapply(._vars, exists)]
      },
      mip_rules = function(){
        c(._miprules, ._value_rules)
      },
      set_values = function(values, weights){
+       #browser()
        if (missing(values) || length(values) == 0){
          objective <<- numeric()
          ._value_rules <<- list()
          return(invisible())
        }
+       missing_vars <- ._vars[!._vars %in% names(values)]
+       if (length(missing_vars)){
+          stop("Missing variable(s): "
+              , paste0("'", missing_vars, "'", collapse = ", ")
+              , "."
+              , call. = FALSE)
+       }
+       #browser()
+       values <- as.list(values)
+
        if (missing(weights)){
          weights <- rep(1, length(values))
          names(weights) <- names(values)
        }
+
        ._value_rules <<- expect_values(values, weights)
        # TODO move this to the outside
        weights <- add_noise(weights)

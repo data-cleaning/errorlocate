@@ -90,6 +90,15 @@ describe("locate_errors", {
     le <- locate_errors(data, rules)
     expect_equivalent(le$errors[1,], TRUE)
   })
+
+  it ("handles missing columns",{
+    rules <- validator(x > 0, y > 0)
+    data <- data.frame(y = 1)
+    expect_warning(
+      le <- locate_errors(data, rules)
+    )
+    expect_equivalent(le$errors[1,], c(FALSE, NA))
+  })
 })
 
 

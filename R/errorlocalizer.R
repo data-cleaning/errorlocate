@@ -47,14 +47,39 @@ fh_localizer <-
         ._miprules <<- miprules(rules)
       },
       locate = function(data, weight=NULL, add_noise = TRUE, ..., timeout=60){
+        vars <- ._miprules$._vars
+        #browser()
+        missing_vars <- vars[!vars %in% names(data)]
+        # nasty: remove variables that are use in the rules
+        #missing_vars <- missing_vars[!sapply(missing_vars, exists)]
+
+        if (length(missing_vars)){
+          warning("Adding missing columns "
+                 , paste0("'", missing_vars, "'=NA", collapse = ", ")
+                 , " to data.frame."
+                 , call. = FALSE
+                 )
+          data[missing_vars] <- ifelse( missing_vars %in% ._miprules$._vars_num
+                                      , NA_real_
+                                      , NA
+                                      )
+        }
         if (length(weight) == 0){
           weight <- matrix(1, nrow=nrow(data), ncol=ncol(data))
           colnames(weight) <- colnames(data)
         } else {
-          if (is.null(dim(weight)) && length(weight) == ncol(data)){
-            # use recycling to fill a weight matrix
-            weight <- t(matrix(weight, nrow=ncol(data), ncol=nrow(data)))
-            colnames(weight) <- colnames(data)
+          if (is.null(dim(weight))){
+            weight[missing_vars] <- 1
+            if (length(weight) == ncol(data)){
+              # use recycling to fill a weight matrix
+              weight <- t(matrix(weight, nrow=ncol(data), ncol=nrow(data)))
+              colnames(weight) <- colnames(data)
+            }
+           else {
+             if (length(missing_vars)){
+               weight[,missing_vars] <- 1
+             }
+           }
           }
           stopifnot(dim(weight) == dim(data))
           if (is.null(colnames(weight))){

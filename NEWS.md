@@ -1,6 +1,7 @@
-# errorlocate 0.3.1
+# errorlocate 0.3.2
 
 * Fixed issue #21, thanks to Sander Scholtus: strict equalities
+* Fixed issue #22, thanks to Sander Scholtus: missing columns in data.
 
 # errorlocate 0.3.0
 
