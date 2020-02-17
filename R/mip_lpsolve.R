@@ -25,7 +25,7 @@ translate_mip_lp <- function( rules
 
   # TODO improve!
   lpSolveAPI::lp.control( lps,
-                          presolve = "rows",
+                          #presolve = "rows",
                           epsint = 1e-15,
                           epspivot = 1e-15,
                           ...

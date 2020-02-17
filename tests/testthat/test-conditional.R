@@ -83,4 +83,22 @@ describe("cond_as_mip_rules",{
     expect_equal(mr[[3]]$rule, "V1._lin2")
     get_mr_matrix(mr)
   })
+
+  it("transforms a categorical rule",{
+    rules <- validator(A %in% c("a1", "a2"), if (A != "a1") x > 1)
+    mr <- to_miprules(rules)
+    expect_equal(mr[[2]]$a, c("A:a1" = -1, V2._lin1 = 1))
+    expect_equal(mr[[2]]$b, 0)
+    expect_equal(mr[[3]]$a, c(x = -1, V2._lin1 = -1e7))
+    expect_equal(mr[[3]]$b, -1)
+  })
+
+  it("transforms a logical rule", {
+    rules <- validator(if (a == FALSE) x > 1)
+    mr <- to_miprules(rules)
+    expect_equal(mr[[1]]$a, c(a = -1, V1._lin1 = 1))
+    expect_equal(mr[[1]]$b, 0)
+    expect_equal(mr[[2]]$a, c(x = -1, V1._lin1 = -1e7))
+    expect_equal(mr[[2]]$b, -1)
+  })
 })

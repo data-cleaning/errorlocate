@@ -137,7 +137,7 @@ cat_mip_rule_ <- function(e, name, ...){
     vars <- bin_var_name(x)
     # if (x %in% set) +1, if (!(x %in% set)) -1
     #coef <- rep(if(x$not) -1L else 1L, length(vars))
-    coef <- rep(if(x$not || all(x$value == FALSE)) -1L else 1L, length(vars))
+    coef <- rep(if( xor(x$not, all(x$value == FALSE))) -1L else 1L, length(vars))
     names(coef) <- vars
     coef
   })
@@ -146,7 +146,7 @@ cat_mip_rule_ <- function(e, name, ...){
   # sum(a_pos) + sum(1-a_neg) >= 1
   # condition is that at least one of the variable is true, extract the negated memberships
   b <- 1 - sum(sapply(rule_l, function(x){
-    x$not || all(x$value == FALSE)
+    xor(x$not, all(x$value == FALSE))
   }))
 
   if ( length(rule_l) == 1){

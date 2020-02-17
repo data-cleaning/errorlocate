@@ -101,10 +101,11 @@ fh_localizer <-
         }
         res <- sapply(rows, function(r){
           # cat(".")
-          values <- data[r,,drop=FALSE]
+          values <- as.list(data[r,,drop=FALSE])
           ._miprules$set_values(values, weight[r,])
           el <- ._miprules$execute(timeout=timeout, ...)
-          adapt <- el$adapt
+          adapt <- sapply(values, function(x){FALSE})
+          adapt[names(el$adapt)] <- el$adapt
           rm(el)
           gc()
           if (interactive()){
@@ -114,14 +115,13 @@ fh_localizer <-
           adapt
         })
         if(interactive()){ close(pb) }
-        dim(res) <- dim(weight)[2:1]
+        #dim(res) <- dim(weight)[2:1]
         adapt <- t(res)
-        colnames(adapt) <- colnames(weight)
 
-        weight_per_record <- as.numeric(tcrossprod(adapt, weight))
+        idx <- which(colnames(adapt) %in% colnames(weight))
+        weight_per_record <- as.numeric(tcrossprod(adapt[,idx], weight))
 
         is.na(adapt) <- is.na(data)
-        #browser()
         create_errorlocation(
           values = adapt,
           weight = weight_per_record

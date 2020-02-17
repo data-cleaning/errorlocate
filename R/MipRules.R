@@ -57,6 +57,7 @@ miprules <- setRefClass("MipRules",
          ._value_rules <<- list()
          return(invisible())
        }
+
        missing_vars <- ._vars[!._vars %in% names(values)]
        if (length(missing_vars)){
           stop("Missing variable(s): "
@@ -64,8 +65,6 @@ miprules <- setRefClass("MipRules",
               , "."
               , call. = FALSE)
        }
-       #browser()
-       values <- as.list(values)
 
        if (missing(weights)){
          weights <- rep(1, length(values))
@@ -82,9 +81,11 @@ miprules <- setRefClass("MipRules",
      },
      execute = function(...){
        # TODO see if this can be executed in parallel.
+       #browser()
        lp <- translate_mip_lp(mip_rules(), objective, ...)
        #TODO set timer, duration etc.
        s <- solve(lp)
+       #browser()
        values <- lpSolveAPI::get.variables(lp)
        names(values) <- colnames(lp)
        adapt <- objective < 0 # trick to create logical with names

@@ -1,7 +1,8 @@
-# errorlocate 0.3.2
+# errorlocate 0.3.3
 
 * Fixed issue #21, thanks to Sander Scholtus: strict equalities
 * Fixed issue #22, thanks to Sander Scholtus: missing columns in data.
+* Fixed issue #23, "<var> =="" FALSE in if clause was handled incorrectly.
 
 # errorlocate 0.3.0
 

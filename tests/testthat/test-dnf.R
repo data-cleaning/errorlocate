@@ -42,4 +42,21 @@ describe("as_dnf", {
     expect_equivalent(dnf, expression(x <=1, z <= 1, w <= 1, y < 0))
   })
 
+  it("works with logical if statement",{
+    dnf <- as_dnf(quote(if (A == TRUE) x > 0))
+    expect_equivalent(as.expression(dnf), expression(A == FALSE | x > 0))
+
+    dnf <- as_dnf(quote(if (A == FALSE) x > 0))
+    expect_equivalent(as.expression(dnf), expression(A == TRUE | x > 0))
+
+    dnf <- as_dnf(quote(if (A == FALSE & B == TRUE) x > 0))
+    expect_equivalent(as.expression(dnf), expression(A == TRUE | B == FALSE | x > 0))
+
+    dnf <- as_dnf(quote(if (A != FALSE) x > 0))
+    expect_equivalent(as.expression(dnf), expression(A == FALSE | x > 0))
+
+    dnf <- as_dnf(quote(if (A != TRUE) x > 0))
+    expect_equivalent(as.expression(dnf), expression(A == TRUE | x > 0))
+  })
+
 })
