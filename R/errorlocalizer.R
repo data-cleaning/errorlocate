@@ -48,10 +48,7 @@ fh_localizer <-
       },
       locate = function(data, weight=NULL, add_noise = TRUE, ..., timeout=60){
         vars <- ._miprules$._vars
-        #browser()
         missing_vars <- vars[!vars %in% names(data)]
-        # nasty: remove variables that are use in the rules
-        #missing_vars <- missing_vars[!sapply(missing_vars, exists)]
 
         if (length(missing_vars)){
           stop('Missing column(s): '
@@ -59,33 +56,17 @@ fh_localizer <-
               , ". Add them to your data and rerun."
               , call. = FALSE
               )
-
-          # warning("Adding missing columns "
-          #        , paste0("'", missing_vars, "'=NA", collapse = ", ")
-          #        , " to data.frame."
-          #        , call. = FALSE
-          #        )
-          # data[missing_vars] <- ifelse( missing_vars %in% ._miprules$._vars_num
-          #                             , NA_real_
-          #                             , NA
-          #                             )
         }
         if (length(weight) == 0){
           weight <- matrix(1, nrow=nrow(data), ncol=ncol(data))
           colnames(weight) <- colnames(data)
         } else {
           if (is.null(dim(weight))){
-            weight[missing_vars] <- 1
             if (length(weight) == ncol(data)){
               # use recycling to fill a weight matrix
               weight <- t(matrix(weight, nrow=ncol(data), ncol=nrow(data)))
               colnames(weight) <- colnames(data)
             }
-           else {
-             if (length(missing_vars)){
-               weight[,missing_vars] <- 1
-             }
-           }
           }
           stopifnot(dim(weight) == dim(data))
           if (is.null(colnames(weight))){
@@ -93,12 +74,6 @@ fh_localizer <-
           }
           stopifnot(names(weight) == names(data))
         }
-        #browser()
-
-        # if (isTRUE(add_noise)){
-        #   weight <- add_noise(weight)
-        # }
-
         rows <- seq_len(nrow(data))
 
         # TODO add suggestions, status and progress bar
