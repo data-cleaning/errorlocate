@@ -54,15 +54,21 @@ fh_localizer <-
         #missing_vars <- missing_vars[!sapply(missing_vars, exists)]
 
         if (length(missing_vars)){
-          warning("Adding missing columns "
-                 , paste0("'", missing_vars, "'=NA", collapse = ", ")
-                 , " to data.frame."
-                 , call. = FALSE
-                 )
-          data[missing_vars] <- ifelse( missing_vars %in% ._miprules$._vars_num
-                                      , NA_real_
-                                      , NA
-                                      )
+          stop('Missing column(s): '
+              , paste0("'", missing_vars, "'", collapse = ", ")
+              , ". Add them to your data and rerun."
+              , call. = FALSE
+              )
+
+          # warning("Adding missing columns "
+          #        , paste0("'", missing_vars, "'=NA", collapse = ", ")
+          #        , " to data.frame."
+          #        , call. = FALSE
+          #        )
+          # data[missing_vars] <- ifelse( missing_vars %in% ._miprules$._vars_num
+          #                             , NA_real_
+          #                             , NA
+          #                             )
         }
         if (length(weight) == 0){
           weight <- matrix(1, nrow=nrow(data), ncol=ncol(data))
