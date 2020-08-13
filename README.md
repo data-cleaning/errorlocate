@@ -81,9 +81,25 @@ print(data_no_error)
 #>   profit cost turnover
 #> 1     NA  125      200
 
-errors_removed(data_no_error)
+er <- errors_removed(data_no_error)
+
+print(er)
 #> call:  x$locate(data = data, weight = weight, ..., timeout = timeout) 
 #> located  1  error(s).
 #> located  0  missing value(s).
 #> Use 'summary', 'values', '$errors' or '$weight', to explore and retrieve the errors.
+
+summary(er)
+#> Variable:
+#>       name errors missing
+#> 1   profit      1       0
+#> 2     cost      0       0
+#> 3 turnover      0       0
+#> Errors per record:
+#>   errors records
+#> 1      1       1
+
+er$errors
+#>      profit  cost turnover
+#> [1,]   TRUE FALSE    FALSE
 ```

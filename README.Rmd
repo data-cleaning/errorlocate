@@ -82,5 +82,11 @@ data_no_error <- replace_errors(data, rules)
 # faulty data was replaced with NA
 print(data_no_error)
 
-errors_removed(data_no_error)
+er <- errors_removed(data_no_error)
+
+print(er)
+
+summary(er)
+
+er$errors
 ```
