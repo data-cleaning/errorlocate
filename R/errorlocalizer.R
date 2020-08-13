@@ -89,33 +89,34 @@ fh_localizer <-
         # time considerably
         cf <- validate::confront(data, rules)
         invalid <- aggregate(cf, by = "record")$nfail > 0
-
+#        browser()
         res <- matrix( FALSE
                      , nrow = ncol(data)
                      , ncol = nrow(data)
                      , dimnames = list(names(data))
                      )
         #
-
-        res[, invalid] <- sapply(rows[invalid], function(r){
-          # cat(".")
-          values <- as.list(data[r,,drop=FALSE])
-          ._miprules$set_values(values, weight[r,])
-          el <- ._miprules$execute(timeout=timeout, ...)
-          adapt <- sapply(values, function(x){FALSE})
-          adapt[names(el$adapt)] <- el$adapt
-          rm(el)
-          gc()
-          if (interactive()){
-            value <- 1 + pb$getVal()
-            utils::setTxtProgressBar(pb, value)
-          }
-          adapt
-        })
+        if (any(invalid)){
+          res[, invalid] <- sapply(rows[invalid], function(r){
+            # cat(".")
+            values <- as.list(data[r,,drop=FALSE])
+            ._miprules$set_values(values, weight[r,])
+            el <- ._miprules$execute(timeout=timeout, ...)
+            adapt <- sapply(values, function(x){FALSE})
+            adapt[names(el$adapt)] <- el$adapt
+            rm(el)
+            gc()
+            if (interactive()){
+              value <- 1 + pb$getVal()
+              utils::setTxtProgressBar(pb, value)
+            }
+            adapt
+          })
+        }
         if(interactive()){ close(pb) }
 
         adapt <- t(res)
-
+ #       browser()
         idx <- which(colnames(adapt) %in% colnames(weight))
         weight_per_record <- as.numeric(tcrossprod(adapt[,idx], weight))
 
