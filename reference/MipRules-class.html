@@ -44,7 +44,7 @@
 This is a utility class that translates a validor object into a mixed integer problem that
 can be solved.
 Most users should use locate_errors which will handle all translation and execution
-automatically. This class is provided so users can implement or derive a alternative solution." />
+automatically. This class is provided so users can implement or derive an alternative solution." />
 
 
 
@@ -125,7 +125,7 @@ automatically. This class is provided so users can implement or derive a alterna
 This is a utility class that translates a validor object into a mixed integer problem that
 can be solved.
 Most users should use <code><a href='locate_errors.html'>locate_errors</a></code> which will handle all translation and execution
-automatically. This class is provided so users can implement or derive a alternative solution.</p>
+automatically. This class is provided so users can implement or derive an alternative solution.</p>
     </div>
 
 
@@ -152,34 +152,33 @@ automatically. This class is provided so users can implement or derive a alterna
 #&gt; Kind       Std            
 #&gt; Type      Real            
 #&gt; Upper      Inf            
-#&gt; Lower     -Inf            </div><div class='input'><span class='no'>mr</span>$<span class='fu'>set_values</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>x</span><span class='kw'>=</span><span class='fl'>0</span>, <span class='kw'>weight</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>x</span><span class='kw'>=</span><span class='fl'>1</span>)))
+#&gt; Lower     -Inf            </div><div class='input'><span class='no'>mr</span>$<span class='fu'>set_values</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>x</span><span class='kw'>=</span><span class='fl'>0</span>), <span class='kw'>weights</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>x</span><span class='kw'>=</span><span class='fl'>1</span>))
 <span class='no'>mr</span>$<span class='fu'>execute</span>()</div><div class='output co'>#&gt; $s
 #&gt; [1] 0
 #&gt; 
 #&gt; $values
-#&gt;             x      .delta_x      weight:1 .delta_weight 
-#&gt;         1.001         1.000         1.000         0.000 
+#&gt;        x .delta_x 
+#&gt;    1.001    1.000 
 #&gt; 
 #&gt; $lp
 #&gt; Model name: 
-#&gt;                        x        .delta_x        weight:1   .delta_weight            
-#&gt; Minimize               0  1.040375068784               0   1.41716651863            
-#&gt; V1                    -1               0               0               0  &lt;=  -1.001
-#&gt; x                      1          -1e+07               0               0  &lt;=       0
-#&gt; R3                    -1          -1e+07               0               0  &lt;=       0
-#&gt; weight                 0               0               1               1   =       1
-#&gt; Kind                 Std             Std             SOS             Std            
-#&gt; Type                Real             Int             Int             Int            
-#&gt; Upper                Inf               1               1               1            
-#&gt; Lower               -Inf               0               0               0            
+#&gt;                        x        .delta_x            
+#&gt; Minimize               0  1.080750137568            
+#&gt; V1                    -1               0  &lt;=  -1.001
+#&gt; x                      1          -1e+07  &lt;=       0
+#&gt; R3                    -1          -1e+07  &lt;=       0
+#&gt; Kind                 Std             Std            
+#&gt; Type                Real             Int            
+#&gt; Upper                Inf               1            
+#&gt; Lower               -Inf               0            
 #&gt; 
 #&gt; $adapt
-#&gt;      x weight 
-#&gt;   TRUE  FALSE 
+#&gt;    x 
+#&gt; TRUE 
 #&gt; 
 #&gt; $errors
-#&gt;      x weight 
-#&gt;   TRUE  FALSE 
+#&gt;    x 
+#&gt; TRUE 
 #&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

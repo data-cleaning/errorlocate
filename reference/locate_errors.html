@@ -194,27 +194,22 @@ possible errors.</p></td>
 )
 
 <span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>A</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"a1"</span>, <span class='st'>"a2"</span>), <span class='kw'>B</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"b2"</span>, <span class='st'>"b2"</span>))
-<span class='fu'>locate_errors</span>(<span class='no'>data</span>, <span class='no'>v_categorical</span>)</div><div class='output co'>#&gt; call:  x$locate(data = data, weight = weight, ..., timeout = timeout) 
-#&gt; located  1  error(s).
-#&gt; located  0  missing value(s).
-#&gt; Use 'summary', 'values', '$errors' or '$weight', to explore and retrieve the errors.</div><div class='input'>
+<span class='fu'>locate_errors</span>(<span class='no'>data</span>, <span class='no'>v_categorical</span>)$<span class='no'>errors</span></div><div class='output co'>#&gt;          A     B
+#&gt; [1,]  TRUE FALSE
+#&gt; [2,] FALSE FALSE</div><div class='input'>
 <span class='no'>v_logical</span> <span class='kw'>&lt;-</span> <span class='fu'>validator</span>( <span class='no'>A</span> <span class='kw'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>TRUE</span>, <span class='fl'>FALSE</span>)
                       , <span class='no'>B</span> <span class='kw'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>TRUE</span>, <span class='fl'>FALSE</span>)
                       ,  <span class='kw'>if</span> (<span class='no'>A</span> <span class='kw'>==</span> <span class='fl'>TRUE</span>) <span class='no'>B</span> <span class='kw'>==</span> <span class='fl'>TRUE</span>
                       )
 
 <span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>A</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='fu'>locate_errors</span>(<span class='no'>data</span>, <span class='no'>v_logical</span>, <span class='kw'>weight</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>,<span class='fl'>1</span>))</div><div class='output co'>#&gt; call:  x$locate(data = data, weight = weight, ..., timeout = timeout) 
-#&gt; located  1  error(s).
-#&gt; located  0  missing value(s).
-#&gt; Use 'summary', 'values', '$errors' or '$weight', to explore and retrieve the errors.</div><div class='input'>
+<span class='fu'>locate_errors</span>(<span class='no'>data</span>, <span class='no'>v_logical</span>, <span class='kw'>weight</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>,<span class='fl'>1</span>))$<span class='no'>errors</span></div><div class='output co'>#&gt;          A    B
+#&gt; [1,] FALSE TRUE</div><div class='input'>
 <span class='co'># try a condinational rule</span>
 <span class='no'>v</span> <span class='kw'>&lt;-</span> <span class='fu'>validator</span>( <span class='no'>married</span> <span class='kw'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>TRUE</span>, <span class='fl'>FALSE</span>), <span class='kw'>if</span> (<span class='no'>married</span><span class='kw'>==</span><span class='fl'>TRUE</span>) <span class='no'>age</span> <span class='kw'>&gt;=</span> <span class='fl'>17</span> )
 <span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>( <span class='kw'>married</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>age</span> <span class='kw'>=</span> <span class='fl'>16</span>)
-<span class='fu'>locate_errors</span>(<span class='no'>data</span>, <span class='no'>v</span>, <span class='kw'>weight</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>married</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>age</span><span class='kw'>=</span><span class='fl'>2</span>))</div><div class='output co'>#&gt; call:  x$locate(data = data, weight = weight, ..., timeout = timeout) 
-#&gt; located  1  error(s).
-#&gt; located  0  missing value(s).
-#&gt; Use 'summary', 'values', '$errors' or '$weight', to explore and retrieve the errors.</div></pre>
+<span class='fu'>locate_errors</span>(<span class='no'>data</span>, <span class='no'>v</span>, <span class='kw'>weight</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>married</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>age</span><span class='kw'>=</span><span class='fl'>2</span>))$<span class='no'>errors</span></div><div class='output co'>#&gt;      married   age
+#&gt; [1,]    TRUE FALSE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
