@@ -2,6 +2,7 @@
 
 * Implemented optimization, only invalid records are now treated. Can greatly
 enhance processing time! Thanks to Jos de Waard.
+* 
 
 # errorlocate 0.3.3
 
