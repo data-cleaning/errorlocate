@@ -20,7 +20,7 @@
 #' rules <- validator(x > 1)
 #' mr <- miprules(rules)
 #' mr$to_lp()
-#' mr$set_values(list(x=0, weight=list(x=1)))
+#' mr$set_values(c(x=0), weights=c(x=1))
 #' mr$execute()
 #' @export miprules
 miprules <- setRefClass("MipRules",

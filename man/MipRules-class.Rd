@@ -10,7 +10,7 @@ Create a mip object from \code{\link{validator}} object.
 This is a utility class that translates a validor object into a mixed integer problem that
 can be solved.
 Most users should use \code{\link{locate_errors}} which will handle all translation and execution
-automatically. This class is provided so users can implement or derive a alternative solution.
+automatically. This class is provided so users can implement or derive an alternative solution.
 }
 
 \section{Methods}{
@@ -28,6 +28,6 @@ The \code{MipRules} class contains the following methods:
 rules <- validator(x > 1)
 mr <- miprules(rules)
 mr$to_lp()
-mr$set_values(list(x=0, weight=list(x=1)))
+mr$set_values(c(x=0), weights=c(x=1))
 mr$execute()
 }
