@@ -74,13 +74,30 @@ fh_localizer <-
           }
           stopifnot(names(weight) == names(data))
         }
+
         rows <- seq_len(nrow(data))
 
         # TODO add suggestions, status and progress bar
         if (interactive()) {
           pb <- utils::txtProgressBar(min = 0, max=nrow(data))
         }
-        res <- sapply(rows, function(r){
+
+
+        #TODO add ref data !!!
+
+        # filter for records that are valid..., that reduces the processing
+        # time considerably
+        cf <- validate::confront(data, rules)
+        invalid <- aggregate(cf, by = "record")[, "rel.pass"] < 1
+
+        res <- matrix( FALSE
+                     , nrow = ncol(data)
+                     , ncol = nrow(data)
+                     , dimnames = list(names(data))
+                     )
+        #
+
+        res[, invalid] <- sapply(rows[invalid], function(r){
           # cat(".")
           values <- as.list(data[r,,drop=FALSE])
           ._miprules$set_values(values, weight[r,])
@@ -96,7 +113,7 @@ fh_localizer <-
           adapt
         })
         if(interactive()){ close(pb) }
-        #dim(res) <- dim(weight)[2:1]
+
         adapt <- t(res)
 
         idx <- which(colnames(adapt) %in% colnames(weight))
