@@ -4,7 +4,7 @@
 #' This is a utility class that translates a validor object into a mixed integer problem that
 #' can be solved.
 #' Most users should use \code{\link{locate_errors}} which will handle all translation and execution
-#' automatically. This class is provided so users can implement or derive a alternative solution.
+#' automatically. This class is provided so users can implement or derive an alternative solution.
 #'
 #' @section Methods:
 #' The \code{MipRules} class contains the following methods:

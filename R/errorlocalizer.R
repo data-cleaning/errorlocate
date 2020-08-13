@@ -77,7 +77,7 @@ fh_localizer <-
 
         rows <- seq_len(nrow(data))
 
-        # TODO add suggestions, status and progress bar
+        # TODO add suggestions and status
         if (interactive()) {
           pb <- utils::txtProgressBar(min = 0, max=nrow(data))
         }
@@ -88,7 +88,7 @@ fh_localizer <-
         # filter for records that are valid..., that reduces the processing
         # time considerably
         cf <- validate::confront(data, rules)
-        invalid <- aggregate(cf, by = "record")[, "rel.pass"] < 1
+        invalid <- aggregate(cf, by = "record")$nfail > 0
 
         res <- matrix( FALSE
                      , nrow = ncol(data)
