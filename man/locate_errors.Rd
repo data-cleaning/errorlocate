@@ -37,10 +37,9 @@ use method \code{\link{replace_errors}}.
 }
 \examples{
 rules <- validator( profit + cost == turnover
-              , cost - 0.6*turnover >= 0
-              , cost>= 0
-              , turnover >= 0
-)
+                  , cost >= 0.6 * turnover # cost should be at least 60\% of turnover
+                  , turnover >= 0 # can not be negative.
+                  )
 data <- data.frame(profit=755, cost=125, turnover=200)
 le <- locate_errors(data, rules)
 

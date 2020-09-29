@@ -12,6 +12,8 @@ data_no_error
 
 errors_removed(data_no_error)
 
-# a bit more control
+# a bit more control, you can supply the result of locate_errors
+# to replace_errors, which is a good thing, otherwise replace_errors will call
+# locate_errors internally.
 error_locations <- locate_errors(data, rules)
 replace_errors(data, error_locations)

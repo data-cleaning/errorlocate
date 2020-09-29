@@ -30,11 +30,10 @@ replace_errors(data, x, ref = NULL, ..., value = c("NA", "suggestion"))
 \code{data} with erronuous values removed.
 }
 \description{
-Find erronous fields using \code{\link{locate_errors}} and replace these
-fields automatically with NA or a suggestion that is provided by the error detection algorithm.
+
 }
 \note{
-In general it is better to replace the erronuous fields with \code{NA} and apply a proper
+In general it is better to replace the erroneous fields with \code{NA} and apply a proper
 imputation methods. Suggested values from the error localization method may introduce an unwanted bias.
 
 The errors that were removed from the \code{data.frame} can be retrieved with the function
@@ -55,7 +54,9 @@ data_no_error
 
 errors_removed(data_no_error)
 
-# a bit more control
+# a bit more control, you can supply the result of locate_errors
+# to replace_errors, which is a good thing, otherwise replace_errors will call
+# locate_errors internally.
 error_locations <- locate_errors(data, rules)
 replace_errors(data, error_locations)
 }
