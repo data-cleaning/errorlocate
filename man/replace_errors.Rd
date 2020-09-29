@@ -30,14 +30,19 @@ replace_errors(data, x, ref = NULL, ..., value = c("NA", "suggestion"))
 \code{data} with erronuous values removed.
 }
 \description{
-
+Find erroneous fields using \code{\link{locate_errors}} and replace these
+fields automatically with NA or a suggestion that is provided by the error detection algorithm.
+}
+\details{
+Note that you can also use the result of \code{\link{locate_errors}} with \code{replace_errors}.
+When the procedure takes a long time and \code{locate_errors} was called previously
+this is the preferred way, because otherwise \code{locate_errors} will be executed again.
+The errors that were removed from the \code{data.frame} can be retrieved with the function
+\code{\link{errors_removed}}. For more control over error localization see \code{\link{locate_errors}}.
 }
 \note{
 In general it is better to replace the erroneous fields with \code{NA} and apply a proper
 imputation methods. Suggested values from the error localization method may introduce an unwanted bias.
-
-The errors that were removed from the \code{data.frame} can be retrieved with the function
- \code{\link{errors_removed}}. For more control over error localization see \code{\link{locate_errors}}.
 }
 \examples{
 rules <- validator( profit + cost == turnover
