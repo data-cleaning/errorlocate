@@ -76,7 +76,7 @@ automatically. This class is provided so users can implement or derive an altern
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">errorlocate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.9.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4</span>
       </span>
     </div>
 
@@ -143,17 +143,19 @@ automatically. This class is provided so users can implement or derive an altern
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>rules</span> <span class='kw'>&lt;-</span> <span class='fu'>validator</span>(<span class='no'>x</span> <span class='kw'>&gt;</span> <span class='fl'>1</span>)
-<span class='no'>mr</span> <span class='kw'>&lt;-</span> <span class='fu'>miprules</span>(<span class='no'>rules</span>)
-<span class='no'>mr</span>$<span class='fu'>to_lp</span>()</div><div class='output co'>#&gt; Model name: 
+    <pre class="examples"><div class='input'><span class='va'>rules</span> <span class='op'>&lt;-</span> <span class='fu'>validator</span><span class='op'>(</span><span class='va'>x</span> <span class='op'>&gt;</span> <span class='fl'>1</span><span class='op'>)</span>
+<span class='va'>mr</span> <span class='op'>&lt;-</span> <span class='fu'>miprules</span><span class='op'>(</span><span class='va'>rules</span><span class='op'>)</span>
+<span class='va'>mr</span><span class='op'>$</span><span class='fu'>to_lp</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Model name: 
 #&gt;              x            
 #&gt; Minimize     0            
 #&gt; V1          -1  &lt;=  -1.001
 #&gt; Kind       Std            
 #&gt; Type      Real            
 #&gt; Upper      Inf            
-#&gt; Lower     -Inf            </div><div class='input'><span class='no'>mr</span>$<span class='fu'>set_values</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>x</span><span class='kw'>=</span><span class='fl'>0</span>), <span class='kw'>weights</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>x</span><span class='kw'>=</span><span class='fl'>1</span>))
-<span class='no'>mr</span>$<span class='fu'>execute</span>()</div><div class='output co'>#&gt; $s
+#&gt; Lower     -Inf            </div><div class='input'><span class='va'>mr</span><span class='op'>$</span><span class='fu'>set_values</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='fl'>0</span><span class='op'>)</span>, weights<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>mr</span><span class='op'>$</span><span class='fu'>execute</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $s
 #&gt; [1] 0
 #&gt; 
 #&gt; $values
@@ -195,7 +197,7 @@ automatically. This class is provided so users can implement or derive an altern
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

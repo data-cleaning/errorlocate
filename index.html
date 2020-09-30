@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">errorlocate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.9.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4</span>
       </span>
     </div>
 
@@ -89,42 +89,46 @@
 <h1 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h1>
 <p><code>errorlocate</code> can be installed from CRAN:</p>
-<div class="sourceCode" id="cb1"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"errorlocate"</span>)</pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"errorlocate"</span><span class="op">)</span></pre></div>
 <p>Beta versions can be installed with <code>drat</code>:</p>
-<div class="sourceCode" id="cb2"><pre class="r"><span class="kw pkg">drat</span><span class="kw ns">::</span><span class="fu">addRepo</span>(<span class="st">"data-cleaning"</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"errorlocate"</span>)</pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="fu">drat</span><span class="fu">::</span><span class="fu">addRepo</span><span class="op">(</span><span class="st">"data-cleaning"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"errorlocate"</span><span class="op">)</span></pre></div>
 <p>The latest development version of <code>errorlocate</code> can be installed from github with <code>devtools</code>:</p>
-<div class="sourceCode" id="cb3"><pre class="r"><span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu">install_github</span>(<span class="st">"data-cleaning/errorlocate"</span>)</pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"data-cleaning/errorlocate"</span><span class="op">)</span></pre></div>
 </div>
 <div id="usage" class="section level1">
 <h1 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h1>
-<div class="sourceCode" id="cb4"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">errorlocate</span>)
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/data-cleaning/errorlocate">errorlocate</a></span><span class="op">)</span>
 <span class="co">#&gt; Loading required package: validate</span>
-<span class="no">rules</span> <span class="kw">&lt;-</span> <span class="fu">validator</span>( <span class="no">profit</span> <span class="kw">==</span> <span class="no">turnover</span> - <span class="no">cost</span>
-                  , <span class="no">cost</span> <span class="kw">&gt;=</span> <span class="fl">0.6</span> * <span class="no">turnover</span>
-                  , <span class="no">turnover</span> <span class="kw">&gt;=</span> <span class="fl">0</span>
-                  , <span class="no">cost</span> <span class="kw">&gt;=</span> <span class="fl">0</span> <span class="co"># is implied</span>
-)
+<span class="va">rules</span> <span class="op">&lt;-</span> <span class="fu">validator</span><span class="op">(</span> <span class="va">profit</span> <span class="op">==</span> <span class="va">turnover</span> <span class="op">-</span> <span class="va">cost</span>
+                  , <span class="va">cost</span> <span class="op">&gt;=</span> <span class="fl">0.6</span> <span class="op">*</span> <span class="va">turnover</span>
+                  , <span class="va">turnover</span> <span class="op">&gt;=</span> <span class="fl">0</span>
+                  , <span class="va">cost</span> <span class="op">&gt;=</span> <span class="fl">0</span> <span class="co"># is implied</span>
+<span class="op">)</span>
 
-<span class="no">data</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">profit</span><span class="kw">=</span><span class="fl">750</span>, <span class="kw">cost</span><span class="kw">=</span><span class="fl">125</span>, <span class="kw">turnover</span><span class="kw">=</span><span class="fl">200</span>)
+<span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>profit<span class="op">=</span><span class="fl">750</span>, cost<span class="op">=</span><span class="fl">125</span>, turnover<span class="op">=</span><span class="fl">200</span><span class="op">)</span>
 
-<span class="no">data_no_error</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/replace_errors.html">replace_errors</a></span>(<span class="no">data</span>, <span class="no">rules</span>)
+<span class="va">data_no_error</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/replace_errors.html">replace_errors</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">rules</span><span class="op">)</span>
 
 <span class="co"># faulty data was replaced with NA</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">data_no_error</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">data_no_error</span><span class="op">)</span>
 <span class="co">#&gt;   profit cost turnover</span>
 <span class="co">#&gt; 1     NA  125      200</span>
 
-<span class="no">er</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/errors_removed.html">errors_removed</a></span>(<span class="no">data_no_error</span>)
+<span class="va">er</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/errors_removed.html">errors_removed</a></span><span class="op">(</span><span class="va">data_no_error</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">er</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">er</span><span class="op">)</span>
 <span class="co">#&gt; call:  x$locate(data = data, weight = weight, ..., timeout = timeout) </span>
 <span class="co">#&gt; located  1  error(s).</span>
 <span class="co">#&gt; located  0  missing value(s).</span>
 <span class="co">#&gt; Use 'summary', 'values', '$errors' or '$weight', to explore and retrieve the errors.</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">er</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">er</span><span class="op">)</span>
 <span class="co">#&gt; Variable:</span>
 <span class="co">#&gt;       name errors missing</span>
 <span class="co">#&gt; 1   profit      1       0</span>
@@ -134,7 +138,7 @@
 <span class="co">#&gt;   errors records</span>
 <span class="co">#&gt; 1      1       1</span>
 
-<span class="no">er</span>$<span class="no">errors</span>
+<span class="va">er</span><span class="op">$</span><span class="va">errors</span>
 <span class="co">#&gt;      profit  cost turnover</span>
 <span class="co">#&gt; [1,]   TRUE FALSE    FALSE</span></pre></div>
 </div>
@@ -186,7 +190,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
