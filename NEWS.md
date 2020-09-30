@@ -2,9 +2,6 @@
 
 * Implemented optimization, only invalid records are now treated. Can greatly
 enhance processing time! Thanks to Jos de Waard.
-
-# errorlocate 0.3.3
-
 * Fixed issue #21, thanks to Sander Scholtus: strict equalities
 * Fixed issue #22, thanks to Sander Scholtus: missing columns in data.
 * Fixed issue #23, "<var> =="" FALSE in if clause was handled incorrectly.
