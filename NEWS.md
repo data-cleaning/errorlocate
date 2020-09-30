@@ -1,3 +1,7 @@
+# errorlocate 0.4.1
+
+* Fix for issue #25, when a variable contains only one category. Thanks to @nickforr.
+
 # errorlocate 0.4
 
 * Implemented optimization, only invalid records are now treated. Can greatly
