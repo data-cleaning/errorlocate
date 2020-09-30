@@ -150,7 +150,10 @@ cat_mip_rule_ <- function(e, name, ...){
   }))
 
   if ( length(rule_l) == 1){
-    if (length(a) > 1 || op(e) == "=="){  # this is a strict(er) version and allows for some optimization
+    if  (length(a) > 1
+      || op(e) == "=="  # this is a strict(er) version and allows for some optimization
+      || is.character(rule_l[[1]]$value) # edge case when there is a single category.
+      ){
       mip_rule(a, op = "==", b = b, rule = name, type=sapply(a, function(x) 'binary'))
     } else {
       mip_rule(a, op = "<=", b = b, rule = name, type=sapply(a, function(x) 'binary')) # needed for logical variables

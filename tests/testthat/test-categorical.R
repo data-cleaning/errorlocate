@@ -38,4 +38,10 @@ describe("categorical", {
                   )
     cat_coefficients(v)
   })
+
+  it ("can handle a single category",{
+    v <- validator( a %in% c("A"))
+    res <- cat_coefficients(v)
+    expect_equal(res$operator, "==")
+  })
 })
