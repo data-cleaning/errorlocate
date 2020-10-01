@@ -18,7 +18,9 @@ replace_errors(data, x, ref = NULL, ..., value = c("NA", "suggestion"))
 \arguments{
 \item{data}{data to be checked}
 
-\item{x}{\code{\link{validator}} object}
+\item{x}{\code{\link{validator}} or \code{\link{errorlocation}} object.
+If an \code{errorlocation} is already available (through \code{\link{locate_errors}}) this
+is more efficient.}
 
 \item{ref}{optional reference data set}
 
