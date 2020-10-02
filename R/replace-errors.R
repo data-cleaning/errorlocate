@@ -12,7 +12,7 @@
 #' imputation methods. Suggested values from the error localization method may introduce an unwanted bias.
 #'
 #' @param data data to be checked
-#' @param x \code{\link{validator}} or \code{\link{errorlocation}} object.
+#' @param x \code{\link{validator}} or \code{errorlocation} object.
 #' If an \code{errorlocation} is already available (through \code{\link{locate_errors}}) this
 #' is more efficient.
 #' @param ref optional reference data set
