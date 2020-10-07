@@ -1,6 +1,7 @@
 # errorlocate 0.4.1
 
 * Fix for issue #25, when a variable contains only one category. Thanks to @nickforr.
+* Added status and duration info to `errorlocation`. Thanks to Sander Scholtus
 
 # errorlocate 0.4
 

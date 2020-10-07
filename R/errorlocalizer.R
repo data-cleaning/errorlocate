@@ -75,7 +75,8 @@ fh_localizer <-
           stopifnot(names(weight) == names(data))
         }
 
-        rows <- seq_len(nrow(data))
+        N <- nrow(data)
+        rows <- seq_len(N)
 
         # TODO add suggestions and status
         if (interactive()) {
@@ -95,35 +96,44 @@ fh_localizer <-
                      , ncol = nrow(data)
                      , dimnames = list(names(data))
                      )
-        #
+
+        # collect info during processing
+        status <- integer(N)
+        duration <- numeric(N)
+
         if (any(invalid)){
           res[, invalid] <- sapply(rows[invalid], function(r){
             # cat(".")
+            starttime <- Sys.time()
             values <- as.list(data[r,,drop=FALSE])
             ._miprules$set_values(values, weight[r,])
             el <- ._miprules$execute(timeout=timeout, ...)
             adapt <- sapply(values, function(x){FALSE})
             adapt[names(el$adapt)] <- el$adapt
+            status[r] <<- el$s
             rm(el)
             gc()
             if (interactive()){
               value <- 1 + pb$getVal()
               utils::setTxtProgressBar(pb, value)
             }
+            duration[r] <<- Sys.time() - starttime
             adapt
           })
         }
         if(interactive()){ close(pb) }
 
+
         adapt <- t(res)
- #       browser()
         idx <- which(colnames(adapt) %in% colnames(weight))
         weight_per_record <- as.numeric(tcrossprod(adapt[,idx], weight))
 
         is.na(adapt) <- is.na(data)
         create_errorlocation(
           values = adapt,
-          weight = weight_per_record
+          weight = weight_per_record,
+          duration = duration,
+          status = status
         )
       }
     )

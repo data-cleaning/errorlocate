@@ -27,4 +27,20 @@ describe("errorlocation",{
     el_s <- summary(el)
     expect_output_file(print(el_s), "test-errorlocation-summary.txt", update=FALSE)
   })
+  it ("has collected info on duration and status",{
+    rules <- validator( x > 1)
+    d <- data.frame( x = c(0,1,2,-1))
+    N <- nrow(d)
+    el <- locate_errors(d, rules)
+
+    expect_equal(length(el$duration), N)
+    expect_true(el$duration[3] == 0)
+    expect_equal(length(el$duration), N)
+    expect_true(all(el$status == 0))
+
+    rules <- validator( x > 1, x < -1)
+    d <- data.frame( x = 0 )
+    el <- locate_errors(d, rules)
+    expect_equal(el$status, 2)
+  })
 })

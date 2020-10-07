@@ -24,6 +24,8 @@
 #'   \item \code{$errors}: \code{matrix} indicating which values are erronuous (\code{TRUE}),
 #'   missing (\code{NA}) or valid (\code{FALSE})
 #'   \item \code{$weight}: The total weight per record. A weight of 0 means no errors were detected.
+#'   \item \code{$status}: The status of the mip solver for this record.
+#'   \item \code{$duration}: The number of seconds for processing each record.
 #' }
 #'
 #' @exportClass errorlocation
@@ -33,20 +35,28 @@ create_errorlocation <- setRefClass('errorlocation',
     ._call = 'call',
     ._values = 'matrix',
     ._weight = 'numeric',
-    ._status = 'list',
+    ._status = 'integer',
+    ._duration = 'numeric',
     ._suggestion = 'list',
     errors = function(){
       ._values
     },
     weight = function(){
       ._weight
+    },
+    status = function(){
+      ._status
+    },
+    duration = function(){
+      ._duration
     }
   ),
   methods=list(
-    initialize = function(values=matrix(), status=list(), weight= rep(1, NROW(values)), suggestion=list()){
+    initialize = function(values=matrix(), status=integer(), weight= rep(1, NROW(values)), suggestion=list(), duration=numeric()){
       ._call <<- sys.call(-5)
       ._values <<- values
       ._status <<- status
+      ._duration <<- duration
       ._weight <<- weight
       ._suggestion <<- suggestion
     },
