@@ -20,6 +20,16 @@ describe("fh_localizer", {
     el <- loc$locate(data)
     expect_equivalent(values(el)[1,], c(x=FALSE, y=TRUE))
   })
+  it("can handle weights correctly",{
+    v <- validator(x + y == z, 2*y + 1 == z)
+    data <- data.frame(x = 1, y = 1, z = 3)
+    loc <- fh_localizer(v)
+    el <- loc$locate(data)
+    expect_equal(as.logical(el$errors), c(TRUE, FALSE, FALSE))
+
+    el <- loc$locate(data, weight = c(x = 10, y = 1, z = 1))
+    expect_equal(as.logical(el$errors), c(FALSE, TRUE, TRUE))
+  })
 })
 
 

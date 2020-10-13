@@ -19,4 +19,10 @@ describe("lp_solve",{
     lin_rules <- lin_as_mip_rules(v)
     translate_mip_lp(lin_rules)
   })
+  it("can encode weights in the objective function",{
+    v <- validator(x + y == z, 2*y + 1 == z)
+    data <- data.frame(x = 1, y = 1, z = 3)
+    mip <- miprules(v)
+    mip$set_values(as.list(data), weights = c(x=10, y = 1, z = 1))
+  })
 })
