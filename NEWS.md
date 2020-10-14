@@ -1,6 +1,7 @@
-# errorlocate 0.4.1
+# errorlocate 0.4.2
 
 * Fix for issue #25, when a variable contains only one category. Thanks to @nickforr.
+* Fix/warning for issue #27, using an integer variable for categories. Thanks to Jeffrey Hoogland for reporting.
 * Added status and duration info to `errorlocation`. Thanks to Sander Scholtus
 
 # errorlocate 0.4

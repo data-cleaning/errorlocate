@@ -43,7 +43,7 @@ cvi <- function(var, value, not){
 }
 
 # collect variable information within a rule, assumes that is_cat_ has been used
-# to check wether it is categorical
+# to check whether it is categorical
 get_catvar <- function(expr, not = FALSE){
   if (is.symbol(expr)){
     return(cvi(expr, TRUE, not))
@@ -71,10 +71,15 @@ get_catvar <- function(expr, not = FALSE){
 
 # generate binary variable names from vars and their values.
 bin_var_name <- function(x, infix=INFIX_CAT_NAME){
-  if (is.character(x$value)){
-    paste0(x$var, infix, x$value)
-  } else {
+  if (is.numeric(x$value)){
+    warning("'", x$var, "' seems a categorical variable, please recode it as a factor in the data.
+Only use character or logical values in %in% statements to prevent this warning.",
+            call. = FALSE)
+  }
+  if (is.logical(x$value)){
     x$var
+  } else {
+    paste0(x$var, infix, x$value)
   }
 }
 
