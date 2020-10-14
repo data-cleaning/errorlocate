@@ -71,14 +71,15 @@ get_catvar <- function(expr, not = FALSE){
 
 # generate binary variable names from vars and their values.
 bin_var_name <- function(x, infix=INFIX_CAT_NAME){
-  if (is.numeric(x$value)){
-    warning("'", x$var, "' seems a categorical variable, please recode it as a factor in the data.
-Only use character or logical values in %in% statements to prevent this warning.",
-            call. = FALSE)
-  }
   if (is.logical(x$value)){
     x$var
   } else {
+    if (is.numeric(x$value)){
+      warning("'", x$var, "' seems a categorical variable, please recode it as a factor in the data.
+Only use character or logical values in %in% statements to prevent this warning.",
+              call. = FALSE)
+
+    }
     paste0(x$var, infix, x$value)
   }
 }
@@ -88,6 +89,7 @@ cat_var_name <- function(x, infix=INFIX_CAT_NAME){
   suffix <- paste0(infix, ".*$")
   gsub(suffix,"",names(x$a))
 }
+
 
 #' Check if rules are categorical
 #'

@@ -106,6 +106,29 @@ describe("locate_errors", {
     res <- locate_errors(data, rules)$errors
     expect_true(res)
   })
+
+  it ("errors on using integer variables as categories",{
+    rules <- validator(if (sector %in% c(1,2)) turnover > 0)
+
+    # faulty record
+    data <- data.frame(sector = 1, turnover = 0)
+    weight <- c(sector = 2, turnover = 1)
+
+    # no errors found, but a warning is given
+    expect_warning({
+      expect_error({
+        el <- locate_errors(data, rules, weight=weight)$errors
+      })
+    })
+
+    # recoding as factor
+    data$sector <- factor(data$sector)
+    expect_warning({
+        el <- locate_errors(data, rules, weight=weight)$errors
+    })
+
+
+  })
 })
 
 

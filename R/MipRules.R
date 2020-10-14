@@ -42,7 +42,7 @@ miprules <- setRefClass("MipRules",
 
        var_num <- sapply(._miprules, function(mr){
                   names(mr$type)[mr$type == "double"]})
-       ._vars_num <<- unique(as.character(var_num))
+       ._vars_num <<- as.character(unique(unlist(var_num)))
        ._vars <<- validate::variables(rules)
        # remove variables that are not in data.frame but in the environment
        ._vars <<- ._vars[!sapply(._vars, exists)]

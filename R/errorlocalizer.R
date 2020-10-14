@@ -57,6 +57,19 @@ fh_localizer <-
               , call. = FALSE
               )
         }
+        numvars_mip <- ._miprules$._vars_num
+        numvars_data <- names(data)[sapply(data, is.numeric)]
+        categorical_as_integer <- numvars_data[ numvars_data %in% vars
+                                              & !numvars_data %in% numvars_mip
+                                              ]
+        if (length(categorical_as_integer)){
+          stop('Categorical columns coded as integers: '
+               , paste0("'", categorical_as_integer, "'", collapse = ", ")
+               , ". Change them to `factor` and rerun."
+               , call. = FALSE
+          )
+        }
+
         if (length(weight) == 0){
           weight <- matrix(1, nrow=nrow(data), ncol=ncol(data))
           colnames(weight) <- colnames(data)

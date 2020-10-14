@@ -92,6 +92,16 @@ get_mr_type <- function(x, ...){
   setNames(df$type, df$vars)
 }
 
+get_mr_numeric_vars <- function(x, ...){
+  type <- unlist(sapply(x, function(mr){
+    mr$type
+  }, simplify = FALSE))
+  vars <- unlist(sapply(x, cat_var_name))
+  df <- unique(data.frame(vars=vars, type=type, stringsAsFactors = FALSE))
+  df$vars[df$type == "double"]
+  # setNames(df$type, df$vars)
+}
+
 get_mr_expression <- function(x, ...){
   expr <- parse(text=sapply(x, as.character))
   names(expr) <- get_mr_rules(x, ...)
