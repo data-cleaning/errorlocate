@@ -160,7 +160,6 @@ as.expression.dnf <- function(x, as_if = FALSE, ...){
 }
 
 dnf_to_mip_rule <- function(d, name = "", ...){
-  #browser()
   islin <- sapply(d, is_lin_)
   d_l <- d[islin]
   if (any(islin)){

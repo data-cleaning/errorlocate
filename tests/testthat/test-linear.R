@@ -9,6 +9,17 @@ describe("is_lin_",{
     e <- quote(if(x>1) y < 1)
     expect_false(is_lin_(e))
   })
+
+  it("detects log constants", {
+    e <- quote(x > log(1))
+    expect_true(is_lin_(e))
+  })
+
+  it("detects log transformed variables", {
+    e <- quote(log(x) > 0)
+    expect_true(is_lin_(e))
+  })
+
 })
 
 describe("is_linear",{
@@ -19,6 +30,13 @@ describe("is_linear",{
   it("can detect var_group linear rules",{
     v <- validator(var_group(a,b) >= 0, if (var_group(a,b) == "a") c == TRUE)
     expect_equal(is_linear(v), c(TRUE, FALSE))
+  })
+
+  it ("can detect linear rules with log",{
+    rules <- validator(log(x) > 0, log10(y) > 0, log1p(z) > 0, log(x+y) > 0)
+    expect_equal( is_linear(rules)
+                , c(TRUE, TRUE, TRUE, FALSE)
+                )
   })
 })
 
@@ -43,7 +61,29 @@ describe("lin_mip_rule",{
   })
   it("errors on invalid input", {
     e <- quote(if (x < 1) y > 1)
-    expect_error(lin_mip_rule_(e))
+    expect_error(lin_mip_rule_(e, name="H"))
   })
+
+  it("evaluates log constants", {
+    e <- quote(x > log(1))
+    e_e <- quote(x > 0)
+
+    mr <- lin_mip_rule_(e, name="n")
+    mr_e <- lin_mip_rule_(e_e, name="n")
+
+    expect_equal(mr, mr_e)
+  })
+
+  it("detects log transformed variables", {
+    e <- quote(log(x) > 0)
+    e_e <- quote(x._log > 0)
+
+    mr <- lin_mip_rule_(e, name="n")
+    mr_e <- lin_mip_rule_(e_e, name="n")
+
+    expect_equal(mr, mr_e)
+  })
+
+
 })
 

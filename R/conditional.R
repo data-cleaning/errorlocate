@@ -44,7 +44,6 @@ is_conditional <- function(rules, ...){
 cond_as_mip_rules <- function(x, ...){
   cond_rules <- x[is_conditional(x)]
   mr <- lapply(cond_rules$rules, function(rule){
-    #browser()
     prefix <- paste0(rule@name, "._lin")
 
     rl <- replace_linear(rule@expr, prefix=prefix)

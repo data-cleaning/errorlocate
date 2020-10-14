@@ -1,3 +1,4 @@
+LOGS <- c("log", "log1p", "log10", "log2")
 # code is mainly copied from validate, but needed for linear sub expressions in
 # conditional statements.
 
@@ -52,12 +53,23 @@ is_lin_ <- function(expr, top=TRUE, ...){
       if (is.numeric(l) || is.numeric(left(l))){ return(is_lin_(r, FALSE)) }
       if (is.numeric(r) || is.numeric(left(r))){ return(is_lin_(l, FALSE)) }
   }
+
+  if (op %in% LOGS){
+    if (is.numeric(l)){
+      return(TRUE)
+    }
+    # this is a log transformed variable...
+    if (is.symbol(l)){
+      return(TRUE)
+    }
+    # TODO make this work for all linear subexpressions (takes more administration)
+  }
   FALSE
 }
 #
 # create a linear mip_rule from a linear expression.
 # assumes that it is checked with is_lin_
-lin_mip_rule_ <- function(e, sign=1, name, ...){
+lin_mip_rule_ <- function(e, sign = 1, name, ...){
 
   if (is.symbol(e)){
     return(setNames(sign, deparse(e)))
@@ -79,7 +91,7 @@ lin_mip_rule_ <- function(e, sign=1, name, ...){
     coef <- c(lin_mip_rule_(l, sign), lin_mip_rule_(r, -sign), .b=0) # makes sure that .b exists
     coef <- tapply(coef, names(coef), sum) # sum up coefficients
     b <- names(coef) == ".b"
-    return(mip_rule(coef[!b], op, -coef[b], name))
+    return(mip_rule(coef[!b], op, -coef[b], rule = name))
   }
 
   if (op == '-'){
@@ -106,6 +118,18 @@ lin_mip_rule_ <- function(e, sign=1, name, ...){
       r <- eval(r) # to deal with negative coefficients
     }
     if (is.numeric(r)){ return(lin_mip_rule_(l, sign*r)) }
+  }
+
+  if (op %in% LOGS){
+    if (is.numeric(l)){
+      l <- eval(e)
+      return(lin_mip_rule_(l, sign))
+    }
+    if (is.symbol(l)){ # derive a new variable <var>._<logfn>
+      n <- paste0(deparse(l), "._", op)
+      return(setNames(sign, n))
+    }
+    stop("to be implemented")
   }
   stop("Invalid linear statement")
 }
