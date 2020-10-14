@@ -27,10 +27,11 @@ miprules <- setRefClass("MipRules",
    fields = list(
      rules         = "validator",
      objective     = "numeric",
-     ._miprules   = "list",
+     ._miprules    = "list",
      ._value_rules = "list",
      ._vars        = "character",
      ._vars_num    = "character",
+     ._log_transform = "data.frame",
      ._ignored     = "ANY",
      ._lp          = "ANY"
    ),
@@ -40,18 +41,28 @@ miprules <- setRefClass("MipRules",
        objective <<- objective
        ._miprules <<- to_miprules(rules)
 
-       var_num <- sapply(._miprules, function(mr){
-                  names(mr$type)[mr$type == "double"]})
-       ._vars_num <<- as.character(unique(unlist(var_num)))
        ._vars <<- validate::variables(rules)
+
+       var_num <- sapply(._miprules, function(mr){
+          names(mr$type)[mr$type == "double"]})
+       var_num <- as.character(unique(unlist(var_num)))
+
+       # extract log transformed variables
+       ._log_transform <<- log_extract(var_num)
+
+       # make sure original variables are also in _vars_num
+       ._vars_num <<- unique(c(._log_transform$num_vars, var_num))
+
        # remove variables that are not in data.frame but in the environment
        ._vars <<- ._vars[!sapply(._vars, exists)]
      },
      mip_rules = function(){
        c(._miprules, ._value_rules)
      },
-     set_values = function(values, weights){
-       #browser()
+     set_values = function( values
+                          , weights
+                          , log_values = list()
+                          , delta_names=character()){
        if (missing(values) || length(values) == 0){
          objective <<- numeric()
          ._value_rules <<- list()
@@ -71,7 +82,17 @@ miprules <- setRefClass("MipRules",
          names(weights) <- names(values)
        }
 
+       # TODO if missing log_values, derive it inplace
+
        ._value_rules <<- expect_values(values, weights)
+       if (length(log_values)){
+          weights_ld <- weights[delta_names]
+          names(weights_ld) <- names(log_values)
+          names(delta_names) <- names(log_values)
+          log_value_rules <- expect_values(log_values, weights = weights_ld, delta_names)
+          ._value_rules <<- c(._value_rules, log_value_rules)
+       }
+
        # TODO move this to the outside
        weights <- add_noise(weights)
        objective <<- setNames(weights, paste0(".delta_", names(weights)))
@@ -132,7 +153,8 @@ miprules <- setRefClass("MipRules",
      show = function(){
        mr <- mip_rules()
        cat("Mip rules:\n")
-       cat(paste(sapply(mr, as.character), collapse = "\n"))
+       # print(mr)
+       cat(paste(sapply(mr, as.character.mip_rule), collapse = "\n"))
      }
    )
 )

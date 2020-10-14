@@ -25,13 +25,14 @@ as.character.mip_rule <- function(x, ...){
   a <- gsub("\\b1\\*", "", a) # "1*" => ""
   a <- gsub("\\+ -", "- ", a) # "+ -" => "- "
 
+#  browser()
   paste0(a, " ",x$op, " ", x$b, sep = "")
 }
 
 print.mip_rule <- function(x, ...){
   a <- paste0(x$a, "*", names(x$a), collapse= ' + ')
 
-  # do some simplication
+  # do some simplification
   a <- gsub("\\b1\\*", "", a) # "1*" => ""
   a <- gsub("\\+ -", "- ", a) # "+ -" => "- "
 

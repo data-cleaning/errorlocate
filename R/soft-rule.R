@@ -38,10 +38,15 @@ eps_min <- suffix("_eps_min")
 #' @param values named list of values.
 #' @param weights named numeric of equal length as values.
 #' @param ... not used
-expect_values <- function(values, weights, ...){
+expect_values <- function(values, weights, delta_names = NULL){
   if (missing(weights)){
     weights <- rep(1, length(values))
     names(weights) <- names(values)
+  }
+
+  if (is.null(delta_names)){
+    delta_names <- names(values)
+    names(delta_names) <- delta_names
   }
 
   stopifnot(
@@ -61,7 +66,9 @@ expect_values <- function(values, weights, ...){
     b <- lin_values[[n]]
     w <- weights[n]
     if (is.finite(w)){
-      soft_lin_rule(mip_rule(a, op="<=", b =  b, rule = n, weight = w))
+      soft_lin_rule( mip_rule(a, op="<=", b =  b, rule = n, weight = w)
+                   , name = delta_names[n]
+                   )
     } else {
       mip_rule(a, op = "==", b = b, rule = n, weight = Inf)
     }
@@ -75,7 +82,9 @@ expect_values <- function(values, weights, ...){
     b <- lin_values[[n]]
     w <- weights[n]
     if (is.finite(w)){
-      soft_lin_rule(mip_rule(-a, op = "<=", b = -b, rule = n, weight = w))
+      soft_lin_rule( mip_rule(-a, op = "<=", b = -b, rule = n, weight = w)
+                   , name = delta_names[n]
+                   )
     } else {
       NULL
     }

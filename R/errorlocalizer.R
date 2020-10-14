@@ -48,6 +48,11 @@ fh_localizer <-
       },
       locate = function(data, weight=NULL, add_noise = TRUE, ..., timeout=60){
         vars <- ._miprules$._vars
+        # upfront, because we are going to expand the data.frame..
+        nr_rows <- nrow(data)
+        nr_cols <- ncol(data)
+        names_cols <- colnames(data)
+
         missing_vars <- vars[!vars %in% names(data)]
 
         if (length(missing_vars)){
@@ -57,6 +62,7 @@ fh_localizer <-
               , call. = FALSE
               )
         }
+        #browser()
         numvars_mip <- ._miprules$._vars_num
         numvars_data <- names(data)[sapply(data, is.numeric)]
         categorical_as_integer <- numvars_data[ numvars_data %in% vars
@@ -71,54 +77,71 @@ fh_localizer <-
         }
 
         if (length(weight) == 0){
-          weight <- matrix(1, nrow=nrow(data), ncol=ncol(data))
-          colnames(weight) <- colnames(data)
+          weight <- matrix(1, nrow=nr_rows, ncol=nr_cols)
+          colnames(weight) <- names_cols
         } else {
           if (is.null(dim(weight))){
             if (length(weight) == ncol(data)){
-              # use recycling to fill a weight matrix
-              weight <- t(matrix(weight, nrow=ncol(data), ncol=nrow(data)))
-              colnames(weight) <- colnames(data)
+
+              if (!is.null(names(weight))){
+                weight <- weight[names_cols]
+              }
+              # use recycling to fill a weight matrix and transpose...
+              weight <- t(matrix(weight, nrow=nr_cols, ncol=nr_rows))
+              colnames(weight) <- names_cols
             }
           }
           stopifnot(dim(weight) == dim(data))
           if (is.null(colnames(weight))){
-            colnames(weight) <- colnames(data)
+            colnames(weight) <- names_cols
+          } else {
+            weight <- weight[, names_cols, drop=FALSE]
           }
-          stopifnot(names(weight) == names(data))
+          stopifnot(names(weight) == names_cols)
         }
 
-        N <- nrow(data)
+        # derive log transformed data! (after weights, because changes the number
+        # of columns etc.)
+        log_transform <- ._miprules$._log_transform
+        # TODO deal with failures when log of negative values is taken...
+        log_data <- log_derived_data(data, log_transform)
+
+        N <- nr_rows
         rows <- seq_len(N)
 
-        # TODO add suggestions and status
         if (interactive()) {
           pb <- utils::txtProgressBar(min = 0, max=nrow(data))
         }
-
-
-        #TODO add ref data !!!
 
         # filter for records that are valid..., that reduces the processing
         # time considerably
         cf <- validate::confront(data, rules)
         invalid <- aggregate(cf, by = "record")$nfail > 0
-#        browser()
+
+        #TODO add ref data !!!
+
+        # seems strange, but we are going to transpose..
         res <- matrix( FALSE
-                     , nrow = ncol(data)
-                     , ncol = nrow(data)
-                     , dimnames = list(names(data))
+                     , nrow = nr_cols
+                     , ncol = nr_rows
+                     , dimnames = list(names_cols)
                      )
+
 
         # collect info during processing
         status <- integer(N)
         duration <- numeric(N)
 
+        # TODO remove any(invalid)
         if (any(invalid)){
           for (r in rows[invalid]){
             starttime <- Sys.time()
             values <- as.list(data[r,,drop=FALSE])
-            ._miprules$set_values(values, weight[r,])
+            ._miprules$set_values( values = values
+                                 , weight[r,]
+                                 , log_values = as.list(log_data[r,,drop=FALSE])
+                                 , delta_names <- log_transform$num_vars
+                                 )
             el <- ._miprules$execute(timeout=timeout, ...)
             adapt <- sapply(values, function(x){FALSE})
             adapt[names(el$adapt)] <- el$adapt
@@ -134,7 +157,6 @@ fh_localizer <-
           }
         }
         if(interactive()){ close(pb) }
-
 
         adapt <- t(res)
         idx <- which(colnames(adapt) %in% colnames(weight))
