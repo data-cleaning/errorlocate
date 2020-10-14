@@ -115,24 +115,23 @@ fh_localizer <-
         duration <- numeric(N)
 
         if (any(invalid)){
-          res[, invalid] <- sapply(rows[invalid], function(r){
-            # cat(".")
+          for (r in rows[invalid]){
             starttime <- Sys.time()
             values <- as.list(data[r,,drop=FALSE])
             ._miprules$set_values(values, weight[r,])
             el <- ._miprules$execute(timeout=timeout, ...)
             adapt <- sapply(values, function(x){FALSE})
             adapt[names(el$adapt)] <- el$adapt
-            status[r] <<- el$s
+            status[r] <- el$s
             rm(el)
             gc()
             if (interactive()){
               value <- 1 + pb$getVal()
               utils::setTxtProgressBar(pb, value)
             }
-            duration[r] <<- Sys.time() - starttime
-            adapt
-          })
+            duration[r] <- Sys.time() - starttime
+            res[, r] <- adapt
+          }
         }
         if(interactive()){ close(pb) }
 
