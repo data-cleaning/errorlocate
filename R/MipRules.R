@@ -28,6 +28,7 @@ miprules <- setRefClass("MipRules",
      rules         = "validator",
      objective     = "numeric",
      ._miprules    = "list",
+     ._log_rules   = "list", # extra constraints for log transformed rules
      ._value_rules = "list",
      ._vars        = "character",
      ._vars_num    = "character",
@@ -36,7 +37,7 @@ miprules <- setRefClass("MipRules",
      ._lp          = "ANY"
    ),
    methods = list(
-     initialize = function(rules){
+     initialize = function(rules, n = 10){
        rules <<- rules
        objective <<- objective
 
@@ -52,14 +53,17 @@ miprules <- setRefClass("MipRules",
        # extract log transformed variables
        ._log_transform <<- log_extract(var_num)
 
-       # make sure original variables are also in _vars_num
+       # set log constraints
+       ._log_rules <<- create_log_constraints(._log_transform)
+
+              # make sure original variables are also in _vars_num
        ._vars_num <<- unique(c(._log_transform$num_vars, var_num))
 
        # remove variables that are not in data.frame but in the environment
        ._vars <<- ._vars[!sapply(._vars, exists)]
      },
      mip_rules = function(){
-       c(._miprules, ._value_rules)
+       c(._miprules, ._log_rules, ._value_rules)
      },
      set_values = function( values
                           , weights
@@ -99,6 +103,12 @@ miprules <- setRefClass("MipRules",
        weights <- add_noise(weights)
        objective <<- setNames(weights, paste0(".delta_", names(weights)))
      },
+     update_log_constraints = function(data, n = 10){
+       ._log_rules <<- create_log_constraints(._log_transform
+                                             , data = data
+                                             , n = n
+                                             )
+     },
      to_lp = function(...){
        translate_mip_lp(mip_rules(), objective, ...)
      },
@@ -116,7 +126,9 @@ miprules <- setRefClass("MipRules",
        adapt[adapt_nms] <- values[adapt_nms] == 1
        # remove prefix
        names(adapt) <- gsub(".delta_", "", names(adapt))
-       #TODO improve the return values based on value of s
+       # TODO improve the return values based on value of s
+       # Add the same table as with infeasible
+       # TODO when no solution found, change errors into NA
        list(
          s = s,
          values = values,

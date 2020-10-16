@@ -106,6 +106,10 @@ fh_localizer <-
         # TODO deal with failures when log of negative values is taken...
         log_data <- log_derived_data(data, log_transform)
 
+        # TODO add `n` to arguments of function
+        # set ranges of log constraints
+        ._miprules$update_log_constraints(data, n = 10)
+
         N <- nr_rows
         rows <- seq_len(N)
 

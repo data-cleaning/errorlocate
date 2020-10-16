@@ -73,7 +73,7 @@ translate_mip_lp <- function( rules
     }
     lpSolveAPI::set.objfn(lps, unname(obj), columns)
   }
-
+  #browser()
   lpSolveAPI::set.constr.type(lps,types=ops)
 
   b <- ifelse(strict, lc$b - eps, lc$b)

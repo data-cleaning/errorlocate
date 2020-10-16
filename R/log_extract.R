@@ -24,10 +24,24 @@ log_derived_data <- function(data, x){
   as.data.frame(derived_data)
 }
 
+create_log_constraints <- function(li, data = NULL, n = 10, r = c(1,1e5)){
+  lc <- lapply(seq_len(nrow(li)), function(i){
+    num_var <- li$num_vars[i]
+    if (!is.null(data[[num_var]])){
+      r <- range(data[[num_var]], na.rm = TRUE)
+    }
+    log_constraint_rules( li$num_vars[i]
+                        , li$log_vars[i]
+                        , li$log_fn[i]
+                        , n = n
+                        , r = r
+                        )
+  })
 
-create_log_constraints <- function(log_transform, data){
-  for (i in seq_len(nrow(log_transform))){
+  if (length(lc)){ # unlist of empty list is NULL
+    lc <- unlist(lc, recursive = FALSE)
   }
+  lc
 }
 
 log_constraint_rules <- function(num_var, log_var, logfn, n = 10, r = c(1,1e5)){

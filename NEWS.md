@@ -1,8 +1,12 @@
-# errorlocate 0.4.2
+# errorlocate 0.5
 
 * Fix for issue #25, when a variable contains only one category. Thanks to @nickforr.
 * Fix/warning for issue #27, using an integer variable for categories. Thanks to Jeffrey Hoogland for reporting.
 * Added status and duration info to `errorlocation`. Thanks to Sander Scholtus
+* Improved progress bar, showing percentage and taking into account records without errors
+* added `inspect_mip` function, allowing for an indepth examination of the mip translation
+and execution. Making it easier to debug/find what is wrong with a record / rule set
+* experimental log functionality.
 
 # errorlocate 0.4
 

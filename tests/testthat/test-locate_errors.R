@@ -129,6 +129,15 @@ describe("locate_errors", {
 
 
   })
+
+  it ("handles variables that are not part of the linear rules gracefully",{
+    rules <- validator( x / y <= 1, x > 5)
+    data <- data.frame(x = 1L, y = 2L)
+    expect_warning({
+      el <- locate_errors(data, rules)
+    })
+    expect_equal(as.logical(el$errors), c(TRUE, FALSE))
+  })
 })
 
 
