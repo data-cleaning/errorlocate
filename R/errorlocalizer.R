@@ -109,14 +109,15 @@ fh_localizer <-
         N <- nr_rows
         rows <- seq_len(N)
 
-        if (interactive()) {
-          pb <- utils::txtProgressBar(min = 0, max=nrow(data))
-        }
 
         # filter for records that are valid..., that reduces the processing
         # time considerably
         cf <- validate::confront(data, rules)
         invalid <- aggregate(cf, by = "record")$nfail > 0
+
+        if (interactive()) {
+          pb <- utils::txtProgressBar(min = 0, max=sum(invalid), style = 3)
+        }
 
         #TODO add ref data !!!
 
