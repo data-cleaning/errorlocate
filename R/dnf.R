@@ -213,7 +213,16 @@ to_miprules <- function(x, ...){
 
   can_translate <- is_linear(exprs) | is_categorical(exprs) | is_conditional(exprs)
   if (!all(can_translate)){
-    warning("Ignoring rules: ", paste(names(exprs)[!can_translate], collapse = ", "))
+    warning( "*******\n"
+           , "Ignoring non linear rules: \n"
+#           , paste(names(exprs)[!can_translate], collapse = ", ")
+           , paste0( "  ", exprs[!can_translate]
+                   , " [", names(exprs)[!can_translate],"]"
+                   , collapse = "\n"
+                   )
+           , "\n******\n"
+           , call. = FALSE
+           )
   }
   exprs <- exprs[can_translate]
   mr <- lapply(names(exprs), function(name){
@@ -224,6 +233,12 @@ to_miprules <- function(x, ...){
           )
   })
   unlist(mr, recursive = F)
+}
+
+get_translatable_vars <- function(x){
+  exprs <- to_exprs(x)
+  can_translate <- is_linear(exprs) | is_categorical(exprs) | is_conditional(exprs)
+  all.vars(exprs[can_translate])
 }
 
 to_lp <- function(x, objective = NULL, eps = 0.001){

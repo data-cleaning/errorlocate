@@ -10,6 +10,7 @@ log_extract <- function(log_vars){
   data.frame(num_vars, log_vars, log_fn)
 }
 
+# create data columns used to set values for log transformed variables.
 log_derived_data <- function(data, x){
   # assume x was created with log_extract function
   derived_data <- list()
@@ -23,27 +24,38 @@ log_derived_data <- function(data, x){
   as.data.frame(derived_data)
 }
 
-log_constraint_rules <- function(num_var, log_var, logfn, n = 10, r = 1:1e5){
-  # TODO check that r[1] >= 1
+
+create_log_constraints <- function(log_transform, data){
+  for (i in seq_len(nrow(log_transform))){
+
+  }
+}
+
+log_constraint_rules <- function(num_var, log_var, logfn, n = 10, r = c(1,1e5)){
+  stopifnot(n > 1)
+
   r[1] <- max(r[1], 1)
+  if (r[1] >=  r[2]){
+    r <- c(r[1]/10, 10*r[2])
+  }
 
   # sample points based on slope
   value_log <- seq(log(r[1]), log(r[2]), length.out = n)
-  value <- exp(value_log)
+  value <- exp(value_log) # log distributed points covering range.
 
   # TODO value_log again (to cope with that logfn can be different from "log")
+
   # upper bound!
   upper <-
     lapply(seq_len(n), function(i){
-    a <- c(1, -1/value[i])
-    names(a) <- c(log_var, num_var)
-    b <- value_log[i] - 1
-    rule <- paste0(log_var, ".upperbound_",i)
-    mip_rule(a, "<=", b, rule = rule)
-  })
+      a <- c(1, -1/value[i])
+      names(a) <- c(log_var, num_var)
+      b <- value_log[i] - 1
+      rule <- paste0(log_var, ".upperbound_",i)
+      mip_rule(a, "<=", b, rule = rule)
+    })
 
   # lowerbound, more nasty...
-  lower <- list()
   d_x <- diff(value)
   d_y <- diff(value_log)
 
@@ -62,16 +74,31 @@ log_constraint_rules <- function(num_var, log_var, logfn, n = 10, r = 1:1e5){
     }), class="dnf"
   )
   lower <- dnf_to_mip_rule(lower, name = paste0(log_var, ".lowerbound"))
-
   c(upper, lower)
 }
 
 # TODO add to  tests
 # rules <- validator(log(x) > log(2))
 # data <- data.frame(x = 1:3)
+# mip <- inspect_mip(data, rules)
 # mip <- miprules(rules)
 # mip
 # le <- log_extract(mip$._vars_num)
 # le
 # log_enrich_data(data, le)
 # log_enrich_data(list(x=1), le)
+# rules <- validator( x > 10, log(x)  < log(8))
+# rules
+#
+# d <- data.frame(x = 9)
+# mip <- miprules(rules)
+# log_values <- log_derived_data(values, mip$._log_transform)
+#
+# mip$set_values( values
+#                 , log_values = log_values
+#                 , delta_names = mip$._log_transform$num_vars
+# )
+#
+# mip$._value_rules <- c(mip$._value_rules, log_constraint_rules("x", "x._log"))
+# mip$._value_rules
+# mip$execute()

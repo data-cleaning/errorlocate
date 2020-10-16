@@ -41,6 +41,7 @@ is_conditional <- function(rules, ...){
   })
 }
 
+# this is obsolote, see dnf
 cond_as_mip_rules <- function(x, ...){
   cond_rules <- x[is_conditional(x)]
   mr <- lapply(cond_rules$rules, function(rule){
@@ -62,6 +63,7 @@ cond_as_mip_rules <- function(x, ...){
   unlist(mr, recursive = FALSE)
 }
 
+# this is obsolote, see dnf
 # replaces linear subexpressions with a binary variable
 # assumes that expresssion is conditional
 replace_linear <- function(e, prefix=".v"){
@@ -74,6 +76,7 @@ replace_linear <- function(e, prefix=".v"){
       )
 }
 
+# this is obsolote, see dnf
 rep_lin_ <- function(e, or=TRUE, h=new.env()){
   #browser()
   op <- op_to_s(e)

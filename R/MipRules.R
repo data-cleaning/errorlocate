@@ -39,12 +39,14 @@ miprules <- setRefClass("MipRules",
      initialize = function(rules){
        rules <<- rules
        objective <<- objective
+
        ._miprules <<- to_miprules(rules)
 
-       ._vars <<- validate::variables(rules)
+       ._vars <<- get_translatable_vars(rules)
 
        var_num <- sapply(._miprules, function(mr){
-          names(mr$type)[mr$type == "double"]})
+          names(mr$type)[mr$type == "double"]
+       })
        var_num <- as.character(unique(unlist(var_num)))
 
        # extract log transformed variables
@@ -61,8 +63,8 @@ miprules <- setRefClass("MipRules",
      },
      set_values = function( values
                           , weights
-                          , log_values = list()
-                          , delta_names=character()){
+                          , log_values = log_derived_data(values, ._log_transform)
+                          , delta_names= ._log_transform$num_vars){
        if (missing(values) || length(values) == 0){
          objective <<- numeric()
          ._value_rules <<- list()
@@ -152,9 +154,17 @@ miprules <- setRefClass("MipRules",
      },
      show = function(){
        mr <- mip_rules()
-       cat("Mip rules:\n")
+       cat("Mip rules object:\n")
+       cat("   methods: '$to_lp()', '$execute', '$set_values()'\n")
+       cat("   properties: '$mip_rules', '$objective', '$is_infeasible', '$rules'\n")
        # print(mr)
-       cat(paste(sapply(mr, as.character.mip_rule), collapse = "\n"))
+       cat("\n")
+       cat("Generates the lp program (see lpSolveAPI) \n\n")
+       print(to_lp())
+       # cat(paste("* " , sapply(head(mr), as.character.mip_rule), collapse = "\n"))
+       # if (length(mr) > 6){
+       #   cat("\n...\nTotal of ", length(mr), " rules")
+       # }
      }
    )
 )

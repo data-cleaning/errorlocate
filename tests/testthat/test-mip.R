@@ -60,7 +60,7 @@ describe("MipRules",{
                       , z < min(x)
                       , y > 0
                       )
-    expect_warning(mr <- miprules(rules), "Ignoring rules")
+    expect_warning(mr <- miprules(rules), "Ignoring non linear rules")
     #expect_equivalent(mr$._ignored$exprs(), rules[2:3]$exprs())
   })
 })

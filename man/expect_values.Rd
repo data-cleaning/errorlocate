@@ -4,7 +4,7 @@
 \alias{expect_values}
 \title{expect values}
 \usage{
-expect_values(values, weights, ...)
+expect_values(values, weights, delta_names = NULL)
 }
 \arguments{
 \item{values}{named list of values.}
