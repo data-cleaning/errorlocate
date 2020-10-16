@@ -163,6 +163,15 @@ fh_localizer <-
         idx <- which(colnames(adapt) %in% colnames(weight))
         weight_per_record <- as.numeric(tcrossprod(adapt[,idx], weight))
 
+        if (any(status > 0)){
+          warning("For some records the procedure was unsuccesful, "
+                 , "please check the '$status' of the errorlocations.\n"
+                 , "Records: "
+                 , paste0(which(status > 0), collapse = " ,")
+                 , call. = FALSE
+                 )
+        }
+
         is.na(adapt) <- is.na(data)
         create_errorlocation(
           values = adapt,

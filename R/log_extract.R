@@ -27,7 +27,6 @@ log_derived_data <- function(data, x){
 
 create_log_constraints <- function(log_transform, data){
   for (i in seq_len(nrow(log_transform))){
-
   }
 }
 

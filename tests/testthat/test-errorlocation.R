@@ -40,7 +40,9 @@ describe("errorlocation",{
 
     rules <- validator( x > 1, x < -1)
     d <- data.frame( x = 0 )
-    el <- locate_errors(d, rules)
+    expect_warning({
+      el <- locate_errors(d, rules)
+    })
     expect_equal(el$status, 2)
   })
 })
