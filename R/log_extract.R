@@ -11,7 +11,7 @@ log_extract <- function(log_vars){
 }
 
 # create data columns used to set values for log transformed variables.
-log_derived_data <- function(data, x){
+log_derived_data <- function(data, x, eps=1e-7){
   # assume x was created with log_extract function
   derived_data <- list()
   for (i in seq_len(nrow(x))){
@@ -19,7 +19,10 @@ log_derived_data <- function(data, x){
     lv <- x$log_vars[i]
     log_fn <- x$log_fn[i]
     # transform the data!
-    derived_data[[lv]] <- do.call(log_fn, list(data[[v]]))
+    # precaution to prevent Inf
+    d <- data[[v]]
+    d[d<=eps] <- eps
+    derived_data[[lv]] <- do.call(log_fn, list(d))
   }
   as.data.frame(derived_data)
 }
@@ -49,7 +52,7 @@ log_constraint_rules <- function(num_var, log_var, logfn, n = 10, r = c(1,1e5)){
 
   r[1] <- max(r[1], 1)
   if (r[1] >=  r[2]){
-    r <- c(r[1]/10, 10*r[2])
+    r <- c(r[1]/10, 10*r[1])
   }
 
   # sample points based on slope

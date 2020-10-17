@@ -30,6 +30,7 @@ inspect_mip <- function(data, x, weight){
 
   mip <- miprules(rules)
   mip$set_values(data, weight)
+  mip$update_log_constraints(data)
   mip
 }
 

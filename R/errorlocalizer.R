@@ -47,6 +47,9 @@ fh_localizer <-
         ._miprules <<- miprules(rules)
       },
       locate = function(data, weight=NULL, add_noise = TRUE, ..., timeout=60){
+        # maybe move this to function arguments.
+        show_progressbar <- interactive()
+
         vars <- ._miprules$._vars
         # upfront, because we are going to expand the data.frame..
         nr_rows <- nrow(data)
@@ -118,8 +121,14 @@ fh_localizer <-
         cf <- validate::confront(data, rules)
         invalid <- aggregate(cf, by = "record")$nfail > 0
 
-        if (interactive()) {
-          pb <- utils::txtProgressBar(min = 0, max=sum(invalid), style = 3)
+        n_invalid <- sum(invalid)
+
+        if (n_invalid == 0){
+          show_progressbar <- FALSE
+        }
+
+        if (show_progressbar) {
+          pb <- utils::txtProgressBar(min = 0, max=n_invalid, style = 3)
         }
 
         #TODO add ref data !!!
@@ -137,7 +146,7 @@ fh_localizer <-
         duration <- numeric(N)
 
         # TODO remove any(invalid)
-        if (any(invalid)){
+        if (n_invalid > 0){
           for (r in rows[invalid]){
             starttime <- Sys.time()
             values <- as.list(data[r,,drop=FALSE])
@@ -152,7 +161,7 @@ fh_localizer <-
             status[r] <- el$s
             rm(el)
             gc()
-            if (interactive()){
+            if (show_progressbar){
               value <- 1 + pb$getVal()
               utils::setTxtProgressBar(pb, value)
             }
@@ -160,7 +169,7 @@ fh_localizer <-
             res[, r] <- adapt
           }
         }
-        if(interactive()){ close(pb) }
+        if(show_progressbar){ close(pb) }
 
         adapt <- t(res)
         idx <- which(colnames(adapt) %in% colnames(weight))
