@@ -6,7 +6,10 @@
 * Improved progress bar, showing percentage and taking into account records without errors
 * added `inspect_mip` function, allowing for an indepth examination of the mip translation
 and execution. Making it easier to debug/find what is wrong with a record / rule set
-* experimental log functionality.
+* experimental functionality for log transformed variables, can be switched on with
+`options(errorlocate.allow_log = TRUE)`. This makes it possible to formulate constraints
+`total_salary >= min_salary * n_employees` as 
+`log(total_salary) >= log(min_salary) + log(n_employees)`.
 
 # errorlocate 0.4
 

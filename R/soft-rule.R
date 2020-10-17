@@ -37,8 +37,9 @@ eps_min <- suffix("_eps_min")
 #'
 #' @param values named list of values.
 #' @param weights named numeric of equal length as values.
+#' @param delta_names alternative names for binary variables. (used for log)
 #' @param ... not used
-expect_values <- function(values, weights, delta_names = NULL){
+expect_values <- function(values, weights, delta_names = NULL, ...){
   if (missing(weights)){
     weights <- rep(1, length(values))
     names(weights) <- names(values)

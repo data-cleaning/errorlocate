@@ -100,8 +100,7 @@ fh_localizer <-
           stopifnot(names(weight) == names_cols)
         }
 
-        # derive log transformed data! (after weights, because changes the number
-        # of columns etc.)
+        # derive log transformed data!
         log_transform <- ._miprules$._log_transform
         # TODO deal with failures when log of negative values is taken...
         log_data <- log_derived_data(data, log_transform)

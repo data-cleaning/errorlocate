@@ -11,13 +11,21 @@ describe("is_lin_",{
   })
 
   it("detects log constants", {
+    options(errorlocate.allow_log = TRUE)
+
     e <- quote(x > log(1))
     expect_true(is_lin_(e))
+
+    options(errorlocate.allow_log = NULL)
   })
 
   it("detects log transformed variables", {
+    options(errorlocate.allow_log = TRUE)
+
     e <- quote(log(x) > 0)
     expect_true(is_lin_(e))
+
+    options(errorlocate.allow_log = NULL)
   })
 
 })
@@ -33,10 +41,14 @@ describe("is_linear",{
   })
 
   it ("can detect linear rules with log",{
+    options(errorlocate.allow_log = TRUE)
+
     rules <- validator(log(x) > 0, log10(y) > 0, log1p(z) > 0, log(x+y) > 0)
     expect_equal( is_linear(rules)
                 , c(TRUE, TRUE, TRUE, FALSE)
                 )
+
+    options(errorlocate.allow_log = NULL)
   })
 })
 

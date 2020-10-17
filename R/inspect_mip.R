@@ -1,21 +1,12 @@
-#' inspect the mip problem for a record
+#' inspect the mip problem formulation for one record
 #'
-#' Utility function to inspect the mip problem for a record
-#' @examples
-#' rules <- validator(x > 1)
-#' data <- list(x = 0)
-#'
-#' mip <- inspect_mip(data, rules)
-#' mip$rules
-#' mip$mip_rules()
-#' mip$objective
-#' mip$to_lp()
-#'
-#' res <- mip$execute()
-#' res
-#' res$lp
+#' Utility function to inspect the mip problem for a record.
+#' It may sometimes be handy
+#' @example ./examples/inspect_mip.R
+#' @export
 #' @inheritParams locate_errors
-inspect_mip <- function(data, rules, weight){
+inspect_mip <- function(data, x, weight){
+  rules <- x
   stopifnot(inherits(rules, "validator"))
 
   w <- sapply(data, function(n) 1)

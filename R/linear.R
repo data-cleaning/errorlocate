@@ -29,7 +29,6 @@ lin_as_mip_rules <- function(x, ...){
 
 # check if a (sub) expression is linear
 is_lin_ <- function(expr, top=TRUE, ...){
-
   op <- op_to_s(expr)
   l <- left(expr)
   r <- right(expr)
@@ -53,8 +52,9 @@ is_lin_ <- function(expr, top=TRUE, ...){
       if (is.numeric(l) || is.numeric(left(l))){ return(is_lin_(r, FALSE)) }
       if (is.numeric(r) || is.numeric(left(r))){ return(is_lin_(l, FALSE)) }
   }
-
-  if (op %in% LOGS){
+  if ( op %in% LOGS
+     && isTRUE(getOption("errorlocate.allow_log"))
+     ){
     if (is.numeric(l)){
       return(TRUE)
     }
