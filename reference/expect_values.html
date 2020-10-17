@@ -120,7 +120,7 @@
     <p>expect values</p>
     </div>
 
-    <pre class="usage"><span class='fu'>expect_values</span><span class='op'>(</span><span class='va'>values</span>, <span class='va'>weights</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>expect_values</span><span class='op'>(</span><span class='va'>values</span>, <span class='va'>weights</span>, delta_names <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -132,6 +132,10 @@
     <tr>
       <th>weights</th>
       <td><p>named numeric of equal length as values.</p></td>
+    </tr>
+    <tr>
+      <th>delta_names</th>
+      <td><p>alternative names for binary variables. (used for log)</p></td>
     </tr>
     <tr>
       <th>...</th>

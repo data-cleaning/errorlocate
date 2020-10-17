@@ -114,14 +114,17 @@
       <small>Source: <a href='https://github.com/data-cleaning/errorlocate/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="errorlocate-0-4-2" class="section level1">
-<h1 class="page-header" data-toc-text="0.4.2">
-<a href="#errorlocate-0-4-2" class="anchor"></a>errorlocate 0.4.2<small> Unreleased </small>
+    <div id="errorlocate-0-5" class="section level1">
+<h1 class="page-header" data-toc-text="0.5">
+<a href="#errorlocate-0-5" class="anchor"></a>errorlocate 0.5<small> Unreleased </small>
 </h1>
 <ul>
 <li>Fix for issue <a href='https://github.com/data-cleaning/errorlocate/issues/25'>#25</a>, when a variable contains only one category. Thanks to <a href='https://github.com/nickforr'>@nickforr</a>.</li>
 <li>Fix/warning for issue <a href='https://github.com/data-cleaning/errorlocate/issues/27'>#27</a>, using an integer variable for categories. Thanks to Jeffrey Hoogland for reporting.</li>
 <li>Added status and duration info to <code>errorlocation</code>. Thanks to Sander Scholtus</li>
+<li>Improved progress bar, showing percentage and taking into account records without errors</li>
+<li>added <code>inspect_mip</code> function, allowing for an indepth examination of the mip translation and execution. Making it easier to debug/find what is wrong with a record / rule set</li>
+<li>experimental functionality for log transformed variables, can be switched on with <code><a href="https://rdrr.io/r/base/options.html">options(errorlocate.allow_log = TRUE)</a></code>. This makes it possible to formulate constraints <code>total_salary &gt;= min_salary * n_employees</code> as <code>log(total_salary) &gt;= log(min_salary) + log(n_employees)</code>.</li>
 </ul>
 </div>
     <div id="errorlocate-0-4" class="section level1">
