@@ -40,8 +40,7 @@
 
 
 <meta property="og:title" content="inspect the mip problem formulation for one record — inspect_mip" />
-<meta property="og:description" content="Utility function to inspect the mip problem for a record.
-It may sometimes be handy" />
+<meta property="og:description" content="Utility function to inspect the mip problem for a record." />
 
 
 
@@ -118,8 +117,7 @@ It may sometimes be handy" />
     </div>
 
     <div class="ref-description">
-    <p>Utility function to inspect the mip problem for a record.
-It may sometimes be handy</p>
+    <p>Utility function to inspect the mip problem for a record.</p>
     </div>
 
     <pre class="usage"><span class='fu'>inspect_mip</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>x</span>, <span class='va'>weight</span><span class='op'>)</span></pre>
@@ -142,6 +140,14 @@ possible errors.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>It may sometimes be handy to find out what is happing exactly with a record.
+See the example section for finding out what to do with inspect_mip.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other Mixed Integer Problem: 
+<code><a href='MipRules-class.html'>MipRules-class</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>rules</span> <span class='op'>&lt;-</span> <span class='fu'>validator</span><span class='op'>(</span><span class='va'>x</span> <span class='op'>&gt;</span> <span class='fl'>1</span><span class='op'>)</span>
@@ -154,7 +160,7 @@ possible errors.</p></td>
 #&gt;    methods: '$to_lp()', '$execute', '$set_values()'
 #&gt;    properties: '$mip_rules', '$objective', '$is_infeasible', '$rules'
 #&gt; 
-#&gt; Generates the lp program (see lpSolveAPI) 
+#&gt; Generates the lp program (see ?inspect_mip) 
 #&gt; 
 #&gt; Model name: 
 #&gt;                       x       .delta_x            
@@ -182,9 +188,10 @@ possible errors.</p></td>
 <span class='co'># for large problems write the lp problem to disk for inspection</span>
 <span class='co'># lpSolveAPI::write.lp(lp, "my_problem.lp")</span>
 
+<span class='co'># solve the mip system / find a solution</span>
 <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='va'>mip</span><span class='op'>$</span><span class='fu'>execute</span><span class='op'>(</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "s"      "values" "lp"     "adapt"  "errors"</div><div class='input'>
+</div><div class='output co'>#&gt; [1] "s"        "solution" "values"   "lp"       "adapt"    "errors"  </div><div class='input'>
 <span class='co'># lpSolveAPI status of finding a solution</span>
 <span class='va'>res</span><span class='op'>$</span><span class='va'>s</span>
 </div><div class='output co'>#&gt; [1] 0</div><div class='input'>

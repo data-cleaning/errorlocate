@@ -153,7 +153,7 @@ The <code>values</code> return <code>NA</code> for missing values.</p>
 <li><p><code>$errors</code>: <code>matrix</code> indicating which values are erronuous (<code>TRUE</code>),
   missing (<code>NA</code>) or valid (<code>FALSE</code>)</p></li>
 <li><p><code>$weight</code>: The total weight per record. A weight of 0 means no errors were detected.</p></li>
-<li><p><code>$status</code>: The status of the mip solver for this record.</p></li>
+<li><p><code>$status</code>: The <a href='https://rdrr.io/pkg/lpSolveAPI/man/solve.lpExtPtr.html'>status</a> of the mip solver for this record.</p></li>
 <li><p><code>$duration</code>: The number of seconds for processing each record.</p></li>
 </ul>
 

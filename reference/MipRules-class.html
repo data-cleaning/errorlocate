@@ -141,6 +141,10 @@ automatically. This class is provided so users can implement or derive an altern
 <li><p><code>$set_values</code>: set values and weights for variables (determines the objective function).</p></li>
 </ul>
 
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other Mixed Integer Problem: 
+<code><a href='inspect_mip.html'>inspect_mip</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>rules</span> <span class='op'>&lt;-</span> <span class='fu'>validator</span><span class='op'>(</span><span class='va'>x</span> <span class='op'>&gt;</span> <span class='fl'>1</span><span class='op'>)</span>
@@ -157,6 +161,9 @@ automatically. This class is provided so users can implement or derive an altern
 <span class='va'>mr</span><span class='op'>$</span><span class='fu'>execute</span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $s
 #&gt; [1] 0
+#&gt; 
+#&gt; $solution
+#&gt; [1] TRUE
 #&gt; 
 #&gt; $values
 #&gt;        x .delta_x 

@@ -177,7 +177,7 @@ possible errors.</p></td>
 <span class='va'>le</span> <span class='op'>&lt;-</span> <span class='fu'>locate_errors</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>rules</span><span class='op'>)</span>
 
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>le</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; call:  x$locate(data = data, weight = weight, ..., timeout = timeout) 
+</div><div class='output co'>#&gt; call:  locate_errors(data = data, fh, ref = ref, weight = weight, ...,      timeout = timeout) 
 #&gt; located  1  error(s).
 #&gt; located  0  missing value(s).
 #&gt; Use 'summary', 'values', '$errors' or '$weight', to explore and retrieve the errors.</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>le</span><span class='op'>)</span>
