@@ -14,6 +14,7 @@
 #' @return \code{\link{errorlocation-class}} object describing the errors found.
 #'
 #' @example examples/locate_errors.R
+#' @family error finding
 #' @export
 setGeneric("locate_errors", function(data, x, ..., timeout = 60){
   standardGeneric("locate_errors")

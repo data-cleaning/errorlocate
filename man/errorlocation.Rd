@@ -36,3 +36,10 @@ The \code{\link{values}} return \code{NA} for missing values.
 }
 }
 
+\seealso{
+Other error finding: 
+\code{\link{errors_removed}()},
+\code{\link{locate_errors}()},
+\code{\link{replace_errors}()}
+}
+\concept{error finding}

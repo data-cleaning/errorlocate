@@ -18,3 +18,4 @@ expect_values(values, weights, delta_names = NULL, ...)
 \description{
 expect values
 }
+\keyword{internal}

@@ -17,6 +17,11 @@ logical indicating which rules are purely categorical/logical
 \description{
 Check if rules are categorical
 }
+\details{
+#' @note \code{errorlocate} supports linear,
+categorical and conditional rules to be used in finding errors. Other rule types
+are ignored during error finding.
+}
 \examples{
 v <- validator( A \%in\% c("a1", "a2")
               , B \%in\% c("b1", "b2")
@@ -26,3 +31,9 @@ v <- validator( A \%in\% c("a1", "a2")
 
 is_categorical(v)
 }
+\seealso{
+Other rule type: 
+\code{\link{is_conditional}()},
+\code{\link{is_linear}()}
+}
+\concept{rule type}

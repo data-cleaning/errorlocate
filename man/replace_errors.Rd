@@ -69,4 +69,10 @@ replace_errors(data, error_locations)
 }
 \seealso{
 \code{\link{errorlocation-class}}
+
+Other error finding: 
+\code{\link{errorlocation-class}},
+\code{\link{errors_removed}()},
+\code{\link{locate_errors}()}
 }
+\concept{error finding}

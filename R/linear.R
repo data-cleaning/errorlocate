@@ -3,10 +3,17 @@ LOGS <- c("log", "log1p", "log10", "log2")
 # conditional statements.
 
 #' Check which rules are linear rules.
+#'
+#' Check which rules are linear rules.
+#'
+#' @note \code{errorlocate} supports linear,
+#' categorical and conditional rules to be used in finding errors. Other rule types
+#' are ignored during error finding.
 #' @export
 #' @param x \code{\link{validator}} object containing data validation rules
 #' @param ... not used
 #' @return \code{logical} indicating which rules are (purely) linear.
+ #' @family rule type
 is_linear <- function(x, ...){
   if (is.expression(x)){
     return(sapply(x, is_lin_))

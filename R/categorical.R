@@ -94,11 +94,16 @@ cat_var_name <- function(x, infix=INFIX_CAT_NAME){
 #' Check if rules are categorical
 #'
 #' Check if rules are categorical
+#'
+#' #' @note \code{errorlocate} supports linear,
+#' categorical and conditional rules to be used in finding errors. Other rule types
+#' are ignored during error finding.
 #' @export
 #' @param x validator or expression object
 #' @param ... not used
 #' @return logical indicating which rules are purely categorical/logical
 #' @example examples/categorical.R
+#' @family rule type
 is_categorical <- function(x, ...){
 
   if (is.expression(x)){

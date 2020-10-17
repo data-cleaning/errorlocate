@@ -22,6 +22,7 @@
 #' @export
 #' @return \code{data} with erronuous values removed.
 #' @example ./examples/replace_errors.R
+#' @family error finding
 setGeneric("replace_errors", function( data
                                      , x
                                      , ref=NULL, ...

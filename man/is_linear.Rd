@@ -17,3 +17,14 @@ is_linear(x, ...)
 \description{
 Check which rules are linear rules.
 }
+\note{
+\code{errorlocate} supports linear,
+categorical and conditional rules to be used in finding errors. Other rule types
+are ignored during error finding.
+}
+\seealso{
+Other rule type: 
+\code{\link{is_categorical}()},
+\code{\link{is_conditional}()}
+}
+\concept{rule type}

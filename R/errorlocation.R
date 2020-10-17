@@ -29,6 +29,7 @@
 #' }
 #'
 #' @exportClass errorlocation
+#' @family error finding
 #' @rdname errorlocation
 create_errorlocation <- setRefClass('errorlocation',
   fields=list(
@@ -133,6 +134,8 @@ setMethod("summary", "errorlocation", summary.errorlocation)
 #' @param x \code{data.frame} that was checked for errors
 #' @param ... not used
 #' @return \code{\link{errorlocation-class}} object
+#' @example ./examples/replace_errors.R
+#' @family error finding
 #' @export
 errors_removed <- function(x, ...){
   attr(x, "errorlocation")

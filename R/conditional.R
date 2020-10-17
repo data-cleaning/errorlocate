@@ -26,11 +26,16 @@ is_condition_ <- function(expr, or=TRUE, top=TRUE, ...){
 #' Check if rules are conditional rules
 #'
 #' Check if rules are conditional rules
+#'
+#' @note \code{errorlocate} supports linear,
+#' categorical and conditional rules to be used in finding errors. Other rule types
+#' are ignored during error finding.
 #' @export
 #' @param rules validator object containing validation rules
 #' @param ... not used
 #' @return logical indicating which rules are conditional
 #' @example examples/conditional.R
+#' @family rule type
 is_conditional <- function(rules, ...){
   if (is.expression(rules)){
     return(sapply(rules, is_condition_))
