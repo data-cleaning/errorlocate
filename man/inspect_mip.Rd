@@ -16,7 +16,10 @@ possible errors.}
 }
 \description{
 Utility function to inspect the mip problem for a record.
-It may sometimes be handy
+}
+\details{
+It may sometimes be handy to find out what is happing exactly with a record.
+See the example section for finding out what to do with inspect_mip.
 }
 \examples{
 rules <- validator(x > 1)
@@ -33,6 +36,7 @@ print(lp)
 # for large problems write the lp problem to disk for inspection
 # lpSolveAPI::write.lp(lp, "my_problem.lp")
 
+# solve the mip system / find a solution
 res <- mip$execute()
 names(res)
 
@@ -54,3 +58,8 @@ res$values
 mip$mip_rules()
 mip$objective
 }
+\seealso{
+Other Mixed Integer Problem: 
+\code{\link{MipRules-class}}
+}
+\concept{Mixed Integer Problem}

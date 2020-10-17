@@ -51,7 +51,6 @@ fh_localizer <-
         show_progressbar <- interactive()
 
         vars <- ._miprules$._vars
-        # upfront, because we are going to expand the data.frame..
         nr_rows <- nrow(data)
         nr_cols <- ncol(data)
         names_cols <- colnames(data)
@@ -109,7 +108,7 @@ fh_localizer <-
         log_data <- log_derived_data(data, log_transform)
 
         # TODO add `n` to arguments of function
-        # set ranges of log constraints
+        # set ranges of log constraints if any
         ._miprules$update_log_constraints(data, n = 10)
 
         N <- nr_rows
@@ -144,6 +143,8 @@ fh_localizer <-
         # collect info during processing
         status <- integer(N)
         duration <- numeric(N)
+        solution <- logical(N)
+        solution[] <- TRUE
 
         # TODO remove any(invalid)
         if (n_invalid > 0){
@@ -159,6 +160,7 @@ fh_localizer <-
             adapt <- sapply(values, function(x){FALSE})
             adapt[names(el$adapt)] <- el$adapt
             status[r] <- el$s
+            solution[r] <- el$solution
             rm(el)
             gc()
             if (show_progressbar){
@@ -175,11 +177,11 @@ fh_localizer <-
         idx <- which(colnames(adapt) %in% colnames(weight))
         weight_per_record <- as.numeric(tcrossprod(adapt[,idx], weight))
 
-        if (any(status > 0)){
+        if (any(!solution)){
           warning("For some records the procedure was unsuccesful, "
-                 , "please check the '$status' of the errorlocations.\n"
+                 , "please check the '$solution' and '$status' of the errorlocations.\n"
                  , "Records: "
-                 , paste0(which(status > 0), collapse = " ,")
+                 , paste0(which(!solution), collapse = " ,")
                  , call. = FALSE
                  )
         }
@@ -189,7 +191,8 @@ fh_localizer <-
           values = adapt,
           weight = weight_per_record,
           duration = duration,
-          status = status
+          status = status,
+          solution = solution
         )
       }
     )

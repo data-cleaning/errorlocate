@@ -31,7 +31,7 @@ The \code{\link{values}} return \code{NA} for missing values.
   \item \code{$errors}: \code{matrix} indicating which values are erronuous (\code{TRUE}),
   missing (\code{NA}) or valid (\code{FALSE})
   \item \code{$weight}: The total weight per record. A weight of 0 means no errors were detected.
-  \item \code{$status}: The status of the mip solver for this record.
+  \item \code{$status}: The \link[lpSolveAPI:solve.lpExtPtr]{status} of the mip solver for this record.
   \item \code{$duration}: The number of seconds for processing each record.
 }
 }

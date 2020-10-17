@@ -22,3 +22,4 @@ v <- validator( turnover + other.rev==total.rev
               , total.rev>0)
 
 d1 <- replace_errors(retailers, v)
+d1

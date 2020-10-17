@@ -1,8 +1,11 @@
 #' inspect the mip problem formulation for one record
 #'
 #' Utility function to inspect the mip problem for a record.
-#' It may sometimes be handy
+#'
+#' It may sometimes be handy to find out what is happing exactly with a record.
+#' See the example section for finding out what to do with inspect_mip.
 #' @example ./examples/inspect_mip.R
+#' @family Mixed Integer Problem
 #' @export
 #' @inheritParams locate_errors
 inspect_mip <- function(data, x, weight){

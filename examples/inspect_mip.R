@@ -12,6 +12,7 @@ print(lp)
 # for large problems write the lp problem to disk for inspection
 # lpSolveAPI::write.lp(lp, "my_problem.lp")
 
+# solve the mip system / find a solution
 res <- mip$execute()
 names(res)
 

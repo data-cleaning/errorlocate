@@ -138,6 +138,38 @@ describe("locate_errors", {
     })
     expect_equal(as.logical(el$errors), c(TRUE, FALSE))
   })
+
+  it ("handles a contradiction in log constraints ",{
+    options(errorlocate.allow_log = TRUE)
+
+    rules <- validator(log(x) > log(4), x < 3)
+    d <- data.frame(x = 1)
+    expect_warning (
+      el <- locate_errors(d, rules)
+    )
+
+    options(errorlocate.allow_log = NULL)
+
+  })
+
+  it ("handles small log transformed variables ",{
+    options(errorlocate.allow_log = TRUE)
+
+    rules <- validator(log(x) > log(.1), x < 3)
+    d <- data.frame(x = 0.3)
+    el <- locate_errors(d, rules)
+
+    expect_false(as.logical(el$errors))
+
+    rules <- validator(log(x) > log(.1), x < 3)
+    d <- data.frame(x = 0.1)
+    el <- locate_errors(d, rules)
+
+    expect_true(as.logical(el$errors))
+
+    options(errorlocate.allow_log = NULL)
+
+  })
 })
 
 

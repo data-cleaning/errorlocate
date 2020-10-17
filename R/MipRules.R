@@ -15,6 +15,7 @@
 #'   \item \code{$set_values}: set values and weights for variables (determines the objective function).
 #' }
 #'
+#' @family Mixed Integer Problem
 #' @exportClass MipRules
 #' @examples
 #' rules <- validator(x > 1)
@@ -128,9 +129,27 @@ miprules <- setRefClass("MipRules",
        names(adapt) <- gsub(".delta_", "", names(adapt))
        # TODO improve the return values based on value of s
        # Add the same table as with infeasible
+       solution <- switch( as.character(s),
+         "0" = TRUE,  # optimal solution found (so feasible)
+         "1" = TRUE,  # sub optimal solution (so feasible)
+         "2" = FALSE, # infeasible
+         "3" = TRUE,  # unbounded (so feasible)
+         "4" = TRUE,  # degenerate (so feasible)
+         "5" = NA,    # numerical failure, so unknown
+         "6" = NA,    # process aborted
+         "7" = NA,    # timeout
+         "9" = TRUE,  # presolved
+         "10" = FALSE, # branch and bound failed
+         "11" = FALSE, # branch and bound stopped
+         "12" = TRUE,  # a feasible branch and bound found
+         "13" = FALSE, # no feasible branch and bound found
+         FALSE
+       )
+
        # TODO when no solution found, change errors into NA
        list(
          s = s,
+         solution = solution,
          values = values,
          lp = lp,
          adapt = adapt,
@@ -171,7 +190,7 @@ miprules <- setRefClass("MipRules",
        cat("   properties: '$mip_rules', '$objective', '$is_infeasible', '$rules'\n")
        # print(mr)
        cat("\n")
-       cat("Generates the lp program (see lpSolveAPI) \n\n")
+       cat("Generates the lp program (see ?inspect_mip) \n\n")
        print(to_lp())
        # cat(paste("* " , sapply(head(mr), as.character.mip_rule), collapse = "\n"))
        # if (length(mr) > 6){
