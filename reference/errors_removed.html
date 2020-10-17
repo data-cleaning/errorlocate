@@ -138,7 +138,39 @@
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><code><a href='errorlocation-class.html'>errorlocation-class</a></code> object</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
+    <div class='dont-index'><p>Other error finding: 
+<code><a href='errorlocation-class.html'>errorlocation-class</a></code>,
+<code><a href='locate_errors.html'>locate_errors</a>()</code>,
+<code><a href='replace_errors.html'>replace_errors</a>()</code></p></div>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='va'>rules</span> <span class='op'>&lt;-</span> <span class='fu'>validator</span><span class='op'>(</span> <span class='va'>profit</span> <span class='op'>+</span> <span class='va'>cost</span> <span class='op'>==</span> <span class='va'>turnover</span>
+              , <span class='va'>cost</span> <span class='op'>-</span> <span class='fl'>0.6</span><span class='op'>*</span><span class='va'>turnover</span> <span class='op'>&gt;=</span> <span class='fl'>0</span>
+              , <span class='va'>cost</span><span class='op'>&gt;=</span> <span class='fl'>0</span>
+              , <span class='va'>turnover</span> <span class='op'>&gt;=</span> <span class='fl'>0</span>
+<span class='op'>)</span>
+<span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>profit<span class='op'>=</span><span class='fl'>755</span>, cost<span class='op'>=</span><span class='fl'>125</span>, turnover<span class='op'>=</span><span class='fl'>200</span><span class='op'>)</span>
+
+<span class='va'>data_no_error</span> <span class='op'>&lt;-</span> <span class='fu'><a href='replace_errors.html'>replace_errors</a></span><span class='op'>(</span><span class='va'>data</span>,<span class='va'>rules</span><span class='op'>)</span>
+
+<span class='co'># faulty data was replaced with NA</span>
+<span class='va'>data_no_error</span>
+</div><div class='output co'>#&gt;   profit cost turnover
+#&gt; 1     NA  125      200</div><div class='input'>
+<span class='fu'>errors_removed</span><span class='op'>(</span><span class='va'>data_no_error</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; call:  locate_errors(data, x, ref, ...) 
+#&gt; located  1  error(s).
+#&gt; located  0  missing value(s).
+#&gt; Use 'summary', 'values', '$errors' or '$weight', to explore and retrieve the errors.</div><div class='input'>
+<span class='co'># a bit more control, you can supply the result of locate_errors</span>
+<span class='co'># to replace_errors, which is a good thing, otherwise replace_errors will call</span>
+<span class='co'># locate_errors internally.</span>
+<span class='va'>error_locations</span> <span class='op'>&lt;-</span> <span class='fu'><a href='locate_errors.html'>locate_errors</a></span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>rules</span><span class='op'>)</span>
+<span class='fu'><a href='replace_errors.html'>replace_errors</a></span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>error_locations</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   profit cost turnover
+#&gt; 1     NA  125      200</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

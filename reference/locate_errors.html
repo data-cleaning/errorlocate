@@ -167,6 +167,12 @@ possible errors.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><code><a href='errorlocation-class.html'>errorlocation-class</a></code> object describing the errors found.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other error finding: 
+<code><a href='errorlocation-class.html'>errorlocation-class</a></code>,
+<code><a href='errors_removed.html'>errors_removed</a>()</code>,
+<code><a href='replace_errors.html'>replace_errors</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>rules</span> <span class='op'>&lt;-</span> <span class='fu'>validator</span><span class='op'>(</span> <span class='va'>profit</span> <span class='op'>+</span> <span class='va'>cost</span> <span class='op'>==</span> <span class='va'>turnover</span>
@@ -197,7 +203,7 @@ possible errors.</p></td>
 <span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>A <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a1"</span>, <span class='st'>"a2"</span><span class='op'>)</span>, B <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"b2"</span>, <span class='st'>"b2"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'>locate_errors</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>v_categorical</span><span class='op'>)</span><span class='op'>$</span><span class='va'>errors</span>
 </div><div class='output co'>#&gt;          A     B
-#&gt; [1,]  TRUE FALSE
+#&gt; [1,] FALSE  TRUE
 #&gt; [2,] FALSE FALSE</div><div class='input'>
 <span class='va'>v_logical</span> <span class='op'>&lt;-</span> <span class='fu'>validator</span><span class='op'>(</span> <span class='va'>A</span> <span class='op'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>TRUE</span>, <span class='cn'>FALSE</span><span class='op'>)</span>
                       , <span class='va'>B</span> <span class='op'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>TRUE</span>, <span class='cn'>FALSE</span><span class='op'>)</span>
