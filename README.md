@@ -5,12 +5,14 @@
 Status](https://travis-ci.org/data-cleaning/errorlocate.svg)](https://travis-ci.org/data-cleaning/errorlocate)
 [![CRAN](http://www.r-pkg.org/badges/version/errorlocate)](https://CRAN.R-project.org/package=errorlocate)
 [![Downloads](http://cranlogs.r-pkg.org/badges/errorlocate)](http://www.r-pkg.org/pkg/errorlocate)
+[![status](https://tinyverse.netlify.com/badge/errorlocate)](https://CRAN.R-project.org/package=errorlocate)
 [![Coverage
 Status](https://coveralls.io/repos/data-cleaning/errorlocate/badge.svg?branch=master&service=github)](https://coveralls.io/github/data-cleaning/errorlocate?branch=master)
 [![Mentioned in Awesome Official
 Statistics](https://awesome.re/mentioned-badge.svg)](http://www.awesomeofficialstatistics.org)
 
-# Error localization
+Error localization
+==================
 
 Find errors in data given a set of validation rules. The `errorlocate`
 helps to identify obvious errors in raw datasets.
@@ -20,10 +22,10 @@ formulate data validation rules to which the data must comply.
 
 For example:
 
-  - “age cannot be negative”: `age >= 0`.
-  - “if a person is married, he must be older then 16 years”: `if
-    (married ==TRUE) age > 16`.
-  - “Profit is turnover minus cost”: `profit == turnover - cost`.
+-   “age cannot be negative”: `age >= 0`.
+-   “if a person is married, he must be older then 16 years”:
+    `if (married ==TRUE) age > 16`.
+-   “Profit is turnover minus cost”: `profit == turnover - cost`.
 
 While `validate` can check if a record is valid or not, it does not
 identify which of the variables are responsible for the invalidation.
@@ -39,67 +41,61 @@ record and a set of validation rules. The algorithm minimizes the
 (weighted) number of values that need to be adjusted to remove the
 invalidation.
 
-# Installation
+Installation
+============
 
 `errorlocate` can be installed from CRAN:
 
-``` r
-install.packages("errorlocate")
-```
+    install.packages("errorlocate")
 
 Beta versions can be installed with `drat`:
 
-``` r
-drat::addRepo("data-cleaning")
-install.packages("errorlocate")
-```
+    drat::addRepo("data-cleaning")
+    install.packages("errorlocate")
 
 The latest development version of `errorlocate` can be installed from
 github with `devtools`:
 
-``` r
-devtools::install_github("data-cleaning/errorlocate")
-```
+    devtools::install_github("data-cleaning/errorlocate")
 
-# Usage
+Usage
+=====
 
-``` r
-library(errorlocate)
-#> Loading required package: validate
-rules <- validator( profit == turnover - cost
-                  , cost >= 0.6 * turnover
-                  , turnover >= 0
-                  , cost >= 0 # is implied
-)
+    library(errorlocate)
+    #> Loading required package: validate
+    rules <- validator( profit == turnover - cost
+                      , cost >= 0.6 * turnover
+                      , turnover >= 0
+                      , cost >= 0 # is implied
+    )
 
-data <- data.frame(profit=750, cost=125, turnover=200)
+    data <- data.frame(profit=750, cost=125, turnover=200)
 
-data_no_error <- replace_errors(data, rules)
+    data_no_error <- replace_errors(data, rules)
 
-# faulty data was replaced with NA
-print(data_no_error)
-#>   profit cost turnover
-#> 1     NA  125      200
+    # faulty data was replaced with NA
+    print(data_no_error)
+    #>   profit cost turnover
+    #> 1     NA  125      200
 
-er <- errors_removed(data_no_error)
+    er <- errors_removed(data_no_error)
 
-print(er)
-#> call:  x$locate(data = data, weight = weight, ..., timeout = timeout) 
-#> located  1  error(s).
-#> located  0  missing value(s).
-#> Use 'summary', 'values', '$errors' or '$weight', to explore and retrieve the errors.
+    print(er)
+    #> call:  locate_errors(data, x, ref, ...) 
+    #> located  1  error(s).
+    #> located  0  missing value(s).
+    #> Use 'summary', 'values', '$errors' or '$weight', to explore and retrieve the errors.
 
-summary(er)
-#> Variable:
-#>       name errors missing
-#> 1   profit      1       0
-#> 2     cost      0       0
-#> 3 turnover      0       0
-#> Errors per record:
-#>   errors records
-#> 1      1       1
+    summary(er)
+    #> Variable:
+    #>       name errors missing
+    #> 1   profit      1       0
+    #> 2     cost      0       0
+    #> 3 turnover      0       0
+    #> Errors per record:
+    #>   errors records
+    #> 1      1       1
 
-er$errors
-#>      profit  cost turnover
-#> [1,]   TRUE FALSE    FALSE
-```
+    er$errors
+    #>      profit  cost turnover
+    #> [1,]   TRUE FALSE    FALSE
