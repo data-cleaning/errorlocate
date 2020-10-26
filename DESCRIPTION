@@ -16,7 +16,9 @@ Imports:
     methods
 Suggests:
     testthat (>= 2.1.0),
-    covr
+    covr,
+    knitr,
+    rmarkdown
 RoxygenNote: 7.1.1
 Encoding: UTF-8
 Collate: 
@@ -39,3 +41,4 @@ Collate:
     'soft-rule.R'
     'utils.R'
     'values.R'
+VignetteBuilder: knitr

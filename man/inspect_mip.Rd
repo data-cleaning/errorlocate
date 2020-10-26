@@ -4,7 +4,7 @@
 \alias{inspect_mip}
 \title{inspect the mip problem formulation for one record}
 \usage{
-inspect_mip(data, x, weight)
+inspect_mip(data, x, weight, ...)
 }
 \arguments{
 \item{data}{data to be checked}
@@ -13,6 +13,8 @@ inspect_mip(data, x, weight)
 possible errors.}
 
 \item{weight}{\code{numeric} optional weight vector to be used in the error localization.}
+
+\item{...}{optional parameter to be used by a specific method}
 }
 \description{
 Utility function to inspect the mip problem for a record.

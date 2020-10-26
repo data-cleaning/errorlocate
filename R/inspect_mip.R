@@ -8,10 +8,9 @@
 #' @family Mixed Integer Problem
 #' @export
 #' @inheritParams locate_errors
-inspect_mip <- function(data, x, weight){
+inspect_mip <- function(data, x, weight, ...){
   rules <- x
   stopifnot(inherits(rules, "validator"))
-
   w <- sapply(data, function(n) 1)
   if (!missing(weight)){
     if (!is.null(names(weight))){
@@ -27,13 +26,13 @@ inspect_mip <- function(data, x, weight){
   if (is.data.frame(data) && nrow(data) > 1){
     warning("Taking record 1, ignoring rest of the records..."
            , call. = FALSE)
-    data <- data[1,]
+    data <- data[1,,drop=FALSE]
   }
   data <- as.list(data)
 
   mip <- miprules(rules)
   mip$set_values(data, weight)
-  mip$update_log_constraints(data)
+  mip$update_log_constraints(data, ...)
   mip
 }
 
