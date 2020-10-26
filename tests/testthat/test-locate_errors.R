@@ -130,6 +130,13 @@ describe("locate_errors", {
 
   })
 
+  it ("handles NA logical values",{
+    rules <- validator(if (age >=18) adult == TRUE)
+    data <- data.frame(age = 15, adult=NA)
+    el <- locate_errors(data, rules)$errors
+    expect_equal(el[1,], c(age=FALSE, adult=NA))
+  })
+
   it ("handles variables that are not part of the linear rules gracefully",{
     rules <- validator( x / y <= 1, x > 5)
     data <- data.frame(x = 1L, y = 2L)

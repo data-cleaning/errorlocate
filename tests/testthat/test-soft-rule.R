@@ -67,4 +67,8 @@ describe("soft_lin_rule",{
     expect_equal(sr$rule, "A")
   })
 
+  it ("handles NA logical values correctly",{
+    values <- list(L = NA)
+    expect_values(values)
+  })
 })

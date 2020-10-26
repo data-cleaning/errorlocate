@@ -10,6 +10,7 @@ and execution. Making it easier to debug/find what is wrong with a record / rule
 `options(errorlocate.allow_log = TRUE)`. This makes it possible to formulate constraints
 `total_salary >= min_salary * n_employees` as 
 `log(total_salary) >= log(min_salary) + log(n_employees)`.
+* fix for handling NA logical values (issue #29).
 
 # errorlocate 0.4
 

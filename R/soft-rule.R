@@ -99,10 +99,16 @@ expect_values <- function(values, weights, delta_names = NULL, ...){
     b <- 1
 
     if (is.logical(value)){
+      # rewrite (only need one column)
       names(a) <- n
-      if (!value){
+      if (!isTRUE(value)){
         a <- -a
         b <- 0
+      }
+      # if NA, just skip this constraint, should this also hold for categories?
+      if (is.na(value)){
+        a[] <- 0 # effectively set delta to 1
+        b <- 1
       }
     }
     soft_cat_rule(mip_rule(a, op = "==", b = b, rule = n, weight = weights[n], type=sapply(a, function(x) "binary")))
