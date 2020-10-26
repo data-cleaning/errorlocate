@@ -76,7 +76,7 @@ bin_var_name <- function(x, infix=INFIX_CAT_NAME){
   } else {
     if (is.numeric(x$value)){
       warning("'", x$var, "' seems a categorical variable, please recode it as a factor in the data.
-Only use character or logical values in %in% statements to prevent this warning.",
+Only use character or logical values in %in% rules to prevent this warning.",
               call. = FALSE)
 
     }

@@ -2,6 +2,7 @@
 
 * Fix for issue #25, when a variable contains only one category. Thanks to @nickforr.
 * Fix/warning for issue #27, using an integer variable for categories. Thanks to Jeffrey Hoogland for reporting.
+* Fix for handling NA logical values (issue #29).
 * Added status and duration info to `errorlocation`. Thanks to Sander Scholtus
 * Improved progress bar, showing percentage and taking into account records without errors
 * added `inspect_mip` function, allowing for an indepth examination of the mip translation
@@ -10,7 +11,6 @@ and execution. Making it easier to debug/find what is wrong with a record / rule
 `options(errorlocate.allow_log = TRUE)`. This makes it possible to formulate constraints
 `total_salary >= min_salary * n_employees` as 
 `log(total_salary) >= log(min_salary) + log(n_employees)`.
-* fix for handling NA logical values (issue #29).
 
 # errorlocate 0.4
 
