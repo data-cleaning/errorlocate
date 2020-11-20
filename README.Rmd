@@ -14,6 +14,7 @@ knitr::opts_chunk$set(
 ```
 
 [![Build Status](https://travis-ci.org/data-cleaning/errorlocate.svg)](https://travis-ci.org/data-cleaning/errorlocate)
+[![R build status](https://github.com/data-cleaning/errorlocate/workflows/R-CMD-check/badge.svg)](https://github.com/data-cleaning/errorlocate/actions)
 [![CRAN](http://www.r-pkg.org/badges/version/errorlocate)](https://CRAN.R-project.org/package=errorlocate)
 [![Downloads](http://cranlogs.r-pkg.org/badges/errorlocate)](http://www.r-pkg.org/pkg/errorlocate) 
 [![status](https://tinyverse.netlify.com/badge/errorlocate)](https://CRAN.R-project.org/package=errorlocate)
