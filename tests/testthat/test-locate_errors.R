@@ -100,6 +100,13 @@ describe("locate_errors", {
     )
   })
 
+  it ("can handle a wrong category", {
+    rules <- validator( x %in% c("B","A"))
+    data <- data.frame(x = "C")
+    res <- locate_errors(data, rules)$errors
+    expect_true(res)
+  })
+
   it ("can handle a single category (issue #25", {
     rules <- validator( x %in% c("A"))
     data <- data.frame(x = "C")

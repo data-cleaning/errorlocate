@@ -123,32 +123,44 @@ miprules <- setRefClass("MipRules",
        lp <- translate_mip_lp(mip_rules(), objective, ...)
        #TODO set timer, duration etc.
        s <- solve(lp)
-       #browser()
-       values <- lpSolveAPI::get.variables(lp)
+
+       solution <- switch( as.character(s),
+                           "0" = TRUE,  # optimal solution found (so feasible)
+                           "1" = TRUE,  # sub optimal solution (so feasible)
+                           "2" = FALSE, # infeasible
+                           "3" = TRUE,  # unbounded (so feasible)
+                           "4" = TRUE,  # degenerate (so feasible)
+                           "5" = NA,    # numerical failure, so unknown
+                           "6" = NA,    # process aborted
+                           "7" = NA,    # timeout
+                           "9" = TRUE,  # presolved
+                           "10" = FALSE, # branch and bound failed
+                           "11" = FALSE, # branch and bound stopped
+                           "12" = TRUE,  # a feasible branch and bound found
+                           "13" = FALSE, # no feasible branch and bound found
+                           FALSE
+       )
+       if (solution){
+          values <- lpSolveAPI::get.variables(lp)
+       } else {
+          values <- rep(NA, ncol(lp))
+       }
        names(values) <- colnames(lp)
+
        adapt <- objective < 0 # trick to create logical with names
        adapt_nms <- names(adapt)[names(adapt) %in% names(values)]
        adapt[adapt_nms] <- values[adapt_nms] == 1
+       if (length(values) == 0){
+          # seems optimalisation of lpSolvAPI when there is only 1 column of data..
+          adapt <- objective > 0
+          adapt[] <- lpSolveAPI::get.objective(lp) > 0
+          #browser()
+       }
+
        # remove prefix
        names(adapt) <- gsub(".delta_", "", names(adapt))
        # TODO improve the return values based on value of s
        # Add the same table as with infeasible
-       solution <- switch( as.character(s),
-         "0" = TRUE,  # optimal solution found (so feasible)
-         "1" = TRUE,  # sub optimal solution (so feasible)
-         "2" = FALSE, # infeasible
-         "3" = TRUE,  # unbounded (so feasible)
-         "4" = TRUE,  # degenerate (so feasible)
-         "5" = NA,    # numerical failure, so unknown
-         "6" = NA,    # process aborted
-         "7" = NA,    # timeout
-         "9" = TRUE,  # presolved
-         "10" = FALSE, # branch and bound failed
-         "11" = FALSE, # branch and bound stopped
-         "12" = TRUE,  # a feasible branch and bound found
-         "13" = FALSE, # no feasible branch and bound found
-         FALSE
-       )
 
        # TODO when no solution found, change errors into NA
        list(

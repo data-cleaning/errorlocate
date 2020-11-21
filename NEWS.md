@@ -7,7 +7,7 @@
 * Fix for handling NA logical values (issue #29).
 * Added status and duration info to `errorlocation`. Thanks to Sander Scholtus
 * Improved progress bar, showing percentage and taking into account records without errors
-* added `inspect_mip` function, allowing for an indepth examination of the mip translation
+* added `inspect_mip` function, allowing for an in depth examination of the mip translation
 and execution. Making it easier to debug/find what is wrong with a record / rule set
 * experimental functionality for log transformed variables, can be switched on with
 `options(errorlocate.allow_log = TRUE)`. This makes it possible to formulate constraints
