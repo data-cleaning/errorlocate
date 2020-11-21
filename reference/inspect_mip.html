@@ -87,6 +87,18 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/inspect_mip.html">Inspecting the errorlocate Mixed Integer Program</a>
+    </li>
+  </ul>
+</li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
@@ -170,8 +182,8 @@ See the example section for finding out what to do with inspect_mip.</p>
 #&gt;                        x        .delta_x            
 #&gt; Minimize               0  1.289767244598            
 #&gt; V1                    -1               0  &lt;=  -1.001
-#&gt; x                      1          -1e+07  &lt;=       0
-#&gt; R3                    -1          -1e+07  &lt;=       0
+#&gt; x_ub                   1          -1e+07  &lt;=       0
+#&gt; x_lb                  -1          -1e+07  &lt;=       0
 #&gt; Kind                 Std             Std            
 #&gt; Type                Real             Int            
 #&gt; Upper                Inf               1            
@@ -183,8 +195,8 @@ See the example section for finding out what to do with inspect_mip.</p>
 #&gt;                        x        .delta_x            
 #&gt; Minimize               0  1.289767244598            
 #&gt; V1                    -1               0  &lt;=  -1.001
-#&gt; x                      1          -1e+07  &lt;=       0
-#&gt; R3                    -1          -1e+07  &lt;=       0
+#&gt; x_ub                   1          -1e+07  &lt;=       0
+#&gt; x_lb                  -1          -1e+07  &lt;=       0
 #&gt; Kind                 Std             Std            
 #&gt; Type                Real             Int            
 #&gt; Upper                Inf               1            
@@ -205,8 +217,8 @@ See the example section for finding out what to do with inspect_mip.</p>
 #&gt;                        x        .delta_x            
 #&gt; Minimize               0  1.289767244598            
 #&gt; V1                    -1               0  &lt;=  -1.001
-#&gt; x                      1          -1e+07  &lt;=       0
-#&gt; R3                    -1          -1e+07  &lt;=       0
+#&gt; x_ub                   1          -1e+07  &lt;=       0
+#&gt; x_lb                  -1          -1e+07  &lt;=       0
 #&gt; Kind                 Std             Std            
 #&gt; Type                Real             Int            
 #&gt; Upper                Inf               1            
@@ -226,9 +238,9 @@ See the example section for finding out what to do with inspect_mip.</p>
 </div><div class='output co'>#&gt; [[1]]
 #&gt; V1: -x &lt; -1
 #&gt; [[2]]
-#&gt; x: x - 1e+07*.delta_x &lt;= 0
+#&gt; x_ub: x - 1e+07*.delta_x &lt;= 0
 #&gt; [[3]]
-#&gt; x: -x - 1e+07*.delta_x &lt;= 0</div><div class='input'><span class='va'>mip</span><span class='op'>$</span><span class='va'>objective</span>
+#&gt; x_lb: -x - 1e+07*.delta_x &lt;= 0</div><div class='input'><span class='va'>mip</span><span class='op'>$</span><span class='va'>objective</span>
 </div><div class='output co'>#&gt; .delta_x 
 #&gt; 1.289767 </div></pre>
   </div>
