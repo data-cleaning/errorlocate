@@ -84,6 +84,7 @@ translate_mip_lp <- function( rules
 # splits category names (<variable>:<category>) into variable column groups needed
 # for SOS1 constraints
 asSOS <- function(vars){
+  #TODO also add log lower boundary as SOS
   CAT <- ":.+"
 
   idx <- grepl(CAT, vars)

@@ -68,7 +68,8 @@ expect_values <- function(values, weights, delta_names = NULL, ...){
     b <- lin_values[[n]]
     w <- weights[n]
     if (is.finite(w)){
-      soft_lin_rule( mip_rule(a, op="<=", b =  b, rule = n, weight = w)
+      n_ub <- paste0(n, "_ub")
+      soft_lin_rule( mip_rule(a, op="<=", b =  b, rule = n_ub, weight = w)
                    , name = delta_names[n]
                    )
     } else {
@@ -84,7 +85,8 @@ expect_values <- function(values, weights, delta_names = NULL, ...){
     b <- lin_values[[n]]
     w <- weights[n]
     if (is.finite(w)){
-      soft_lin_rule( mip_rule(-a, op = "<=", b = -b, rule = n, weight = w)
+      n_lb <- paste0(n, "_lb")
+      soft_lin_rule( mip_rule(-a, op = "<=", b = -b, rule = n_lb, weight = w)
                    , name = delta_names[n]
                    )
     } else {

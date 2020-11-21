@@ -1,0 +1,193 @@
+---
+title: "Inspecting the errorlocate Mixed Integer Program"
+output: 
+  rmarkdown::html_vignette:
+    df_print: kable
+vignette: >
+  %\VignetteIndexEntry{Inspecting the errorlocate Mixed Integer Program}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+bibliography: 
+- references.bib
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(errorlocate)
+```
+
+## Intro
+
+Errorlocate uses the linear, categorical and conditional rules from a rules set formulate with R package [`validate`](https://cran.r-project.org/package=validate), to create a Mixed Integer Problem.
+
+The details of the translation are hidden in `locate_errors`, since for most users they are not relevant. Often the number of errors found and the processing time are much more relevant parameters.
+
+In few cases, you may run into a problems with your error localization problem:
+
+a)  The processing time of (some of the records) of `locate_errors` is high.
+b)  `locate_errors` missresolveded an obvious error.
+c)  `locate_errors` indicates that it did not find a valid solution (for some records) .
+
+Problem a. can be by splitting your dataset and use a `parallel` solution and problem b, can be due to that `error_locate` ignores non-linear rules, but these problems may also indicate problems with your rules set.
+
+Problem with you rule set may be mitigated by using the `validatetools` package that can detect conflicting and redundant rules and has methods to simplify your rule set.
+
+If you want to dive deep into the mixed integer problem that is created by `error_locate` you can use the `inspect_mip` function.
+
+## A bit of theory
+
+In the following sections an example is given of how linear, categorical and conditional rules are written as Mixed Integer Problems. First let's see how each rule in validator is concieved:
+
+## Formal description
+
+### Rule $r_i(\mathbf{x})$
+
+Each translatable rule $r_i(\mathbf{x})$ can be written as a disjunction of atomic clauses: it is a function $r_i$ that operates on (some of) the values of record $\mathbf{x} = (x_1, \ldots, x_n)$ and is `TRUE` (valid) or `FALSE` (not valid)
+
+$$
+r_i(\mathbf{x}) = \bigvee_j C_i^j(\mathbf{x})
+$$ 
+
+with:
+
+$$
+C_i^j(\mathbf{x}) = \left\{
+  \begin{array}{l}
+ \mathbf{a}^T\mathbf{x} \leq b \\
+  \mathbf{a}^T\mathbf{x} = b \\
+  x_j \in F_{ij}  \textrm{with } F_{ij} \subseteq D_j \\
+  x_j \not\in F_{ij} \textrm{with } F_{ij} \subseteq D_j \\
+  \end{array}
+\right.
+$$
+
+Each linear, categorical or conditional rule $r_i$ can be written in this form.
+
+## Rule system:
+
+The rules form a system $R(\mathbf{x})$:
+
+$$
+R(\mathbf{x}) = \bigwedge_i r_i
+$$ 
+which means that all rules $r_i$ must be valid. If $R(\mathbf{x})$ is true for 
+record $\mathbf{x}$, then the record is valid, otherwise one (or more) of the rules is violated.
+
+## Mixed Integer Programming to FH
+
+Each rule set $R(\mathbf{x})$ can be translated into a mip problem and solved. 
+
+$$
+\begin{array}{r}
+  \textrm{Minimize } f(\mathbf{x}) = 0; \\
+  \textrm{s.t. }\mathbf{Rx} \leq \mathbf{d} \\
+\end{array}
+$$
+-   $f(\mathbf{x})$ is the (weighted) number of changed variable: 
+$\delta_i \in {0,1}$
+
+$$
+f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
+$$
+
+-   $\mathbf{R}$ contains rules: $\mathbf{R}_H(\mathbf{x}) \leq \mathbf{d}_H$ that
+were specified with `validate`/`validator` 
+and soft constraints: $\mathbf{R}_0(\mathbf{x}, \mathbf{\delta}) \leq \mathbf{d}_0$ 
+that try fix the current 
+record of $\mathbf{x}$ to the observed values.
+
+## `inspect_mip`
+
+Most users will use the function `locate_errors` to find errors. The function
+`inspect_mip` works exactly same, except that it operates on just one record in
+stead of a whole `data.frame`. The result of `inspect_mip` is a mip object, that
+is not yet executed and can be inspectied.
+
+```{r, df_print = "kable"}
+rules <- validator( is_adult   = age >= 18
+                  , pos_income = income >= 0
+                  )
+data <- data.frame(age = c(12, 35), income = c(2000, -1000))
+data
+```
+
+So we detect two errors in the dataset:
+
+```{r}
+summary(confront(data, rules))
+```
+
+
+```{r}
+locate_errors(data, rules)$errors
+```
+
+Lets inspect the first record
+
+```{r}
+mip <- inspect_mip(data, rules)
+print(mip)
+```
+
+
+```{r}
+# inspect the lp problem (prior to solving it with lpsolveAPI)
+lp <- mip$to_lp()
+print(lp)
+
+# for large problems write the lp problem to disk for inspection
+# lpSolveAPI::write.lp(lp, "my_problem.lp")
+
+# solve the mip system / find a solution
+res <- mip$execute()
+names(res)
+
+# lpSolveAPI status of finding a solution
+res$s
+
+# lp problem after solving (often simplified version of first lp)
+res$lp
+
+# records that are deemed "faulty"
+res$errors
+
+# values of variables used in the mip formulation. Also contains a valid solution
+# for "faulty" variables
+res$values
+
+# see the derived mip rules and objective function, used in the construction of
+# lp problem
+mip$mip_rules()
+mip$objective
+```
+
+# Categorical rule
+
+```{r}
+rules <- validator( working %in% c("job","retired")
+                  , adult %in% c(TRUE, FALSE)
+                  )
+
+data <- data.frame(working="?", adult = NA)
+locate_errors(data, rules)$errors
+inspect_mip(data, rules)
+```
+
+# Conditional rule
+
+```{r}
+rules <- validator( working %in% c("no_job", "job","retired")
+                  , if (age < 12) working == "no_job"
+                  , if (working == "retired") age > 50
+                  , age >=0
+                  )
+
+data <- data.frame(age = 12, working="retired")
+inspect_mip(data, rules)
+```
