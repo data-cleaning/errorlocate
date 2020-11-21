@@ -61,7 +61,7 @@ miprules <- setRefClass("MipRules",
        ._vars_num <<- unique(c(._log_transform$num_vars, var_num))
 
        # remove variables that are not in data.frame but in the environment
-       ._vars <<- ._vars[!sapply(._vars, exists)]
+       # ._vars <<- ._vars[!sapply(._vars, exists)]
      },
      mip_rules = function(){
        c(._miprules, ._log_rules, ._value_rules)
@@ -88,6 +88,10 @@ miprules <- setRefClass("MipRules",
          weights <- rep(1, length(values))
          names(weights) <- names(values)
        }
+
+       # omitting vars that are not in rules...
+       values <- values[._vars]
+       weights <- weights[._vars]
 
        # TODO if missing log_values, derive it inplace
 

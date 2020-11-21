@@ -31,6 +31,16 @@ inspect_mip <- function(data, x, weight, ...){
   data <- as.list(data)
 
   mip <- miprules(rules)
+
+  vars <- mip$._vars
+  missing_vars <- vars[!vars %in% names(data)]
+  if (length(missing_vars)){
+    # if they are part of the environment remove...
+    mv_in_env <- sapply(missing_vars, exists)
+    vars <- setdiff(vars, missing_vars[mv_in_env])
+    mip$._vars <- vars
+  }
+
   mip$set_values(data, weight)
   mip$update_log_constraints(data, ...)
   mip

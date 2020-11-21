@@ -1,5 +1,7 @@
 # errorlocate 0.5
 
+* Better name generation for soft linear equality constraints
+* Only values of the data.frame that are used in the constraints are added to the matrix.
 * Fix for issue #25, when a variable contains only one category. Thanks to @nickforr.
 * Fix/warning for issue #27, using an integer variable for categories. Thanks to Jeffrey Hoogland for reporting.
 * Fix for handling NA logical values (issue #29).

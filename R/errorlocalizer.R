@@ -58,6 +58,15 @@ fh_localizer <-
         missing_vars <- vars[!vars %in% names(data)]
 
         if (length(missing_vars)){
+          # if they are part of the environment remove...
+          mv_in_env <- sapply(missing_vars, exists)
+          vars <- setdiff(vars, missing_vars[mv_in_env])
+          ._miprules$._vars <<- vars
+
+          missing_vars <- missing_vars[!mv_in_env]
+        }
+
+        if (length(missing_vars)){
           stop('Missing column(s): '
               , paste0("'", missing_vars, "'", collapse = ", ")
               , ". Add them to your data and rerun."
