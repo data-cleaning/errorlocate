@@ -214,15 +214,13 @@ See the example section for finding out what to do with inspect_mip.</p>
 <span class='co'># lp problem after solving (often simplified version of first lp)</span>
 <span class='va'>res</span><span class='op'>$</span><span class='va'>lp</span>
 </div><div class='output co'>#&gt; Model name: 
-#&gt;                        x        .delta_x            
-#&gt; Minimize               0  1.289767244598            
-#&gt; V1                    -1               0  &lt;=  -1.001
-#&gt; x_ub                   1          -1e+07  &lt;=       0
-#&gt; x_lb                  -1          -1e+07  &lt;=       0
-#&gt; Kind                 Std             Std            
-#&gt; Type                Real             Int            
-#&gt; Upper                Inf               1            
-#&gt; Lower               -Inf               0            </div><div class='input'>
+#&gt;                        x        .delta_x       
+#&gt; Minimize               0  1.289767244598       
+#&gt; x_ub                   1          -1e+07  &lt;=  0
+#&gt; Kind                 Std             Std       
+#&gt; Type                Real             Int       
+#&gt; Upper                Inf               1       
+#&gt; Lower              1.001               0       </div><div class='input'>
 <span class='co'># records that are deemed "faulty"</span>
 <span class='va'>res</span><span class='op'>$</span><span class='va'>errors</span>
 </div><div class='output co'>#&gt;    x 

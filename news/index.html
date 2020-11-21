@@ -138,7 +138,7 @@
 <li>Fix for handling NA logical values (issue <a href='https://github.com/data-cleaning/errorlocate/issues/29'>#29</a>).</li>
 <li>Added status and duration info to <code>errorlocation</code>. Thanks to Sander Scholtus</li>
 <li>Improved progress bar, showing percentage and taking into account records without errors</li>
-<li>added <code>inspect_mip</code> function, allowing for an indepth examination of the mip translation and execution. Making it easier to debug/find what is wrong with a record / rule set</li>
+<li>added <code>inspect_mip</code> function, allowing for an in depth examination of the mip translation and execution. Making it easier to debug/find what is wrong with a record / rule set</li>
 <li>experimental functionality for log transformed variables, can be switched on with <code><a href="https://rdrr.io/r/base/options.html">options(errorlocate.allow_log = TRUE)</a></code>. This makes it possible to formulate constraints <code>total_salary &gt;= min_salary * n_employees</code> as <code>log(total_salary) &gt;= log(min_salary) + log(n_employees)</code>.</li>
 </ul>
 </div>
