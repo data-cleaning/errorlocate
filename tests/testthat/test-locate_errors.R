@@ -157,7 +157,7 @@ describe("locate_errors", {
     options(errorlocate.allow_log = TRUE)
 
     rules <- validator(log(x) > log(4), x < 3)
-    d <- data.frame(x = 1)
+    d <- data.frame(x = 2)
     expect_warning (
       el <- locate_errors(d, rules)
     )
@@ -175,9 +175,11 @@ describe("locate_errors", {
 
     expect_false(as.logical(el$errors))
 
-    rules <- validator(log(x) > log(.1), x < 3)
-    d <- data.frame(x = 0.1)
+    rules <- validator(log(x) > log(1), x < 3)
+    d <- data.frame(x = 1)
     el <- locate_errors(d, rules)
+    mip <- inspect_mip(d, rules)
+    s <- mip$execute()
 
     expect_true(as.logical(el$errors))
 

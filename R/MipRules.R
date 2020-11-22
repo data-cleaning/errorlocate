@@ -57,11 +57,9 @@ miprules <- setRefClass("MipRules",
        # set log constraints
        ._log_rules <<- create_log_constraints(._log_transform)
 
-              # make sure original variables are also in _vars_num
+       # make sure original variables are also in _vars_num
        ._vars_num <<- unique(c(._log_transform$num_vars, var_num))
 
-       # remove variables that are not in data.frame but in the environment
-       # ._vars <<- ._vars[!sapply(._vars, exists)]
      },
      mip_rules = function(){
        c(._miprules, ._log_rules, ._value_rules)
@@ -117,6 +115,9 @@ miprules <- setRefClass("MipRules",
      to_lp = function(...){
        translate_mip_lp(mip_rules(), objective, ...)
      },
+     write_lp = function(filename, ...){
+        lpSolveAPI::write.lp(to_lp(), filename, ...)
+     },
      execute = function(...){
        # TODO see if this can be executed in parallel.
        #browser()
@@ -143,7 +144,7 @@ miprules <- setRefClass("MipRules",
        if (solution){
           values <- lpSolveAPI::get.variables(lp)
        } else {
-          values <- rep(NA, ncol(lp))
+          values <- rep(1, ncol(lp))
        }
        names(values) <- colnames(lp)
 
@@ -162,7 +163,6 @@ miprules <- setRefClass("MipRules",
        # TODO improve the return values based on value of s
        # Add the same table as with infeasible
 
-       # TODO when no solution found, change errors into NA
        list(
          s = s,
          solution = solution,
