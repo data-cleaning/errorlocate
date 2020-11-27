@@ -1,3 +1,8 @@
+# errorlocate 0.5.2
+
+* Bug fix for issue #30: when a value >= 1e7 was encountered, all fields were flagged erroneous.
+Thanks to Garðar Páll Gíslason. 
+
 # errorlocate 0.5.1
 
 * Better name generation for soft linear equality constraints
