@@ -215,7 +215,7 @@ data <- data.frame(working="?")
 ```
 
 ```{r, echo=FALSE}
-data
+knitr::kable(data)
 ```
 
 ```{r mip3, results="hide"}
@@ -242,7 +242,7 @@ data <- data.frame(voted = TRUE, adult = FALSE)
 ```
 
 ```{r, echo=FALSE}
-data
+knitr::kable(data)
 ```
 
 ```{r mip4, results="hide"}
@@ -265,7 +265,7 @@ data <- data.frame(age = 12, income = 2000)
 ```
 
 ```{r, echo = FALSE}
-data
+knitr::kable(data)
 ```
 
 ```{r}
