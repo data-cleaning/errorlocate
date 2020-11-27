@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">errorlocate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.1.9000</span>
       </span>
     </div>
 
@@ -222,7 +222,7 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">lp</span><span class="op">)</span></pre></div>
 <pre><code>  Model name: 
                         age          income      .delta_age   .delta_income           
-  Minimize                0               0  1.232651903644   1.00522379193           
+  Minimize                0               0  1.107428386226  1.325907181716           
   r1                     -1               0               0               0  &lt;=    -18
   r2                      0              -1               0               0  &lt;=      0
   age_ub                  1               0          -1e+07               0  &lt;=     12
@@ -269,7 +269,7 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <span class="va">res</span><span class="op">$</span><span class="va">lp</span></pre></div>
 <pre><code>  Model name: 
                         age          income      .delta_age   .delta_income           
-  Minimize                0               0  1.232651903644   1.00522379193           
+  Minimize                0               0  1.107428386226  1.325907181716           
   age_ub                  1               0          -1e+07               0  &lt;=     12
   income_ub               0               1               0          -1e+07  &lt;=   2000
   income_lb               0              -1               0          -1e+07  &lt;=  -2000
@@ -299,7 +299,7 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <span class="va">mip</span><span class="op">$</span><span class="fu">to_lp</span><span class="op">(</span><span class="op">)</span></pre></div>
 <pre><code>  Model name: 
                   working:?      working:job  working:retired   .delta_working      
-  Minimize                0                0                0   1.445999366696      
+  Minimize                0                0                0   1.554507331456      
   r1                      0                1                1                0  =  1
   working                 1                0                0                1  =  1
   Kind                  SOS              SOS              SOS              Std      
@@ -333,7 +333,7 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <span class="va">mip</span><span class="op">$</span><span class="fu">to_lp</span><span class="op">(</span><span class="op">)</span></pre></div>
 <pre><code>  Model name: 
                      adult           voted    .delta_adult    .delta_voted       
-  Minimize               0               0    1.1708031249  1.326386387926       
+  Minimize               0               0  1.322486889082  1.323391661164       
   r1                    -1               1               0               0  &lt;=  0
   voted                  0               1               0               1   =  1
   adult                 -1               0               1               0   =  0
@@ -394,7 +394,7 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <span class="va">mip</span><span class="op">$</span><span class="fu">to_lp</span><span class="op">(</span><span class="op">)</span></pre></div>
 <pre><code>  Model name: 
                         age          income      .delta_age   .delta_income        r1._lin1        r1._lin2           
-  Minimize                0               0  1.354418236064  1.104790979298               0               0           
+  Minimize                0               0  1.369442299124  1.138684165198               0               0           
   r1                      0               0               0               0               1               1  &lt;=      1
   r1._lin1                0               1               0               0          -1e+07               0  &lt;=      0
   r1._lin2               -1               0               0               0               0          -1e+07  &lt;=    -16
@@ -428,7 +428,7 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <span class="va">mip</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/inspect_mip.html">inspect_mip</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">rules</span><span class="op">)</span>
 <span class="va">mip</span><span class="op">$</span><span class="fu">execute</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">errors</span>
 <span class="co">#&gt; working     age </span>
-<span class="co">#&gt;   FALSE    TRUE</span></pre></div>
+<span class="co">#&gt;    TRUE   FALSE</span></pre></div>
 </div>
 <div id="weights" class="section level3">
 <h3 class="hasAnchor">
