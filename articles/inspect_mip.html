@@ -222,7 +222,7 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">lp</span><span class="op">)</span></pre></div>
 <pre><code>  Model name: 
                         age          income      .delta_age   .delta_income           
-  Minimize                0               0   1.27703374473  1.121583106578           
+  Minimize                0               0  1.033464566456  1.477967544576           
   r1                     -1               0               0               0  &lt;=    -18
   r2                      0              -1               0               0  &lt;=      0
   age_ub                  1               0          -1e+07               0  &lt;=     12
@@ -269,7 +269,7 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <span class="va">res</span><span class="op">$</span><span class="va">lp</span></pre></div>
 <pre><code>  Model name: 
                         age          income      .delta_age   .delta_income           
-  Minimize                0               0   1.27703374473  1.121583106578           
+  Minimize                0               0  1.033464566456  1.477967544576           
   age_ub                  1               0          -1e+07               0  &lt;=     12
   income_ub               0               1               0          -1e+07  &lt;=   2000
   income_lb               0              -1               0          -1e+07  &lt;=  -2000
@@ -286,14 +286,20 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <div class="sourceCode" id="cb18"><pre class="downlit">
 <span class="va">rules</span> <span class="op">&lt;-</span> <span class="fu">validator</span><span class="op">(</span> r1 <span class="op">=</span> <span class="va">working</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"job"</span>,<span class="st">"retired"</span><span class="op">)</span>                  <span class="op">)</span>
 <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>working<span class="op">=</span><span class="st">"?"</span><span class="op">)</span></pre></div>
-<pre><code>#&gt;   working
-#&gt; 1       ?</code></pre>
-<div class="sourceCode" id="cb20"><pre class="downlit">
+<table class="table">
+<thead><tr class="header">
+<th align="left">working</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td align="left">?</td>
+</tr></tbody>
+</table>
+<div class="sourceCode" id="cb19"><pre class="downlit">
 <span class="va">mip</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/inspect_mip.html">inspect_mip</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">rules</span><span class="op">)</span>
 <span class="va">mip</span><span class="op">$</span><span class="fu">to_lp</span><span class="op">(</span><span class="op">)</span></pre></div>
 <pre><code>  Model name: 
                   working:?      working:job  working:retired   .delta_working      
-  Minimize                0                0                0   1.763546269154      
+  Minimize                0                0                0   1.290845897282      
   r1                      0                1                1                0  =  1
   working                 1                0                0                1  =  1
   Kind                  SOS              SOS              SOS              Std      
@@ -301,7 +307,7 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
   Upper                   1                1                1                1      
   Lower                   0                0                0                0</code></pre>
 <p>Row <code>r1</code> indicates that either <code>working:job</code> or <code>working:retired</code> must be true. The <code>Kind</code> row (<code>SOS</code>) indicates that these variables share the same switch, only one of them can be set.</p>
-<div class="sourceCode" id="cb22"><pre class="downlit">
+<div class="sourceCode" id="cb21"><pre class="downlit">
 <span class="va">mip</span><span class="op">$</span><span class="fu">execute</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">values</span>
 <span class="co">#&gt;       working:?     working:job working:retired  .delta_working </span>
 <span class="co">#&gt;               0               1               0               1</span></pre></div>
@@ -309,17 +315,25 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <h4 class="hasAnchor">
 <a href="#multiple-categories" class="anchor"></a>Multiple categories:</h4>
 <p>With categorical variables it is also possible to specify <code>if-then</code> rules. These are encoded as one mip rule:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit">
+<div class="sourceCode" id="cb22"><pre class="downlit">
 <span class="va">rules</span> <span class="op">&lt;-</span> <span class="fu">validator</span><span class="op">(</span> r1 <span class="op">=</span> <span class="kw">if</span> <span class="op">(</span><span class="va">voted</span> <span class="op">==</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="va">adult</span> <span class="op">==</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>voted <span class="op">=</span> <span class="cn">TRUE</span>, adult <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></pre></div>
-<pre><code>#&gt;   voted adult
-#&gt; 1  TRUE FALSE</code></pre>
-<div class="sourceCode" id="cb25"><pre class="downlit">
+<table class="table">
+<thead><tr class="header">
+<th align="left">voted</th>
+<th align="left">adult</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+</tr></tbody>
+</table>
+<div class="sourceCode" id="cb23"><pre class="downlit">
 <span class="va">mip</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/inspect_mip.html">inspect_mip</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">rules</span><span class="op">)</span>
 <span class="va">mip</span><span class="op">$</span><span class="fu">to_lp</span><span class="op">(</span><span class="op">)</span></pre></div>
 <pre><code>  Model name: 
                      adult           voted    .delta_adult    .delta_voted       
-  Minimize               0               0  1.076441128854  1.406844667276       
+  Minimize               0               0  1.308264231892  1.444903422962       
   r1                    -1               1               0               0  &lt;=  0
   voted                  0               1               0               1   =  1
   adult                 -1               0               1               0   =  0
@@ -327,7 +341,7 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
   Type                 Int             Int             Int             Int       
   Upper                  1               1               1               1       
   Lower                  0               0               0               0</code></pre>
-<div class="sourceCode" id="cb27"><pre class="downlit">
+<div class="sourceCode" id="cb25"><pre class="downlit">
 <span class="va">mip</span><span class="op">$</span><span class="fu">execute</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">values</span>
 <span class="co">#&gt;        adult        voted .delta_adult .delta_voted </span>
 <span class="co">#&gt;            1            1            1            0</span></pre></div>
@@ -336,12 +350,20 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <div id="conditional-rule" class="section level3">
 <h3 class="hasAnchor">
 <a href="#conditional-rule" class="anchor"></a>Conditional rule</h3>
-<div class="sourceCode" id="cb28"><pre class="downlit">
+<div class="sourceCode" id="cb26"><pre class="downlit">
 <span class="va">rules</span> <span class="op">&lt;-</span> <span class="fu">validator</span><span class="op">(</span> r1 <span class="op">=</span> <span class="kw">if</span> <span class="op">(</span><span class="va">income</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="va">age</span> <span class="op">&gt;=</span> <span class="fl">16</span><span class="op">)</span>
 <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>age <span class="op">=</span> <span class="fl">12</span>, income <span class="op">=</span> <span class="fl">2000</span><span class="op">)</span></pre></div>
-<pre><code>#&gt;   age income
-#&gt; 1  12   2000</code></pre>
-<div class="sourceCode" id="cb30"><pre class="downlit">
+<table class="table">
+<thead><tr class="header">
+<th align="right">age</th>
+<th align="right">income</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td align="right">12</td>
+<td align="right">2000</td>
+</tr></tbody>
+</table>
+<div class="sourceCode" id="cb27"><pre class="downlit">
 <span class="va">mip</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/inspect_mip.html">inspect_mip</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">rules</span><span class="op">)</span></pre></div>
 <p><code>errorlocate</code> encodes this rule into multiple rules (as noted in the theoreteical section above), so rule <code>r1</code> is chopped into 1 rule + 2 sub rules:</p>
 <p><code>r1: if (income &gt; 0) age &gt;= 0</code>:</p>
@@ -351,7 +373,7 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <li><p><code>r1: r1._lin1 == FALSE | r1._lin2 == FALSE</code></p></li>
 </ul>
 <p>This can be seen with:</p>
-<div class="sourceCode" id="cb31"><pre class="downlit">
+<div class="sourceCode" id="cb28"><pre class="downlit">
 <span class="va">mip</span><span class="op">$</span><span class="fu">mip_rules</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; [[1]]</span>
 <span class="co">#&gt; r1: r1._lin1 + r1._lin2 &lt;= 1</span>
@@ -368,11 +390,11 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <span class="co">#&gt; [[7]]</span>
 <span class="co">#&gt; age_lb: -age - 1e+07*.delta_age &lt;= -12</span></pre></div>
 <p>The resulting lp model is:</p>
-<div class="sourceCode" id="cb32"><pre class="downlit">
+<div class="sourceCode" id="cb29"><pre class="downlit">
 <span class="va">mip</span><span class="op">$</span><span class="fu">to_lp</span><span class="op">(</span><span class="op">)</span></pre></div>
 <pre><code>  Model name: 
                         age          income      .delta_age   .delta_income        r1._lin1        r1._lin2           
-  Minimize                0               0  1.015955312294  1.341840576962               0               0           
+  Minimize                0               0  1.195603564032  1.026191772544               0               0           
   r1                      0               0               0               0               1               1  &lt;=      1
   r1._lin1                0               1               0               0          -1e+07               0  &lt;=      0
   r1._lin2               -1               0               0               0               0          -1e+07  &lt;=    -16
@@ -384,18 +406,18 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
   Type                 Real            Real             Int             Int             Int             Int           
   Upper                 Inf             Inf               1               1               1               1           
   Lower                -Inf            -Inf               0               0               0               0</code></pre>
-<div class="sourceCode" id="cb34"><pre class="downlit">
+<div class="sourceCode" id="cb31"><pre class="downlit">
 <span class="va">mip</span><span class="op">$</span><span class="fu">execute</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">values</span>
 <span class="co">#&gt;           age        income    .delta_age .delta_income      r1._lin1 </span>
-<span class="co">#&gt;            16          2000             1             0             1 </span>
+<span class="co">#&gt;            12             0             0             1             0 </span>
 <span class="co">#&gt;      r1._lin2 </span>
-<span class="co">#&gt;             0</span></pre></div>
+<span class="co">#&gt;             1</span></pre></div>
 </div>
 <div id="alltogether" class="section level3">
 <h3 class="hasAnchor">
 <a href="#alltogether" class="anchor"></a>Alltogether:</h3>
 <p>This works together with categorical, linear and conditional rules.</p>
-<div class="sourceCode" id="cb35"><pre class="downlit">
+<div class="sourceCode" id="cb32"><pre class="downlit">
 <span class="va">rules</span> <span class="op">&lt;-</span> <span class="fu">validator</span><span class="op">(</span> r1 <span class="op">=</span> <span class="va">working</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"no_job"</span>, <span class="st">"job"</span>,<span class="st">"retired"</span><span class="op">)</span>
                   , r2 <span class="op">=</span> <span class="kw">if</span> <span class="op">(</span><span class="va">age</span> <span class="op">&lt;</span> <span class="fl">12</span><span class="op">)</span> <span class="va">working</span> <span class="op">==</span> <span class="st">"no_job"</span>
                   , r3 <span class="op">=</span> <span class="kw">if</span> <span class="op">(</span><span class="va">working</span> <span class="op">==</span> <span class="st">"retired"</span><span class="op">)</span> <span class="va">age</span> <span class="op">&gt;</span> <span class="fl">50</span>
@@ -406,24 +428,24 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <span class="va">mip</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/inspect_mip.html">inspect_mip</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">rules</span><span class="op">)</span>
 <span class="va">mip</span><span class="op">$</span><span class="fu">execute</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">errors</span>
 <span class="co">#&gt; working     age </span>
-<span class="co">#&gt;    TRUE   FALSE</span></pre></div>
+<span class="co">#&gt;   FALSE    TRUE</span></pre></div>
 </div>
 <div id="weights" class="section level3">
 <h3 class="hasAnchor">
 <a href="#weights" class="anchor"></a>Weights</h3>
 <p>The weights for each variable are normally set to 1, and <code>errorlocate</code> adds some random remainder to the weights: so the solutions are unique and reproducible (using <code>set.seed</code>).</p>
-<div class="sourceCode" id="cb36"><pre class="downlit">
+<div class="sourceCode" id="cb33"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span>
 <span class="va">rules</span> <span class="op">&lt;-</span> <span class="fu">validator</span><span class="op">(</span> r1 <span class="op">=</span> <span class="kw">if</span> <span class="op">(</span><span class="va">voted</span> <span class="op">==</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="va">adult</span> <span class="op">==</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>voted <span class="op">=</span> <span class="cn">TRUE</span>, adult <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="va">mip</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/inspect_mip.html">inspect_mip</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">rules</span>, weight <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>voted <span class="op">=</span> <span class="fl">3</span>, adult<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></pre></div>
 <p><code>$objective</code> contains the generated weights:</p>
-<div class="sourceCode" id="cb37"><pre class="downlit">
+<div class="sourceCode" id="cb34"><pre class="downlit">
 <span class="va">mip</span><span class="op">$</span><span class="va">objective</span>
 <span class="co">#&gt; .delta_voted .delta_adult </span>
 <span class="co">#&gt;     3.457403     1.468538</span></pre></div>
 <p>These are assigned to the <code>delta</code> variables in the objective function of the mip.</p>
-<div class="sourceCode" id="cb38"><pre class="downlit">
+<div class="sourceCode" id="cb35"><pre class="downlit">
 <span class="va">mip</span><span class="op">$</span><span class="fu">to_lp</span><span class="op">(</span><span class="op">)</span></pre></div>
 <pre><code>  Model name: 
                      adult           voted    .delta_adult    .delta_voted       
