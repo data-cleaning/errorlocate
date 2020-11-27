@@ -186,6 +186,17 @@ describe("locate_errors", {
     options(errorlocate.allow_log = NULL)
 
   })
+
+  it("handles values >=1e7 gracefully, issue #30", {
+    rules <- validator( profit == turnover - cost
+                        , cost >= 0.6 * turnover
+                        , turnover >= 0
+    )
+
+    data <- data.frame(profit = 1e10, cost = 200, turnover = 300)
+    el <- locate_errors(data, rules)
+    expect_equal(el$errors[1,], c(profit=TRUE, cost=FALSE, turnover=FALSE))
+  })
 })
 
 
