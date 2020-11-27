@@ -1,4 +1,4 @@
-# errorlocate 0.5
+# errorlocate 0.5.1
 
 * Better name generation for soft linear equality constraints
 * Only values of the data.frame that are used in the constraints are added to the matrix.
