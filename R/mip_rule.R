@@ -65,6 +65,12 @@ get_mr_rules <- function(x, ...){
 # get a coefficient matrix from a list of mip_rule objects
 get_mr_matrix <- function(x, ...){
   variable <- get_mr_vars(x, ...)
+  # needed for variables sticking together
+  # could need some
+  variable <- sort(variable)
+  # just aesthetics...
+  .delta <- grepl("^.delta|._lin", variable)
+  variable <- c(variable[!.delta], variable[.delta])
   rule <- get_mr_rules(x, ...)
   n_rule <- length(rule)
   n_variable <- length(variable)

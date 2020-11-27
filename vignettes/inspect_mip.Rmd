@@ -42,7 +42,7 @@ If you want to dive deep into the mixed integer problem that is created by `erro
 
 ## A bit of theory
 
-In the following sections an example is given of how linear, categorical and conditional rules are written as Mixed Integer Problems. First let's see how each rule in validator is concieved:
+In the following sections an example is given of how linear, categorical and conditional rules are written as Mixed Integer Problems. First let's see how these rules in validator can be formally defined.
 
 ## Formal description
 
@@ -52,7 +52,7 @@ Each translatable rule $r_i(\mathbf{x})$ can be written as a disjunction of atom
 
 $$
 r_i(\mathbf{x}) = \bigvee_j C_i^j(\mathbf{x})
-$$ 
+$$
 
 with:
 
@@ -69,49 +69,53 @@ $$
 
 Each linear, categorical or conditional rule $r_i$ can be written in this form.
 
+### Example
+
+```{r}
+rules <- validator(has_income = if (income > 0) age >= 16)
+rules$exprs()
+```
+
+So the rule `if (income > 0) age >= 16` can be written as (`income <= 0` OR `age >=16`)
+
 ## Rule system:
 
 The rules form a system $R(\mathbf{x})$:
 
 $$
 R(\mathbf{x}) = \bigwedge_i r_i
-$$ 
-which means that all rules $r_i$ must be valid. If $R(\mathbf{x})$ is true for 
-record $\mathbf{x}$, then the record is valid, otherwise one (or more) of the rules is violated.
+$$ which means that all rules $r_i$ must be valid. If $R(\mathbf{x})$ is true for record $\mathbf{x}$, then the record is valid, otherwise one (or more) of the rules is violated.
 
 ## Mixed Integer Programming to FH
 
-Each rule set $R(\mathbf{x})$ can be translated into a mip problem and solved. 
+Each rule set $R(\mathbf{x})$ can be translated into a mip problem and solved.
 
 $$
 \begin{array}{r}
   \textrm{Minimize } f(\mathbf{x}) = 0; \\
   \textrm{s.t. }\mathbf{Rx} \leq \mathbf{d} \\
 \end{array}
-$$
--   $f(\mathbf{x})$ is the (weighted) number of changed variable: 
-$\delta_i \in {0,1}$
+$$ - $f(\mathbf{x})$ is the (weighted) number of changed variable: $\delta_i \in {0,1}$
 
 $$
 f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 $$
 
--   $\mathbf{R}$ contains rules: $\mathbf{R}_H(\mathbf{x}) \leq \mathbf{d}_H$ that
-were specified with `validate`/`validator` 
-and soft constraints: $\mathbf{R}_0(\mathbf{x}, \mathbf{\delta}) \leq \mathbf{d}_0$ 
-that try fix the current 
-record of $\mathbf{x}$ to the observed values.
+-   $\mathbf{R}$ contains rules:
 
-## `inspect_mip`
+    -   $\mathbf{R}_H(\mathbf{x}) \leq \mathbf{d}_H$ that were specified with `validate`/`validator`
 
-Most users will use the function `locate_errors` to find errors. The function
-`inspect_mip` works exactly same, except that it operates on just one record in
-stead of a whole `data.frame`. The result of `inspect_mip` is a mip object, that
-is not yet executed and can be inspectied.
+    -   $\mathbf{R}_0(\mathbf{x}, \mathbf{\delta}) \leq \mathbf{d}_0$ : soft constraints that try fix the current record of $\mathbf{x}$ to the observed values.
+
+## Enter `inspect_mip`:
+
+### Linear rules
+
+Most users will use the function `locate_errors` to find errors. The function `inspect_mip` works exactly same, except that it operates on just one record in stead of a whole `data.frame`. The result of `inspect_mip` is a mip object, that is not yet executed and can be inspected.
 
 ```{r, df_print = "kable"}
-rules <- validator( is_adult   = age >= 18
-                  , pos_income = income >= 0
+rules <- validator( r1 = age >= 18
+                  , r2 = income >= 0
                   )
 data <- data.frame(age = c(12, 35), income = c(2000, -1000))
 data
@@ -123,7 +127,6 @@ So we detect two errors in the dataset:
 summary(confront(data, rules))
 ```
 
-
 ```{r}
 locate_errors(data, rules)$errors
 ```
@@ -132,62 +135,211 @@ Lets inspect the first record
 
 ```{r}
 mip <- inspect_mip(data, rules)
-print(mip)
 ```
 
+The `mip` object contains the mip problem before it is executed. We can inspect the lp problem, prior to solving it with `lpSolveApi` with
 
-```{r}
+```{r mip1, results='hide'}
 # inspect the lp problem (prior to solving it with lpsolveAPI)
 lp <- mip$to_lp()
 print(lp)
+```
 
-# for large problems write the lp problem to disk for inspection
-# lpSolveAPI::write.lp(lp, "my_problem.lp")
+```{r, ref.label="mip1", comment= " ", echo=FALSE}
+```
 
-# solve the mip system / find a solution
+Validator rules `r1` and `r2` are encoded in two lines of the model. The values of the current record are encoded as soft contraints in `age_ub`, `age_lb`, `income_lb` and `income_ub`. These constraints try to fix the values of `age` at 12 and `income` at 2000, but can be violated, setting `.delta_age` or `.delta_income` to 1.
+
+For large problems the lp problem can be written to disk for inspection
+
+```{r, eval=FALSE}
+lpSolveAPI::write.lp(lp, "my_problem.lp")
+```
+
+Once we execute the mip project, the lp solver is executed on the problem:
+
+```{r}
 res <- mip$execute()
+```
+
+Extra arguments are passed through to `lpSolveAPI`. The result object contains several properties:
+
+```{r}
 names(res)
+```
 
-# lpSolveAPI status of finding a solution
+`res$solution` indicates of a solution was found
+
+```{r}
+res$solution
+```
+
+`res$s` indicates the `lpSolveAPI` status, what kind of solution was found.
+
+```{r}
 res$s
+```
 
-# lp problem after solving (often simplified version of first lp)
-res$lp
+`res$errors` indicates which fields/values are deemed erroneous:
 
-# records that are deemed "faulty"
+```{r}
 res$errors
+```
 
-# values of variables used in the mip formulation. Also contains a valid solution
-# for "faulty" variables
+`res$values` contains the values for the valid solution that has been found by the lpsolver: 
+
+```{r}
 res$values
+```
+Note that the solver has found that setting `age` from 12 to 18 gives a valid solution. `.delta_age = 1` indicates that `age` contained an error.
 
-# see the derived mip rules and objective function, used in the construction of
-# lp problem
+The result object `res` also contains an `lp` object after optimization. This object can be further investigated using `lpSolveAPI` functions.
+
+```{r mip2, results="hide"}
+# lp problem after solving
+res$lp
+```
+
+```{r, ref.label="mip2", comment=" ", echo=FALSE}
+```
+
+Note that the lp problem has been simplified. For example the single variable constraints,the lp problem/object after solving shows that the solver has optimized some of the rules: it has moved rule `r1` and `r2` into the `Lower boundary` conditions. It also removed `age_lb` because that was superfluous with respect to the boundary conditions.
+
+### Categorical rule
+
+In categorical rules, each category is coded in a separate column/mip variable: e.g. if we have a `working` variable, with two categories ("job", "retired"), the mip problem is encoded as follows:
+
+```{r}
+rules <- validator( r1 = working %in% c("job","retired")                  )
+data <- data.frame(working="?")
+```
+
+```{r, echo=FALSE}
+data
+```
+
+```{r mip3, results="hide"}
+mip <- inspect_mip(data, rules)
+mip$to_lp()
+```
+
+```{r, ref.label="mip3", comment=" ", echo=FALSE}
+```
+
+Row `r1` indicates that either `working:job` or `working:retired` must be true. The `Kind` row (`SOS`) indicates that these variables share the same switch, only one of them can be set.
+
+```{r}
+mip$execute()$values
+```
+
+#### Multiple categories:
+
+With categorical variables it is also possible to specify `if-then` rules. These are encoded as one mip rule:
+
+```{r}
+rules <- validator( r1 = if (voted == TRUE) adult == TRUE)
+data <- data.frame(voted = TRUE, adult = FALSE)
+```
+
+```{r, echo=FALSE}
+data
+```
+
+```{r mip4, results="hide"}
+mip <- inspect_mip(data, rules)
+mip$to_lp()
+```
+
+```{r, ref.label="mip4", comment=" ", echo=FALSE}
+```
+
+```{r}
+mip$execute()$values
+```
+
+### Conditional rule
+
+```{r}
+rules <- validator( r1 = if (income > 0) age >= 16)
+data <- data.frame(age = 12, income = 2000)
+```
+
+```{r, echo = FALSE}
+data
+```
+
+```{r}
+mip <- inspect_mip(data, rules)
+```
+
+`errorlocate` encodes this rule into multiple rules
+(as noted in the theoreteical section above), so rule `r1` is chopped into
+1 rule + 2 sub rules: 
+
+`r1: if (income > 0) age >= 0`:
+
+- `r1._lin1: if (r1._lin1 == FALSE) income <= 0`
+
+- `r1._lin2: if (r1._lin2 == FALSE) age >= 16`
+
+- `r1: r1._lin1 == FALSE | r1._lin2 == FALSE`
+
+This can be seen with:
+
+```{r}
 mip$mip_rules()
-mip$objective
 ```
 
-# Categorical rule
+The resulting lp model is:
 
-```{r}
-rules <- validator( working %in% c("job","retired")
-                  , adult %in% c(TRUE, FALSE)
-                  )
-
-data <- data.frame(working="?", adult = NA)
-locate_errors(data, rules)$errors
-inspect_mip(data, rules)
+```{r mip6, results="hide"}
+mip$to_lp()
+```
+```{r, ref.label="mip6", comment=" ", echo=FALSE}
 ```
 
-# Conditional rule
+```{r}
+mip$execute()$values
+```
+
+### Alltogether:
+
+This works together with categorical, linear and conditional rules.
 
 ```{r}
-rules <- validator( working %in% c("no_job", "job","retired")
-                  , if (age < 12) working == "no_job"
-                  , if (working == "retired") age > 50
-                  , age >=0
+rules <- validator( r1 = working %in% c("no_job", "job","retired")
+                  , r2 = if (age < 12) working == "no_job"
+                  , r3 = if (working == "retired") age > 50
+                  , r4 = age >=0
                   )
 
 data <- data.frame(age = 12, working="retired")
-inspect_mip(data, rules)
+mip <- inspect_mip(data, rules)
+mip$execute()$errors
+```
+
+### Weights
+
+The weights for each variable are normally set to 1, and `errorlocate` adds some random remainder to the weights: so the solutions are unique and reproducible (using `set.seed`).
+
+```{r}
+set.seed(42)
+rules <- validator( r1 = if (voted == TRUE) adult == TRUE)
+data <- data.frame(voted = TRUE, adult = FALSE)
+mip <- inspect_mip(data, rules, weight = c(voted = 3, adult=1))
+```
+
+`$objective` contains the generated weights:
+
+```{r}
+mip$objective
+```
+
+These are assigned to the `delta` variables in the objective function of the mip.
+
+```{r mip7, results="hide"}
+mip$to_lp()
+```
+
+```{r, ref.label="mip7", comment=" ", echo=FALSE}
 ```
