@@ -13,7 +13,9 @@ Depends:
     validate
 Imports:
     lpSolveAPI,
-    methods
+    methods,
+    pbapply,
+    parallel
 Suggests:
     testthat (>= 2.1.0),
     covr,

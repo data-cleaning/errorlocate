@@ -17,6 +17,7 @@
 #' is more efficient.
 #' @param ref optional reference data set
 #' @param ... these parameters are handed over to \code{\link{locate_errors}}
+#' @param cl optional cluster for parallel execution
 #' @param value \code{NA}
 #' @seealso \code{\link{errorlocation-class}}
 #' @export
@@ -26,6 +27,7 @@
 setGeneric("replace_errors", function( data
                                      , x
                                      , ref=NULL, ...
+                                     , cl = NULL
                                      , value = c("NA", "suggestion")){
   standardGeneric("replace_errors")
 })
@@ -33,9 +35,9 @@ setGeneric("replace_errors", function( data
 #' @export
 #' @rdname replace_errors
 setMethod('replace_errors', c("data.frame", "validator")
-         , function(data, x, ref=NULL, ..., value = c("NA", "suggestion")){
+         , function(data, x, ref=NULL, ..., cl = NULL,value = c("NA", "suggestion")){
   fh <- fh_localizer(x)
-  replace_errors(data, fh, ref, ...)
+  replace_errors(data, fh, ref, ..., cl = cl)
 })
 
 #' @export
@@ -44,9 +46,10 @@ setMethod('replace_errors', c("data.frame", "ErrorLocalizer")
          , function(data, x
                    , ref = NULL
                    , ...
+                   , cl = NULL
                    , value = c("NA", "suggestion")){
-  el <- locate_errors(data, x, ref, ...)
-  replace_errors(data, el, ref, ...)
+  el <- locate_errors(data, x, ref, ..., cl = cl)
+  replace_errors(data, el, ref, ..., cl = cl)
 })
 
 #' @export
@@ -55,6 +58,7 @@ setMethod('replace_errors', c("data.frame", "errorlocation")
          , function( data, x
                    , ref = NULL,
                    ...
+                   , cl = NULL # not used...
                    , value = c("NA", "suggestion")){
     value <- switch ( match.arg(value),
         "NA" = is.na(data) <- values(x)

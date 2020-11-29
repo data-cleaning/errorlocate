@@ -15,7 +15,7 @@ setRefClass("ErrorLocalizer",
     initialize  = function(...){
       stop("Abstract class: not implemented. Please use an inherited class")
     },
-    locate = function(data, ref=NULL, ..., timeout=60){
+    locate = function(data, ref=NULL, ..., cl = NULL, timeout=60){
       stop("Implement locate on subclass of ErrorLocalizer")
     }
   )
@@ -46,10 +46,7 @@ fh_localizer <-
         rules <<- rules
         ._miprules <<- miprules(rules)
       },
-      locate = function(data, weight=NULL, add_noise = TRUE, ..., timeout=60){
-        # maybe move this to function arguments.
-        show_progressbar <- interactive()
-
+      locate = function(data, weight=NULL, add_noise = TRUE, ..., cl = NULL, timeout=60){
         vars <- ._miprules$._vars
         nr_rows <- nrow(data)
         nr_cols <- ncol(data)
@@ -131,23 +128,68 @@ fh_localizer <-
 
         n_invalid <- sum(invalid)
 
-        if (n_invalid == 0){
-          show_progressbar <- FALSE
-        }
-
-        if (show_progressbar){
-          pb <- utils::txtProgressBar(min = 0, max=n_invalid, style = 3)
-        }
-
         #TODO add ref data !!!
 
-        # seems strange, but we are going to transpose..
-        res <- matrix( FALSE
-                     , nrow = nr_cols
-                     , ncol = nr_rows
-                     , dimnames = list(names_cols)
-                     )
+        # TODO export data/weight/log_data to parallel (is more efficient then
+        # copying the data over and over...)
+        # data, weight, log_data, mip
+        mip <- ._miprules
 
+        solve_record <- function(r, progress = invisible){
+          starttime <- Sys.time()
+          values <- as.list(data[r,,drop=FALSE])
+          mip$set_values( values = values
+                        , weight[r,]
+                        , log_values = as.list(log_data[r,,drop=FALSE])
+                        , delta_names = log_transform$num_vars
+                        )
+          el <- mip$execute(timeout=timeout, ...)
+          # remove lp object, too memory hungry...
+          el$lp <- NULL
+          el$duration <- Sys.time() - starttime
+          el$row <- r
+          progress()
+          el
+        }
+        show_progress <- interactive()
+
+        sols <- if (is.null(cl)){ # sequential
+          progress <- invisible
+          if (show_progress) {
+            pb <- txtProgressBar(min=0, max = sum(invalid), style=3)
+            e <- baseenv()
+            e$val <- 0
+            e$lasttime <- Sys.time()
+
+            progress <- function(){
+              e$val <- e$val + 1
+              if (Sys.time() - e$lasttime > 1){
+                setTxtProgressBar(pb, e$val)
+                e$lasttime <- Sys.time()
+              }
+            }
+          }
+          lapply(rows[invalid], solve_record, progress = progress)
+          if (show_progress){
+            setTxtProgressBar(pb, sum(invalid))
+            close(pb)
+          }
+        } else if (is.numeric(cl)){
+          message("starting parallel: ", cl, " cores (non-Windows)")
+          parallel::mclapply( rows[invalid]
+                            , solve_record
+                            , mc.cores = cl
+                            )
+        } else if (inherits(cl, "cluster")){
+          message("Setting up cluster job: ")
+          parallel::clusterEvalQ(cl, library(errorlocate))
+          parallel::clusterExport( cl
+                                 , c("data", "weights", "mip", "log_data", "log_transform")
+                                 , envir = environment()
+                                 )
+          message("Starting cluster job")
+          parallel::parLapplyLB(cl, rows[invalid], solve_record)
+        }
 
         # collect info during processing
         status <- integer(N)
@@ -155,34 +197,20 @@ fh_localizer <-
         solution <- logical(N)
         solution[] <- TRUE
 
-        # TODO remove any(invalid)
-        if (n_invalid > 0){
-          for (r in rows[invalid]){
-            starttime <- Sys.time()
-            values <- as.list(data[r,,drop=FALSE])
-            ._miprules$set_values( values = values
-                                 , weight[r,]
-                                 , log_values = as.list(log_data[r,,drop=FALSE])
-                                 , delta_names <- log_transform$num_vars
-                                 )
-            el <- ._miprules$execute(timeout=timeout, ...)
-            adapt <- sapply(values, function(x){FALSE})
-            adapt[names(el$adapt)] <- el$adapt
-            status[r] <- el$s
-            solution[r] <- el$solution
-            rm(el)
-            gc()
-            if (show_progressbar){
-              value <- 1 + pb$getVal()
-              utils::setTxtProgressBar(pb, value)
-            }
-            duration[r] <- Sys.time() - starttime
-            res[, r] <- adapt
-          }
+        # adapt <- t(res)
+        adapt <- matrix( FALSE
+                       , nrow = nr_rows
+                       , ncol = nr_cols
+                       , dimnames = list(NULL, names_cols)
+                       )
+        for (sol in sols){
+          r <- sol$row
+          idx <- match(names(sol$adapt), names_cols)
+          adapt[r,idx] <-  sol$adapt
+          duration[r] <- sol$duration
+          solution[r] <- sol$solution
+          status[r] <- sol$s
         }
-        if(show_progressbar){ close(pb) }
-
-        adapt <- t(res)
         idx <- which(colnames(adapt) %in% colnames(weight))
         weight_per_record <- as.numeric(tcrossprod(adapt[,idx], weight))
 
