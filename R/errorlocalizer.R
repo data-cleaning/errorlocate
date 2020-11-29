@@ -169,11 +169,12 @@ fh_localizer <-
               }
             }
           }
-          lapply(rows[invalid], solve_record, progress = progress)
+          sols <- lapply(rows[invalid], solve_record, progress = progress)
           if (show_progress){
             setTxtProgressBar(pb, sum(invalid))
             close(pb)
           }
+          sols
         } else if (is.numeric(cl)){
           message("starting parallel: ", cl, " cores (non-Windows)")
           parallel::mclapply( rows[invalid]
@@ -190,7 +191,6 @@ fh_localizer <-
           message("Starting cluster job")
           parallel::parLapplyLB(cl, rows[invalid], solve_record)
         }
-
         # collect info during processing
         status <- integer(N)
         duration <- numeric(N)

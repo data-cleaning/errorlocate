@@ -7,13 +7,41 @@
 \alias{replace_errors,data.frame,errorlocation-method}
 \title{Replace erroneous fields with NA or a suggested value}
 \usage{
-replace_errors(data, x, ref = NULL, ..., value = c("NA", "suggestion"))
+replace_errors(
+  data,
+  x,
+  ref = NULL,
+  ...,
+  cl = NULL,
+  value = c("NA", "suggestion")
+)
 
-\S4method{replace_errors}{data.frame,validator}(data, x, ref = NULL, ..., value = c("NA", "suggestion"))
+\S4method{replace_errors}{data.frame,validator}(
+  data,
+  x,
+  ref = NULL,
+  ...,
+  cl = NULL,
+  value = c("NA", "suggestion")
+)
 
-\S4method{replace_errors}{data.frame,ErrorLocalizer}(data, x, ref = NULL, ..., value = c("NA", "suggestion"))
+\S4method{replace_errors}{data.frame,ErrorLocalizer}(
+  data,
+  x,
+  ref = NULL,
+  ...,
+  cl = NULL,
+  value = c("NA", "suggestion")
+)
 
-\S4method{replace_errors}{data.frame,errorlocation}(data, x, ref = NULL, ..., value = c("NA", "suggestion"))
+\S4method{replace_errors}{data.frame,errorlocation}(
+  data,
+  x,
+  ref = NULL,
+  ...,
+  cl = NULL,
+  value = c("NA", "suggestion")
+)
 }
 \arguments{
 \item{data}{data to be checked}
@@ -25,6 +53,8 @@ is more efficient.}
 \item{ref}{optional reference data set}
 
 \item{...}{these parameters are handed over to \code{\link{locate_errors}}}
+
+\item{cl}{optional cluster for parallel execution}
 
 \item{value}{\code{NA}}
 }
