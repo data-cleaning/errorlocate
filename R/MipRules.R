@@ -38,7 +38,8 @@ miprules <- setRefClass("MipRules",
      ._lp          = "ANY"
    ),
    methods = list(
-     initialize = function(rules, n = 10){
+     initialize = function(rules = NULL, n = 10){
+       if (is.null(rules)){ return()}
        rules <<- rules
        objective <<- objective
 

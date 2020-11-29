@@ -135,7 +135,7 @@ fh_localizer <-
           show_progressbar <- FALSE
         }
 
-        if (show_progressbar) {
+        if (show_progressbar){
           pb <- utils::txtProgressBar(min = 0, max=n_invalid, style = 3)
         }
 

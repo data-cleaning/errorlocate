@@ -29,7 +29,7 @@ is more efficient.}
 \item{value}{\code{NA}}
 }
 \value{
-\code{data} with erronuous values removed.
+\code{data} with erroneous values removed.
 }
 \description{
 Find erroneous fields using \code{\link{locate_errors}} and replace these
@@ -44,7 +44,7 @@ The errors that were removed from the \code{data.frame} can be retrieved with th
 }
 \note{
 In general it is better to replace the erroneous fields with \code{NA} and apply a proper
-imputation methods. Suggested values from the error localization method may introduce an unwanted bias.
+imputation method. Suggested values from the error localization method may introduce an undesired bias.
 }
 \examples{
 rules <- validator( profit + cost == turnover

@@ -9,7 +9,7 @@
 #' The errors that were removed from the \code{data.frame} can be retrieved with the function
 #' \code{\link{errors_removed}}. For more control over error localization see \code{\link{locate_errors}}.
 #' @note In general it is better to replace the erroneous fields with \code{NA} and apply a proper
-#' imputation methods. Suggested values from the error localization method may introduce an unwanted bias.
+#' imputation method. Suggested values from the error localization method may introduce an undesired bias.
 #'
 #' @param data data to be checked
 #' @param x \code{\link{validator}} or \code{errorlocation} object.
@@ -20,7 +20,7 @@
 #' @param value \code{NA}
 #' @seealso \code{\link{errorlocation-class}}
 #' @export
-#' @return \code{data} with erronuous values removed.
+#' @return \code{data} with erroneous values removed.
 #' @example ./examples/replace_errors.R
 #' @family error finding
 setGeneric("replace_errors", function( data

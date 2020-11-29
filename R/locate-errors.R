@@ -1,6 +1,6 @@
 #' Locate errors in data
 #'
-#' Locate erronuous fields in rows of data using validation rules or a specific
+#' Locate erroneuous fields in rows of data using validation rules or a specific
 #' errorlocalizer object. This method returns found errors, according to the specified
 #' method \code{x}. If these errors are to be removed automatically
 #' use method \code{\link{replace_errors}}.
@@ -22,7 +22,8 @@ setGeneric("locate_errors", function(data, x, ..., timeout = 60){
 
 #' @export
 #' @rdname locate_errors
-setMethod('locate_errors', signature = c("data.frame", "validator"), function(data, x, weight=NULL, ref=NULL, ..., timeout=60){
+setMethod('locate_errors', signature = c("data.frame", "validator")
+        , function(data, x, weight=NULL, ref=NULL, ..., timeout=60){
   fh <- fh_localizer(x)
   locate_errors(data=data, fh, ref=ref, weight=weight, ..., timeout = timeout)
 })
@@ -30,6 +31,7 @@ setMethod('locate_errors', signature = c("data.frame", "validator"), function(da
 
 #' @export
 #' @rdname locate_errors
-setMethod('locate_errors', signature = c("data.frame", "ErrorLocalizer"), function(data, x, weight=NULL, ref=NULL, ..., timeout=60){
+setMethod('locate_errors', signature = c("data.frame", "ErrorLocalizer")
+        , function(data, x, weight=NULL, ref=NULL, ..., timeout=60){
   x$locate(data=data, weight=weight, ..., timeout=timeout)
 })

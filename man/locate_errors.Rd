@@ -30,7 +30,7 @@ possible errors.}
 \code{\link{errorlocation-class}} object describing the errors found.
 }
 \description{
-Locate erronuous fields in rows of data using validation rules or a specific
+Locate erroneuous fields in rows of data using validation rules or a specific
 errorlocalizer object. This method returns found errors, according to the specified
 method \code{x}. If these errors are to be removed automatically
 use method \code{\link{replace_errors}}.
