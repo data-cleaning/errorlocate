@@ -157,7 +157,7 @@ fh_localizer <-
           progress <- invisible
           if (show_progress) {
             pb <- txtProgressBar(min=0, max = sum(invalid), style=3)
-            e <- new.env(parent = baseenv())
+            e <- new.env(parent = emptyenv())
             e$val <- 0
             e$lasttime <- Sys.time()
 
