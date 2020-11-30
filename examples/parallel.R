@@ -93,7 +93,7 @@ message("Cluster PSOCK:")
 cl <- parallel::makeCluster(4)
 
 time_psock <- system.time({
-  le <- locate_errors(data, rules, weight = c(profit=1, cost = 2, turnover = 2), cl=4)
+  le <- locate_errors(data, rules, weight = c(profit=1, cost = 2, turnover = 2), cl=cl)
 })
 print(time_psock)
 
@@ -108,7 +108,7 @@ message("Cluster Fork:")
 cl <- parallel::makeForkCluster(4)
 
 time_pfork <- system.time({
-  le <- locate_errors(data, rules, weight = c(profit=1, cost = 2, turnover = 2), cl=4)
+  le <- locate_errors(data, rules, weight = c(profit=1, cost = 2, turnover = 2), cl=cl)
 })
 print(time_pfork)
 
