@@ -67,8 +67,9 @@ miprules <- setRefClass("MipRules",
      },
      set_values = function( values
                           , weights
-                          , log_values = log_derived_data(values, ._log_transform)
-                          , delta_names= ._log_transform$num_vars){
+                          #, log_values = log_derived_data(values, ._log_transform)
+                          #, delta_names= ._log_transform$num_vars)
+                          ){
        if (missing(values) || length(values) == 0){
          objective <<- numeric()
          ._value_rules <<- list()
@@ -95,13 +96,13 @@ miprules <- setRefClass("MipRules",
        # TODO if missing log_values, derive it inplace
 
        ._value_rules <<- expect_values(values, weights)
-       if (length(log_values)){
-          weights_ld <- weights[delta_names]
-          names(weights_ld) <- names(log_values)
-          names(delta_names) <- names(log_values)
-          log_value_rules <- expect_values(log_values, weights = weights_ld, delta_names)
-          ._value_rules <<- c(._value_rules, log_value_rules)
-       }
+       # if (length(log_values)){
+       #    weights_ld <- weights[delta_names]
+       #    names(weights_ld) <- names(log_values)
+       #    names(delta_names) <- names(log_values)
+       #    log_value_rules <- expect_values(log_values, weights = weights_ld, delta_names)
+       #    ._value_rules <<- c(._value_rules, log_value_rules)
+       # }
 
        # TODO move this to the outside
        weights <- add_noise(weights)
