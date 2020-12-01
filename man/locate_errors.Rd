@@ -6,11 +6,36 @@
 \alias{locate_errors,data.frame,ErrorLocalizer-method}
 \title{Locate errors in data}
 \usage{
-locate_errors(data, x, ..., cl = NULL, timeout = 60)
+locate_errors(
+  data,
+  x,
+  ...,
+  cl = NULL,
+  Ncpu = getOption("Ncpu", 1),
+  timeout = 60
+)
 
-\S4method{locate_errors}{data.frame,validator}(data, x, weight = NULL, ref = NULL, ..., cl = NULL, timeout = 60)
+\S4method{locate_errors}{data.frame,validator}(
+  data,
+  x,
+  weight = NULL,
+  ref = NULL,
+  ...,
+  cl = NULL,
+  Ncpu = getOption("Ncpu", 1),
+  timeout = 60
+)
 
-\S4method{locate_errors}{data.frame,ErrorLocalizer}(data, x, weight = NULL, ref = NULL, ..., cl = NULL, timeout = 60)
+\S4method{locate_errors}{data.frame,ErrorLocalizer}(
+  data,
+  x,
+  weight = NULL,
+  ref = NULL,
+  ...,
+  cl = NULL,
+  Ncpu = getOption("Ncpu", 1),
+  timeout = 60
+)
 }
 \arguments{
 \item{data}{data to be checked}

@@ -17,22 +17,26 @@
 #' @example examples/locate_errors.R
 #' @family error finding
 #' @export
-setGeneric("locate_errors", function(data, x, ..., cl = NULL, timeout = 60){
+setGeneric("locate_errors", function(data, x, ..., cl = NULL
+                                    , Ncpu = getOption("Ncpu", 1), timeout = 60
+                                    ){
   standardGeneric("locate_errors")
 })
 
 #' @export
 #' @rdname locate_errors
 setMethod('locate_errors', signature = c("data.frame", "validator")
-        , function(data, x, weight=NULL, ref=NULL, ..., cl = NULL, timeout=60){
+        , function(data, x, weight=NULL, ref=NULL, ..., cl = NULL
+                   , Ncpu = getOption("Ncpu", 1), timeout=60){
   fh <- fh_localizer(x)
-  locate_errors(data=data, fh, ref=ref, weight=weight, ..., cl = cl, timeout = timeout)
+  locate_errors(data=data, fh, ref=ref, weight=weight, ..., cl = cl, Ncpu = Ncpu, timeout = timeout)
 })
 
 
 #' @export
 #' @rdname locate_errors
 setMethod('locate_errors', signature = c("data.frame", "ErrorLocalizer")
-        , function(data, x, weight=NULL, ref=NULL, ..., cl = NULL, timeout=60){
-  x$locate(data=data, weight=weight, ..., cl = cl, timeout=timeout)
+        , function(data, x, weight=NULL, ref=NULL, ..., cl = NULL
+                  , Ncpu = getOption("Ncpu", 1), timeout=60){
+  x$locate(data=data, weight=weight, ..., cl = cl, Ncpu = Ncpu, timeout=timeout)
 })

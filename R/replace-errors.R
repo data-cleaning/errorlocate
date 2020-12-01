@@ -28,6 +28,7 @@ setGeneric("replace_errors", function( data
                                      , x
                                      , ref=NULL, ...
                                      , cl = NULL
+                                     , Ncpu = getOption("Ncpu", 1)
                                      , value = c("NA", "suggestion")){
   standardGeneric("replace_errors")
 })
@@ -35,9 +36,11 @@ setGeneric("replace_errors", function( data
 #' @export
 #' @rdname replace_errors
 setMethod('replace_errors', c("data.frame", "validator")
-         , function(data, x, ref=NULL, ..., cl = NULL,value = c("NA", "suggestion")){
+         , function(data, x, ref=NULL, ..., cl = NULL
+                    , Ncpu = getOption("Ncpu", 1)
+                    , value = c("NA", "suggestion")){
   fh <- fh_localizer(x)
-  replace_errors(data, fh, ref, ..., cl = cl)
+  replace_errors(data, fh, ref, ..., cl = cl, Ncpu = Ncpu)
 })
 
 #' @export
@@ -47,9 +50,10 @@ setMethod('replace_errors', c("data.frame", "ErrorLocalizer")
                    , ref = NULL
                    , ...
                    , cl = NULL
+                   , Ncpu = getOption("Ncpu", 1)
                    , value = c("NA", "suggestion")){
   el <- locate_errors(data, x, ref, ..., cl = cl)
-  replace_errors(data, el, ref, ..., cl = cl)
+  replace_errors(data, el, ref, ..., cl = cl, Ncpu = Ncpu)
 })
 
 #' @export
@@ -59,6 +63,7 @@ setMethod('replace_errors', c("data.frame", "errorlocation")
                    , ref = NULL,
                    ...
                    , cl = NULL # not used...
+                   , Ncpu = 1 # not used
                    , value = c("NA", "suggestion")){
     value <- switch ( match.arg(value),
         "NA" = is.na(data) <- values(x)

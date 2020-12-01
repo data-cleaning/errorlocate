@@ -15,7 +15,7 @@ setRefClass("ErrorLocalizer",
     initialize  = function(...){
       stop("Abstract class: not implemented. Please use an inherited class")
     },
-    locate = function(data, ref=NULL, ..., cl = NULL, timeout=60){
+    locate = function(data, ref=NULL, ..., cl = NULL, Ncpu = getOption("Ncpu", 1),timeout=60){
       stop("Implement locate on subclass of ErrorLocalizer")
     }
   )
@@ -46,7 +46,12 @@ fh_localizer <-
         rules <<- rules
         ._miprules <<- miprules(rules)
       },
-      locate = function(data, weight=NULL, add_noise = TRUE, ..., cl = NULL, n = 20, timeout=60){
+      locate = function( data, weight=NULL, add_noise = TRUE, ...
+                       , cl = NULL
+                       , n = 20
+                       , Ncpu = getOption("Ncpu", 1)
+                       , timeout=60
+                       ){
         vars <- ._miprules$._vars
         nr_rows <- nrow(data)
         nr_cols <- ncol(data)
@@ -152,7 +157,10 @@ fh_localizer <-
           el
         }
         show_progress <- interactive()
-
+        setup_cluster <- Ncpu > 1 && is.null(cl) && n_invalid > 1
+        if (setup_cluster){
+          cl <- parallel::makeCluster(Ncpu)
+        }
         sols <- if (is.null(cl)){ # sequential
           progress <- invisible
           if (show_progress) {
@@ -182,14 +190,18 @@ fh_localizer <-
                             , mc.cores = cl
                             )
         } else if (inherits(cl, "cluster")){
-          message("Setting up cluster job: ")
+          message("Setting up ", class(cl)[1], " job with ", length(cl)," nodes")
           parallel::clusterEvalQ(cl, library(errorlocate))
           parallel::clusterExport( cl
-                                 , c("data", "weights", "mip", "log_data", "log_transform")
+                                 , c("data", "weights", "mip")
                                  , envir = environment()
                                  )
-          message("Starting cluster job")
+          message("Starting cluster job...")
           parallel::parLapplyLB(cl, rows[invalid], solve_record)
+        }
+        if (setup_cluster){
+          message("Stopping cluster...")
+          parallel::stopCluster(cl)
         }
         # collect info during processing
         status <- integer(N)

@@ -13,6 +13,7 @@ replace_errors(
   ref = NULL,
   ...,
   cl = NULL,
+  Ncpu = getOption("Ncpu", 1),
   value = c("NA", "suggestion")
 )
 
@@ -22,6 +23,7 @@ replace_errors(
   ref = NULL,
   ...,
   cl = NULL,
+  Ncpu = getOption("Ncpu", 1),
   value = c("NA", "suggestion")
 )
 
@@ -31,6 +33,7 @@ replace_errors(
   ref = NULL,
   ...,
   cl = NULL,
+  Ncpu = getOption("Ncpu", 1),
   value = c("NA", "suggestion")
 )
 
@@ -40,6 +43,7 @@ replace_errors(
   ref = NULL,
   ...,
   cl = NULL,
+  Ncpu = 1,
   value = c("NA", "suggestion")
 )
 }
