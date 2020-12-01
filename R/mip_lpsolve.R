@@ -69,6 +69,21 @@ translate_mip_lp <- function( rules
     )
   }
 
+  # should improve performance quite a lot: a SOS1 makes bin variables exclusive.
+  for (sos2 in asSOS2(colnames(lps))){
+    lpSolveAPI::set.bounds(lps
+                          , lower=rep(0, length(sos2$columns))
+                          , upper=rep(1, length(sos2$columns))
+                          , columns=sos2$columns
+                          )
+    lpSolveAPI::add.SOS( lps, sos2$name,
+                         type=2, priority = 1,
+                         columns=sos2$columns,
+                         weights = sos2$weights
+    )
+
+  }
+
   if (length(objective)){
     obj <- objective[objective != 0]
     columns <- match(names(obj), colnames(A))
@@ -104,6 +119,24 @@ asSOS <- function(vars){
   }, simplify=FALSE)
 }
 
+# splits category names (<variable>:<category>) into variable column groups needed
+# for SOS1 constraints
+asSOS2 <- function(vars){
+
+  #TODO also add log lower boundary as SOS
+  LOG <- "(.+\\._x).+"
+
+  idx <- grepl(LOG, vars)
+  var <- sub(LOG, "\\1", vars)
+  sosname <- unique(var[idx])
+  sapply(sosname, function(sos){
+    columns = which(var == sos)
+    list( name=sos
+        , columns=columns
+        , weights = rep(1, length(columns))
+    )
+  }, simplify=FALSE)
+}
 
 ### testing
 

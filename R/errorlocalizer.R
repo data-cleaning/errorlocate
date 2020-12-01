@@ -46,7 +46,7 @@ fh_localizer <-
         rules <<- rules
         ._miprules <<- miprules(rules)
       },
-      locate = function(data, weight=NULL, add_noise = TRUE, ..., cl = NULL, timeout=60){
+      locate = function(data, weight=NULL, add_noise = TRUE, ..., cl = NULL, n = 20, timeout=60){
         vars <- ._miprules$._vars
         nr_rows <- nrow(data)
         nr_cols <- ncol(data)
@@ -109,13 +109,13 @@ fh_localizer <-
         }
 
         # derive log transformed data!
-        log_transform <- ._miprules$._log_transform
+        # log_transform <- ._miprules$._log_transform
         # TODO deal with failures when log of negative values is taken...
-        log_data <- log_derived_data(data, log_transform)
+        # log_data <- log_derived_data(data, log_transform)
 
         # TODO add `n` to arguments of function
         # set ranges of log constraints if any
-        ._miprules$update_log_constraints(data, n = 10)
+        ._miprules$update_log_constraints(data, n = n)
 
         N <- nr_rows
         rows <- seq_len(N)
@@ -140,8 +140,8 @@ fh_localizer <-
           values <- as.list(data[r,,drop=FALSE])
           mip$set_values( values = values
                         , weight[r,]
-                        , log_values = as.list(log_data[r,,drop=FALSE])
-                        , delta_names = log_transform$num_vars
+                        # , log_values = as.list(log_data[r,,drop=FALSE])
+                        # , delta_names = log_transform$num_vars
                         )
           el <- mip$execute(timeout=timeout, ...)
           # remove lp object, too memory hungry...

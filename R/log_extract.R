@@ -58,39 +58,36 @@ log_constraint_rules <- function(num_var, log_var, logfn, n = 10, r = c(1,1e5)){
   # sample points based on slope
   value_log <- seq(log(r[1]), log(r[2]), length.out = n)
   value <- exp(value_log) # log distributed points covering range.
+  f_value <- do.call(logfn, list(value))
 
-  # TODO value_log again (to cope with that logfn can be different from "log")
+  # create points
+  points <- paste0(num_var, "._x", sprintf("%03d", seq_len(n)))
 
-  # upper bound!
-  upper <-
-    lapply(seq_len(n), function(i){
-      a <- c(1, -1/value[i])
-      names(a) <- c(log_var, num_var)
-      b <- value_log[i] - 1
-      rule <- paste0(log_var, ".upperbound_",i)
-      mip_rule(a, "<=", b, rule = rule)
-    })
+  # function rule:
+  a <- c(-1, f_value)
+  names(a) <- c(log_var, points)
 
-  # lowerbound, more nasty...
-  d_x <- diff(value)
-  d_y <- diff(value_log)
+  func_rule <- mip_rule( a = a
+                    , op = "=="
+                    , b = 0
+                    , rule = paste0(log_var, ".", "func"))
+  # ref rule:
+  a <- c(-1, value)
+  names(a) <- c(num_var, points)
+  ref_rule <- mip_rule( a = a
+                         , op = "=="
+                         , b = 0
+                         , rule = paste0(log_var, ".", "ref"))
 
-  as <- d_y / d_x # check if d_x is zero?
-  bs <- value_log[-n] - as * value[-n]
+  # convex rule:
+  a <- rep(1, length(points))
+  names(a) <- points
+  cvx_rule <- mip_rule( a = a
+                       , op = "=="
+                       , b = 1
+                       , rule = paste0(log_var, ".", "cvx"))
 
-  lower <- structure(
-    lapply(seq_len(n-1), function(i){
-      substitute( log_var >= a * num_var + b
-                , list( a = as[i]
-                      , b=bs[i]
-                      , log_var = as.symbol(log_var)
-                      , num_var = as.symbol(num_var)
-                      )
-                )
-    }), class="dnf"
-  )
-  lower <- dnf_to_mip_rule(lower, name = paste0(log_var, ".lowerbound"))
-  c(upper, lower)
+  list(func_rule, ref_rule, cvx_rule)
 }
 
 # TODO add to  tests
