@@ -1,7 +1,7 @@
 options(errorlocate.allow_log = TRUE)
 
 rules <- validator( log(prijs) == log(m2prijs) + log(oppervlakte)
-                  , prijs >= 1e5
+                  , prijs >= 1e3
                   , oppervlakte >= 20
                   )
 
@@ -22,7 +22,7 @@ lpSolveAPI::write.lp(res$lp, filename = "test.lp")
 res$values
 
 rules <- validator(log(x) > log(y), x < y)
-data <- data.frame(x = 1e3, y = 2e3)
+data <- data.frame(x = 2e3, y = 2e3)
 mip <- inspect_mip(data, rules)
 res <- mip$execute()
 res
@@ -32,3 +32,4 @@ res <- sapply(10:80, function(n){
   mip$execute()$s
 })
 
+res
