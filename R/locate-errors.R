@@ -11,6 +11,7 @@
 #' @param weight \code{numeric} optional weight vector to be used in the error localization.
 #' @param ... optional parameter to be used by a specific method
 #' @param cl optional parallel / cluster.
+#' @param Ncpus number of nodes to use. See details
 #' @param timeout maximum number of seconds that the localizer should use per record.
 #' @return \code{\link{errorlocation-class}} object describing the errors found.
 #'
@@ -18,7 +19,7 @@
 #' @family error finding
 #' @export
 setGeneric("locate_errors", function(data, x, ..., cl = NULL
-                                    , Ncpu = getOption("Ncpu", 1), timeout = 60
+                                    , Ncpus = getOption("Ncpus", 1), timeout = 60
                                     ){
   standardGeneric("locate_errors")
 })
@@ -27,9 +28,9 @@ setGeneric("locate_errors", function(data, x, ..., cl = NULL
 #' @rdname locate_errors
 setMethod('locate_errors', signature = c("data.frame", "validator")
         , function(data, x, weight=NULL, ref=NULL, ..., cl = NULL
-                   , Ncpu = getOption("Ncpu", 1), timeout=60){
+                   , Ncpus = getOption("Ncpus", 1), timeout=60){
   fh <- fh_localizer(x)
-  locate_errors(data=data, fh, ref=ref, weight=weight, ..., cl = cl, Ncpu = Ncpu, timeout = timeout)
+  locate_errors(data=data, fh, ref=ref, weight=weight, ..., cl = cl, Ncpus = Ncpus, timeout = timeout)
 })
 
 
@@ -37,6 +38,6 @@ setMethod('locate_errors', signature = c("data.frame", "validator")
 #' @rdname locate_errors
 setMethod('locate_errors', signature = c("data.frame", "ErrorLocalizer")
         , function(data, x, weight=NULL, ref=NULL, ..., cl = NULL
-                  , Ncpu = getOption("Ncpu", 1), timeout=60){
-  x$locate(data=data, weight=weight, ..., cl = cl, Ncpu = Ncpu, timeout=timeout)
+                  , Ncpus = getOption("Ncpus", 1), timeout=60){
+  x$locate(data=data, weight=weight, ..., cl = cl, Ncpus = Ncpus, timeout=timeout)
 })

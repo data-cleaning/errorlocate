@@ -13,7 +13,7 @@ replace_errors(
   ref = NULL,
   ...,
   cl = NULL,
-  Ncpu = getOption("Ncpu", 1),
+  Ncpus = getOption("Ncpus", 1),
   value = c("NA", "suggestion")
 )
 
@@ -23,7 +23,7 @@ replace_errors(
   ref = NULL,
   ...,
   cl = NULL,
-  Ncpu = getOption("Ncpu", 1),
+  Ncpus = getOption("Ncpus", 1),
   value = c("NA", "suggestion")
 )
 
@@ -33,7 +33,7 @@ replace_errors(
   ref = NULL,
   ...,
   cl = NULL,
-  Ncpu = getOption("Ncpu", 1),
+  Ncpus = getOption("Ncpus", 1),
   value = c("NA", "suggestion")
 )
 
@@ -43,7 +43,7 @@ replace_errors(
   ref = NULL,
   ...,
   cl = NULL,
-  Ncpu = 1,
+  Ncpus = 1,
   value = c("NA", "suggestion")
 )
 }
@@ -59,6 +59,8 @@ is more efficient.}
 \item{...}{these parameters are handed over to \code{\link{locate_errors}}}
 
 \item{cl}{optional cluster for parallel execution}
+
+\item{Ncpus}{number of nodes to use.}
 
 \item{value}{\code{NA}}
 }

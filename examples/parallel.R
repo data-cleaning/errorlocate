@@ -29,7 +29,7 @@ rules <- validator( profit + cost == turnover
 )
 
 set.seed(1)
-N <- 5000
+N <- 10000
 
 turnover <- as.integer(rlnorm(N, log(2e5)))
 cost <- as.integer(runif(N, min=0.6, max=1.1) * turnover)
@@ -56,7 +56,7 @@ data <- data.frame(profit, cost, turnover)
 ## -----------------------------------------------------------------------------
 # 1 Sequential
 time_seq <- system.time({
-  le <- locate_errors(data, rules, weight = c(profit=1, cost = 2, turnover = 2))
+  le <- locate_errors(data, rules, weight = c(profit=1, cost = 2, turnover = 2), Ncpus = 1)
 })
 print(time_seq)
 
@@ -77,10 +77,10 @@ print(time_fork)
 
 
 message("Ncpu:")
-time_fork <- system.time({
-  le <- locate_errors(data, rules, weight = c(profit=1, cost = 2, turnover = 2), Ncpu=4)
+time_ncpus <- system.time({
+  le <- locate_errors(data, rules, weight = c(profit=1, cost = 2, turnover = 2), Ncpus=4)
 })
-print(time_fork)
+print(time_ncpus)
 
 
 #'

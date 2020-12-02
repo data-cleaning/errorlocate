@@ -15,7 +15,7 @@ setRefClass("ErrorLocalizer",
     initialize  = function(...){
       stop("Abstract class: not implemented. Please use an inherited class")
     },
-    locate = function(data, ref=NULL, ..., cl = NULL, Ncpu = getOption("Ncpu", 1),timeout=60){
+    locate = function(data, ref=NULL, ..., cl = NULL, Ncpus = getOption("Ncpus", 1),timeout=60){
       stop("Implement locate on subclass of ErrorLocalizer")
     }
   )
@@ -49,7 +49,7 @@ fh_localizer <-
       locate = function( data, weight=NULL, add_noise = TRUE, ...
                        , cl = NULL
                        , n = 20
-                       , Ncpu = getOption("Ncpu", 1)
+                       , Ncpus = getOption("Ncpus", 1)
                        , timeout=60
                        ){
         vars <- ._miprules$._vars
@@ -157,9 +157,9 @@ fh_localizer <-
           el
         }
         show_progress <- interactive()
-        setup_cluster <- Ncpu > 1 && is.null(cl) && n_invalid > 1
+        setup_cluster <- Ncpus > 1 && is.null(cl) && n_invalid > 1
         if (setup_cluster){
-          cl <- parallel::makeCluster(Ncpu)
+          cl <- parallel::makeCluster(Ncpus)
         }
         sols <- if (is.null(cl)){ # sequential
           progress <- invisible

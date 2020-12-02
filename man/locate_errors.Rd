@@ -11,7 +11,7 @@ locate_errors(
   x,
   ...,
   cl = NULL,
-  Ncpu = getOption("Ncpu", 1),
+  Ncpus = getOption("Ncpus", 1),
   timeout = 60
 )
 
@@ -22,7 +22,7 @@ locate_errors(
   ref = NULL,
   ...,
   cl = NULL,
-  Ncpu = getOption("Ncpu", 1),
+  Ncpus = getOption("Ncpus", 1),
   timeout = 60
 )
 
@@ -33,7 +33,7 @@ locate_errors(
   ref = NULL,
   ...,
   cl = NULL,
-  Ncpu = getOption("Ncpu", 1),
+  Ncpus = getOption("Ncpus", 1),
   timeout = 60
 )
 }
@@ -46,6 +46,8 @@ possible errors.}
 \item{...}{optional parameter to be used by a specific method}
 
 \item{cl}{optional parallel / cluster.}
+
+\item{Ncpus}{number of nodes to use. See details}
 
 \item{timeout}{maximum number of seconds that the localizer should use per record.}
 
