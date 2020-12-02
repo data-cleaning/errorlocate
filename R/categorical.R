@@ -2,7 +2,7 @@ INFIX_CAT_NAME <- ":"
 
 # TODO maybe change the code below to directly generate mip_rules
 # determine if a rule is categorical
-is_cat_ <- function(expr, or=TRUE, ...){
+  is_cat_ <- function(expr, or=TRUE, ...){
   # this allows for logicals such as "if (A) B"
   if (is.symbol(expr)){
     return(TRUE)

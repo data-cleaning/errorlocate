@@ -105,7 +105,9 @@ as_dnf <- function(expr, ...){
   clauses <- unlist(lapply(clauses, function(clause){
     if (op_to_s(clause) == "|"){
       as_dnf(clause)
-    } else{
+    } else if (op_to_s(clause) == "!"){
+      invert_or_negate(consume(left(clause)))
+    } else {
       clause
     }
   }))

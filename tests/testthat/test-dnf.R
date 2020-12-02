@@ -59,4 +59,21 @@ describe("as_dnf", {
     expect_equivalent(as.expression(dnf), expression(A == TRUE | x > 0))
   })
 
+  it("works on issue of negated linear consequent", {
+    dnf <- as_dnf(quote(if (A==TRUE) !x < 0))
+    expect_equivalent(as.expression(dnf), expression(A == FALSE | x >= 0))
+
+    dnf <- as_dnf(quote(if (y > 0) !x < 0))
+    expect_equivalent(as.expression(dnf), expression(y <= 0 | x >= 0))
+
+    dnf <- as_dnf(quote(if (!y > 0) !x < 0))
+    expect_equivalent(as.expression(dnf), expression(y > 0 | x >= 0))
+
+    dnf <- as_dnf(quote(if (!y > 0) !x < 0 | z > 0))
+    expect_equivalent(as.expression(dnf), expression(y > 0 | x >= 0 | z > 0))
+
+    dnf <- as_dnf(quote(if (!y > 0) !x < 0 | !z > 0))
+    expect_equivalent(as.expression(dnf), expression(y > 0 | x >= 0 | z <= 0))
+  })
+
 })
