@@ -13,3 +13,25 @@
 #     expect_true(contains_value_(e, 'A'))
 #   })
 # })
+
+
+describe("rewrite_ratio", {
+  res <- rewrite_ratio(quote(a / b <= 1))
+  expect_equal(res, quote(a <= b))
+
+  res <- rewrite_ratio(quote(a / b == 1))
+  expect_equal(res, quote(a == b))
+
+  res <- rewrite_ratio(quote(a / b >= 1))
+  expect_equal(res, quote(a >= b))
+
+  res <- rewrite_ratio(quote((a+1) / b >= 1))
+  expect_equal(res, quote(a +1 >= b))
+
+  res <- rewrite_ratio(quote(a / (b + 1) >= 1))
+  expect_equal(res, quote(a  >= b + 1))
+
+  res <- rewrite_ratio(quote((2*a+2) / (3*b + 1) >= 1))
+  expect_equal(res, quote(2*a + 2 >= 3*b + 1))
+
+})

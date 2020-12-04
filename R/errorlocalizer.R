@@ -52,6 +52,7 @@ fh_localizer <-
                        , Ncpus = getOption("Ncpus", 1)
                        , timeout=60
                        ){
+
         vars <- ._miprules$._vars
         nr_rows <- nrow(data)
         nr_cols <- ncol(data)
@@ -142,13 +143,17 @@ fh_localizer <-
 
         solve_record <- function(r, progress = invisible){
           starttime <- Sys.time()
-          values <- as.list(data[r,,drop=FALSE])
-          mip$set_values( values = values
-                        , weight[r,]
-                        # , log_values = as.list(log_data[r,,drop=FALSE])
-                        # , delta_names = log_transform$num_vars
-                        )
-          el <- mip$execute(timeout=timeout, ...)
+          el <- tryCatch({
+            values <- as.list(data[r,,drop=FALSE])
+            mip$set_values( values = values
+                            , weight[r,]
+                            # , log_values = as.list(log_data[r,,drop=FALSE])
+                            # , delta_names = log_transform$num_vars
+            )
+            mip$execute(timeout=timeout, ...)
+          }, error = function(e){
+            list(solution=FALSE, s = NA, adapt = logical())
+          })
           # remove lp object, too memory hungry...
           el$lp <- NULL
           el$duration <- Sys.time() - starttime
@@ -157,10 +162,14 @@ fh_localizer <-
           el
         }
         show_progress <- interactive()
+
         setup_cluster <- Ncpus > 1 && is.null(cl) && n_invalid > 1
+
         if (setup_cluster){
           cl <- parallel::makeCluster(Ncpus)
+          on.exit(parallel::stopCluster(cl))
         }
+
         sols <- if (is.null(cl)){ # sequential
           progress <- invisible
           if (show_progress) {
@@ -198,10 +207,6 @@ fh_localizer <-
                                  )
           message("Starting cluster job...")
           parallel::parLapplyLB(cl, rows[invalid], solve_record)
-        }
-        if (setup_cluster){
-          message("Stopping cluster...")
-          parallel::stopCluster(cl)
         }
         # collect info during processing
         status <- integer(N)

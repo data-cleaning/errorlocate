@@ -144,8 +144,15 @@ describe("locate_errors", {
     expect_equal(el[1,], c(age=FALSE, adult=NA))
   })
 
-  it ("handles variables that are not part of the linear rules gracefully",{
+  it ("rewrites ratio",{
     rules <- validator( x / y <= 1, x > 5)
+    data <- data.frame(x = 4L, y = 10L)
+    el <- locate_errors(data, rules)
+    expect_equal(as.logical(el$errors), c(TRUE, FALSE))
+  })
+
+  it ("handles variables that are not part of the linear rules gracefully",{
+    rules <- validator( sin(x) <= 1, x > 5)
     data <- data.frame(x = 1L, y = 2L)
     expect_warning({
       el <- locate_errors(data, rules)

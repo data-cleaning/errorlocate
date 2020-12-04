@@ -1,3 +1,8 @@
+# errorlocate 0.9
+
+* Added parallel processing options, speed improvements
+* simple ratio's are taken into account (rewritten into linear rules).
+
 # errorlocate 0.5.2
 
 * Bug fix for issue #30: when a value >= 1e7 was encountered, all fields were flagged erroneous.

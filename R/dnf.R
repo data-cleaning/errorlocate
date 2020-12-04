@@ -101,9 +101,9 @@ as_dnf <- function(expr, ...){
     clauses[[length(clauses) + 1]] <- cons
   }
 
-  # the nasty case of negating equalities...
   clauses <- unlist(lapply(clauses, function(clause){
     if (op_to_s(clause) == "|"){
+      # the nasty case of negating equalities...
       as_dnf(clause)
     } else if (op_to_s(clause) == "!"){
       invert_or_negate(consume(left(clause)))

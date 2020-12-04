@@ -78,10 +78,9 @@ print(time_fork)
 
 message("Ncpu:")
 time_ncpus <- system.time({
-  le <- locate_errors(data, rules, weight = c(profit=1, cost = 2, turnover = 2), Ncpus=4)
+  le <- locate_errors(data, rules, weight = c(profit=1, cost = 2, turnover = 2), Ncpus=7)
 })
 print(time_ncpus)
-
 
 #'
 #' This gives speed up in this case of about a factor 3.

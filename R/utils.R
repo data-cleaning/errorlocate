@@ -9,8 +9,8 @@ check_validator <- function(x, copy = TRUE, check_infeasible = TRUE){
   invisible(x)
 }
 
-to_exprs <- function(x, ...){
-  as.expression(
+to_exprs <- function(x, ..., ratios=TRUE){
+  exprs <-
     x$exprs( lin_eq_eps   = 0
            , lin_ineq_eps = 0
            , replace_in   = FALSE
@@ -19,7 +19,10 @@ to_exprs <- function(x, ...){
            , expand_groups = TRUE
            , ...
            )
-  )
+  if (isTRUE(ratios)){
+    exprs[] <- lapply(exprs, rewrite_ratio)
+  }
+  as.expression(exprs)
 }
 
 #
