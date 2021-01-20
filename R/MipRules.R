@@ -122,7 +122,6 @@ miprules <- setRefClass("MipRules",
      },
      execute = function(...){
        # TODO see if this can be executed in parallel.
-       #browser()
        lp <- translate_mip_lp(mip_rules(), objective, ...)
        #TODO set timer, duration etc.
        s <- solve(lp)
@@ -133,9 +132,9 @@ miprules <- setRefClass("MipRules",
                            "2" = FALSE, # infeasible
                            "3" = TRUE,  # unbounded (so feasible)
                            "4" = TRUE,  # degenerate (so feasible)
-                           "5" = NA,    # numerical failure, so unknown
-                           "6" = NA,    # process aborted
-                           "7" = NA,    # timeout
+                           # "5" = NA,    # numerical failure, so unknown
+                           # "6" = NA,    # process aborted
+                           # "7" = NA,    # timeout
                            "9" = TRUE,  # presolved
                            "10" = FALSE, # branch and bound failed
                            "11" = FALSE, # branch and bound stopped
@@ -143,7 +142,7 @@ miprules <- setRefClass("MipRules",
                            "13" = FALSE, # no feasible branch and bound found
                            FALSE
        )
-       if (solution){
+       if (isTRUE(solution)){
           values <- lpSolveAPI::get.variables(lp)
        } else {
           values <- rep(1, ncol(lp))
@@ -181,7 +180,10 @@ miprules <- setRefClass("MipRules",
        obj <- rep(1, length(vars))
        names(obj) <- vars
 
-       lp <- translate_mip_lp(mr, obj)
+       lp <- translate_mip_lp( mr
+                             , obj
+                             , break.at.first = TRUE
+                             )
        i <- lpSolveAPI::solve.lpExtPtr(lp)
        feasible <- switch( as.character(i),
           "0" = TRUE,  # optimal solution found (so feasible)

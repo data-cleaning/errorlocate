@@ -161,8 +161,9 @@ fh_localizer <-
           progress()
           el
         }
-        show_progress <- interactive()
+        show_progress <- interactive() && n_invalid > 0
 
+        Ncpus <- min(Ncpus, n_invalid)
         setup_cluster <- Ncpus > 1 && is.null(cl) && n_invalid > 1
 
         if (setup_cluster){
@@ -173,7 +174,7 @@ fh_localizer <-
         sols <- if (is.null(cl)){ # sequential
           progress <- invisible
           if (show_progress) {
-            pb <- txtProgressBar(min=0, max = sum(invalid), style=3)
+            pb <- txtProgressBar(min=0, max = n_invalid, style=3)
             e <- new.env(parent = emptyenv())
             e$val <- 0
             e$lasttime <- Sys.time()
@@ -188,7 +189,7 @@ fh_localizer <-
           }
           sols <- lapply(rows[invalid], solve_record, progress = progress)
           if (show_progress){
-            setTxtProgressBar(pb, sum(invalid))
+            setTxtProgressBar(pb, n_invalid)
             close(pb)
           }
           sols
@@ -206,6 +207,7 @@ fh_localizer <-
                                  , envir = environment()
                                  )
           message("Starting cluster job...")
+          # parallel::parLapplyLB(cl, rows[invalid], solve_record)
           parallel::parLapplyLB(cl, rows[invalid], solve_record)
         }
         # collect info during processing
@@ -220,6 +222,7 @@ fh_localizer <-
                        , ncol = nr_cols
                        , dimnames = list(NULL, names_cols)
                        )
+
         for (sol in sols){
           r <- sol$row
           idx <- match(names(sol$adapt), names_cols)
@@ -228,9 +231,15 @@ fh_localizer <-
           solution[r] <- sol$solution
           status[r] <- sol$s
         }
-        idx <- which(colnames(adapt) %in% colnames(weight))
-        weight_per_record <- as.numeric(tcrossprod(adapt[,idx], weight))
 
+
+        idx <- which(colnames(adapt) %in% colnames(weight))
+
+        wpr <- weight
+        wpr[!adapt || is.na(adapt)] <- 0
+
+        weight_per_record <-  rowSums(wpr, na.rm=T)
+        #weight_per_record <- as.numeric(tcrossprod(adapt[,idx], weight))
         if (any(!solution)){
           warning("For some records the procedure was unsuccesful, "
                  , "please check the '$solution' and '$status' of the errorlocations.\n"

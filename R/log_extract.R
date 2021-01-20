@@ -58,7 +58,7 @@ log_constraint_rules <- function(num_var, log_var, logfn, n = 10, r = c(1,1e5)){
   # sample points based on slope
   value_log <- seq(log(r[1]), log(r[2]), length.out = n)
   value <- exp(value_log) # log distributed points covering range.
-  f_value <- do.call(logfn, list(value))
+  f_value <- do.call(as.character(logfn), list(value))
 
   # create points
   points <- paste0(num_var, "._x", sprintf("%03d", seq_len(n)))

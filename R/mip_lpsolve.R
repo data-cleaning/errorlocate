@@ -23,6 +23,7 @@ translate_mip_lp <- function( rules
                             , ncol = nvar
                             )
 
+  lpSolveAPI::name.lp(lps, "errorlocate")
   # TODO improve!
   lpSolveAPI::lp.control( lps,
                           presolve = c(

@@ -29,7 +29,7 @@ rules <- validator( profit + cost == turnover
 )
 
 set.seed(1)
-N <- 10000
+N <- 5000
 
 turnover <- as.integer(rlnorm(N, log(2e5)))
 cost <- as.integer(runif(N, min=0.6, max=1.1) * turnover)
@@ -78,7 +78,7 @@ print(time_fork)
 
 message("Ncpu:")
 time_ncpus <- system.time({
-  le <- locate_errors(data, rules, weight = c(profit=1, cost = 2, turnover = 2), Ncpus=7)
+  le <- locate_errors(data, rules, weight = c(profit=1, cost = 2, turnover = 2), Ncpus=4)
 })
 print(time_ncpus)
 
@@ -127,12 +127,12 @@ parallel::stopCluster(cl)
 #'
 ## ---- echo =FALSE-------------------------------------------------------------
 time_comp <-
-  data.frame( type = c("sequential", "fork", "psock", "psock_fork")
-            , time = c(time_seq[3],time_fork[3],time_psock[3],time_pfork[3])
+  data.frame( type = c("sequential", "fork", "psock", "psock_fork", "Ncpus")
+            , time = c(time_seq[3],time_fork[3],time_psock[3],time_pfork[3], time_ncpus[3])
             )
 ggplot(time_comp, aes(x = type, y = time, fill=type)) +
   geom_col() +
-  labs(title="errorlocate time for 5000 records, 4 cores (in seconds)"
+  labs(title=paste0("errorlocate time for ", N," records, 4 cores (in seconds)")
       , y = ""
       , fill=""
       )
