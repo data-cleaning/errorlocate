@@ -7,7 +7,7 @@ log_extract <- function(log_vars){
   log_fn <- sapply( regmatches(log_vars, m)
                   , function(x){x[[2]]}
                   )
-  data.frame(num_vars, log_vars, log_fn)
+  data.frame(num_vars, log_vars, log_fn, stringsAsFactors = FALSE)
 }
 
 # create data columns used to set values for log transformed variables.

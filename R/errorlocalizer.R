@@ -146,14 +146,27 @@ fh_localizer <-
           el <- tryCatch({
             values <- as.list(data[r,,drop=FALSE])
             mip$set_values( values = values
-                            , weight[r,]
+                          , weight[r,]
                             # , log_values = as.list(log_data[r,,drop=FALSE])
                             # , delta_names = log_transform$num_vars
-            )
+                          )
             mip$execute(timeout=timeout, ...)
           }, error = function(e){
             list(solution=FALSE, s = NA, adapt = logical())
           })
+
+          if (!isTRUE(el$solution)){
+            dump_path <- file.path(
+              tempdir(),
+              paste0("no_solution_record_", r, ".mps")
+            )
+            mip$write_lp( dump_path,type="mps")
+            warning( "dumping lp problem for record ", r
+                   , " in '", dump_path, "'"
+                   , call. = FALSE
+                   )
+          }
+
           # remove lp object, too memory hungry...
           el$lp <- NULL
           el$duration <- Sys.time() - starttime
@@ -236,7 +249,7 @@ fh_localizer <-
         idx <- which(colnames(adapt) %in% colnames(weight))
 
         wpr <- weight
-        wpr[!adapt || is.na(adapt)] <- 0
+        wpr[!adapt | is.na(adapt)] <- 0
 
         weight_per_record <-  rowSums(wpr, na.rm=T)
         #weight_per_record <- as.numeric(tcrossprod(adapt[,idx], weight))

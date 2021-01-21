@@ -22,7 +22,7 @@ describe("locate_errors", {
     v_categorical <- validator( A %in% c("a1", "a2")
                               , B %in% c("b1", "b2")
                               ,  if (A == "a1") B == "b1"
-    )
+                              )
 
     set.seed(42) # because of random noise added to weight
     data <- data.frame(A = c("a1", "a2"), B = c("b2", "b2"))
