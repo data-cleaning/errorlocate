@@ -73,7 +73,7 @@ fields automatically with NA or a suggestion that is provided by the error detec
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">errorlocate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.6.9000</span>
       </span>
     </div>
 
@@ -81,7 +81,7 @@ fields automatically with NA or a suggestion that is provided by the error detec
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -107,7 +107,7 @@ fields automatically with NA or a suggestion that is provided by the error detec
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/data-cleaning/errorlocate/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -134,16 +134,48 @@ fields automatically with NA or a suggestion that is provided by the error detec
 fields automatically with NA or a suggestion that is provided by the error detection algorithm.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>replace_errors</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>x</span>, ref <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span>, value <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"NA"</span>, <span class='st'>"suggestion"</span><span class='op'>)</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>replace_errors</span><span class='op'>(</span>
+  <span class='va'>data</span>,
+  <span class='va'>x</span>,
+  ref <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>,
+  cl <span class='op'>=</span> <span class='cn'>NULL</span>,
+  Ncpus <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"Ncpus"</span>, <span class='fl'>1</span><span class='op'>)</span>,
+  value <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"NA"</span>, <span class='st'>"suggestion"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
 <span class='co'># S4 method for data.frame,validator</span>
-<span class='fu'>replace_errors</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>x</span>, ref <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span>, value <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"NA"</span>, <span class='st'>"suggestion"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>replace_errors</span><span class='op'>(</span>
+  <span class='va'>data</span>,
+  <span class='va'>x</span>,
+  ref <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>,
+  cl <span class='op'>=</span> <span class='cn'>NULL</span>,
+  Ncpus <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"Ncpus"</span>, <span class='fl'>1</span><span class='op'>)</span>,
+  value <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"NA"</span>, <span class='st'>"suggestion"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
 <span class='co'># S4 method for data.frame,ErrorLocalizer</span>
-<span class='fu'>replace_errors</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>x</span>, ref <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span>, value <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"NA"</span>, <span class='st'>"suggestion"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>replace_errors</span><span class='op'>(</span>
+  <span class='va'>data</span>,
+  <span class='va'>x</span>,
+  ref <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>,
+  cl <span class='op'>=</span> <span class='cn'>NULL</span>,
+  Ncpus <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"Ncpus"</span>, <span class='fl'>1</span><span class='op'>)</span>,
+  value <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"NA"</span>, <span class='st'>"suggestion"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
 <span class='co'># S4 method for data.frame,errorlocation</span>
-<span class='fu'>replace_errors</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>x</span>, ref <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span>, value <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"NA"</span>, <span class='st'>"suggestion"</span><span class='op'>)</span><span class='op'>)</span></pre>
+<span class='fu'>replace_errors</span><span class='op'>(</span>
+  <span class='va'>data</span>,
+  <span class='va'>x</span>,
+  ref <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>,
+  cl <span class='op'>=</span> <span class='cn'>NULL</span>,
+  Ncpus <span class='op'>=</span> <span class='fl'>1</span>,
+  value <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"NA"</span>, <span class='st'>"suggestion"</span><span class='op'>)</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -167,6 +199,14 @@ is more efficient.</p></td>
       <td><p>these parameters are handed over to <code><a href='locate_errors.html'>locate_errors</a></code></p></td>
     </tr>
     <tr>
+      <th>cl</th>
+      <td><p>optional cluster for parallel execution</p></td>
+    </tr>
+    <tr>
+      <th>Ncpus</th>
+      <td><p>number of nodes to use.</p></td>
+    </tr>
+    <tr>
       <th>value</th>
       <td><p><code>NA</code></p></td>
     </tr>
@@ -174,7 +214,7 @@ is more efficient.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>data</code> with erronuous values removed.</p>
+    <p><code>data</code> with erroneous values removed.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Note that you can also use the result of <code><a href='locate_errors.html'>locate_errors</a></code> with <code>replace_errors</code>.
@@ -185,7 +225,7 @@ The errors that were removed from the <code>data.frame</code> can be retrieved w
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>In general it is better to replace the erroneous fields with <code>NA</code> and apply a proper
-imputation methods. Suggested values from the error localization method may introduce an unwanted bias.</p>
+imputation method. Suggested values from the error localization method may introduce an undesired bias.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='errorlocation-class.html'>errorlocation-class</a></code></p>
@@ -209,7 +249,7 @@ imputation methods. Suggested values from the error localization method may intr
 </div><div class='output co'>#&gt;   profit cost turnover
 #&gt; 1     NA  125      200</div><div class='input'>
 <span class='fu'><a href='errors_removed.html'>errors_removed</a></span><span class='op'>(</span><span class='va'>data_no_error</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; call:  locate_errors(data, x, ref, ...) 
+</div><div class='output co'>#&gt; call:  locate_errors(data, x, ref, ..., cl = cl) 
 #&gt; located  1  error(s).
 #&gt; located  0  missing value(s).
 #&gt; Use 'summary', 'values', '$errors' or '$weight', to explore and retrieve the errors.</div><div class='input'>

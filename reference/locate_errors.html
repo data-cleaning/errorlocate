@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Locate errors in data — locate_errors" />
-<meta property="og:description" content="Locate erronuous fields in rows of data using validation rules or a specific
+<meta property="og:description" content="Locate erroneuous fields in rows of data using validation rules or a specific
 errorlocalizer object. This method returns found errors, according to the specified
 method x. If these errors are to be removed automatically
 use method replace_errors." />
@@ -75,7 +75,7 @@ use method replace_errors." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">errorlocate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.6.9000</span>
       </span>
     </div>
 
@@ -83,7 +83,7 @@ use method replace_errors." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -109,7 +109,7 @@ use method replace_errors." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/data-cleaning/errorlocate/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -132,19 +132,44 @@ use method replace_errors." />
     </div>
 
     <div class="ref-description">
-    <p>Locate erronuous fields in rows of data using validation rules or a specific
+    <p>Locate erroneuous fields in rows of data using validation rules or a specific
 errorlocalizer object. This method returns found errors, according to the specified
 method <code>x</code>. If these errors are to be removed automatically
 use method <code><a href='replace_errors.html'>replace_errors</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>locate_errors</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>x</span>, <span class='va'>...</span>, timeout <span class='op'>=</span> <span class='fl'>60</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>locate_errors</span><span class='op'>(</span>
+  <span class='va'>data</span>,
+  <span class='va'>x</span>,
+  <span class='va'>...</span>,
+  cl <span class='op'>=</span> <span class='cn'>NULL</span>,
+  Ncpus <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"Ncpus"</span>, <span class='fl'>1</span><span class='op'>)</span>,
+  timeout <span class='op'>=</span> <span class='fl'>60</span>
+<span class='op'>)</span>
 
 <span class='co'># S4 method for data.frame,validator</span>
-<span class='fu'>locate_errors</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>x</span>, weight <span class='op'>=</span> <span class='cn'>NULL</span>, ref <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span>, timeout <span class='op'>=</span> <span class='fl'>60</span><span class='op'>)</span>
+<span class='fu'>locate_errors</span><span class='op'>(</span>
+  <span class='va'>data</span>,
+  <span class='va'>x</span>,
+  weight <span class='op'>=</span> <span class='cn'>NULL</span>,
+  ref <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>,
+  cl <span class='op'>=</span> <span class='cn'>NULL</span>,
+  Ncpus <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"Ncpus"</span>, <span class='fl'>1</span><span class='op'>)</span>,
+  timeout <span class='op'>=</span> <span class='fl'>60</span>
+<span class='op'>)</span>
 
 <span class='co'># S4 method for data.frame,ErrorLocalizer</span>
-<span class='fu'>locate_errors</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>x</span>, weight <span class='op'>=</span> <span class='cn'>NULL</span>, ref <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span>, timeout <span class='op'>=</span> <span class='fl'>60</span><span class='op'>)</span></pre>
+<span class='fu'>locate_errors</span><span class='op'>(</span>
+  <span class='va'>data</span>,
+  <span class='va'>x</span>,
+  weight <span class='op'>=</span> <span class='cn'>NULL</span>,
+  ref <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>,
+  cl <span class='op'>=</span> <span class='cn'>NULL</span>,
+  Ncpus <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"Ncpus"</span>, <span class='fl'>1</span><span class='op'>)</span>,
+  timeout <span class='op'>=</span> <span class='fl'>60</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -161,6 +186,14 @@ possible errors.</p></td>
     <tr>
       <th>...</th>
       <td><p>optional parameter to be used by a specific method</p></td>
+    </tr>
+    <tr>
+      <th>cl</th>
+      <td><p>optional parallel / cluster.</p></td>
+    </tr>
+    <tr>
+      <th>Ncpus</th>
+      <td><p>number of nodes to use. See details</p></td>
     </tr>
     <tr>
       <th>timeout</th>
@@ -195,7 +228,7 @@ possible errors.</p></td>
 <span class='va'>le</span> <span class='op'>&lt;-</span> <span class='fu'>locate_errors</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>rules</span><span class='op'>)</span>
 
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>le</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; call:  locate_errors(data = data, fh, ref = ref, weight = weight, ...,      timeout = timeout) 
+</div><div class='output co'>#&gt; call:  locate_errors(data = data, fh, ref = ref, weight = weight, ...,      cl = cl, Ncpus = Ncpus, timeout = timeout) 
 #&gt; located  1  error(s).
 #&gt; located  0  missing value(s).
 #&gt; Use 'summary', 'values', '$errors' or '$weight', to explore and retrieve the errors.</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>le</span><span class='op'>)</span>
