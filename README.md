@@ -1,8 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-[![Build
-Status](https://travis-ci.org/data-cleaning/errorlocate.svg)](https://travis-ci.org/data-cleaning/errorlocate)
 [![R build
 status](https://github.com/data-cleaning/errorlocate/workflows/R-CMD-check/badge.svg)](https://github.com/data-cleaning/errorlocate/actions)
 [![CRAN](http://www.r-pkg.org/badges/version/errorlocate)](https://CRAN.R-project.org/package=errorlocate)

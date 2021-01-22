@@ -156,15 +156,23 @@ fh_localizer <-
           })
 
           if (!isTRUE(el$solution)){
-            dump_path <- file.path(
-              tempdir(),
-              paste0("no_solution_record_", r, ".mps")
+            # test for numerical instability?
+            # retry because of numerical instability
+            mip$set_values( values = values
+                            , weight[r,]
             )
-            mip$write_lp( dump_path,type="mps")
-            warning( "dumping lp problem for record ", r
-                   , " in '", dump_path, "'"
-                   , call. = FALSE
-                   )
+            el <- mip$execute(timeout=timeout, ...)
+            if (!isTRUE(el$solution)){
+              dump_path <- file.path(
+                tempdir(),
+                paste0("no_solution_record_", r, ".mps")
+              )
+              mip$write_lp( dump_path,type="mps")
+              warning( "dumping lp problem for record ", r
+                     , " in '", dump_path, "'"
+                     , call. = FALSE
+                     )
+            }
           }
 
           # remove lp object, too memory hungry...
@@ -252,7 +260,6 @@ fh_localizer <-
         wpr[!adapt | is.na(adapt)] <- 0
 
         weight_per_record <-  rowSums(wpr, na.rm=T)
-        #weight_per_record <- as.numeric(tcrossprod(adapt[,idx], weight))
         if (any(!solution)){
           warning("For some records the procedure was unsuccesful, "
                  , "please check the '$solution' and '$status' of the errorlocations.\n"
