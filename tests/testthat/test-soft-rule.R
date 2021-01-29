@@ -69,6 +69,12 @@ describe("soft_lin_rule",{
 
   it ("handles NA logical values correctly",{
     values <- list(L = NA)
-    expect_values(values)
+    sr <- expect_values(values)
+  })
+
+  it ("handles NA real values correctly",{
+    values <- list(L = NA_real_)
+    sr <- expect_values(values)
+    expect_equal(sr, list())
   })
 })

@@ -201,8 +201,19 @@ describe("locate_errors", {
     )
 
     data <- data.frame(profit = 1e10, cost = 200, turnover = 300)
-    el <- locate_errors(data, rules)
-    expect_equal(el$errors[1,], c(profit=TRUE, cost=FALSE, turnover=FALSE))
+
+    expect_warning({
+      el <- locate_errors(data, rules)
+    })
+  })
+
+  it ("handles NA values gracefully, issue #31", {
+    d <- data.frame(x = 10, y = NA, z = 5)
+    rules <- validator( x + y == z, x >= 0, y >= 0)
+
+    set.seed(1)
+    el <- locate_errors(d, rules)
+    expect_equal(el$errors[1,], c(x=FALSE, y = NA, z = TRUE))
   })
 })
 

@@ -76,9 +76,32 @@ fh_localizer <-
               , call. = FALSE
               )
         }
-        #browser()
+
         numvars_mip <- ._miprules$._vars_num
         numvars_data <- names(data)[sapply(data, is.numeric)]
+        numvars <- numvars_mip[numvars_mip %in% numvars_data]
+
+        # checking size of numeric columns
+        too_big <- sapply(data[numvars], function(v){
+          any(abs(v) > 1e7)
+        })
+
+        if (isTRUE(any(too_big))){
+          nv <- numvars[too_big]
+          data[nv] <- sapply(data[nv], function(v){
+            is.na(v) <- abs(v) > 1e7
+            v
+          })
+
+          warning("Large values detected in: "
+              , paste0("'", names(too_big)[too_big] ,"'", collapse = ", ")
+              , ". Values > abs(1e7) were set to NA. "
+              , "\nThis might be indication that these column(s) should be rescaled."
+              , "\n(the problem because otherwise numerically unstable)"
+              , call. = FALSE
+              )
+        }
+
         categorical_as_integer <- numvars_data[ numvars_data %in% vars
                                               & !numvars_data %in% numvars_mip
                                               ]
