@@ -7,7 +7,7 @@
 is_linear(x, ...)
 }
 \arguments{
-\item{x}{\code{\link{validator}} object containing data validation rules}
+\item{x}{\code{\link[=validator]{validator()}} object containing data validation rules}
 
 \item{...}{not used}
 }

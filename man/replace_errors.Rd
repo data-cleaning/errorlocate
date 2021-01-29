@@ -50,17 +50,17 @@ replace_errors(
 \arguments{
 \item{data}{data to be checked}
 
-\item{x}{\code{\link{validator}} or \code{errorlocation} object.
-If an \code{errorlocation} is already available (through \code{\link{locate_errors}}) this
+\item{x}{\code{\link[=validator]{validator()}} or \code{errorlocation} object.
+If an \code{errorlocation} is already available (through \code{\link[=locate_errors]{locate_errors()}}) this
 is more efficient.}
 
 \item{ref}{optional reference data set}
 
-\item{...}{these parameters are handed over to \code{\link{locate_errors}}}
+\item{...}{these parameters are handed over to \code{\link[=locate_errors]{locate_errors()}}}
 
-\item{cl}{optional cluster for parallel execution}
+\item{cl}{optional cluster for parallel execution (see details)}
 
-\item{Ncpus}{number of nodes to use.}
+\item{Ncpus}{number of nodes to use. (see details)}
 
 \item{value}{\code{NA}}
 }
@@ -68,15 +68,17 @@ is more efficient.}
 \code{data} with erroneous values removed.
 }
 \description{
-Find erroneous fields using \code{\link{locate_errors}} and replace these
+Find erroneous fields using \code{\link[=locate_errors]{locate_errors()}} and replace these
 fields automatically with NA or a suggestion that is provided by the error detection algorithm.
 }
 \details{
-Note that you can also use the result of \code{\link{locate_errors}} with \code{replace_errors}.
+Note that you can also use the result of \code{\link[=locate_errors]{locate_errors()}} with \code{replace_errors}.
 When the procedure takes a long time and \code{locate_errors} was called previously
 this is the preferred way, because otherwise \code{locate_errors} will be executed again.
 The errors that were removed from the \code{data.frame} can be retrieved with the function
-\code{\link{errors_removed}}. For more control over error localization see \code{\link{locate_errors}}.
+\code{\link[=errors_removed]{errors_removed()}}. For more control over error localization see \code{\link[=locate_errors]{locate_errors()}}.
+
+\code{replace_errors} has the same parallelization options as \code{\link[=locate_errors]{locate_errors()}} (see there).
 }
 \note{
 In general it is better to replace the erroneous fields with \code{NA} and apply a proper
@@ -104,7 +106,7 @@ error_locations <- locate_errors(data, rules)
 replace_errors(data, error_locations)
 }
 \seealso{
-\code{\link{errorlocation-class}}
+\code{\link[=errorlocation-class]{errorlocation-class()}}
 
 Other error finding: 
 \code{\link{errorlocation-class}},

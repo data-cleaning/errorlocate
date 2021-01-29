@@ -5,27 +5,27 @@
 
 #' \itemize{
 #' \item A record based error is restricted within one observation.
-#' \code{\link{errorlocate}} using the Felligi Holt algorithm assumes errors are record based.
+#' [errorlocate()] using the Felligi Holt algorithm assumes errors are record based.
 #' \item A variable based error is a flaw in  uni- or multivariate
 #'  distribution. To correct this error multiple observations or the aggregated number should be adjusted.
 #' }
 #'
 #'
 #' Current implementation assumes that errors are record based. The error locations can be retrieved
-#' using the method \code{\link{values}} and are a matrix of
-#' rows and columns, with the same dimensions are the \code{data.frame} that was checked.
+#' using the method [values()] and are a matrix of
+#' rows and columns, with the same dimensions are the `data.frame` that was checked.
 #' For errors that are purely column based, or dataset based, errorlocations will return a matrix with all
-#' rows or cells set to \code{TRUE}.
-#' The \code{\link{values}} return \code{NA} for missing values.
+#' rows or cells set to `TRUE`.
+#' The [values()] return `NA` for missing values.
 
 #' @section Fields:
 #'
 #' \itemize{
-#'   \item \code{$errors}: \code{matrix} indicating which values are erronuous (\code{TRUE}),
-#'   missing (\code{NA}) or valid (\code{FALSE})
-#'   \item \code{$weight}: The total weight per record. A weight of 0 means no errors were detected.
-#'   \item \code{$status}: The \link[lpSolveAPI:solve.lpExtPtr]{status} of the mip solver for this record.
-#'   \item \code{$duration}: The number of seconds for processing each record.
+#'   \item `$errors`: `matrix` indicating which values are erronuous (`TRUE`),
+#'   missing (`NA`) or valid (`FALSE`)
+#'   \item `$weight`: The total weight per record. A weight of 0 means no errors were detected.
+#'   \item `$status`: The [status][lpSolveAPI::solve.lpExtPtr] of the mip solver for this record.
+#'   \item `$duration`: The number of seconds for processing each record.
 #' }
 #'
 #' @exportClass errorlocation
@@ -130,10 +130,10 @@ setMethod("summary", "errorlocation", summary.errorlocation)
 
 #' Get location of removed errors from a 'cleaned' data set
 #'
-#' \code{errors_removed} retrieves the errors detected by \code{\link{replace_errors}}
-#' @param x \code{data.frame} that was checked for errors
+#' `errors_removed` retrieves the errors detected by [replace_errors()]
+#' @param x `data.frame` that was checked for errors
 #' @param ... not used
-#' @return \code{\link{errorlocation-class}} object
+#' @return [errorlocation-class()] object
 #' @example ./examples/replace_errors.R
 #' @family error finding
 #' @export

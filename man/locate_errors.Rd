@@ -43,7 +43,7 @@ locate_errors(
 \item{x}{validation rules or errorlocalizer object to be used for finding
 possible errors.}
 
-\item{...}{optional parameter to be used by a specific method}
+\item{...}{optional parameters that are passed to \code{\link[lpSolveAPI:lp.control]{lpSolveAPI::lp.control()}} (see details)}
 
 \item{cl}{optional parallel / cluster.}
 
@@ -56,13 +56,32 @@ possible errors.}
 \item{ref}{\code{data.frame} optional reference data to be used in the rules checking}
 }
 \value{
-\code{\link{errorlocation-class}} object describing the errors found.
+\code{\link[=errorlocation-class]{errorlocation-class()}} object describing the errors found.
 }
 \description{
 Locate erroneuous fields in rows of data using validation rules or a specific
 errorlocalizer object. This method returns found errors, according to the specified
-method \code{x}. If these errors are to be removed automatically
-use method \code{\link{replace_errors}}.
+method \code{x}.
+Use method \code{\link[=replace_errors]{replace_errors()}}, to automatically remove these errors.
+}
+\details{
+\code{locate_errors} uses lpSolveAPI to formulate and solve a mixed integer problem.
+This solver has many options:  \link[lpSolveAPI:lp.control.options]{lpSolveAPI::lp.control.options}. Noteworthy
+options to be used are:
+\itemize{
+\item \code{timeout}: restricts the time the solver spends on a record (seconds)
+\item \code{break.at.value}: set this to minimum weight + 1 to improve speed.
+}
+
+\code{locate_errors} can be run on multiple cores using R package \code{parallel}.
+\itemize{
+\item The easiest way to use the parallel option is to set \code{Ncpus} to the number of
+desired cores, @seealso \code{\link[parallel:detectCores]{parallel::detectCores()}}.
+\item Alternatively one can create a cluster object (\code{\link[parallel:makeCluster]{parallel::makeCluster()}})
+and use \code{cl} to pass the cluster object.
+\item Or set \code{cl} to an integer which results in \code{\link[parallel:mclapply]{parallel::mclapply()}}, which only works
+on non-windows.
+}
 }
 \examples{
 rules <- validator( profit + cost == turnover

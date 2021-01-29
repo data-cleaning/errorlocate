@@ -10,7 +10,7 @@ add_noise(x, max_delta = NULL, ...)
 \item{x}{\code{numeric} vector or matrix. When \code{x} is a matrix, the function
 will be applied to each row of the matrix.}
 
-\item{max_delta}{when supplied noise will be drawn from $[0,max_delta]$
+\item{max_delta}{when supplied noise will be drawn from $\link{0,max_delta}$
 otherwise see details}
 
 \item{...}{currently not used}

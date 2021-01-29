@@ -8,6 +8,6 @@
 ErrorLocalizer can be used as a base class to implement a new error localization algorithm.
 The derived class must implement two methods: \code{initialize}, which is called
 before any error localization is done and \code{locate} which operates upon data. The
-extra parameter \code{...} can used to supply algoritmic specific parameters.
+extra parameter \code{...} can used to supply algorithmic specific parameters.
 }
 

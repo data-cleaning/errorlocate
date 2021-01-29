@@ -10,29 +10,29 @@ Errorlocation contains the result of a error detection.
 Errors can record based or variable based.
 \itemize{
 \item A record based error is restricted within one observation.
-\code{\link{errorlocate}} using the Felligi Holt algorithm assumes errors are record based.
+\code{\link[=errorlocate]{errorlocate()}} using the Felligi Holt algorithm assumes errors are record based.
 \item A variable based error is a flaw in  uni- or multivariate
- distribution. To correct this error multiple observations or the aggregated number should be adjusted.
+distribution. To correct this error multiple observations or the aggregated number should be adjusted.
 }
 }
 \details{
 Current implementation assumes that errors are record based. The error locations can be retrieved
-using the method \code{\link{values}} and are a matrix of
+using the method \code{\link[=values]{values()}} and are a matrix of
 rows and columns, with the same dimensions are the \code{data.frame} that was checked.
 For errors that are purely column based, or dataset based, errorlocations will return a matrix with all
 rows or cells set to \code{TRUE}.
-The \code{\link{values}} return \code{NA} for missing values.
+The \code{\link[=values]{values()}} return \code{NA} for missing values.
 }
 
 \section{Fields}{
 
 
 \itemize{
-  \item \code{$errors}: \code{matrix} indicating which values are erronuous (\code{TRUE}),
-  missing (\code{NA}) or valid (\code{FALSE})
-  \item \code{$weight}: The total weight per record. A weight of 0 means no errors were detected.
-  \item \code{$status}: The \link[lpSolveAPI:solve.lpExtPtr]{status} of the mip solver for this record.
-  \item \code{$duration}: The number of seconds for processing each record.
+\item \verb{$errors}: \code{matrix} indicating which values are erronuous (\code{TRUE}),
+missing (\code{NA}) or valid (\code{FALSE})
+\item \verb{$weight}: The total weight per record. A weight of 0 means no errors were detected.
+\item \verb{$status}: The \link[lpSolveAPI:solve.lpExtPtr]{status} of the mip solver for this record.
+\item \verb{$duration}: The number of seconds for processing each record.
 }
 }
 

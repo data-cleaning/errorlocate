@@ -10,7 +10,7 @@ Find errors in data given a set of validation rules.
 The \code{errorlocate} helps to identify obvious errors in raw datasets.
 }
 \details{
-It works in tandem with the package \code{\link{validate}}.
+It works in tandem with the package \code{\link[=validate]{validate()}}.
 With \code{validate} you formulate data validation rules to which the data must comply.
 For example:
 
@@ -33,14 +33,14 @@ a mixed integer problem and uses a mip solver to find a solution.
 \references{
 T. De Waal (2003) Processing of Erroneous and Unsafe Data. PhD thesis, University of Rotterdam.
 
- Van der Loo, M., de Jonge, E, Data Cleaning With Applications in R
+Van der Loo, M., de Jonge, E, Data Cleaning With Applications in R
 
- E. De Jonge and Van der Loo, M. (2012) Error localization as a mixed-integer program in
- editrules.
+E. De Jonge and Van der Loo, M. (2012) Error localization as a mixed-integer program in
+editrules.
 
- lp_solve and Kjell Konis. (2011). lpSolveAPI: R Interface for
- lp_solve version 5.5.2.0. R package version 5.5.2.0-5.
- http://CRAN.R-project.org/package=lpSolveAPI
+lp_solve and Kjell Konis. (2011). lpSolveAPI: R Interface for
+lp_solve version 5.5.2.0. R package version 5.5.2.0-5.
+http://CRAN.R-project.org/package=lpSolveAPI
 }
 \seealso{
 Useful links:

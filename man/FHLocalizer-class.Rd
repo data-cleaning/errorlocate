@@ -12,7 +12,7 @@ the smallest (weighted) combination of variables that are erroneous (if any).
 }
 
 \note{
-Most users do not need this class and can use \code{\link{locate_errors}}.
+Most users do not need this class and can use \code{\link[=locate_errors]{locate_errors()}}.
 
 \code{errorlocalizer} implements feligi holt using a MIP-solver. For problems in which
 coefficients of the validation rules or the data are too different, you should consider scaling

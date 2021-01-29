@@ -27,7 +27,7 @@ is_condition_ <- function(expr, or=TRUE, top=TRUE, ...){
 #'
 #' Check if rules are conditional rules
 #'
-#' @note \code{errorlocate} supports linear,
+#' @note `errorlocate` supports linear,
 #' categorical and conditional rules to be used in finding errors. Other rule types
 #' are ignored during error finding.
 #' @export

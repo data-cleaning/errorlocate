@@ -6,14 +6,14 @@
 #' an identical solution over and over while there are multiple solutions of equal weight.
 #' The generated noise is positive to prevent that weights will be zero or negative.
 #'
-#' When no \code{max_delta} is supplied, add_noise will use the minimum difference
-#' larger than zero divided by the \code{length(x)}.
-#' @param x \code{numeric} vector or matrix. When \code{x} is a matrix, the function
+#' When no `max_delta` is supplied, add_noise will use the minimum difference
+#' larger than zero divided by the `length(x)`.
+#' @param x `numeric` vector or matrix. When `x` is a matrix, the function
 #' will be applied to each row of the matrix.
 #' @param max_delta when supplied noise will be drawn from $[0,max_delta]$
 #' otherwise see details
 #' @param ... currently not used
-#' @return \code{numeric} vector/matrix with noise applied.
+#' @return `numeric` vector/matrix with noise applied.
 #' @export
 add_noise <- function(x, max_delta = NULL, ...){
   if (is.matrix(x)){

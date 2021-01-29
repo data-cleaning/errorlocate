@@ -14,13 +14,13 @@ possible errors.}
 
 \item{weight}{\code{numeric} optional weight vector to be used in the error localization.}
 
-\item{...}{optional parameter to be used by a specific method}
+\item{...}{optional parameters that are passed to \code{\link[lpSolveAPI:lp.control]{lpSolveAPI::lp.control()}} (see details)}
 }
 \description{
 Utility function to inspect the mip problem for a record.
 }
 \details{
-It may sometimes be handy to find out what is happing exactly with a record.
+It may sometimes be handy to find out what is happening exactly with a record.
 See the example section for finding out what to do with inspect_mip.
 }
 \examples{

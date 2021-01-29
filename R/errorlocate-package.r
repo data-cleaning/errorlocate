@@ -1,15 +1,15 @@
 #' Find errors in data given a set of validation rules.
 #'
 #' Find errors in data given a set of validation rules.
-#' The \code{errorlocate} helps to identify obvious errors in raw datasets.
+#' The `errorlocate` helps to identify obvious errors in raw datasets.
 #'
-#' It works in tandem with the package \code{\link{validate}}.
-#' With \code{validate} you formulate data validation rules to which the data must comply.
+#' It works in tandem with the package [validate()].
+#' With `validate` you formulate data validation rules to which the data must comply.
 #' For example:
 #'
-#' "age cannot be negative": \code{age >= 0}
+#' "age cannot be negative": `age >= 0`
 #'
-#' While \code{validate} can identify if a record is valid or not, it does not identify
+#' While `validate` can identify if a record is valid or not, it does not identify
 #' which of the variables are responsible for the invalidation. This may seem a simple task,
 #' but is actually quite tricky:  a set of validation rules form a web
 #' of dependent variables: changing the value of an invalid record to repair for rule 1, may invalidate
@@ -20,7 +20,7 @@
 #' and a set of validation rules. The algorithm minimizes the (weighted) number of values that need
 #' to be adjusted to remove the invalidation.
 #'
-#' The \code{errorlocate} package translates the validation and error localization problem into
+#' The `errorlocate` package translates the validation and error localization problem into
 #' a mixed integer problem and uses a mip solver to find a solution.
 #' @name errorlocate-package
 #' @import methods validate

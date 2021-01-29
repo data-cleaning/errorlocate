@@ -12,10 +12,10 @@ errors_removed(x, ...)
 \item{...}{not used}
 }
 \value{
-\code{\link{errorlocation-class}} object
+\code{\link[=errorlocation-class]{errorlocation-class()}} object
 }
 \description{
-\code{errors_removed} retrieves the errors detected by \code{\link{replace_errors}}
+\code{errors_removed} retrieves the errors detected by \code{\link[=replace_errors]{replace_errors()}}
 }
 \examples{
 rules <- validator( profit + cost == turnover
