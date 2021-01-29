@@ -2,7 +2,7 @@
 #'
 #' Utility function to inspect the mip problem for a record.
 #'
-#' It may sometimes be handy to find out what is happing exactly with a record.
+#' It may sometimes be handy to find out what is happening exactly with a record.
 #' See the example section for finding out what to do with inspect_mip.
 #' @example ./examples/inspect_mip.R
 #' @family Mixed Integer Problem

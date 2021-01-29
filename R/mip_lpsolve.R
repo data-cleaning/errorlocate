@@ -73,10 +73,11 @@ translate_mip_lp <- function( rules
   # should improve performance quite a lot: a SOS1 makes bin variables exclusive.
   for (sos2 in asSOS2(colnames(lps))){
     lpSolveAPI::set.bounds(lps
-                          , lower=rep(0, length(sos2$columns))
-                          , upper=rep(1, length(sos2$columns))
+                          , lower=rep(0L, length(sos2$columns))
+                          , upper=rep(1L, length(sos2$columns))
                           , columns=sos2$columns
                           )
+
     lpSolveAPI::add.SOS( lps, sos2$name,
                          type=2, priority = 1,
                          columns=sos2$columns,
@@ -98,6 +99,7 @@ translate_mip_lp <- function( rules
 
   b <- ifelse(strict, lc$b - eps, lc$b)
   lpSolveAPI::set.constr.value(lps, b)
+#  print(colnames(lps))
   lps
 }
 

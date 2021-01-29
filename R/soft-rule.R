@@ -67,6 +67,7 @@ expect_values <- function(values, weights, delta_names = NULL, ...){
   lin_is_na <- vapply(lin_values, is.na, TRUE)
 
   lin_values[lin_is_na] <- -1
+
   lin_rules1 <- lapply(names(lin_values), function(n){
     a <- setNames(1, n)
     b <- lin_values[[n]]

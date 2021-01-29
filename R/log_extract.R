@@ -31,7 +31,10 @@ create_log_constraints <- function(li, data = NULL, n = 10, r = c(1,1e5)){
   lc <- lapply(seq_len(nrow(li)), function(i){
     num_var <- li$num_vars[i]
     if (!is.null(data[[num_var]])){
-      r <- range(data[[num_var]], na.rm = TRUE)
+      r2 <- range(data[[num_var]], na.rm = TRUE)
+      if (all(is.finite(r2))){
+        r <- r2
+      }
     }
     log_constraint_rules( li$num_vars[i]
                         , li$log_vars[i]
@@ -47,18 +50,29 @@ create_log_constraints <- function(li, data = NULL, n = 10, r = c(1,1e5)){
   lc
 }
 
-log_constraint_rules <- function(num_var, log_var, logfn, n = 10, r = c(1,1e5)){
+log_constraint_rules <- function( num_var, log_var, logfn, n = 10, r = c(1,1e5)
+                                , d = NULL
+                                ){
   stopifnot(n > 1)
-
   r[1] <- max(r[1], 1)
   if (r[1] >=  r[2]){
     r <- c(r[1]/10, 10*r[1])
   }
 
+  # retrieve log function
+  log_f <- get(logfn)
+  exp_f <- switch( logfn
+                 , log10 = function(x){10^x}
+                 , log1p = expm1
+                 , exp
+                 )
+
   # sample points based on slope
-  value_log <- seq(log(r[1]), log(r[2]), length.out = n)
-  value <- exp(value_log) # log distributed points covering range.
-  f_value <- do.call(as.character(logfn), list(value))
+  value_log <- seq(log_f(r[1]), log_f(r[2]), length.out = n)
+  value_log <- unique(sort(c(value_log, d)))
+
+  value <- exp_f(value_log) # log distributed points covering range.
+  f_value <- value_log
 
   # create points
   points <- paste0(num_var, "._x", sprintf("%03d", seq_len(n)))

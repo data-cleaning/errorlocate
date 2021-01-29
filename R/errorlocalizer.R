@@ -3,7 +3,7 @@
 #' ErrorLocalizer can be used as a base class to implement a new error localization algorithm.
 #' The derived class must implement two methods: \code{initialize}, which is called
 #' before any error localization is done and \code{locate} which operates upon data. The
-#' extra parameter \code{...} can used to supply algoritmic specific parameters.
+#' extra parameter \code{...} can used to supply algorithmic specific parameters.
 #' @export
 setRefClass("ErrorLocalizer",
   fields=list(
@@ -48,7 +48,7 @@ fh_localizer <-
       },
       locate = function( data, weight=NULL, add_noise = TRUE, ...
                        , cl = NULL
-                       , n = 20
+                       , n = 10
                        , Ncpus = getOption("Ncpus", 1)
                        , timeout=60
                        ){
