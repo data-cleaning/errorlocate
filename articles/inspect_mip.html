@@ -220,18 +220,18 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <span class="va">lp</span> <span class="op">&lt;-</span> <span class="va">mip</span><span class="op">$</span><span class="fu">to_lp</span><span class="op">(</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">lp</span><span class="op">)</span></code></pre></div>
 <pre><code>  Model name: errorlocate
-                       age         income     .delta_age  .delta_income           
-  Minimize               0              0  1.18046318146  1.38388456928           
-  r1                    -1              0              0              0  &lt;=    -18
-  r2                     0             -1              0              0  &lt;=      0
-  age_ub                 1              0         -1e+07              0  &lt;=     12
-  income_ub              0              1              0         -1e+07  &lt;=   2000
-  age_lb                -1              0         -1e+07              0  &lt;=    -12
-  income_lb              0             -1              0         -1e+07  &lt;=  -2000
-  Kind                 Std            Std            Std            Std           
-  Type                Real           Real            Int            Int           
-  Upper                Inf            Inf              1              1           
-  Lower               -Inf           -Inf              0              0</code></pre>
+                        age          income      .delta_age   .delta_income           
+  Minimize                0               0  1.244442928116  1.447620667866           
+  r1                     -1               0               0               0  &lt;=    -18
+  r2                      0              -1               0               0  &lt;=      0
+  age_ub                  1               0          -1e+07               0  &lt;=     12
+  income_ub               0               1               0          -1e+07  &lt;=   2000
+  age_lb                 -1               0          -1e+07               0  &lt;=    -12
+  income_lb               0              -1               0          -1e+07  &lt;=  -2000
+  Kind                  Std             Std             Std             Std           
+  Type                 Real            Real             Int             Int           
+  Upper                 Inf             Inf               1               1           
+  Lower                -Inf            -Inf               0               0</code></pre>
 <p>Validator rules <code>r1</code> and <code>r2</code> are encoded in two lines of the model. The values of the current record are encoded as soft contraints in <code>age_ub</code>, <code>age_lb</code>, <code>income_lb</code> and <code>income_ub</code>. These constraints try to fix the values of <code>age</code> at 12 and <code>income</code> at 2000, but can be violated, setting <code>.delta_age</code> or <code>.delta_income</code> to 1.</p>
 <p>For large problems the lp problem can be written to disk for inspection</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
@@ -267,15 +267,15 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <code class="sourceCode R"><span class="co"># lp problem after solving</span>
 <span class="va">res</span><span class="op">$</span><span class="va">lp</span></code></pre></div>
 <pre><code>  Model name: errorlocate
-                       age         income     .delta_age  .delta_income           
-  Minimize               0              0  1.18046318146  1.38388456928           
-  age_ub                 1              0         -1e+07              0  &lt;=     12
-  income_ub              0              1              0         -1e+07  &lt;=   2000
-  income_lb              0             -1              0         -1e+07  &lt;=  -2000
-  Kind                 Std            Std            Std            Std           
-  Type                Real           Real            Int            Int           
-  Upper                Inf            Inf              1              1           
-  Lower                 18              0              0              0</code></pre>
+                        age          income      .delta_age   .delta_income           
+  Minimize                0               0  1.244442928116  1.447620667866           
+  age_ub                  1               0          -1e+07               0  &lt;=     12
+  income_ub               0               1               0          -1e+07  &lt;=   2000
+  income_lb               0              -1               0          -1e+07  &lt;=  -2000
+  Kind                  Std             Std             Std             Std           
+  Type                 Real            Real             Int             Int           
+  Upper                 Inf             Inf               1               1           
+  Lower                  18               0               0               0</code></pre>
 <p>Note that the lp problem has been simplified. For example the single variable constraints,the lp problem/object after solving shows that the solver has optimized some of the rules: it has moved rule <code>r1</code> and <code>r2</code> into the <code>Lower boundary</code> conditions. It also removed <code>age_lb</code> because that was superfluous with respect to the boundary conditions.</p>
 </div>
 <div id="categorical-rule" class="section level3">
@@ -298,7 +298,7 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <span class="va">mip</span><span class="op">$</span><span class="fu">to_lp</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>  Model name: errorlocate
                   working:?      working:job  working:retired   .delta_working      
-  Minimize                0                0                0   1.377711510286      
+  Minimize                0                0                0   1.118696618826      
   r1                      0                1                1                0  =  1
   working                 1                0                0                1  =  1
   Kind                  SOS              SOS              SOS              Std      
@@ -332,7 +332,7 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <span class="va">mip</span><span class="op">$</span><span class="fu">to_lp</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>  Model name: errorlocate
                      adult           voted    .delta_adult    .delta_voted       
-  Minimize               0               0  1.165569715434   1.46003425133       
+  Minimize               0               0  1.219167436474  1.003618142568       
   r1                    -1               1               0               0  &lt;=  0
   voted                  0               1               0               1   =  1
   adult                 -1               0               1               0   =  0
@@ -343,7 +343,7 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mip</span><span class="op">$</span><span class="fu">execute</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">values</span>
 <span class="co">#&gt;        adult        voted .delta_adult .delta_voted </span>
-<span class="co">#&gt;            1            1            1            0</span></code></pre></div>
+<span class="co">#&gt;            0            0            0            1</span></code></pre></div>
 </div>
 </div>
 <div id="conditional-rule" class="section level3">
@@ -393,7 +393,7 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <code class="sourceCode R"><span class="va">mip</span><span class="op">$</span><span class="fu">to_lp</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>  Model name: errorlocate
                         age          income      .delta_age   .delta_income        r1._lin1        r1._lin2           
-  Minimize                0               0  1.418527394416  1.360792574938               0               0           
+  Minimize                0               0  1.337583192974   1.26627135987               0               0           
   r1                      0               0               0               0               1               1  &lt;=      1
   r1._lin1                0               1               0               0          -1e+07               0  &lt;=      0
   r1._lin2               -1               0               0               0               0          -1e+07  &lt;=    -16
