@@ -1,12 +1,24 @@
-# errorlocate 0.9
+# errorlocate 0.9.8
 
-* Added parallel processing options, speed improvements
-* simple ratio's are taken into account (rewritten into linear rules).
+* Added parallel processing options, resulting in speed and memory consumption
+improvements. (also for `Ncpus=1`).
 
-# errorlocate 0.5.2
+* simple ratio's are taken into account and rewritten into linear rules:
+`cost/turnover > 0.6` will be rewritten into `cost > 0.6 * turnover`.
+
+* bug fix issue #31: when a record was invalid, but all rules involving the invalidation
+contained missing variables, the record was skipped by errorlocate.
 
 * Bug fix for issue #30: when a value >= 1e7 was encountered, all fields were flagged erroneous.
-Thanks to Garðar Páll Gíslason. 
+Thanks to Garðar Páll Gíslason.
+
+* Bug fix for log1p, log10 function approximation.
+
+* In long running `locate_error` sessions, the mip solver returned for some records
+a numerical instability error code. Seems to be an instability in lpSolve. Resubmitting
+same record does return a solution. When a numerical instability in lpSolve is reported
+a record is try again. When this fails, it is saved in mps format to the temporary
+directory (with a warning).
 
 # errorlocate 0.5.1
 
