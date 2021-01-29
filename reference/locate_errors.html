@@ -42,8 +42,8 @@
 <meta property="og:title" content="Locate errors in data — locate_errors" />
 <meta property="og:description" content="Locate erroneuous fields in rows of data using validation rules or a specific
 errorlocalizer object. This method returns found errors, according to the specified
-method x. If these errors are to be removed automatically
-use method replace_errors." />
+method x.
+Use method replace_errors(), to automatically remove these errors." />
 
 
 
@@ -75,7 +75,7 @@ use method replace_errors." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">errorlocate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.8</span>
       </span>
     </div>
 
@@ -134,8 +134,8 @@ use method replace_errors." />
     <div class="ref-description">
     <p>Locate erroneuous fields in rows of data using validation rules or a specific
 errorlocalizer object. This method returns found errors, according to the specified
-method <code>x</code>. If these errors are to be removed automatically
-use method <code><a href='replace_errors.html'>replace_errors</a></code>.</p>
+method <code>x</code>.
+Use method <code><a href='replace_errors.html'>replace_errors()</a></code>, to automatically remove these errors.</p>
     </div>
 
     <pre class="usage"><span class='fu'>locate_errors</span><span class='op'>(</span>
@@ -185,7 +185,7 @@ possible errors.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>optional parameter to be used by a specific method</p></td>
+      <td><p>optional parameters that are passed to <code><a href='https://rdrr.io/pkg/lpSolveAPI/man/lp.control.html'>lpSolveAPI::lp.control()</a></code> (see details)</p></td>
     </tr>
     <tr>
       <th>cl</th>
@@ -211,7 +211,25 @@ possible errors.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code><a href='errorlocation-class.html'>errorlocation-class</a></code> object describing the errors found.</p>
+    <p><code><a href='errorlocation-class.html'>errorlocation-class()</a></code> object describing the errors found.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p><code>locate_errors</code> uses lpSolveAPI to formulate and solve a mixed integer problem.
+This solver has many options:  <a href='https://rdrr.io/pkg/lpSolveAPI/man/lp.control.options.html'>lpSolveAPI::lp.control.options</a>. Noteworthy
+options to be used are:</p><ul>
+<li><p><code>timeout</code>: restricts the time the solver spends on a record (seconds)</p></li>
+<li><p><code>break.at.value</code>: set this to minimum weight + 1 to improve speed.</p></li>
+</ul>
+
+<p><code>locate_errors</code> can be run on multiple cores using R package <code>parallel</code>.</p><ul>
+<li><p>The easiest way to use the parallel option is to set <code>Ncpus</code> to the number of
+desired cores, @seealso <code><a href='https://rdrr.io/r/parallel/detectCores.html'>parallel::detectCores()</a></code>.</p></li>
+<li><p>Alternatively one can create a cluster object (<code><a href='https://rdrr.io/r/parallel/makeCluster.html'>parallel::makeCluster()</a></code>)
+and use <code>cl</code> to pass the cluster object.</p></li>
+<li><p>Or set <code>cl</code> to an integer which results in <code><a href='https://rdrr.io/r/parallel/mclapply.html'>parallel::mclapply()</a></code>, which only works
+on non-windows.</p></li>
+</ul>
+
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other error finding: 

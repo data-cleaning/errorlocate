@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Replace erroneous fields with NA or a suggested value — replace_errors" />
-<meta property="og:description" content="Find erroneous fields using locate_errors and replace these
+<meta property="og:description" content="Find erroneous fields using locate_errors() and replace these
 fields automatically with NA or a suggestion that is provided by the error detection algorithm." />
 
 
@@ -73,7 +73,7 @@ fields automatically with NA or a suggestion that is provided by the error detec
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">errorlocate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.8</span>
       </span>
     </div>
 
@@ -130,7 +130,7 @@ fields automatically with NA or a suggestion that is provided by the error detec
     </div>
 
     <div class="ref-description">
-    <p>Find erroneous fields using <code><a href='locate_errors.html'>locate_errors</a></code> and replace these
+    <p>Find erroneous fields using <code><a href='locate_errors.html'>locate_errors()</a></code> and replace these
 fields automatically with NA or a suggestion that is provided by the error detection algorithm.</p>
     </div>
 
@@ -186,8 +186,8 @@ fields automatically with NA or a suggestion that is provided by the error detec
     </tr>
     <tr>
       <th>x</th>
-      <td><p><code>validator</code> or <code>errorlocation</code> object.
-If an <code>errorlocation</code> is already available (through <code><a href='locate_errors.html'>locate_errors</a></code>) this
+      <td><p><code>validator()</code> or <code>errorlocation</code> object.
+If an <code>errorlocation</code> is already available (through <code><a href='locate_errors.html'>locate_errors()</a></code>) this
 is more efficient.</p></td>
     </tr>
     <tr>
@@ -196,15 +196,15 @@ is more efficient.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>these parameters are handed over to <code><a href='locate_errors.html'>locate_errors</a></code></p></td>
+      <td><p>these parameters are handed over to <code><a href='locate_errors.html'>locate_errors()</a></code></p></td>
     </tr>
     <tr>
       <th>cl</th>
-      <td><p>optional cluster for parallel execution</p></td>
+      <td><p>optional cluster for parallel execution (see details)</p></td>
     </tr>
     <tr>
       <th>Ncpus</th>
-      <td><p>number of nodes to use.</p></td>
+      <td><p>number of nodes to use. (see details)</p></td>
     </tr>
     <tr>
       <th>value</th>
@@ -217,18 +217,19 @@ is more efficient.</p></td>
     <p><code>data</code> with erroneous values removed.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Note that you can also use the result of <code><a href='locate_errors.html'>locate_errors</a></code> with <code>replace_errors</code>.
+    <p>Note that you can also use the result of <code><a href='locate_errors.html'>locate_errors()</a></code> with <code>replace_errors</code>.
 When the procedure takes a long time and <code>locate_errors</code> was called previously
 this is the preferred way, because otherwise <code>locate_errors</code> will be executed again.
 The errors that were removed from the <code>data.frame</code> can be retrieved with the function
-<code><a href='errors_removed.html'>errors_removed</a></code>. For more control over error localization see <code><a href='locate_errors.html'>locate_errors</a></code>.</p>
+<code><a href='errors_removed.html'>errors_removed()</a></code>. For more control over error localization see <code><a href='locate_errors.html'>locate_errors()</a></code>.</p>
+<p><code>replace_errors</code> has the same parallelization options as <code><a href='locate_errors.html'>locate_errors()</a></code> (see there).</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>In general it is better to replace the erroneous fields with <code>NA</code> and apply a proper
 imputation method. Suggested values from the error localization method may introduce an undesired bias.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='errorlocation-class.html'>errorlocation-class</a></code></p>
+    <div class='dont-index'><p><code><a href='errorlocation-class.html'>errorlocation-class()</a></code></p>
 <p>Other error finding: 
 <code><a href='errorlocation-class.html'>errorlocation-class</a></code>,
 <code><a href='errors_removed.html'>errors_removed</a>()</code>,

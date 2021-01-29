@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">errorlocate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.8</span>
       </span>
     </div>
 
@@ -126,21 +126,17 @@
       <small>Source: <a href='https://github.com/data-cleaning/errorlocate/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="errorlocate-09" class="section level1">
-<h1 class="page-header" data-toc-text="0.9">
-<a href="#errorlocate-09" class="anchor"></a>errorlocate 0.9<small> Unreleased </small>
+    <div id="errorlocate-098" class="section level1">
+<h1 class="page-header" data-toc-text="0.9.8">
+<a href="#errorlocate-098" class="anchor"></a>errorlocate 0.9.8<small> Unreleased </small>
 </h1>
 <ul>
-<li>Added parallel processing options, speed improvements</li>
-<li>simple ratio’s are taken into account (rewritten into linear rules).</li>
-</ul>
-</div>
-    <div id="errorlocate-052" class="section level1">
-<h1 class="page-header" data-toc-text="0.5.2">
-<a href="#errorlocate-052" class="anchor"></a>errorlocate 0.5.2<small> Unreleased </small>
-</h1>
-<ul>
-<li>Bug fix for issue <a href='https://github.com/data-cleaning/errorlocate/issues/30'>#30</a>: when a value &gt;= 1e7 was encountered, all fields were flagged erroneous. Thanks to Garðar Páll Gíslason.</li>
+<li><p>Added parallel processing options, resulting in speed and memory consumption improvements. (also for <code>Ncpus=1</code>).</p></li>
+<li><p>simple ratio’s are taken into account and rewritten into linear rules: <code>cost/turnover &gt; 0.6</code> will be rewritten into <code>cost &gt; 0.6 * turnover</code>.</p></li>
+<li><p>bug fix issue <a href='https://github.com/data-cleaning/errorlocate/issues/31'>#31</a>: when a record was invalid, but all rules involving the invalidation contained missing variables, the record was skipped by errorlocate.</p></li>
+<li><p>Bug fix for issue <a href='https://github.com/data-cleaning/errorlocate/issues/30'>#30</a>: when a value &gt;= 1e7 was encountered, all fields were flagged erroneous. Thanks to Garðar Páll Gíslason.</p></li>
+<li><p>Bug fix for log1p, log10 function approximation.</p></li>
+<li><p>In long running <code>locate_error</code> sessions, the mip solver returned for some records a numerical instability error code. Seems to be an instability in lpSolve. Resubmitting same record does return a solution. When a numerical instability in lpSolve is reported a record is try again. When this fails, it is saved in mps format to the temporary directory (with a warning).</p></li>
 </ul>
 </div>
     <div id="errorlocate-051" class="section level1">
