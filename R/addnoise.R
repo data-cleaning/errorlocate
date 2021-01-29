@@ -10,7 +10,7 @@
 #' larger than zero divided by the `length(x)`.
 #' @param x `numeric` vector or matrix. When `x` is a matrix, the function
 #' will be applied to each row of the matrix.
-#' @param max_delta when supplied noise will be drawn from $[0,max_delta]$
+#' @param max_delta when supplied noise will be drawn from `[0,max_delta]`
 #' otherwise see details
 #' @param ... currently not used
 #' @return `numeric` vector/matrix with noise applied.
