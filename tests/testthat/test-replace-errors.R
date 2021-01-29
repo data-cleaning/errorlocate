@@ -40,6 +40,10 @@ describe("replace errors",{
                         , profit >= 0
     )
     data <- data.frame(profit=NA_real_, cost=125, turnover=200)
+    mip <- inspect_mip(data,rules)
+
+    mip$objective
+
     data_no_errors <- replace_errors(data, rules)
     expect_equivalent(data_no_errors, data)
   })

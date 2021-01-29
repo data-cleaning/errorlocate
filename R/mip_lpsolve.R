@@ -89,8 +89,13 @@ translate_mip_lp <- function( rules
   if (length(objective)){
     obj <- objective[objective != 0]
     columns <- match(names(obj), colnames(A))
-    if (any(is.na(columns))){
-      stop("Invalid objective function")
+
+    # this is due to NA variables that are not part of the problem any more...
+
+    if (any(is_na <- is.na(columns))){
+      obj <- obj[!is_na]
+      columns <- columns[!is_na]
+      #stop("Invalid objective function")
     }
     lpSolveAPI::set.objfn(lps, unname(obj), columns)
   }

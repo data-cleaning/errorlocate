@@ -67,7 +67,7 @@ setMethod('replace_errors', c("data.frame", "errorlocation")
                    , Ncpus = 1 # not used
                    , value = c("NA", "suggestion")){
     value <- switch ( match.arg(value),
-        "NA" = is.na(data) <- values(x)
+        "NA" = is.na(data) <- values(x, na_as_error = TRUE)
     )
     attr(data,"errorlocation") <- x
     data

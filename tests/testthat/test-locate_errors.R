@@ -205,6 +205,12 @@ describe("locate_errors", {
     expect_warning({
       el <- locate_errors(data, rules)
     })
+    expect_equal(el$errors[1,], c(profit=NA, cost=FALSE, turnover=FALSE))
+
+    expect_warning({
+      data_na <- replace_errors(data, rules)
+    })
+    expect_equivalent(data_na[1,], data.frame(profit=NA_real_, cost=200, turnover=300))
   })
 
   it ("handles NA values gracefully, issue #31", {
@@ -213,7 +219,7 @@ describe("locate_errors", {
 
     set.seed(1)
     el <- locate_errors(d, rules)
-    expect_equal(el$errors[1,], c(x=FALSE, y = NA, z = TRUE))
+    expect_equal(el$errors[1,], c(x=TRUE, y = NA, z = FALSE))
   })
 })
 

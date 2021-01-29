@@ -153,7 +153,8 @@ fh_localizer <-
         # filter for records that are valid..., that reduces the processing
         # time considerably
         cf <- validate::confront(data, rules)
-        invalid <- aggregate(cf, by = "record")$nfail > 0
+        agg <- aggregate(cf, by = "record")
+        invalid <- (agg$nfail + agg$nNA) > 0
 
         n_invalid <- sum(invalid)
 
