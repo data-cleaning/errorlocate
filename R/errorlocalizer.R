@@ -217,7 +217,7 @@ fh_localizer <-
         setup_cluster <- Ncpus > 1 && is.null(cl) && n_invalid > 1
 
         if (setup_cluster){
-          cl <- parallel::makeCluster(Ncpus)
+          cl <- parallel::makeCluster(Ncpus, setup_strategy = "sequential")
           on.exit(parallel::stopCluster(cl))
         }
 

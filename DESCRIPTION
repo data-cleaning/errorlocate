@@ -1,7 +1,7 @@
 Package: errorlocate
 Type: Package
 Title: Locate Errors with Validation Rules
-Version: 0.9.8.9000
+Version: 0.9.9
 Authors@R: c(person("Edwin", "de Jonge", email = "edwindjonge@gmail.com", role = c("aut", "cre"), comment=c(ORCID="0000-0002-6580-4718")),
              person("Mark", "van der Loo", email = "mark.vanderloo@gmail.com", role = c("aut")))
 Description: Errors in data can be located and removed using validation rules from package 'validate'.
