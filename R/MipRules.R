@@ -44,7 +44,6 @@ miprules <- setRefClass("MipRules",
        objective <<- objective
 
        ._miprules <<- to_miprules(rules)
-
        ._vars <<- get_translatable_vars(rules)
 
        var_num <- sapply(._miprules, function(mr){
@@ -149,12 +148,12 @@ miprules <- setRefClass("MipRules",
        }
        names(values) <- colnames(lp)
 
-       adapt <- objective < 0 # trick to create logical with names
+       adapt <- objective[is.finite(objective)] < 0  # trick to create logical with names
        adapt_nms <- names(adapt)[names(adapt) %in% names(values)]
        adapt[adapt_nms] <- values[adapt_nms] == 1
        if (length(values) == 0){
           # seems optimalisation of lpSolvAPI when there is only 1 column of data..
-          adapt <- objective > 0
+          # adapt <- objective > 0
           adapt[] <- lpSolveAPI::get.objective(lp) > 0
           #browser()
        }

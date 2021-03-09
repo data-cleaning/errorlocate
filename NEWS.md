@@ -1,3 +1,10 @@
+# errorlocate 0.9.9
+
+* Added support for Inf weights, thanks to Guido van den Heuvel.
+
+* Improved default setting of solver `epsd = 1e-12` provides better numerical
+stability.
+
 # errorlocate 0.9.8
 
 * Added parallel processing options, resulting in speed and memory consumption

@@ -63,14 +63,18 @@ describe("locate_errors", {
   })
 
   it("handles Inf weights",{
-    skip("Enhancement")
     v <- validator( profit + cost == turnover
-                  , cost - 0.6*turnover >= 0
+                  , cost/turnover >= 0.6
                   , cost>= 0
                   , turnover >= 0
     )
-    data <- data.frame(profit=100, cost=125, turnover=200)
+    data <- data.frame(profit=30, cost=70, turnover=80)
+    set.seed(1)
+    le <- locate_errors(data, v, weight=c(profit=Inf, cost=1, turnover=Inf))
+    expect_equivalent(le$errors[1,], c(profit = FALSE, cost = TRUE, turnover = FALSE))
+
     le <- locate_errors(data, v, weight=c(profit=Inf, cost=Inf, turnover=1))
+    expect_equivalent(le$errors[1,], c(profit = FALSE, cost = FALSE, turnover = TRUE))
   })
 
   it ("handles equality in condition",{

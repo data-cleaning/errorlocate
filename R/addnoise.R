@@ -22,9 +22,10 @@ add_noise <- function(x, max_delta = NULL, ...){
 
   N <- length(x)
   if (is.null(max_delta)){
-    ds <- diff(sort(x))
+    x_f <- x[is.finite(x)]
+    ds <- diff(sort(x_f))
     ds <- c(ds[ds > .Machine$double.eps])
-    max_delta <- min(ds, min(x)) / N
+    max_delta <- min(ds, min(x_f)) / N
   }
   x + runif(N, max = max_delta)
 }

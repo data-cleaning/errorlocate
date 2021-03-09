@@ -95,6 +95,8 @@ expect_values <- function(values, weights, delta_names = NULL, ...){
       NULL
     }
   })
+  # to filter out the non finite weights....
+  lin_rules2 <- lin_rules2[!sapply(lin_rules2, is.null)]
 
   cat_values <- values[!is_numeric]
   cat_rules <- lapply(names(cat_values), function(n){
@@ -115,7 +117,17 @@ expect_values <- function(values, weights, delta_names = NULL, ...){
         b <- 1
       }
     }
-    soft_cat_rule(mip_rule(a, op = "==", b = b, rule = n, weight = weights[n], type=sapply(a, function(x) "binary")))
+    w <- weights[n]
+    mr <-
+      mip_rule( a, op = "==", b = b
+              , rule = n
+              , weight = weights[n]
+              , type=sapply(a, function(x) "binary")
+              )
+    if (is.finite(w)){
+      mr <- soft_cat_rule(mr)
+    }
+    mr
   })
 
   c(lin_rules1, lin_rules2, cat_rules)

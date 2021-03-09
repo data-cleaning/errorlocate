@@ -42,7 +42,7 @@ invert_ <- function(e, ...){
 is_ratio <- function(e){
   op <- op_to_s(e)
 
-  if (!op %in% c(">=", "<=", "==")){
+  if (!op %in% c(">=", "<=", "==", "<", ">")){
     return(FALSE)
   }
 

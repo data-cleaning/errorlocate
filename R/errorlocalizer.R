@@ -52,7 +52,6 @@ fh_localizer <-
                        , Ncpus = getOption("Ncpus", 1)
                        , timeout=60
                        ){
-
         vars <- ._miprules$._vars
         nr_rows <- nrow(data)
         nr_cols <- ncol(data)
@@ -119,7 +118,6 @@ fh_localizer <-
         } else {
           if (is.null(dim(weight))){
             if (length(weight) == ncol(data)){
-
               if (!is.null(names(weight))){
                 weight <- weight[names_cols]
               }
@@ -183,9 +181,16 @@ fh_localizer <-
             # test for numerical instability?
             # retry because of numerical instability
             mip$set_values( values = values
-                            , weight[r,]
+                          , weight[r,]
             )
-            el <- mip$execute(timeout=timeout, ...)
+            # could be a scaling issue. Drop geometric scaling
+            warning("Dropping geometric `scaling` for record ",r, " (?lpSolveAPI::lp.control.options)"
+                   , call. = FALSE
+                   )
+            args <- list(...)
+            args$timeout = timeout
+            args$scaling = c("range", "equilibrate","integers" )
+            el <- do.call(mip$execute, args)
             if (!isTRUE(el$solution)){
               dump_path <- file.path(
                 tempdir(),
