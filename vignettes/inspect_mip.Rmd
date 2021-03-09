@@ -59,7 +59,7 @@ how these rules in validator can be formally defined.
 ### Rule $r_i(\mathbf{x})$
 
 Each translatable rule $r_i(\mathbf{x})$ can be written as a disjunction of 
-atomic clauses: it is a function $r_i$ that operates on (some of) the values 
+atomic clauses $C_i^j(x)$: it is a function $r_i$ that operates on (some of) the values 
 of record $\mathbf{x} = (x_1, \ldots, x_n)$ and is `TRUE` (valid) or `FALSE` 
 (not valid)
 
@@ -67,7 +67,7 @@ $$
 r_i(\mathbf{x}) = \bigvee_j C_i^j(\mathbf{x})
 $$
 
-with:
+with each atomic clause:
 
 $$
 C_i^j(\mathbf{x}) = \left\{
@@ -82,14 +82,24 @@ $$
 
 Each linear, categorical or conditional rule $r_i$ can be written in this form.
 
-### Example
+### Example 1
 
 ```{r}
-rules <- validator(has_income = if (income > 0) age >= 16)
+rules <- validator(example_1 = if (income > 0) age >= 16)
 rules$exprs()
 ```
 
 So the rule `if (income > 0) age >= 16` can be written as (`income <= 0` OR `age >=16`)
+
+### Example 2
+
+```{r}
+rules <- validator(example_2 = if (has_house == "yes") income >= 1000)
+rules$exprs()
+```
+
+So the rule `if (has_house == "yes") income >= 1000)` can be written as (`has_house != "yes"` OR `age >=1000`)
+
 
 ## Rule system:
 
@@ -165,7 +175,7 @@ print(lp)
 ```{r, ref.label="mip1", comment= " ", echo=FALSE}
 ```
 
-Validator rules `r1` and `r2` are encoded in two lines of the model. The values of the current record are encoded as soft contraints in `age_ub`, `age_lb`, `income_lb` and `income_ub`. These constraints try to fix the values of `age` at 12 and `income` at 2000, but can be violated, setting `.delta_age` or `.delta_income` to 1.
+Validator rules `r1` and `r2` are encoded in two lines of the model. The values of the current record are encoded as soft constraints in `age_ub`, `age_lb`, `income_lb` and `income_ub`. These constraints try to fix the values of `age` at 12 and `income` at 2000, but can be violated, setting `.delta_age` or `.delta_income` to 1.
 
 For large problems the lp problem can be written to disk for inspection
 
@@ -290,10 +300,10 @@ mip <- inspect_mip(data, rules)
 ```
 
 `errorlocate` encodes this rule into multiple rules
-(as noted in the theoreteical section above), so rule `r1` is chopped into
+(as noted in the theoretical section above), so rule `r1` is chopped into
 1 rule + 2 sub rules: 
 
-`r1: if (income > 0) age >= 0`:
+`r1: if (income > 0) age >= 16`:
 
 - `r1._lin1: if (r1._lin1 == FALSE) income <= 0`
 
