@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">errorlocate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.8.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.9</span>
       </span>
     </div>
 
@@ -98,18 +98,18 @@
 <div id="intro" class="section level2">
 <h2 class="hasAnchor">
 <a href="#intro" class="anchor"></a>Intro</h2>
-<p>Errorlocate uses the linear, categorical and conditional rules from a rules set formulate with R package <a href="https://cran.r-project.org/package=validate"><code>validate</code></a>, to create a Mixed Integer Problem.</p>
-<p>The details of the translation are hidden in <code>locate_errors</code>, since for most users they are not relevant. Often the number of errors found and the processing time are much more relevant parameters.</p>
-<p>In few cases, you may run into a problems with your error localization problem:</p>
+<p>Errorlocate uses the linear, categorical and conditional rules from a rules set formulated with R package <a href="https://cran.r-project.org/package=validate"><code>validate</code></a>, to create a Mixed Integer Problem.</p>
+<p>For most users the details of the translation are not relevant and hidden in <code>locate_errors</code>. Often the number of errors found and the processing time are much more relevant parameters.</p>
+<p>In a few cases, you may run into a problems with your error localization problem:</p>
 <ol style="list-style-type: lower-alpha">
 <li>The processing time of (some of the records) of <code>locate_errors</code> is high.</li>
 <li>
-<code>locate_errors</code> missresolveded an obvious error.</li>
+<code>locate_errors</code> missed an obvious error.</li>
 <li>
 <code>locate_errors</code> indicates that it did not find a valid solution (for some records) .</li>
 </ol>
-<p>Problem a. can be by splitting your dataset and use a <code>parallel</code> solution and problem b, can be due to that <code>error_locate</code> ignores non-linear rules, but these problems may also indicate problems with your rules set.</p>
-<p>Problem with you rule set may be mitigated by using the <code>validatetools</code> package that can detect conflicting and redundant rules and has methods to simplify your rule set.</p>
+<p>Problem a. can be addressed by using the parallel argument of <code>locate_errors</code> (and <code>replace_errors</code>). Problem b can be due to that <code>error_locate</code> ignores non-linear rules, and therefore is not able to deduce the errors, because it only takes linear, categorical and conditional rules into a account.</p>
+<p>There may also be problems with your rules set. Problems set may be mitigated by using the <a href="https://cran.r-project.org/package=validate"><code>validatetools</code></a> package that can detect conflicting and redundant rules and has methods to simplify your rule set.</p>
 <p>If you want to dive deep into the mixed integer problem that is created by <code>error_locate</code> you can use the <code>inspect_mip</code> function.</p>
 </div>
 <div id="a-bit-of-theory" class="section level2">
@@ -221,7 +221,7 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">lp</span><span class="op">)</span></code></pre></div>
 <pre><code>  Model name: errorlocate
                         age          income      .delta_age   .delta_income           
-  Minimize                0               0  1.412696126382  1.446379015804           
+  Minimize                0               0  1.156694416306  1.024578504498           
   r1                     -1               0               0               0  &lt;=    -18
   r2                      0              -1               0               0  &lt;=      0
   age_ub                  1               0          -1e+07               0  &lt;=     12
@@ -235,7 +235,7 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <p>Validator rules <code>r1</code> and <code>r2</code> are encoded in two lines of the model. The values of the current record are encoded as soft contraints in <code>age_ub</code>, <code>age_lb</code>, <code>income_lb</code> and <code>income_ub</code>. These constraints try to fix the values of <code>age</code> at 12 and <code>income</code> at 2000, but can be violated, setting <code>.delta_age</code> or <code>.delta_income</code> to 1.</p>
 <p>For large problems the lp problem can be written to disk for inspection</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">lpSolveAPI</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lpSolveAPI/man/write.lp.html">write.lp</a></span><span class="op">(</span><span class="va">lp</span>, <span class="st">"my_problem.lp"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">mip</span><span class="op">$</span><span class="fu">write_lp</span><span class="op">(</span><span class="st">"my_problem.lp"</span><span class="op">)</span></code></pre></div>
 <p>Once we execute the mip project, the lp solver is executed on the problem:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">res</span> <span class="op">&lt;-</span> <span class="va">mip</span><span class="op">$</span><span class="fu">execute</span><span class="op">(</span><span class="op">)</span></code></pre></div>
@@ -268,7 +268,7 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <span class="va">res</span><span class="op">$</span><span class="va">lp</span></code></pre></div>
 <pre><code>  Model name: errorlocate
                         age          income      .delta_age   .delta_income           
-  Minimize                0               0  1.412696126382  1.446379015804           
+  Minimize                0               0  1.156694416306  1.024578504498           
   age_ub                  1               0          -1e+07               0  &lt;=     12
   income_ub               0               1               0          -1e+07  &lt;=   2000
   income_lb               0              -1               0          -1e+07  &lt;=  -2000
@@ -298,7 +298,7 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <span class="va">mip</span><span class="op">$</span><span class="fu">to_lp</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>  Model name: errorlocate
                   working:?      working:job  working:retired   .delta_working      
-  Minimize                0                0                0   1.411685011582      
+  Minimize                0                0                0   1.506722018588      
   r1                      0                1                1                0  =  1
   working                 1                0                0                1  =  1
   Kind                  SOS              SOS              SOS              Std      
@@ -332,7 +332,7 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <span class="va">mip</span><span class="op">$</span><span class="fu">to_lp</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>  Model name: errorlocate
                      adult           voted    .delta_adult    .delta_voted       
-  Minimize               0               0  1.206338324468  1.156626451994       
+  Minimize               0               0  1.491114492178  1.346091304556       
   r1                    -1               1               0               0  &lt;=  0
   voted                  0               1               0               1   =  1
   adult                 -1               0               1               0   =  0
@@ -393,7 +393,7 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <code class="sourceCode R"><span class="va">mip</span><span class="op">$</span><span class="fu">to_lp</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>  Model name: errorlocate
                         age          income      .delta_age   .delta_income        r1._lin1        r1._lin2           
-  Minimize                0               0   1.43906012259  1.220883442088               0               0           
+  Minimize                0               0  1.090667807264  1.423664537956               0               0           
   r1                      0               0               0               0               1               1  &lt;=      1
   r1._lin1                0               1               0               0          -1e+07               0  &lt;=      0
   r1._lin2               -1               0               0               0               0          -1e+07  &lt;=    -16
@@ -408,9 +408,9 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mip</span><span class="op">$</span><span class="fu">execute</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">values</span>
 <span class="co">#&gt;           age        income    .delta_age .delta_income      r1._lin1 </span>
-<span class="co">#&gt;            12             0             0             1             0 </span>
+<span class="co">#&gt;            16          2000             1             0             1 </span>
 <span class="co">#&gt;      r1._lin2 </span>
-<span class="co">#&gt;             1</span></code></pre></div>
+<span class="co">#&gt;             0</span></code></pre></div>
 </div>
 <div id="alltogether" class="section level3">
 <h3 class="hasAnchor">
