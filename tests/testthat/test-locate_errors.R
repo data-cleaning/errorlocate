@@ -225,6 +225,17 @@ describe("locate_errors", {
     el <- locate_errors(d, rules)
     expect_equal(el$errors[1,], c(x=TRUE, y = NA, z = FALSE))
   })
+
+  it ("handles inf weights", {
+    d <- data.frame(x = 6, y = 6, z = 5)
+    rules <- validator( x + y == z, x >= 0, y >= 0)
+
+    set.seed(1)
+    weight <- c(x = 1, y = 1, z = Inf)
+    el <- locate_errors(d, rules, weight = weight)
+    expect_equal(el$errors[1,], c(x=TRUE, y = TRUE, z = FALSE))
+
+  })
 })
 
 

@@ -63,4 +63,18 @@ describe("MipRules",{
     expect_warning(mr <- miprules(rules), "Ignoring non linear rules")
     #expect_equivalent(mr$._ignored$exprs(), rules[2:3]$exprs())
   })
+
+  it ("handles inf weights", {
+    d <- data.frame(x = 6, y = 6, z = 5)
+    rules <- validator( x + y == z, x >= 0, y >= 0)
+
+    set.seed(1)
+    weight <- c(x = 1, y = 1, z = Inf)
+    mip <- inspect_mip(d, rules, weight)
+    mip$to_lp()
+    s <- mip$execute()
+    # z has been removed from the problem (presolve)
+    expect_equal(s$errors, c(x = TRUE, y= TRUE))
+  })
+
 })
