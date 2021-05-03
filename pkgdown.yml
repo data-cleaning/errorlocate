@@ -3,5 +3,6 @@ pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   inspect_mip: inspect_mip.html
-last_built: 2021-05-03T10:40Z
+  introduction: introduction.html
+last_built: 2021-05-03T12:56Z
 
