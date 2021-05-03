@@ -23,7 +23,7 @@
 #' The `errorlocate` package translates the validation and error localization problem into
 #' a mixed integer problem and uses a mip solver to find a solution.
 #' @name errorlocate-package
-#' @import methods validate parallel
+#' @import methods validate
 #' @importFrom stats runif setNames
 #' @docType package
 #' @references
