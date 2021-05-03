@@ -6,7 +6,6 @@ Authors@R: c(person("Edwin", "de Jonge", email = "edwindjonge@gmail.com", role =
              person("Mark", "van der Loo", email = "mark.vanderloo@gmail.com", role = c("aut")))
 Description: Errors in data can be located and removed using validation rules from package 'validate'.
 License: GPL-3
-LazyData: TRUE
 URL: https://github.com/data-cleaning/errorlocate
 BugReports: https://github.com/data-cleaning/errorlocate/issues
 Depends:

@@ -1,0 +1,158 @@
+---
+title: "Find errors in data"
+output: 
+  rmarkdown::html_vignette: 
+    df_print: kable
+vignette: >
+  %\VignetteIndexEntry{Find errors in data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+options(Ncpus = 1)
+```
+
+
+## Intro
+
+Errorlocate uses validation rules from package `validate` to locate faulty
+values in observations (or in database slang: erronenous _fields_ in _records_).
+
+It follows this simple recipe (Felligi-Holt):
+
+- Check if a record is valid (using supplied validation rules)
+- If not valid then adjust the minimum number of values to make it valid.
+
+`errorlocate` does this by translating this problem into a mixed integer 
+problem (see other vignettes) and solving this mathematical problem.
+
+
+## Methods
+
+`errorlocate` has two main functions to be used:
+
+- `locate_errors` for detecting errors
+- `replace_errors` for replacing faulty values with `NA`
+
+```{r setup}
+library(validate)
+library(errorlocate)
+```
+
+Let's start with a simple example:
+
+We have a rule dat age cannot be negative:
+```{r}
+rules <- validator(age > 0)
+```
+
+And we have the following data set
+```{r}
+"age, income
+ -10,    0  
+  15, 2000
+  25, 3000
+  NA, 1000
+" -> csv
+d <- read.csv(textConnection(csv), strip.white = TRUE)
+```
+
+```{r, echo = FALSE}
+d
+```
+
+
+```{r}
+le <- locate_errors(d, rules)
+summary(le)
+```
+
+`summary(le)` gives an overview of the errors found in this data set.
+The complete error listing can be found with:
+
+```{r}
+le$errors
+```
+
+Which says that record 1 has a faulty value for age.
+
+
+Suppose we expand our rules
+
+```{r}
+rules <- validator( r1 = age > 0
+                  , r2 = if (income > 0) age > 16
+                  )
+```
+
+With `validate::confront` we can see that rule `r2` is violated (record 2).
+
+```{r}
+summary(confront(d, rules))
+```
+
+
+What errors will be found by `locate_errors`?
+
+```{r}
+set.seed(1)
+le <- locate_errors(d, rules)
+le$errors
+```
+
+It now detects that `age` in observation 2 is also faulty, since it 
+violates the second rule. Note that we use `set.seed`.
+This is needed because in this example, either `age` or `income` can 
+be considered faulty. `set.seed` assures that the procedure is 
+reproducible.
+
+With `replace_errors` we can remove the errors (which still need to be imputed).
+
+```{r}
+d_fixed <- replace_errors(d, le)
+summary(confront(d_fixed, rules))
+```
+In which `replace_errors` set all faulty values to `NA`. 
+
+```{r}
+d_fixed
+```
+
+### Weights
+
+`locate_errors` allows for supplying weigths for the variables. 
+It is common that the quality of the observed variables differs.
+When we have more trust in `age` we can give it more weight so it choose
+income when it has to decide between the two (record 2):
+
+```{r}
+set.seed(1) # good practice, although not needed in this example
+weight <- c(age = 2, income = 1) 
+le <- locate_errors(d, rules, weight)
+le$errors
+```
+
+For weights there are three different options:
+
+- not specifying: all variables will have weight 1
+- named vector: all records will have same set of weights
+- named matrix, same dimension as the data: specify weights per record.
+
+### Performance / Parallelisation
+
+`locate_errors` solves a mixed integer problem. When the number of interactions between validation rules is large, finding an optimal
+solution can be become computationally intensive. Both `locate_errors`
+as well as `replace_errors` have a parallization option: `Ncpus` making
+use of multiple processors. The `$duration` (s) property of each solution 
+indicates the time spent to find a solution for each record. This can 
+be restricted using the argument `timeout` (s).
+
+```{r}
+# duration is in seconds. 
+le$duration
+```
