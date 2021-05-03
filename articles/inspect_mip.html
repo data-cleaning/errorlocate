@@ -148,7 +148,10 @@ C_i^j(\mathbf{x}) = \left\{
 <code class="sourceCode R"><span class="va">rules</span> <span class="op">&lt;-</span> <span class="fu">validator</span><span class="op">(</span>example_1 <span class="op">=</span> <span class="kw">if</span> <span class="op">(</span><span class="va">income</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="va">age</span> <span class="op">&gt;=</span> <span class="fl">16</span><span class="op">)</span>
 <span class="va">rules</span><span class="op">$</span><span class="fu">exprs</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; $example_1</span>
-<span class="co">#&gt; !(income &gt; 0) | (age &gt;= 16)</span></code></pre></div>
+<span class="co">#&gt; !(income &gt; 0) | (age &gt;= 16)</span>
+<span class="co">#&gt; attr(,"reference")</span>
+<span class="co">#&gt; example_1 </span>
+<span class="co">#&gt;         1</span></code></pre></div>
 <p>So the rule <code>if (income &gt; 0) age &gt;= 16</code> can be written as (<code>income &lt;= 0</code> OR <code>age &gt;=16</code>)</p>
 </div>
 <div id="example-2" class="section level3">
@@ -158,7 +161,10 @@ C_i^j(\mathbf{x}) = \left\{
 <code class="sourceCode R"><span class="va">rules</span> <span class="op">&lt;-</span> <span class="fu">validator</span><span class="op">(</span>example_2 <span class="op">=</span> <span class="kw">if</span> <span class="op">(</span><span class="va">has_house</span> <span class="op">==</span> <span class="st">"yes"</span><span class="op">)</span> <span class="va">income</span> <span class="op">&gt;=</span> <span class="fl">1000</span><span class="op">)</span>
 <span class="va">rules</span><span class="op">$</span><span class="fu">exprs</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; $example_2</span>
-<span class="co">#&gt; !(has_house == "yes") | (income &gt;= 1000)</span></code></pre></div>
+<span class="co">#&gt; !(has_house == "yes") | (income &gt;= 1000)</span>
+<span class="co">#&gt; attr(,"reference")</span>
+<span class="co">#&gt; example_2 </span>
+<span class="co">#&gt;         1</span></code></pre></div>
 <p>So the rule <code>if (has_house == "yes") income &gt;= 1000)</code> can be written as (<code>has_house != "yes"</code> OR <code>age &gt;=1000</code>)</p>
 </div>
 </div>
@@ -231,7 +237,7 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">lp</span><span class="op">)</span></code></pre></div>
 <pre><code>  Model name: errorlocate
                         age          income      .delta_age   .delta_income           
-  Minimize                0               0  1.059400107246  1.100922840764           
+  Minimize                0               0   1.19420206768  1.173134604236           
   r1                     -1               0               0               0  &lt;=    -18
   r2                      0              -1               0               0  &lt;=      0
   age_ub                  1               0          -1e+07               0  &lt;=     12
@@ -278,7 +284,7 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <span class="va">res</span><span class="op">$</span><span class="va">lp</span></code></pre></div>
 <pre><code>  Model name: errorlocate
                         age          income      .delta_age   .delta_income           
-  Minimize                0               0  1.059400107246  1.100922840764           
+  Minimize                0               0   1.19420206768  1.173134604236           
   age_ub                  1               0          -1e+07               0  &lt;=     12
   income_ub               0               1               0          -1e+07  &lt;=   2000
   income_lb               0              -1               0          -1e+07  &lt;=  -2000
@@ -308,7 +314,7 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <span class="va">mip</span><span class="op">$</span><span class="fu">to_lp</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>  Model name: errorlocate
                   working:?      working:job  working:retired   .delta_working      
-  Minimize                0                0                0   1.333625780418      
+  Minimize                0                0                0   1.089141918114      
   r1                      0                1                1                0  =  1
   working                 1                0                0                1  =  1
   Kind                  SOS              SOS              SOS              Std      
@@ -342,7 +348,7 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <span class="va">mip</span><span class="op">$</span><span class="fu">to_lp</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>  Model name: errorlocate
                      adult           voted    .delta_adult    .delta_voted       
-  Minimize               0               0  1.292195791728  1.123051951756       
+  Minimize               0               0   1.26345918572  1.002846995252       
   r1                    -1               1               0               0  &lt;=  0
   voted                  0               1               0               1   =  1
   adult                 -1               0               1               0   =  0
@@ -403,7 +409,7 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <code class="sourceCode R"><span class="va">mip</span><span class="op">$</span><span class="fu">to_lp</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>  Model name: errorlocate
                         age          income      .delta_age   .delta_income        r1._lin1        r1._lin2           
-  Minimize                0               0  1.354270565906  1.171550266444               0               0           
+  Minimize                0               0  1.043397487956  1.355117542786               0               0           
   r1                      0               0               0               0               1               1  &lt;=      1
   r1._lin1                0               1               0               0          -1e+07               0  &lt;=      0
   r1._lin2               -1               0               0               0               0          -1e+07  &lt;=    -16
@@ -418,9 +424,9 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mip</span><span class="op">$</span><span class="fu">execute</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">values</span>
 <span class="co">#&gt;           age        income    .delta_age .delta_income      r1._lin1 </span>
-<span class="co">#&gt;            12             0             0             1             0 </span>
+<span class="co">#&gt;            16          2000             1             0             1 </span>
 <span class="co">#&gt;      r1._lin2 </span>
-<span class="co">#&gt;             1</span></code></pre></div>
+<span class="co">#&gt;             0</span></code></pre></div>
 </div>
 <div id="alltogether" class="section level3">
 <h3 class="hasAnchor">
@@ -437,7 +443,7 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <span class="va">mip</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/inspect_mip.html">inspect_mip</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">rules</span><span class="op">)</span>
 <span class="va">mip</span><span class="op">$</span><span class="fu">execute</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">errors</span>
 <span class="co">#&gt; working     age </span>
-<span class="co">#&gt;    TRUE   FALSE</span></code></pre></div>
+<span class="co">#&gt;   FALSE    TRUE</span></code></pre></div>
 </div>
 <div id="weights" class="section level3">
 <h3 class="hasAnchor">

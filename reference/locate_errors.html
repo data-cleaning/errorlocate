@@ -219,6 +219,8 @@ This solver has many options:  <a href='https://rdrr.io/pkg/lpSolveAPI/man/lp.co
 options to be used are:</p><ul>
 <li><p><code>timeout</code>: restricts the time the solver spends on a record (seconds)</p></li>
 <li><p><code>break.at.value</code>: set this to minimum weight + 1 to improve speed.</p></li>
+<li><p><code>presolve</code>: default for errorlocate is "rows". Set to "none" when you have
+solutions where all variables are deemed wrong.</p></li>
 </ul>
 
 <p><code>locate_errors</code> can be run on multiple cores using R package <code>parallel</code>.</p><ul>
