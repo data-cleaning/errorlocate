@@ -26,16 +26,13 @@ translate_mip_lp <- function( rules
   lpSolveAPI::name.lp(lps, "errorlocate")
   # TODO improve!
   lpSolveAPI::lp.control( lps,
-                          presolve = c(
-                              "rows"
-                            , "cols"
-                            #, "probefix"
-                          ),
+                          presolve="rows",
                           epsint = 1e-15,
                           epspivot = 1e-15,
-                          epsd = 1e-12,
-                          ...
+                          epsd = 1e-12
                         )
+  # overwrite options
+  lpSolveAPI::lp.control( lps, ...)
 
   dimnames(lps) <- dimnames(A)
 

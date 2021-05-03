@@ -71,6 +71,8 @@ options to be used are:
 \itemize{
 \item \code{timeout}: restricts the time the solver spends on a record (seconds)
 \item \code{break.at.value}: set this to minimum weight + 1 to improve speed.
+\item \code{presolve}: default for errorlocate is "rows". Set to "none" when you have
+solutions where all variables are deemed wrong.
 }
 
 \code{locate_errors} can be run on multiple cores using R package \code{parallel}.

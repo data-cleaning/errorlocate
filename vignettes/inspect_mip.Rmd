@@ -218,9 +218,11 @@ res$errors
 ```{r}
 res$values
 ```
-Note that the solver has found that setting `age` from 12 to 18 gives a valid solution. `.delta_age = 1` indicates that `age` contained an error.
+Note that the solver has found that setting `age` from 12 to 18 gives a valid 
+solution. `.delta_age = 1` indicates that `age` contained an error.
 
-The result object `res` also contains an `lp` object after optimization. This object can be further investigated using `lpSolveAPI` functions.
+The result object `res` also contains an `lp` object after optimization. This 
+object can be further investigated using `lpSolveAPI` functions.
 
 ```{r mip2, results="hide"}
 # lp problem after solving
@@ -230,11 +232,16 @@ res$lp
 ```{r, ref.label="mip2", comment=" ", echo=FALSE}
 ```
 
-Note that the lp problem has been simplified. For example the single variable constraints,the lp problem/object after solving shows that the solver has optimized some of the rules: it has moved rule `r1` and `r2` into the `Lower boundary` conditions. It also removed `age_lb` because that was superfluous with respect to the boundary conditions.
+Note that the lp problem has been simplified. For example the single 
+variable constraints,the lp problem/object after solving shows that the solver 
+has optimized some of the rules: it has moved rule `r1` and `r2` into the 
+`Lower boundary` conditions. It also removed `age_lb` because that was 
+superfluous with respect to the boundary conditions.
 
 ### Categorical rule
 
-In categorical rules, each category is coded in a separate column/mip variable: e.g. if we have a `working` variable, with two categories ("job", "retired"), the mip problem is encoded as follows:
+In categorical rules, each category is coded in a separate column/mip variable: 
+e.g. if we have a `working` variable, with two categories ("job", "retired"), the mip problem is encoded as follows:
 
 ```{r}
 rules <- validator( r1 = working %in% c("job","retired")                  )

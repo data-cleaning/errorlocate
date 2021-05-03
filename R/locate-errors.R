@@ -11,6 +11,8 @@
 #'
 #' - `timeout`: restricts the time the solver spends on a record (seconds)
 #' - `break.at.value`: set this to minimum weight + 1 to improve speed.
+#' - `presolve`: default for errorlocate is "rows". Set to "none" when you have
+#' solutions where all variables are deemed wrong.
 #'
 #' `locate_errors` can be run on multiple cores using R package `parallel`.
 #'

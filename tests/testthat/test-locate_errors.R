@@ -236,6 +236,34 @@ describe("locate_errors", {
     expect_equal(el$errors[1,], c(x=TRUE, y = TRUE, z = FALSE))
 
   })
+
+  it ("handles inf weights", {
+    d <- data.frame(x = 6, y = 6, z = 5)
+    rules <- validator( x + y == z, x >= 0, y >= 0)
+
+    set.seed(1)
+    weight <- c(x = 1, y = 1, z = Inf)
+    el <- locate_errors(d, rules, weight = weight)
+    expect_equal(el$errors[1,], c(x=TRUE, y = TRUE, z = FALSE))
+
+  })
+
+  it ("handles issue 34 (non aggressively)",{
+    d <- data.frame(y = 60, yA = 5, yB = 5, yC = 5, yD = 45, yE = 0)
+
+    rules <- validator(60 == y,
+                        5 == yA,
+                        5 == yB,
+                        5 == yC,
+                        25 == yD,
+                        20 == yE,
+                        y == yA + yB + yC + yD + yE)
+    set.seed(1)
+    le <- locate_errors(d, rules)
+    expect_equal( le$errors[1,]
+                  , c(y=FALSE, yA=FALSE, yB=FALSE, yC=FALSE, yD=TRUE, yE=TRUE)
+    )
+  })
 })
 
 
