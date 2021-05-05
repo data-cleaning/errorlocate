@@ -6,8 +6,8 @@ status](https://github.com/data-cleaning/errorlocate/workflows/R-CMD-check/badge
 [![CRAN](http://www.r-pkg.org/badges/version/errorlocate)](https://CRAN.R-project.org/package=errorlocate)
 [![Downloads](http://cranlogs.r-pkg.org/badges/errorlocate)](http://www.r-pkg.org/pkg/errorlocate)
 [![status](https://tinyverse.netlify.com/badge/errorlocate)](https://CRAN.R-project.org/package=errorlocate)
-[![Coverage
-Status](https://coveralls.io/repos/data-cleaning/errorlocate/badge.svg?branch=master&service=github)](https://coveralls.io/github/data-cleaning/errorlocate?branch=master)
+[![Codecov test
+coverage](https://codecov.io/gh/data-cleaning/errorlocate/branch/master/graph/badge.svg)](https://codecov.io/gh/data-cleaning/errorlocate?branch=master)
 [![Mentioned in Awesome Official
 Statistics](https://awesome.re/mentioned-badge.svg)](http://www.awesomeofficialstatistics.org)
 
@@ -85,7 +85,7 @@ print(data_no_error)
 er <- errors_removed(data_no_error)
 
 print(er)
-#> call:  locate_errors(data, x, ref, ...) 
+#> call:  locate_errors(data, x, ref, ..., cl = cl) 
 #> located  1  error(s).
 #> located  0  missing value(s).
 #> Use 'summary', 'values', '$errors' or '$weight', to explore and retrieve the errors.
