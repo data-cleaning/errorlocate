@@ -1,10 +1,12 @@
 Package: errorlocate
 Type: Package
 Title: Locate Errors with Validation Rules
-Version: 0.9.9
+Version: 0.9.9.9000
 Authors@R: c(person("Edwin", "de Jonge", email = "edwindjonge@gmail.com", role = c("aut", "cre"), comment=c(ORCID="0000-0002-6580-4718")),
              person("Mark", "van der Loo", email = "mark.vanderloo@gmail.com", role = c("aut")))
-Description: Errors in data can be located and removed using validation rules from package 'validate'.
+Description: Errors in data can be located and removed using validation rules from package 
+   'validate'. See also Van der Loo and De Jonge (2018) <doi:10.1002/9781118897126>,
+   chapter 7.
 License: GPL-3
 URL: https://github.com/data-cleaning/errorlocate
 BugReports: https://github.com/data-cleaning/errorlocate/issues
