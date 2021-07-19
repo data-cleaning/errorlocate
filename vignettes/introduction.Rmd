@@ -137,11 +137,13 @@ le <- locate_errors(d, rules, weight)
 le$errors
 ```
 
-For weights there are three different options:
+Weights can be specified in different ways: 
+(see also `expand_weights`):
 
 - not specifying: all variables will have weight 1
-- named vector: all records will have same set of weights
-- named matrix, same dimension as the data: specify weights per record.
+- named `vector`: all records will have same set of weights. Unspeficied columns
+will have weight 1.
+- named `matrix` or `data.frame`, same dimension as the data: specify weights per record.
 
 ### Performance / Parallelisation
 
