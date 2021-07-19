@@ -209,11 +209,11 @@
 <span class="co">#&gt; [2,] FALSE   TRUE</span>
 <span class="co">#&gt; [3,] FALSE  FALSE</span>
 <span class="co">#&gt; [4,]    NA  FALSE</span></code></pre></div>
-<p>For weights there are three different options:</p>
+<p>Weights can be specified in different ways: (see also <code>expand_weights</code>):</p>
 <ul>
 <li>not specifying: all variables will have weight 1</li>
-<li>named vector: all records will have same set of weights</li>
-<li>named matrix, same dimension as the data: specify weights per record.</li>
+<li>named <code>vector</code>: all records will have same set of weights. Unspeficied columns will have weight 1.</li>
+<li>named <code>matrix</code> or <code>data.frame</code>, same dimension as the data: specify weights per record.</li>
 </ul>
 </div>
 <div id="performance-parallelisation" class="section level3">
@@ -223,7 +223,7 @@
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># duration is in seconds. </span>
 <span class="va">le</span><span class="op">$</span><span class="va">duration</span>
-<span class="co">#&gt; [1] 0.002979994 0.002490997 0.000000000 0.002333164</span></code></pre></div>
+<span class="co">#&gt; [1] 0.002865076 0.002387047 0.000000000 0.002088070</span></code></pre></div>
 </div>
 </div>
   </div>
