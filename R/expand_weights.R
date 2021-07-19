@@ -20,6 +20,7 @@
 #' @param ... unused
 #' @return `matrix` or `data.frame` of same dimensions as `dat`
 #' @family error finding
+#' @example ./examples/expand_weights.R
 expand_weights <- function(dat, weight = NULL, as.data.frame = FALSE, ...){
   nr_rows <- nrow(dat)
   nr_cols <- ncol(dat)

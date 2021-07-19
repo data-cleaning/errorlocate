@@ -12,7 +12,7 @@ inspect_mip(data, x, weight, ...)
 \item{x}{validation rules or errorlocalizer object to be used for finding
 possible errors.}
 
-\item{weight}{\code{numeric} optional weight vector to be used in the error localization.}
+\item{weight}{\code{numeric} optional weight specification to be used in the error localization (see \code{\link[=expand_weights]{expand_weights()}})}
 
 \item{...}{optional parameters that are passed to \code{\link[lpSolveAPI:lp.control]{lpSolveAPI::lp.control()}} (see details)}
 }
