@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Locate errors in data — locate_errors • errorlocate</title>
+<title>Find errors in data — locate_errors • errorlocate</title>
 
 
 <!-- jquery -->
@@ -39,10 +39,9 @@
 
 
 
-<meta property="og:title" content="Locate errors in data — locate_errors" />
-<meta property="og:description" content="Locate erroneuous fields in rows of data using validation rules or a specific
-errorlocalizer object. This method returns found errors, according to the specified
-method x.
+<meta property="og:title" content="Find errors in data — locate_errors" />
+<meta property="og:description" content="Find out which fields in a data.frame are &quot;faulty&quot;using validation rules
+This method returns found errors, according to the specified method x.
 Use method replace_errors(), to automatically remove these errors." />
 
 
@@ -129,15 +128,14 @@ Use method replace_errors(), to automatically remove these errors." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Locate errors in data</h1>
+    <h1>Find errors in data</h1>
     <small class="dont-index">Source: <a href='https://github.com/data-cleaning/errorlocate/blob/master/R/locate-errors.R'><code>R/locate-errors.R</code></a></small>
     <div class="hidden name"><code>locate_errors.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Locate erroneuous fields in rows of data using validation rules or a specific
-errorlocalizer object. This method returns found errors, according to the specified
-method <code>x</code>.
+    <p>Find out which fields in a data.frame are "faulty"using validation rules
+This method returns found errors, according to the specified method <code>x</code>.
 Use method <code><a href='replace_errors.html'>replace_errors()</a></code>, to automatically remove these errors.</p>
     </div>
 
@@ -217,7 +215,8 @@ possible errors.</p></td>
     <p><code><a href='errorlocation-class.html'>errorlocation-class()</a></code> object describing the errors found.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>locate_errors</code> uses lpSolveAPI to formulate and solve a mixed integer problem.
+    <p><code>locate_errors</code> uses lpSolveAPI to formulate and solves a mixed integer problem.
+For details see the vignettes.
 This solver has many options:  <a href='https://rdrr.io/pkg/lpSolveAPI/man/lp.control.options.html'>lpSolveAPI::lp.control.options</a>. Noteworthy
 options to be used are:</p><ul>
 <li><p><code>timeout</code>: restricts the time the solver spends on a record (seconds)</p></li>
