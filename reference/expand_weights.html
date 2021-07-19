@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • errorlocate</title>
+<title>Create a weight matrix — expand_weights • errorlocate</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,9 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Create a weight matrix — expand_weights" />
+<meta property="og:description" content="Expands a weight specicification (see details) into a weight matrix used
+by locate_errors and replace_errors." />
 
 
 
@@ -58,7 +60,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -123,126 +125,66 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Create a weight matrix</h1>
+    <small class="dont-index">Source: <a href='https://github.com/data-cleaning/errorlocate/blob/master/R/expand_weights.R'><code>R/expand_weights.R</code></a></small>
+    <div class="hidden name"><code>expand_weights.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>Expands a weight specicification (see details) into a weight matrix used
+by <code>locate_errors</code> and <code>replace_errors</code>.</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'>expand_weights</span><span class='op'>(</span><span class='va'>dat</span>, weight <span class='op'>=</span> <span class='cn'>NULL</span>, as.data.frame <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="ErrorLocalizer-class.html">ErrorLocalizer-class</a></code> </p>
-        </td>
-        <td><p>Base class for class locate errors based on rules and data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="FHLocalizer-class.html">FHLocalizer-class</a></code> </p>
-        </td>
-        <td><p>Feligi-Holt Errorlocalizer</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="MipRules-class.html">MipRules-class</a></code> </p>
-        </td>
-        <td><p>Create a mip object from a validator object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="add_noise.html">add_noise()</a></code> </p>
-        </td>
-        <td><p>Add (a small amount of) noise</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="errorlocate-package.html">errorlocate-package</a></code> </p>
-        </td>
-        <td><p>Find errors in data given a set of validation rules.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="errorlocation.html">errorlocation-class</a></code> </p>
-        </td>
-        <td><p>Error location object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="errors_removed.html">errors_removed()</a></code> </p>
-        </td>
-        <td><p>Get location of removed errors from a 'cleaned' data set</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="expand_weights.html">expand_weights()</a></code> </p>
-        </td>
-        <td><p>Create a weight matrix</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="inspect_mip.html">inspect_mip()</a></code> </p>
-        </td>
-        <td><p>inspect the mip problem formulation for one record</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="is_categorical.html">is_categorical()</a></code> </p>
-        </td>
-        <td><p>Check if rules are categorical</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="is_conditional.html">is_conditional()</a></code> </p>
-        </td>
-        <td><p>Check if rules are conditional rules</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="is_linear.html">is_linear()</a></code> </p>
-        </td>
-        <td><p>Check which rules are linear rules.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="locate_errors.html">locate_errors()</a></code> </p>
-        </td>
-        <td><p>Locate errors in data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="replace_errors.html">replace_errors()</a></code> </p>
-        </td>
-        <td><p>Replace erroneous fields with NA or a suggested value</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="translate_mip_lp.html">translate_mip_lp()</a></code> </p>
-        </td>
-        <td><p>translate linear rules into an lp problem</p></td>
-      </tr>
-    </tbody>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>dat</th>
+      <td><p><code>data.frame</code> the data to be checked</p></td>
+    </tr>
+    <tr>
+      <th>weight</th>
+      <td><p>weight specification, see details.</p></td>
+    </tr>
+    <tr>
+      <th>as.data.frame</th>
+      <td><p>if <code>TRUE</code> a <code>data.frame</code> will be returned (details)</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>unused</p></td>
+    </tr>
     </table>
-  </div>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p><code>matrix</code> or <code>data.frame</code> of same dimensions as <code>dat</code></p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>If weight fine tuning is needed,
+a possible scenario is to generate a weight <code>data.frame</code> using <code>expand_weights</code> and
+adjust it before executing <code><a href='locate_errors.html'>locate_errors()</a></code> or <code><a href='replace_errors.html'>replace_errors()</a></code>.
+The following specifications for <code>weight</code> are supported:</p><ul>
+<li><p><code>NULL</code>: generates a weight matrix with <code>1</code>'s</p></li>
+<li><p>a named <code>numeric</code>, unmentioned columns will have weight 1</p></li>
+<li><p>a unnamed <code>numeric</code> with a length equal to <code><a href='https://rdrr.io/r/base/nrow.html'>ncol(dat)</a></code></p></li>
+<li><p>a <code>data.frame</code> with same number of rows as <code>dat</code></p></li>
+<li><p>a <code>matrix</code> with same number of rows as <code>dat</code></p></li>
+</ul>
+
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other error finding: 
+<code><a href='errorlocation-class.html'>errorlocation-class</a></code>,
+<code><a href='errors_removed.html'>errors_removed</a>()</code>,
+<code><a href='locate_errors.html'>locate_errors</a>()</code>,
+<code><a href='replace_errors.html'>replace_errors</a>()</code></p></div>
+
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>

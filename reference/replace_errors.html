@@ -236,6 +236,7 @@ imputation method. Suggested values from the error localization method may intro
 <p>Other error finding: 
 <code><a href='errorlocation-class.html'>errorlocation-class</a></code>,
 <code><a href='errors_removed.html'>errors_removed</a>()</code>,
+<code><a href='expand_weights.html'>expand_weights</a>()</code>,
 <code><a href='locate_errors.html'>locate_errors</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -253,7 +254,7 @@ imputation method. Suggested values from the error localization method may intro
 </div><div class='output co'>#&gt;   profit cost turnover
 #&gt; 1     NA  125      200</div><div class='input'>
 <span class='fu'><a href='errors_removed.html'>errors_removed</a></span><span class='op'>(</span><span class='va'>data_no_error</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; call:  locate_errors(data, x, ref, ..., cl = cl) 
+</div><div class='output co'>#&gt; call:  locate_errors(data, x, ref, ..., cl = cl, Ncpus = Ncpus) 
 #&gt; located  1  error(s).
 #&gt; located  0  missing value(s).
 #&gt; Use 'summary', 'values', '$errors' or '$weight', to explore and retrieve the errors.</div><div class='input'>
