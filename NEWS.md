@@ -1,3 +1,8 @@
+# errorlocate 0.9.10
+
+* Added `expand_weights`, which helps in specifying detailed weights for records
+
+* Removed a bug: `Ncpus` was ignored in `replace_errors`
 
 # errorlocate 0.9.9
 
