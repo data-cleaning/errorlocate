@@ -11,7 +11,7 @@ expand_weights(dat, weight = NULL, as.data.frame = FALSE, ...)
 
 \item{weight}{weight specification, see details.}
 
-\item{as.data.frame}{if \code{TRUE} a \code{data.frame} will be returned (details)}
+\item{as.data.frame}{if \code{TRUE} a \code{data.frame} will be returned.}
 
 \item{...}{unused}
 }
@@ -19,7 +19,7 @@ expand_weights(dat, weight = NULL, as.data.frame = FALSE, ...)
 \code{matrix} or \code{data.frame} of same dimensions as \code{dat}
 }
 \description{
-Expands a weight specicification (see details) into a weight matrix used
+Expands a weight specification into a weight matrix to be used
 by \code{locate_errors} and \code{replace_errors}.
 }
 \details{

@@ -4,7 +4,7 @@
 \alias{locate_errors}
 \alias{locate_errors,data.frame,validator-method}
 \alias{locate_errors,data.frame,ErrorLocalizer-method}
-\title{Locate errors in data}
+\title{Find errors in data}
 \usage{
 locate_errors(
   data,
@@ -59,13 +59,13 @@ possible errors.}
 \code{\link[=errorlocation-class]{errorlocation-class()}} object describing the errors found.
 }
 \description{
-Locate erroneuous fields in rows of data using validation rules or a specific
-errorlocalizer object. This method returns found errors, according to the specified
-method \code{x}.
+Find out which fields in a data.frame are "faulty"using validation rules
+This method returns found errors, according to the specified method \code{x}.
 Use method \code{\link[=replace_errors]{replace_errors()}}, to automatically remove these errors.
 }
 \details{
-\code{locate_errors} uses lpSolveAPI to formulate and solve a mixed integer problem.
+\code{locate_errors} uses lpSolveAPI to formulate and solves a mixed integer problem.
+For details see the vignettes.
 This solver has many options:  \link[lpSolveAPI:lp.control.options]{lpSolveAPI::lp.control.options}. Noteworthy
 options to be used are:
 \itemize{

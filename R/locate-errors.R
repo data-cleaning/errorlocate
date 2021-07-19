@@ -1,11 +1,11 @@
-#' Locate errors in data
+#' Find errors in data
 #'
-#' Locate erroneuous fields in rows of data using validation rules or a specific
-#' errorlocalizer object. This method returns found errors, according to the specified
-#' method `x`.
+#' Find out which fields in a data.frame are "faulty"using validation rules
+#' This method returns found errors, according to the specified method `x`.
 #' Use method [replace_errors()], to automatically remove these errors.
 #'
-#' `locate_errors` uses lpSolveAPI to formulate and solve a mixed integer problem.
+#' `locate_errors` uses lpSolveAPI to formulate and solves a mixed integer problem.
+#' For details see the vignettes.
 #' This solver has many options:  [lpSolveAPI::lp.control.options]. Noteworthy
 #' options to be used are:
 #'

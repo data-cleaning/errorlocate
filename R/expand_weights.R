@@ -1,6 +1,6 @@
 #' Create a weight matrix
 #'
-#' Expands a weight specicification (see details) into a weight matrix used
+#' Expands a weight specification into a weight matrix to be used
 #' by `locate_errors` and `replace_errors`.
 #'
 #' If weight fine tuning is needed,
@@ -16,7 +16,7 @@
 #' @export
 #' @param dat `data.frame` the data to be checked
 #' @param weight weight specification, see details.
-#' @param as.data.frame if `TRUE` a `data.frame` will be returned (details)
+#' @param as.data.frame if `TRUE` a `data.frame` will be returned.
 #' @param ... unused
 #' @return `matrix` or `data.frame` of same dimensions as `dat`
 #' @family error finding
