@@ -204,7 +204,7 @@ possible errors.</p></td>
     </tr>
     <tr>
       <th>weight</th>
-      <td><p><code>numeric</code> optional weight vector to be used in the error localization.</p></td>
+      <td><p><code>numeric</code> optional weight specification to be used in the error localization (see <code><a href='expand_weights.html'>expand_weights()</a></code>)</p></td>
     </tr>
     <tr>
       <th>ref</th>
@@ -248,7 +248,10 @@ on non-windows.</p></li>
                   , <span class='va'>cost</span> <span class='op'>&gt;=</span> <span class='fl'>0.6</span> <span class='op'>*</span> <span class='va'>turnover</span> <span class='co'># cost should be at least 60% of turnover</span>
                   , <span class='va'>turnover</span> <span class='op'>&gt;=</span> <span class='fl'>0</span> <span class='co'># can not be negative.</span>
                   <span class='op'>)</span>
-<span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>profit<span class='op'>=</span><span class='fl'>755</span>, cost<span class='op'>=</span><span class='fl'>125</span>, turnover<span class='op'>=</span><span class='fl'>200</span><span class='op'>)</span>
+<span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span> profit   <span class='op'>=</span> <span class='fl'>755</span>
+                  , cost     <span class='op'>=</span> <span class='fl'>125</span>
+                  , turnover <span class='op'>=</span> <span class='fl'>200</span>
+                  <span class='op'>)</span>
 <span class='va'>le</span> <span class='op'>&lt;-</span> <span class='fu'>locate_errors</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>rules</span><span class='op'>)</span>
 
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>le</span><span class='op'>)</span>
@@ -264,32 +267,55 @@ on non-windows.</p></li>
 #&gt; Errors per record:
 #&gt;   errors records
 #&gt; 1      1       1</div><div class='input'>
-<span class='va'>v_categorical</span> <span class='op'>&lt;-</span> <span class='fu'>validator</span><span class='op'>(</span> <span class='va'>A</span> <span class='op'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a1"</span>, <span class='st'>"a2"</span><span class='op'>)</span>
-                          , <span class='va'>B</span> <span class='op'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"b1"</span>, <span class='st'>"b2"</span><span class='op'>)</span>
-                          , <span class='kw'>if</span> <span class='op'>(</span><span class='va'>A</span> <span class='op'>==</span> <span class='st'>"a1"</span><span class='op'>)</span> <span class='va'>B</span> <span class='op'>==</span> <span class='st'>"b1"</span>
+<span class='va'>v_categorical</span> <span class='op'>&lt;-</span> <span class='fu'>validator</span><span class='op'>(</span> <span class='va'>branch</span> <span class='op'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"government"</span>, <span class='st'>"industry"</span><span class='op'>)</span>
+                          , <span class='va'>tax</span> <span class='op'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"none"</span>, <span class='st'>"VAT"</span><span class='op'>)</span>
+                          , <span class='kw'>if</span> <span class='op'>(</span><span class='va'>tax</span> <span class='op'>==</span> <span class='st'>"VAT"</span><span class='op'>)</span> <span class='va'>branch</span> <span class='op'>==</span> <span class='st'>"industry"</span>
 <span class='op'>)</span>
 
-<span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>A <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a1"</span>, <span class='st'>"a2"</span><span class='op'>)</span>, B <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"b2"</span>, <span class='st'>"b2"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span>text<span class='op'>=</span>
+<span class='st'>"   branch, tax
+government, VAT
+industry  , VAT
+"</span>, strip.white <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='fu'>locate_errors</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>v_categorical</span><span class='op'>)</span><span class='op'>$</span><span class='va'>errors</span>
-</div><div class='output co'>#&gt;          A     B
-#&gt; [1,] FALSE  TRUE
-#&gt; [2,] FALSE FALSE</div><div class='input'>
-<span class='va'>v_logical</span> <span class='op'>&lt;-</span> <span class='fu'>validator</span><span class='op'>(</span> <span class='va'>A</span> <span class='op'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>TRUE</span>, <span class='cn'>FALSE</span><span class='op'>)</span>
-                      , <span class='va'>B</span> <span class='op'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>TRUE</span>, <span class='cn'>FALSE</span><span class='op'>)</span>
-                      ,  <span class='kw'>if</span> <span class='op'>(</span><span class='va'>A</span> <span class='op'>==</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='va'>B</span> <span class='op'>==</span> <span class='cn'>TRUE</span>
+</div><div class='output co'>#&gt;      branch   tax
+#&gt; [1,]  FALSE  TRUE
+#&gt; [2,]  FALSE FALSE</div><div class='input'>
+<span class='va'>v_logical</span> <span class='op'>&lt;-</span> <span class='fu'>validator</span><span class='op'>(</span> <span class='va'>citizen</span> <span class='op'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>TRUE</span>, <span class='cn'>FALSE</span><span class='op'>)</span>
+                      , <span class='va'>voted</span> <span class='op'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>TRUE</span>, <span class='cn'>FALSE</span><span class='op'>)</span>
+                      ,  <span class='kw'>if</span> <span class='op'>(</span><span class='va'>voted</span> <span class='op'>==</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='va'>citizen</span> <span class='op'>==</span> <span class='cn'>TRUE</span>
                       <span class='op'>)</span>
 
-<span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>A <span class='op'>=</span> <span class='cn'>TRUE</span>, B <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>voted <span class='op'>=</span> <span class='cn'>TRUE</span>, citizen <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 <span class='fu'>locate_errors</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>v_logical</span>, weight<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span><span class='op'>$</span><span class='va'>errors</span>
-</div><div class='output co'>#&gt;          A    B
-#&gt; [1,] FALSE TRUE</div><div class='input'>
+</div><div class='output co'>#&gt;      voted citizen
+#&gt; [1,] FALSE    TRUE</div><div class='input'>
 <span class='co'># try a condinational rule</span>
-<span class='va'>v</span> <span class='op'>&lt;-</span> <span class='fu'>validator</span><span class='op'>(</span> <span class='va'>married</span> <span class='op'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>TRUE</span>, <span class='cn'>FALSE</span><span class='op'>)</span>, <span class='kw'>if</span> <span class='op'>(</span><span class='va'>married</span><span class='op'>==</span><span class='cn'>TRUE</span><span class='op'>)</span> <span class='va'>age</span> <span class='op'>&gt;=</span> <span class='fl'>17</span> <span class='op'>)</span>
+<span class='va'>v</span> <span class='op'>&lt;-</span> <span class='fu'>validator</span><span class='op'>(</span> <span class='va'>married</span> <span class='op'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>TRUE</span>, <span class='cn'>FALSE</span><span class='op'>)</span>
+              , <span class='kw'>if</span> <span class='op'>(</span><span class='va'>married</span><span class='op'>==</span><span class='cn'>TRUE</span><span class='op'>)</span> <span class='va'>age</span> <span class='op'>&gt;=</span> <span class='fl'>17</span>
+              <span class='op'>)</span>
 <span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span> married <span class='op'>=</span> <span class='cn'>TRUE</span>, age <span class='op'>=</span> <span class='fl'>16</span><span class='op'>)</span>
 <span class='fu'>locate_errors</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>v</span>, weight<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>married<span class='op'>=</span><span class='fl'>1</span>, age<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span><span class='op'>$</span><span class='va'>errors</span>
 </div><div class='output co'>#&gt;      married   age
 #&gt; [1,]    TRUE FALSE</div><div class='input'>
-</div></pre>
+
+<span class='co'># different weights per row</span>
+<span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span>text<span class='op'>=</span>
+<span class='st'>"married, age
+    TRUE,  16
+    TRUE,  14
+"</span>, strip.white <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+
+<span class='va'>weight</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span>text<span class='op'>=</span>
+<span class='st'>"married, age
+       1,   2
+       2,   1
+"</span>, strip.white <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+
+<span class='fu'>locate_errors</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>v</span>, weight <span class='op'>=</span> <span class='va'>weight</span><span class='op'>)</span><span class='op'>$</span><span class='va'>errors</span>
+</div><div class='output co'>#&gt;      married   age
+#&gt; [1,]    TRUE FALSE
+#&gt; [2,]   FALSE  TRUE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
