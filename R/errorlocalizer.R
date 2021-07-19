@@ -112,29 +112,7 @@ fh_localizer <-
           )
         }
 
-        if (length(weight) == 0){
-          weight <- matrix(1, nrow=nr_rows, ncol=nr_cols)
-          colnames(weight) <- names_cols
-        } else {
-          if (is.null(dim(weight))){
-            if (length(weight) == ncol(data)){
-              if (!is.null(names(weight))){
-                weight <- weight[names_cols]
-              }
-              # use recycling to fill a weight matrix and transpose...
-              weight <- t(matrix(weight, nrow=nr_cols, ncol=nr_rows))
-              colnames(weight) <- names_cols
-            }
-          }
-          stopifnot(dim(weight) == dim(data))
-          if (is.null(colnames(weight))){
-            colnames(weight) <- names_cols
-          } else {
-            weight <- weight[, names_cols, drop=FALSE]
-          }
-          stopifnot(names(weight) == names_cols)
-        }
-
+        weight <- expand_weights(data, weight, as.data.frame = FALSE)
         # derive log transformed data!
         # log_transform <- ._miprules$._log_transform
         # TODO deal with failures when log of negative values is taken...
@@ -267,6 +245,7 @@ fh_localizer <-
         solution[] <- TRUE
 
         # adapt <- t(res)
+        # TODO makes this a sparse matrix?
         adapt <- matrix( FALSE
                        , nrow = nr_rows
                        , ncol = nr_cols

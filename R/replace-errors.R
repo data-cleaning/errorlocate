@@ -56,7 +56,7 @@ setMethod('replace_errors', c("data.frame", "ErrorLocalizer")
                    , cl = NULL
                    , Ncpus = getOption("Ncpus", 1)
                    , value = c("NA", "suggestion")){
-  el <- locate_errors(data, x, ref, ..., cl = cl)
+  el <- locate_errors(data, x, ref, ..., cl = cl, Ncpus = Ncpus)
   replace_errors(data, el, ref, ..., cl = cl, Ncpus = Ncpus)
 })
 

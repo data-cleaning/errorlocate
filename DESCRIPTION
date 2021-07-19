@@ -32,6 +32,7 @@ Collate:
     'errorlocalizer.R'
     'errorlocate-package.r'
     'errorlocation.R'
+    'expand_weights.R'
     'expr_manip.R'
     'inspect_mip.R'
     'linear.R'

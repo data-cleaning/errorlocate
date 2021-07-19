@@ -111,6 +111,7 @@ replace_errors(data, error_locations)
 Other error finding: 
 \code{\link{errorlocation-class}},
 \code{\link{errors_removed}()},
+\code{\link{expand_weights}()},
 \code{\link{locate_errors}()}
 }
 \concept{error finding}

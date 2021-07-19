@@ -39,6 +39,7 @@ missing (\code{NA}) or valid (\code{FALSE})
 \seealso{
 Other error finding: 
 \code{\link{errors_removed}()},
+\code{\link{expand_weights}()},
 \code{\link{locate_errors}()},
 \code{\link{replace_errors}()}
 }

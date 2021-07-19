@@ -120,7 +120,6 @@ miprules <- setRefClass("MipRules",
         lpSolveAPI::write.lp(to_lp(), filename, ...)
      },
      execute = function(...){
-       # TODO see if this can be executed in parallel.
        lp <- translate_mip_lp(mip_rules(), objective, ...)
        #TODO set timer, duration etc.
        s <- solve(lp)

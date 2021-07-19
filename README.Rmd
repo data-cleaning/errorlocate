@@ -20,7 +20,6 @@ knitr::opts_chunk$set(
 [![Codecov test coverage](https://codecov.io/gh/data-cleaning/errorlocate/branch/master/graph/badge.svg)](https://codecov.io/gh/data-cleaning/errorlocate?branch=master)
 [![Mentioned in Awesome Official Statistics ](https://awesome.re/mentioned-badge.svg)](http://www.awesomeofficialstatistics.org)
 
-
 # Error localization
 
 Find errors in data given a set of validation rules.

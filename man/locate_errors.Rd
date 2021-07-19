@@ -122,6 +122,7 @@ locate_errors(data, v, weight=c(married=1, age=2))$errors
 Other error finding: 
 \code{\link{errorlocation-class}},
 \code{\link{errors_removed}()},
+\code{\link{expand_weights}()},
 \code{\link{replace_errors}()}
 }
 \concept{error finding}

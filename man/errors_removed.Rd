@@ -41,6 +41,7 @@ replace_errors(data, error_locations)
 \seealso{
 Other error finding: 
 \code{\link{errorlocation-class}},
+\code{\link{expand_weights}()},
 \code{\link{locate_errors}()},
 \code{\link{replace_errors}()}
 }
