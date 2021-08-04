@@ -240,7 +240,7 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">lp</span><span class="op">)</span></code></pre></div>
 <pre><code>  Model name: errorlocate
                         age          income      .delta_age   .delta_income           
-  Minimize                0               0  1.127128028544  1.455297203618           
+  Minimize                0               0  1.042835618486  1.034308576724           
   r1                     -1               0               0               0  &lt;=    -18
   r2                      0              -1               0               0  &lt;=      0
   age_ub                  1               0          -1e+07               0  &lt;=     12
@@ -287,7 +287,7 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <span class="va">res</span><span class="op">$</span><span class="va">lp</span></code></pre></div>
 <pre><code>  Model name: errorlocate
                         age          income      .delta_age   .delta_income           
-  Minimize                0               0  1.127128028544  1.455297203618           
+  Minimize                0               0  1.042835618486  1.034308576724           
   age_ub                  1               0          -1e+07               0  &lt;=     12
   income_ub               0               1               0          -1e+07  &lt;=   2000
   income_lb               0              -1               0          -1e+07  &lt;=  -2000
@@ -317,7 +317,7 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <span class="va">mip</span><span class="op">$</span><span class="fu">to_lp</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>  Model name: errorlocate
                   working:?      working:job  working:retired   .delta_working      
-  Minimize                0                0                0   1.467282298254      
+  Minimize                0                0                0    1.63572931895      
   r1                      0                1                1                0  =  1
   working                 1                0                0                1  =  1
   Kind                  SOS              SOS              SOS              Std      
@@ -351,7 +351,7 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <span class="va">mip</span><span class="op">$</span><span class="fu">to_lp</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>  Model name: errorlocate
                      adult           voted    .delta_adult    .delta_voted       
-  Minimize               0               0   1.10403006035  1.215017192648       
+  Minimize               0               0  1.407068750588   1.45103352191       
   r1                    -1               1               0               0  &lt;=  0
   voted                  0               1               0               1   =  1
   adult                 -1               0               1               0   =  0
@@ -412,7 +412,7 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <code class="sourceCode R"><span class="va">mip</span><span class="op">$</span><span class="fu">to_lp</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>  Model name: errorlocate
                         age          income      .delta_age   .delta_income        r1._lin1        r1._lin2           
-  Minimize                0               0  1.474582445574  1.180376943666               0               0           
+  Minimize                0               0  1.245513264206  1.172040772042               0               0           
   r1                      0               0               0               0               1               1  &lt;=      1
   r1._lin1                0               1               0               0          -1e+07               0  &lt;=      0
   r1._lin2               -1               0               0               0               0          -1e+07  &lt;=    -16
@@ -446,7 +446,7 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <span class="va">mip</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/inspect_mip.html">inspect_mip</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">rules</span><span class="op">)</span>
 <span class="va">mip</span><span class="op">$</span><span class="fu">execute</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">errors</span>
 <span class="co">#&gt; working     age </span>
-<span class="co">#&gt;   FALSE    TRUE</span></code></pre></div>
+<span class="co">#&gt;    TRUE   FALSE</span></code></pre></div>
 </div>
 <div id="weights" class="section level3">
 <h3 class="hasAnchor">
