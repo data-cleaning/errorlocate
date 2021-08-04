@@ -33,7 +33,7 @@ print.mip_rule <- function(x, ...){
   a <- paste0(x$a, "*", names(x$a), collapse= ' + ')
 
   # do some simplification
-  a <- gsub("\\b1\\*", "", a) # "1*" => ""
+  a <- gsub("(?<=[^\\d.]|^)1\\*", "", a, perl = T) # "1*" => ""
   a <- gsub("\\+ -", "- ", a) # "+ -" => "- "
 
   cat(x$rule, ": ", a, " ",x$op, " ", x$b, sep = "")
