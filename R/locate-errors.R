@@ -1,6 +1,6 @@
 #' Find errors in data
 #'
-#' Find out which fields in a data.frame are "faulty"using validation rules
+#' Find out which fields in a data.frame are "faulty" using validation rules
 #' This method returns found errors, according to the specified method `x`.
 #' Use method [replace_errors()], to automatically remove these errors.
 #'

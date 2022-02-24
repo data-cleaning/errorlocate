@@ -59,7 +59,7 @@ possible errors.}
 \code{\link[=errorlocation-class]{errorlocation-class()}} object describing the errors found.
 }
 \description{
-Find out which fields in a data.frame are "faulty"using validation rules
+Find out which fields in a data.frame are "faulty" using validation rules
 This method returns found errors, according to the specified method \code{x}.
 Use method \code{\link[=replace_errors]{replace_errors()}}, to automatically remove these errors.
 }
