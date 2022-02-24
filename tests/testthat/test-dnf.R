@@ -76,4 +76,25 @@ describe("as_dnf", {
     expect_equivalent(as.expression(dnf), expression(y > 0 | x >= 0 | z <= 0))
   })
 
+  it("works with & clause", {
+    dnf <- as_dnf(quote(a & b))
+    expect_equivalent(as.expression(dnf)[[1]], quote((a & b)))
+
+    dnf <- as_dnf(quote(c | (a & b)))
+    expect_equivalent(as.expression(dnf)[[1]], quote(c |(a&b)))
+  })
+
+  it("generates multiple dnfs with & clause", {
+    dnf <- as_dnf(quote(a & b))
+    expect_equivalent(as_dnfs(dnf), list(as_dnf(quote(a)), as_dnf(quote(b))))
+
+    dnf <- as_dnf(quote(c | (a & b)))
+    expect_equivalent( as_dnfs(dnf)
+                     , list( as_dnf(quote(c | a))
+                           , as_dnf(quote(c | b))
+                           )
+                     )
+  })
+
+
 })

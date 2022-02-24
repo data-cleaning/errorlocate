@@ -72,6 +72,7 @@ as_dnf <- function(expr, ...){
     cons <- NULL
   } else if (is_cat_(expr) || is_lin_(expr)){
     return(structure(list(expr), class="dnf"))
+  } else if (op_if %in% c("&", "&&")){
   } else {
     stop("Invalid expression")
   }
@@ -94,14 +95,21 @@ as_dnf <- function(expr, ...){
     cons <- consume(cons)
     op_or <- op_to_s(cons)
     while(op_or %in% c("|", "||")){
+      #TODO improve nested parsing
       clauses[[length(clauses) + 1]] <- consume(left(cons))
       cons <- consume(right(cons))
       op_or <- op_to_s(cons)
+    }
+    if (op_or %in% c("&", "&&")){
+      cons <- list(as_dnf(left(cons)), as_dnf(right(cons)))
     }
     clauses[[length(clauses) + 1]] <- cons
   }
 
   clauses <- unlist(lapply(clauses, function(clause){
+    if (is.list(clause)){
+      return(list(clause))
+    }
     if (op_to_s(clause) == "|"){
       # the nasty case of negating equalities...
       as_dnf(clause)
@@ -110,7 +118,7 @@ as_dnf <- function(expr, ...){
     } else {
       clause
     }
-  }))
+  }), recursive = FALSE)
   # unroll <- FALSE
   # for (i in seq_along(clauses)){
   #   clause <- clauses[[i]]
@@ -127,12 +135,47 @@ as_dnf <- function(expr, ...){
   structure(clauses, class="dnf")
 }
 
+# allows for multiple dnfs / unrolls nested dnfs
+as_dnfs <- function(d){
+  nested <- sapply(d, is.list)
+  e_pre <- d[!nested]
+
+  n <- lapply(d[nested], function(l){
+    ld <- unlist(lapply(l, as_dnfs), recursive = FALSE)
+    ld <- lapply(ld, unclass)
+    ld
+  })
+
+  if (any(nested)){
+    l <- list(e_pre)
+    for (i in n){
+      l <- unlist(lapply(l, function(l1){
+        list( c(l1, i[[1]])
+            , c(l1, i[[2]])
+            )
+      }), recursive = FALSE)
+    }
+    l <- lapply(l, structure, class="dnf")
+    l
+  } else {
+    list(structure(e_pre, class="dnf"))
+  }
+}
+
 #as_clause <- as_dnf
 deparse_all <- function(x, width.cutoff = 500L, ...){
+  if (is.list(x)){ # nested dnf parsing
+    text <- sapply(x, as.character)
+    text <- paste0(text, collapse = " & ")
+    text <- paste0("(", text, ")")
+    return(text)
+  }
+
   text <- deparse(x, width.cutoff = width.cutoff, ...)
   if (length(text) == 1){
     return(text)
   }
+
   text <- sub("^\\s+", "", text)
   paste0(text, collapse = "")
 }
@@ -142,6 +185,7 @@ as.character.dnf <- function(x, as_if = FALSE, ...){
   x <- x[] # removes NULL entries
   x_s <- sapply(x, deparse_all)
   if (as_if && length(x) > 1){
+    #TODO fix this for nested dnfs
     x_i <- sapply(x, invert_or_negate)
     x_i_s <- sapply(x_i, deparse_all)
     s <- paste(utils::head(x_i_s, -1), collapse = " & ")
