@@ -21,3 +21,10 @@ describe("get_mr_type",{
     #get_mr_weights(mr)
   })
 })
+
+describe("print mr rule", {
+  rules <- validator( x  < 1.1*y, 2*x  < y)
+  mr <- to_miprules(rules)
+  expect_output(print(mr[[1]]), "V1: x - 1.1*y < 0", fixed = TRUE)
+  expect_output(print(mr[[2]]), "V2: 2*x - y < 0", fixed = TRUE)
+})

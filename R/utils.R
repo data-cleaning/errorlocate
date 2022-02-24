@@ -10,6 +10,9 @@ check_validator <- function(x, copy = TRUE, check_infeasible = TRUE){
 }
 
 to_exprs <- function(x, ..., ratios=TRUE){
+  # make names unique
+  names(x) <- names(x)
+
   exprs <-
     x$exprs( lin_eq_eps   = 0
            , lin_ineq_eps = 0
