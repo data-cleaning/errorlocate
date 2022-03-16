@@ -10,9 +10,11 @@ describe("expand_weights",{
     expect_equal(W, W_ref)
   })
 
-  it("warns a named numeric",{
+  it("warns about a named numeric",{
     weight <- c(a=2, c=1)
-    W <- expand_weights(dat, weight)
+    expect_warning({
+      W <- expand_weights(dat, weight)
+    })
     expect_equal(W, W_ref)
   })
 
