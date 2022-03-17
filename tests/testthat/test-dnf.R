@@ -96,5 +96,4 @@ describe("as_dnf", {
                      )
   })
 
-
 })
