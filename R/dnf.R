@@ -256,6 +256,7 @@ dnf_to_mip_rule <- function(d, name = "", ...){
 to_miprules <- function(x, ...){
   check_validator(x, check_infeasible = FALSE)
   exprs <- to_exprs(x)
+  # browser()
 
   can_translate <- is_linear(exprs) | is_categorical(exprs) | is_conditional(exprs)
   if (!all(can_translate)){
@@ -274,10 +275,15 @@ to_miprules <- function(x, ...){
   mr <- lapply(names(exprs), function(name){
     e <- exprs[[name]]
     d <- as_dnf(e)
-    lapply( dnf_to_mip_rule(d, name = name)
-          , rewrite_mip_rule
-          )
+
+    l <- lapply(as_dnfs(d), function(d){
+      lapply( dnf_to_mip_rule(d, name = name)
+              , rewrite_mip_rule
+      )
+    })
+    unlist(l, recursive = F)
   })
+
   unlist(mr, recursive = F)
 }
 

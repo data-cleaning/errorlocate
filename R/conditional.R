@@ -13,10 +13,10 @@ is_condition_ <- function(expr, or=TRUE, top=TRUE, ...){
 
   switch (op,
     'if'  = is_condition_(l, !or, FALSE) && is_condition_(r, or, FALSE),
-    "|"   = or  && is_condition_(l, or, FALSE) && is_condition_(r, or, FALSE),
-    "||"  = or  && is_condition_(l, or, FALSE) && is_condition_(r, or, FALSE),
-    "&"   = !or && is_condition_(l, or, FALSE) && is_condition_(r, or, FALSE),
-    "&&"  = !or && is_condition_(l, or, FALSE) && is_condition_(r, or, FALSE),
+    "|"   = is_condition_(l, or, FALSE) && is_condition_(r, or, FALSE),
+    "||"  = is_condition_(l, or, FALSE) && is_condition_(r, or, FALSE),
+    "&"   = is_condition_(l, or, FALSE) && is_condition_(r, or, FALSE),
+    "&&"  = is_condition_(l, or, FALSE) && is_condition_(r, or, FALSE),
     "!"   = is_condition_(l, !or, FALSE),
     "("   = is_condition_(l, or, FALSE),
     FALSE
