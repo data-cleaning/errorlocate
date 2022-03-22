@@ -11,6 +11,7 @@ describe("LPsolve drops variable names",{
     set.seed(5484)
     el <- errorlocate::locate_errors(d, rules)
     v <- values(el)
-    expect_equal(v[1,], c(id=FALSE, b = FALSE, c = FALSE, d = FALSE, e = FALSE, f = FALSE, s = TRUE, z = NA))
+    expect_equal(v[1,], c(id=FALSE, a=FALSE, b = FALSE, c = FALSE
+                        , d = FALSE, e = FALSE, f = FALSE, s = TRUE, z = NA))
   })
 })
