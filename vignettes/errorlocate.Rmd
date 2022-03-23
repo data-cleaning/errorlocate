@@ -46,7 +46,7 @@ library(errorlocate)
 
 Let's start with a simple example:
 
-We have a rule dat age cannot be negative:
+We have a rule that age cannot be negative:
 ```{r}
 rules <- validator(age > 0)
 ```
@@ -127,7 +127,7 @@ d_fixed
 
 `locate_errors` allows for supplying weigths for the variables. 
 It is common that the quality of the observed variables differs.
-When we have more trust in `age` we can give it more weight so it choose
+When we have more trust in `age` we can give it more weight so it chooses
 income when it has to decide between the two (record 2):
 
 ```{r}
