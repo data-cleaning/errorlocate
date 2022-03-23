@@ -63,8 +63,12 @@ error localization (see \code{\link[=expand_weights]{expand_weights()}}).}
 Find out which fields in a data.frame are "faulty" using validation rules
 This method returns found errors, according to the specified method \code{x}.
 Use method \code{\link[=replace_errors]{replace_errors()}}, to automatically remove these errors.
+`
 }
 \details{
+Use an \code{Inf} \code{weight} specification to fixate variables that can not be changed.
+See \code{\link[=expand_weights]{expand_weights()}} for more details.
+
 \code{locate_errors} uses lpSolveAPI to formulate and solves a mixed integer problem.
 For details see the vignettes.
 This solver has many options:  \link[lpSolveAPI:lp.control.options]{lpSolveAPI::lp.control.options}. Noteworthy
@@ -141,6 +145,11 @@ weight <- read.csv(text=
        2,   1
 ", strip.white = TRUE)
 
+locate_errors(data, v, weight = weight)$errors
+
+# fixate / exclude a variable from error localiziation
+# using an Inf weight
+weight <- c(age = Inf)
 locate_errors(data, v, weight = weight)$errors
 }
 \seealso{

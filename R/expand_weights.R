@@ -2,8 +2,8 @@
 #'
 #' Expands a weight specification into a weight matrix to be used
 #' by `locate_errors` and `replace_errors`. Weights allow for "guiding" the
-#' errorlocalization process, so that more reliable values/variables with more
-#' weight are selected as erroneous less easily. See details on the specification.
+#' errorlocalization process, so that less reliable values/variables with less
+#' weight are selected first. See details on the specification.
 #'
 #' If weight fine tuning is needed,
 #' a possible scenario is to generate a weight `data.frame` using `expand_weights` and

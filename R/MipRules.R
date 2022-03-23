@@ -35,8 +35,7 @@ miprules <- setRefClass("MipRules",
      ._vars_num    = "character",
      ._log_transform = "data.frame",
      ._ignored     = "ANY",
-     ._lp          = "ANY",
-     ._values      = "ANY"
+     ._lp          = "ANY"
    ),
    methods = list(
      initialize = function(rules = NULL, n = 10){
@@ -91,7 +90,6 @@ miprules <- setRefClass("MipRules",
 
        # omitting vars that are not in rules...
        values <- values[._vars]
-       ._values <<- values
        weights <- weights[._vars]
 
        # TODO if missing log_values, derive it inplace
@@ -148,14 +146,10 @@ miprules <- setRefClass("MipRules",
           values <- rep(1, ncol(lp))
        }
        names(values) <- colnames(lp)
-       # browser()
 
        adapt <- objective[is.finite(objective)] < 0  # trick to create logical with names
        adapt_nms <- names(adapt)[names(adapt) %in% names(values)]
        adapt[adapt_nms] <- values[adapt_nms] == 1
-       # issue with lpsolve: it sometimes messes up column names...
-       vm <- !names(adapt) %in% names(values)
-
        if (length(values) == 0){
           # seems optimalisation of lpSolvAPI when there is only 1 column of data..
           # adapt <- objective > 0
@@ -165,18 +159,9 @@ miprules <- setRefClass("MipRules",
 
        # remove prefix
        names(adapt) <- gsub(".delta_", "", names(adapt))
-       if (any(vm)){
-         vm <- names(adapt)[vm]
-         vm <- vm[vm %in% names(values)]
-         # print(vm)
-         adapt[vm] <- sapply(vm, function(nm){
-           !isTRUE(unname(values[nm]) == ._values[[nm]])
-         })
-                }
        # TODO improve the return values based on value of s
        # Add the same table as with infeasible
 
-       adapt <- unlist(adapt)
        list(
          s = s,
          solution = solution,

@@ -3,6 +3,10 @@
 #' Find out which fields in a data.frame are "faulty" using validation rules
 #' This method returns found errors, according to the specified method `x`.
 #' Use method [replace_errors()], to automatically remove these errors.
+#' `
+#'
+#' Use an `Inf` `weight` specification to fixate variables that can not be changed.
+#' See [expand_weights()] for more details.
 #'
 #' `locate_errors` uses lpSolveAPI to formulate and solves a mixed integer problem.
 #' For details see the vignettes.
