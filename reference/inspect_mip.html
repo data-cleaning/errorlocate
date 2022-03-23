@@ -101,29 +101,29 @@ See the example section for finding out what to do with inspect_mip.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Generates the lp program (see ?inspect_mip) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model name: errorlocate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                       x       .delta_x            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Minimize              0  1.40545726451            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> V1                   -1              0  &lt;=  -1.001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x_ub                  1         -1e+07  &lt;=       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x_lb                 -1         -1e+07  &lt;=       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Kind                Std            Std            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Type               Real            Int            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Upper               Inf              1            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Lower              -Inf              0            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                      x      .delta_x            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Minimize             0  1.4670959278            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> V1                  -1             0  &lt;=  -1.001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x_ub                 1        -1e+07  &lt;=       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x_lb                -1        -1e+07  &lt;=       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Kind               Std           Std            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Type              Real           Int            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Upper              Inf             1            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Lower             -Inf             0            </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># inspect the lp problem (prior to solving it with lpsolveAPI)</span></span>
 <span class="r-in"><span class="va">lp</span> <span class="op">&lt;-</span> <span class="va">mip</span><span class="op">$</span><span class="fu">to_lp</span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">lp</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model name: errorlocate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                       x       .delta_x            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Minimize              0  1.40545726451            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> V1                   -1              0  &lt;=  -1.001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x_ub                  1         -1e+07  &lt;=       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x_lb                 -1         -1e+07  &lt;=       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Kind                Std            Std            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Type               Real            Int            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Upper               Inf              1            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Lower              -Inf              0            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                      x      .delta_x            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Minimize             0  1.4670959278            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> V1                  -1             0  &lt;=  -1.001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x_ub                 1        -1e+07  &lt;=       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x_lb                -1        -1e+07  &lt;=       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Kind               Std           Std            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Type              Real           Int            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Upper              Inf             1            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Lower             -Inf             0            </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># for large problems write the lp problem to disk for inspection</span></span>
 <span class="r-in"><span class="co"># lpSolveAPI::write.lp(lp, "my_problem.lp")</span></span>
@@ -140,13 +140,13 @@ See the example section for finding out what to do with inspect_mip.</p>
 <span class="r-in"><span class="co"># lp problem after solving (often simplified version of first lp)</span></span>
 <span class="r-in"><span class="va">res</span><span class="op">$</span><span class="va">lp</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model name: errorlocate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                       x       .delta_x       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Minimize              0  1.40545726451       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x_ub                  1         -1e+07  &lt;=  0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Kind                Std            Std       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Type               Real            Int       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Upper               Inf              1       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Lower             1.001              0       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                      x      .delta_x       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Minimize             0  1.4670959278       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x_ub                 1        -1e+07  &lt;=  0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Kind               Std           Std       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Type              Real           Int       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Upper              Inf             1       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Lower            1.001             0       </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># records that are deemed "faulty"</span></span>
 <span class="r-in"><span class="va">res</span><span class="op">$</span><span class="va">errors</span></span>
@@ -170,7 +170,7 @@ See the example section for finding out what to do with inspect_mip.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> x_lb: -x - 1e+07*.delta_x &lt;= 0</span>
 <span class="r-in"><span class="va">mip</span><span class="op">$</span><span class="va">objective</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> .delta_x </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1.405457 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1.467096 </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
