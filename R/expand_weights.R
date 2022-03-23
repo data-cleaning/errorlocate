@@ -1,7 +1,9 @@
 #' Create a weight matrix
 #'
 #' Expands a weight specification into a weight matrix to be used
-#' by `locate_errors` and `replace_errors`.
+#' by `locate_errors` and `replace_errors`. Weights allow for "guiding" the
+#' errorlocalization process, so that more reliable values/variables with more
+#' weight are selected as erroneous less easily. See details on the specification.
 #'
 #' If weight fine tuning is needed,
 #' a possible scenario is to generate a weight `data.frame` using `expand_weights` and
@@ -13,6 +15,8 @@
 #' - a unnamed `numeric` with a length equal to `ncol(dat)`
 #' - a `data.frame` with same number of rows as `dat`
 #' - a `matrix` with same number of rows as `dat`
+#' - `Inf`, `NA` weights will be interpreted as that those variables must not be
+#' changed and are fixated.T
 #' @export
 #' @param dat `data.frame` the data to be checked
 #' @param weight weight specification, see details.

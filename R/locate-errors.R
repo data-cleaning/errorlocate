@@ -29,7 +29,8 @@
 #' @param x validation rules or errorlocalizer object to be used for finding
 #' possible errors.
 #' @param ref `data.frame` optional reference data to be used in the rules checking
-#' @param weight `numeric` optional weight specification to be used in the error localization (see [expand_weights()])
+#' @param weight `numeric` optional weight specification to be used in the
+#' error localization (see [expand_weights()]).
 #' @param ... optional parameters that are passed to [lpSolveAPI::lp.control()] (see details)
 #' @param cl optional parallel / cluster.
 #' @param Ncpus number of nodes to use. See details

@@ -51,7 +51,8 @@ possible errors.}
 
 \item{timeout}{maximum number of seconds that the localizer should use per record.}
 
-\item{weight}{\code{numeric} optional weight specification to be used in the error localization (see \code{\link[=expand_weights]{expand_weights()}})}
+\item{weight}{\code{numeric} optional weight specification to be used in the
+error localization (see \code{\link[=expand_weights]{expand_weights()}}).}
 
 \item{ref}{\code{data.frame} optional reference data to be used in the rules checking}
 }
