@@ -13,3 +13,11 @@ expand_weights(dat, weight, as.data.frame = TRUE)
 # works too
 weight <- c(country=5)
 expand_weights(dat, weight)
+
+# specify a per row weight for country
+weight <- data.frame(country=c(1,5))
+expand_weights(dat, weight)
+
+# country should not be changed!
+weight <- c(country = Inf)
+expand_weights(dat, weight)

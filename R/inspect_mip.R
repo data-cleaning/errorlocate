@@ -1,9 +1,12 @@
-#' inspect the mip problem formulation for one record
+#' inspect the mip problem formulation
 #'
-#' Utility function to inspect the mip problem for a record.
+#' Utility function to inspect the mip problem for a record. `inspect_mip` can
+#' be used as a "drop-in" replacement for [locate_errors()], but works on the
+#' first record.
 #'
 #' It may sometimes be handy to find out what is happening exactly with a record.
-#' See the example section for finding out what to do with inspect_mip.
+#' See the example section for finding out what to do with inspect_mip. See
+#' `vignette("inspect_mip")` for more details.
 #' @example ./examples/inspect_mip.R
 #' @family Mixed Integer Problem
 #' @export

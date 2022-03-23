@@ -1,5 +1,8 @@
 # errorlocate 0.9.10
 
+* Fixed a nasty bug in which variable names are mangled by lpsolveAPI, depending
+on the seed / added random noise. Thanks to Patrick Driessens
+
 * Added `expand_weights`, which helps in specifying detailed weights for records
 
 * Removed a bug: `Ncpus` was ignored in `replace_errors`
