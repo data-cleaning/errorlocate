@@ -36,7 +36,8 @@ The following specifications for \code{weight} are supported:
 \item a \code{data.frame} with same number of rows as \code{dat}
 \item a \code{matrix} with same number of rows as \code{dat}
 \item \code{Inf}, \code{NA} weights will be interpreted as that those variables must not be
-changed and are fixated.T
+changed and are fixated. \code{Inf} weights perform much better than setting a weight
+to a large number.
 }
 }
 \examples{
