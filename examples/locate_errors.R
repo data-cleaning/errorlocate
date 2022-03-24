@@ -53,3 +53,8 @@ weight <- read.csv(text=
 ", strip.white = TRUE)
 
 locate_errors(data, v, weight = weight)$errors
+
+# fixate / exclude a variable from error localiziation
+# using an Inf weight
+weight <- c(age = Inf)
+locate_errors(data, v, weight = weight)$errors

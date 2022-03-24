@@ -20,7 +20,9 @@ expand_weights(dat, weight = NULL, as.data.frame = FALSE, ...)
 }
 \description{
 Expands a weight specification into a weight matrix to be used
-by \code{locate_errors} and \code{replace_errors}.
+by \code{locate_errors} and \code{replace_errors}. Weights allow for "guiding" the
+errorlocalization process, so that less reliable values/variables with less
+weight are selected first. See details on the specification.
 }
 \details{
 If weight fine tuning is needed,
@@ -33,6 +35,9 @@ The following specifications for \code{weight} are supported:
 \item a unnamed \code{numeric} with a length equal to \code{ncol(dat)}
 \item a \code{data.frame} with same number of rows as \code{dat}
 \item a \code{matrix} with same number of rows as \code{dat}
+\item \code{Inf}, \code{NA} weights will be interpreted as that those variables must not be
+changed and are fixated. \code{Inf} weights perform much better than setting a weight
+to a large number.
 }
 }
 \examples{
@@ -50,6 +55,14 @@ expand_weights(dat, weight, as.data.frame = TRUE)
 
 # works too
 weight <- c(country=5)
+expand_weights(dat, weight)
+
+# specify a per row weight for country
+weight <- data.frame(country=c(1,5))
+expand_weights(dat, weight)
+
+# country should not be changed!
+weight <- c(country = Inf)
 expand_weights(dat, weight)
 }
 \seealso{

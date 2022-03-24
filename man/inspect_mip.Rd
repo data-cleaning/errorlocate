@@ -2,7 +2,7 @@
 % Please edit documentation in R/inspect_mip.R
 \name{inspect_mip}
 \alias{inspect_mip}
-\title{inspect the mip problem formulation for one record}
+\title{inspect the mip problem formulation}
 \usage{
 inspect_mip(data, x, weight, ...)
 }
@@ -12,16 +12,20 @@ inspect_mip(data, x, weight, ...)
 \item{x}{validation rules or errorlocalizer object to be used for finding
 possible errors.}
 
-\item{weight}{\code{numeric} optional weight specification to be used in the error localization (see \code{\link[=expand_weights]{expand_weights()}})}
+\item{weight}{\code{numeric} optional weight specification to be used in the
+error localization (see \code{\link[=expand_weights]{expand_weights()}}).}
 
 \item{...}{optional parameters that are passed to \code{\link[lpSolveAPI:lp.control]{lpSolveAPI::lp.control()}} (see details)}
 }
 \description{
-Utility function to inspect the mip problem for a record.
+Utility function to inspect the mip problem for a record. \code{inspect_mip} can
+be used as a "drop-in" replacement for \code{\link[=locate_errors]{locate_errors()}}, but works on the
+first record.
 }
 \details{
 It may sometimes be handy to find out what is happening exactly with a record.
-See the example section for finding out what to do with inspect_mip.
+See the example section for finding out what to do with inspect_mip. See
+\code{vignette("inspect_mip")} for more details.
 }
 \examples{
 rules <- validator(x > 1)
