@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">errorlocate</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.10.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -226,7 +226,7 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">lp</span><span class="op">)</span></code></pre></div>
 <pre><code>  Model name: errorlocate
                         age          income      .delta_age   .delta_income           
-  Minimize                0               0   1.33896939084  1.417210129206           
+  Minimize                0               0  1.306085141142  1.140066296096           
   r1                     -1               0               0               0  &lt;=    -18
   r2                      0              -1               0               0  &lt;=      0
   age_ub                  1               0          -1e+07               0  &lt;=     12
@@ -273,7 +273,7 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <span class="va">res</span><span class="op">$</span><span class="va">lp</span></code></pre></div>
 <pre><code>  Model name: errorlocate
                         age          income      .delta_age   .delta_income           
-  Minimize                0               0   1.33896939084  1.417210129206           
+  Minimize                0               0  1.306085141142  1.140066296096           
   age_ub                  1               0          -1e+07               0  &lt;=     12
   income_ub               0               1               0          -1e+07  &lt;=   2000
   income_lb               0              -1               0          -1e+07  &lt;=  -2000
@@ -303,7 +303,7 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <span class="va">mip</span><span class="op">$</span><span class="fu">to_lp</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>  Model name: errorlocate
                   working:?      working:job  working:retired   .delta_working      
-  Minimize                0                0                0   1.593805258396      
+  Minimize                0                0                0   1.073405773612      
   r1                      0                1                1                0  =  1
   working                 1                0                0                1  =  1
   Kind                  SOS              SOS              SOS              Std      
@@ -337,7 +337,7 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <span class="va">mip</span><span class="op">$</span><span class="fu">to_lp</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>  Model name: errorlocate
                      adult           voted    .delta_adult    .delta_voted       
-  Minimize               0               0  1.058651824016  1.369198374218       
+  Minimize               0               0   1.18618138705  1.022168333292       
   r1                    -1               1               0               0  &lt;=  0
   voted                  0               1               0               1   =  1
   adult                 -1               0               1               0   =  0
@@ -348,7 +348,7 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mip</span><span class="op">$</span><span class="fu">execute</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">values</span>
 <span class="co">#&gt;        adult        voted .delta_adult .delta_voted </span>
-<span class="co">#&gt;            1            1            1            0</span></code></pre></div>
+<span class="co">#&gt;            0            0            0            1</span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
@@ -398,7 +398,7 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <code class="sourceCode R"><span class="va">mip</span><span class="op">$</span><span class="fu">to_lp</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>  Model name: errorlocate
                         age          income      .delta_age   .delta_income        r1._lin1        r1._lin2           
-  Minimize                0               0  1.239396347898  1.117345790262               0               0           
+  Minimize                0               0  1.350455391338  1.327848058892               0               0           
   r1                      0               0               0               0               1               1  &lt;=      1
   r1._lin1                0               1               0               0          -1e+07               0  &lt;=      0
   r1._lin2               -1               0               0               0               0          -1e+07  &lt;=    -16
@@ -432,7 +432,7 @@ f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
 <span class="va">mip</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/inspect_mip.html">inspect_mip</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">rules</span><span class="op">)</span>
 <span class="va">mip</span><span class="op">$</span><span class="fu">execute</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">errors</span>
 <span class="co">#&gt; working     age </span>
-<span class="co">#&gt;   FALSE    TRUE</span></code></pre></div>
+<span class="co">#&gt;    TRUE   FALSE</span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="weights">Weights<a class="anchor" aria-label="anchor" href="#weights"></a>
