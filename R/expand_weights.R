@@ -16,7 +16,8 @@
 #' - a `data.frame` with same number of rows as `dat`
 #' - a `matrix` with same number of rows as `dat`
 #' - `Inf`, `NA` weights will be interpreted as that those variables must not be
-#' changed and are fixated.T
+#' changed and are fixated. `Inf` weights perform much better than setting a weight
+#' to a large number.
 #' @export
 #' @param dat `data.frame` the data to be checked
 #' @param weight weight specification, see details.

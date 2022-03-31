@@ -1,4 +1,4 @@
-# errorlocate 0.9.10
+# errorlocate 1.0.0
 
 * Fixed a nasty bug in which variable names are mangled by lpsolveAPI, depending
 on the seed / added random noise. Thanks to Patrick Driessens
