@@ -25,6 +25,7 @@ to_exprs <- function(x, ..., ratios=TRUE){
   if (isTRUE(ratios)){
     exprs[] <- lapply(exprs, rewrite_ratio)
   }
+  exprs[] <- lapply(exprs, rewrite_in_range)
   as.expression(exprs)
 }
 

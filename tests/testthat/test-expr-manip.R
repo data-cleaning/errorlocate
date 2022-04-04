@@ -35,3 +35,24 @@ describe("rewrite_ratio", {
   expect_equal(res, quote(2*a + 2 >= 3*b + 1))
 
 })
+
+describe("rewrite in_range", {
+  it("checks if num range", {
+    e <- quote(in_range(x, 2, 5))
+    expect_true(is_num_range(e))
+
+    e <- quote(in_range(x, "a", "b"))
+    expect_false(is_num_range(e))
+  })
+
+  it("rewrites in_range", {
+    e <- quote(in_range(x, 2, 5))
+    e2 <- rewrite_in_range(e)
+    expect_equal(e2, quote((x >= 2) & (x <= 5)))
+
+    e <- quote(in_range(x, 2*y, 5*y))
+    e2 <- rewrite_in_range(e)
+    expect_equal(e2, quote((x >= 2*y) & (x <= 5*y)))
+
+  })
+})

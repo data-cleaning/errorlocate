@@ -41,6 +41,9 @@ is_lin_ <- function(expr, top=TRUE, ...){
   r <- consume(right(expr))
 
   if (top){
+    if (is_num_range(expr)){
+      return(TRUE)
+    }
     if (!(op %in% c("==", ">", ">=", "<=", "<"))){ return(FALSE) }
     return(is_lin_(l, FALSE) && is_lin_(r, FALSE))
   }

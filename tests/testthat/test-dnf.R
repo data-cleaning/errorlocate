@@ -96,4 +96,9 @@ describe("as_dnf", {
                      )
   })
 
+  it("handles in_range", {
+    e <- quote(in_range(age, 18, 67))
+    dnf <- as_dnf(e)
+  })
+
 })

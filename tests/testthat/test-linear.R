@@ -50,6 +50,17 @@ describe("is_linear",{
 
     options(errorlocate.allow_log = NULL)
   })
+
+  it ("handles in_range", {
+    rules <- validator(in_range(age, 18, 67))
+    expect_true(is_linear(rules))
+
+    rules <- validator(in_range(x, 2*y, 5*y))
+    expect_true(is_linear(rules))
+
+    rules <- validator(in_range(x, "a", "b"))
+    expect_false(is_linear(rules))
+  })
 })
 
 describe("lin_mip_rule",{

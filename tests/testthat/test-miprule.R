@@ -28,3 +28,11 @@ describe("print mr rule", {
   expect_output(print(mr[[1]]), "V1: x - 1.1*y < 0", fixed = TRUE)
   expect_output(print(mr[[2]]), "V2: 2*x - y < 0", fixed = TRUE)
 })
+
+describe("print mr rule", {
+  rules <- validator( in_range(age, 18, 67))
+  mr <- to_miprules(rules)
+
+  expect_output(print(mr[[1]]), "V1: -age <= -18", fixed = TRUE)
+  expect_output(print(mr[[2]]), "V1: age <= 67", fixed = TRUE)
+})

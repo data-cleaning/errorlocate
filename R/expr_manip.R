@@ -81,3 +81,27 @@ rewrite_ratio <- function(e){
     e
   }
 }
+
+is_num_range <- function(e){
+  op <- as.character(node(e))
+  if (!(op %in% c("in_range", "validate::in_range"))){
+    return(FALSE)
+  }
+  if (is_lin_(e[[3]], top=FALSE) && is_lin_(e[[4]], top=FALSE)){
+    return(TRUE)
+  }
+  FALSE
+}
+
+rewrite_in_range <- function(e){
+  if (is_num_range(e)){
+    substitute((.var >= .min) & (.var <= .max)
+              , list( .var = e[[2]]
+                    , .min = e[[3]]
+                    , .max = e[[4]]
+                    )
+              )
+  } else {
+   e
+  }
+}
