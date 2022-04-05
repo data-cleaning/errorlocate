@@ -82,7 +82,7 @@ fh_localizer <-
 
         # checking size of numeric columns
         too_big <- sapply(data[numvars], function(v){
-          any(abs(v) > 1e7)
+          any(abs(v) > 1e7, na.rm = TRUE)
         })
 
         if (isTRUE(any(too_big))){

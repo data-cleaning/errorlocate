@@ -1,3 +1,7 @@
+# errorlocate 1.0.1
+
+* For values `> 1e7` in combination with another value `NA` `locate_errors` generated an error. Reported and fixed by Ramon Reinders.
+
 # errorlocate 1.0.0
 
 * Fixed a nasty bug in which variable names are mangled by lpsolveAPI, depending
