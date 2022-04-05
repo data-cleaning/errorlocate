@@ -15,8 +15,7 @@ negate_ <- function(e, ...){
       } else {
         substitute( l != r, list(l = left(e), r = right(e)))
       }
-    }
-    else {
+    } else {
       substitute( !(e), list(e=e) )
     }
   } else {

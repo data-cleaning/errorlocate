@@ -84,6 +84,11 @@ describe("as_dnf", {
     expect_equivalent(as.expression(dnf)[[1]], quote(c |(a&b)))
   })
 
+  it("works with || clause in if", {
+    e <- quote(if(a || b) c)
+    dnf <- as_dnf(e)
+  })
+
   it("generates multiple dnfs with & clause", {
     dnf <- as_dnf(quote(a & b))
     expect_equivalent(as_dnfs(dnf), list(as_dnf(quote(a)), as_dnf(quote(b))))
