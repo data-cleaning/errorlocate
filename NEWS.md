@@ -2,6 +2,8 @@
 
 * For values `> 1e7` in combination with another value `NA` `locate_errors` generated an error. Reported and fixed by Ramon Reinders (issue #36)
 
+* support for `in_range` (issue #33)
+
 # errorlocate 1.0.0
 
 * Fixed a nasty bug in which variable names are mangled by lpsolveAPI, depending
