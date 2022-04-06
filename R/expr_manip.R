@@ -1,5 +1,5 @@
 negate_ <- function(e, ...){
-  op <- node(e)
+  op <- op_to_s(e)
 
   # don't do double negation: that complicates analysis of expressions
   if (op == '!'){
@@ -15,6 +15,12 @@ negate_ <- function(e, ...){
       } else {
         substitute( l != r, list(l = left(e), r = right(e)))
       }
+    } else if (op %in% c("||", "|")){
+      substitute( (nl & nr), list( nl = invert_or_negate(e[[2]])
+                                 , nr = invert_or_negate(e[[3]])
+                                 )
+                )
+
     } else {
       substitute( !(e), list(e=e) )
     }
