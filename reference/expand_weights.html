@@ -16,7 +16,7 @@ weight are selected first. See details on the specification.'><!-- mathjax --><s
     
     <a class="navbar-brand me-2" href="../index.html">errorlocate</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -69,23 +69,34 @@ weight are selected first. See details on the specification.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">expand_weights</span><span class="op">(</span><span class="va">dat</span>, weight <span class="op">=</span> <span class="cn">NULL</span>, as.data.frame <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">expand_weights</span><span class="op">(</span><span class="va">dat</span>, weight <span class="op">=</span> <span class="cn">NULL</span>, as.data.frame <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>dat</dt>
 <dd><p><code>data.frame</code> the data to be checked</p></dd>
+
+
 <dt>weight</dt>
 <dd><p>weight specification, see details.</p></dd>
+
+
 <dt>as.data.frame</dt>
 <dd><p>if <code>TRUE</code> a <code>data.frame</code> will be returned.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>unused</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p><code>matrix</code> or <code>data.frame</code> of same dimensions as <code>dat</code></p>
+    
+
+<p><code>matrix</code> or <code>data.frame</code> of same dimensions as <code>dat</code></p>
+
+
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -112,41 +123,41 @@ to a large number.</p></li>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span>text<span class="op">=</span></span>
-<span class="r-in"><span class="st">"age,country</span>
-<span class="r-in">  49,     NL</span>
-<span class="r-in">  23,     DE</span>
-<span class="r-in">"</span>, strip.white<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">weight</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>age <span class="op">=</span> <span class="fl">2</span>, country <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">expand_weights</span><span class="op">(</span><span class="va">dat</span>, <span class="va">weight</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span>text<span class="op">=</span></span></span>
+<span class="r-in"><span><span class="st">"age,country</span></span></span>
+<span class="r-in"><span><span class="st">  49,     NL</span></span></span>
+<span class="r-in"><span><span class="st">  23,     DE</span></span></span>
+<span class="r-in"><span><span class="st">"</span>, strip.white<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">weight</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>age <span class="op">=</span> <span class="fl">2</span>, country <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">expand_weights</span><span class="op">(</span><span class="va">dat</span>, <span class="va">weight</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      age country</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]   2       1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,]   2       1</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">weight</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">expand_weights</span><span class="op">(</span><span class="va">dat</span>, <span class="va">weight</span>, as.data.frame <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">weight</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">expand_weights</span><span class="op">(</span><span class="va">dat</span>, <span class="va">weight</span>, as.data.frame <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   age country</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1   2       1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2   2       1</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># works too</span></span>
-<span class="r-in"><span class="va">weight</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>country<span class="op">=</span><span class="fl">5</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">expand_weights</span><span class="op">(</span><span class="va">dat</span>, <span class="va">weight</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># works too</span></span></span>
+<span class="r-in"><span><span class="va">weight</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>country<span class="op">=</span><span class="fl">5</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">expand_weights</span><span class="op">(</span><span class="va">dat</span>, <span class="va">weight</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      age country</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]   1       5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,]   1       5</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># specify a per row weight for country</span></span>
-<span class="r-in"><span class="va">weight</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>country<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">expand_weights</span><span class="op">(</span><span class="va">dat</span>, <span class="va">weight</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># specify a per row weight for country</span></span></span>
+<span class="r-in"><span><span class="va">weight</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>country<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">expand_weights</span><span class="op">(</span><span class="va">dat</span>, <span class="va">weight</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      age country</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]   1       1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,]   1       5</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># country should not be changed!</span></span>
-<span class="r-in"><span class="va">weight</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>country <span class="op">=</span> <span class="cn">Inf</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">expand_weights</span><span class="op">(</span><span class="va">dat</span>, <span class="va">weight</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># country should not be changed!</span></span></span>
+<span class="r-in"><span><span class="va">weight</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>country <span class="op">=</span> <span class="cn">Inf</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">expand_weights</span><span class="op">(</span><span class="va">dat</span>, <span class="va">weight</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      age country</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]   1     Inf</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,]   1     Inf</span>
@@ -161,7 +172,7 @@ to a large number.</p></li>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

@@ -12,7 +12,7 @@ fields automatically with NA or a suggestion that is provided by the error detec
     
     <a class="navbar-brand me-2" href="../index.html">errorlocate</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,72 +63,87 @@ fields automatically with NA or a suggestion that is provided by the error detec
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">replace_errors</span><span class="op">(</span>
-  <span class="va">data</span>,
-  <span class="va">x</span>,
-  ref <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>,
-  cl <span class="op">=</span> <span class="cn">NULL</span>,
-  Ncpus <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"Ncpus"</span>, <span class="fl">1</span><span class="op">)</span>,
-  value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NA"</span>, <span class="st">"suggestion"</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="co"># S4 method for data.frame,validator</span>
-<span class="fu">replace_errors</span><span class="op">(</span>
-  <span class="va">data</span>,
-  <span class="va">x</span>,
-  ref <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>,
-  cl <span class="op">=</span> <span class="cn">NULL</span>,
-  Ncpus <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"Ncpus"</span>, <span class="fl">1</span><span class="op">)</span>,
-  value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NA"</span>, <span class="st">"suggestion"</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="co"># S4 method for data.frame,ErrorLocalizer</span>
-<span class="fu">replace_errors</span><span class="op">(</span>
-  <span class="va">data</span>,
-  <span class="va">x</span>,
-  ref <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>,
-  cl <span class="op">=</span> <span class="cn">NULL</span>,
-  Ncpus <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"Ncpus"</span>, <span class="fl">1</span><span class="op">)</span>,
-  value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NA"</span>, <span class="st">"suggestion"</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="co"># S4 method for data.frame,errorlocation</span>
-<span class="fu">replace_errors</span><span class="op">(</span>
-  <span class="va">data</span>,
-  <span class="va">x</span>,
-  ref <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>,
-  cl <span class="op">=</span> <span class="cn">NULL</span>,
-  Ncpus <span class="op">=</span> <span class="fl">1</span>,
-  value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NA"</span>, <span class="st">"suggestion"</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">replace_errors</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  <span class="va">x</span>,</span>
+<span>  ref <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  cl <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  Ncpus <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"Ncpus"</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NA"</span>, <span class="st">"suggestion"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S4 method for data.frame,validator</span></span>
+<span><span class="fu">replace_errors</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  <span class="va">x</span>,</span>
+<span>  ref <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  cl <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  Ncpus <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"Ncpus"</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NA"</span>, <span class="st">"suggestion"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S4 method for data.frame,ErrorLocalizer</span></span>
+<span><span class="fu">replace_errors</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  <span class="va">x</span>,</span>
+<span>  ref <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  cl <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  Ncpus <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"Ncpus"</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NA"</span>, <span class="st">"suggestion"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S4 method for data.frame,errorlocation</span></span>
+<span><span class="fu">replace_errors</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  <span class="va">x</span>,</span>
+<span>  ref <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  cl <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  Ncpus <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NA"</span>, <span class="st">"suggestion"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
 <dd><p>data to be checked</p></dd>
+
+
 <dt>x</dt>
 <dd><p><code><a href="https://rdrr.io/pkg/validate/man/validator.html" class="external-link">validator()</a></code> or <code>errorlocation</code> object.
 If an <code>errorlocation</code> is already available (through <code><a href="locate_errors.html">locate_errors()</a></code>) this
 is more efficient.</p></dd>
+
+
 <dt>ref</dt>
 <dd><p>optional reference data set</p></dd>
+
+
 <dt>...</dt>
 <dd><p>these parameters are handed over to <code><a href="locate_errors.html">locate_errors()</a></code></p></dd>
+
+
 <dt>cl</dt>
 <dd><p>optional cluster for parallel execution (see details)</p></dd>
+
+
 <dt>Ncpus</dt>
 <dd><p>number of nodes to use. (see details)</p></dd>
+
+
 <dt>value</dt>
 <dd><p><code>NA</code></p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p><code>data</code> with erroneous values removed.</p>
+    
+
+<p><code>data</code> with erroneous values removed.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -156,31 +171,31 @@ imputation method. Suggested values from the error localization method may intro
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">rules</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/validate/man/validator.html" class="external-link">validator</a></span><span class="op">(</span> <span class="va">profit</span> <span class="op">+</span> <span class="va">cost</span> <span class="op">==</span> <span class="va">turnover</span></span>
-<span class="r-in">              , <span class="va">cost</span> <span class="op">-</span> <span class="fl">0.6</span><span class="op">*</span><span class="va">turnover</span> <span class="op">&gt;=</span> <span class="fl">0</span></span>
-<span class="r-in">              , <span class="va">cost</span><span class="op">&gt;=</span> <span class="fl">0</span></span>
-<span class="r-in">              , <span class="va">turnover</span> <span class="op">&gt;=</span> <span class="fl">0</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>profit<span class="op">=</span><span class="fl">755</span>, cost<span class="op">=</span><span class="fl">125</span>, turnover<span class="op">=</span><span class="fl">200</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">data_no_error</span> <span class="op">&lt;-</span> <span class="fu">replace_errors</span><span class="op">(</span><span class="va">data</span>,<span class="va">rules</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># faulty data was replaced with NA</span></span>
-<span class="r-in"><span class="va">data_no_error</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">rules</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/validate/man/validator.html" class="external-link">validator</a></span><span class="op">(</span> <span class="va">profit</span> <span class="op">+</span> <span class="va">cost</span> <span class="op">==</span> <span class="va">turnover</span></span></span>
+<span class="r-in"><span>              , <span class="va">cost</span> <span class="op">-</span> <span class="fl">0.6</span><span class="op">*</span><span class="va">turnover</span> <span class="op">&gt;=</span> <span class="fl">0</span></span></span>
+<span class="r-in"><span>              , <span class="va">cost</span><span class="op">&gt;=</span> <span class="fl">0</span></span></span>
+<span class="r-in"><span>              , <span class="va">turnover</span> <span class="op">&gt;=</span> <span class="fl">0</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>profit<span class="op">=</span><span class="fl">755</span>, cost<span class="op">=</span><span class="fl">125</span>, turnover<span class="op">=</span><span class="fl">200</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">data_no_error</span> <span class="op">&lt;-</span> <span class="fu">replace_errors</span><span class="op">(</span><span class="va">data</span>,<span class="va">rules</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># faulty data was replaced with NA</span></span></span>
+<span class="r-in"><span><span class="va">data_no_error</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   profit cost turnover</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1     NA  125      200</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="errors_removed.html">errors_removed</a></span><span class="op">(</span><span class="va">data_no_error</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="errors_removed.html">errors_removed</a></span><span class="op">(</span><span class="va">data_no_error</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> call:  locate_errors(data, x, ref, ..., cl = cl, Ncpus = Ncpus) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> located  1  error(s).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> located  0  missing value(s).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Use 'summary', 'values', '$errors' or '$weight', to explore and retrieve the errors.</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># a bit more control, you can supply the result of locate_errors</span></span>
-<span class="r-in"><span class="co"># to replace_errors, which is a good thing, otherwise replace_errors will call</span></span>
-<span class="r-in"><span class="co"># locate_errors internally.</span></span>
-<span class="r-in"><span class="va">error_locations</span> <span class="op">&lt;-</span> <span class="fu"><a href="locate_errors.html">locate_errors</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">rules</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">replace_errors</span><span class="op">(</span><span class="va">data</span>, <span class="va">error_locations</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># a bit more control, you can supply the result of locate_errors</span></span></span>
+<span class="r-in"><span><span class="co"># to replace_errors, which is a good thing, otherwise replace_errors will call</span></span></span>
+<span class="r-in"><span><span class="co"># locate_errors internally.</span></span></span>
+<span class="r-in"><span><span class="va">error_locations</span> <span class="op">&lt;-</span> <span class="fu"><a href="locate_errors.html">locate_errors</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">rules</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">replace_errors</span><span class="op">(</span><span class="va">data</span>, <span class="va">error_locations</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   profit cost turnover</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1     NA  125      200</span>
 </code></pre></div>
@@ -194,7 +209,7 @@ imputation method. Suggested values from the error localization method may intro
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>
