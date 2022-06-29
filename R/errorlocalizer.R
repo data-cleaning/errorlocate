@@ -34,6 +34,7 @@ setRefClass("ErrorLocalizer",
 #' the data.
 #' @include MipRules.R
 #' @exportClass FHLocalizer
+#' @import parallel
 #'
 fh_localizer <-
   setRefClass("FHLocalizer",
