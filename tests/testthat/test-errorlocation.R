@@ -31,7 +31,7 @@ describe("errorlocation",{
     rules <- validator( x > 1)
     d <- data.frame( x = c(0,1,2,-1))
     N <- nrow(d)
-    el <- locate_errors(d, rules)
+    el <- locate_errors(d, rules, Ncpus = 1)
 
     expect_equal(length(el$duration), N)
     expect_true(el$duration[3] == 0)

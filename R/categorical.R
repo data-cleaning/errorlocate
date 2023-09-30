@@ -8,7 +8,7 @@ INFIX_CAT_NAME <- ":"
     return(TRUE)
   }
 
-  if(is.atomic(expr)){
+  if(is.atomic(expr) || is.null(expr)){
     return(is.logical(expr))
   }
 
