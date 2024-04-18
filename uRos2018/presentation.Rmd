@@ -110,7 +110,7 @@ check_that( data.frame( age     = 3
 ```
 Ok, clear that this is a faulty record, but what is the error? 
 
-## Feligi Holt formalism:
+## Fellegi Holt formalism:
 
 > Find the minimal (weighted) number of variables that cause the invalidation of the data rules.
 
