@@ -21,15 +21,15 @@ setRefClass("ErrorLocalizer",
   )
 )
 
-#' Feligi-Holt Errorlocalizer
+#' Fellegi-Holt Errorlocalizer
 #'
-#' Implementation of the Feligi-Holt algorithm using the `ErrorLocalizer` base class.
-#' Given a set of validation rules and a dataset the Feligi-Holt algorithm finds for each record
+#' Implementation of the Fellegi-Holt algorithm using the `ErrorLocalizer` base class.
+#' Given a set of validation rules and a dataset the Fellegi-Holt algorithm finds for each record
 #' the smallest (weighted) combination of variables that are erroneous (if any).
 #'
 #' @note Most users do not need this class and can use [locate_errors()].
 #'
-#' `errorlocalizer` implements feligi holt using a MIP-solver. For problems in which
+#' `errorlocalizer` implements Fellegi holt using a MIP-solver. For problems in which
 #' coefficients of the validation rules or the data are too different, you should consider scaling
 #' the data.
 #' @include MipRules.R
