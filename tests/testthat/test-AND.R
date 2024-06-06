@@ -25,7 +25,7 @@ describe("AND-ing rules work",{
     rules <- validator(if (x1 < 1 && x2 < 1) x3 >= 1 & x4 >= 1)
     d <- data.frame(x1 = 0, x2 = 0, x3 = 0, x4 = 0)
     le <- locate_errors(d, rules, weight=c(x1=Inf))
-    expect_equal(values(le)[1,], c(x1=FALSE, x2-FALSE, x3=TRUE, x4=TRUE))
+    expect_equal(values(le)[1,], c(x1=FALSE, x2=FALSE, x3=TRUE, x4=TRUE))
   })
 
 
