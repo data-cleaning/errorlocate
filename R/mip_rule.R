@@ -90,6 +90,38 @@ get_mr_matrix <- function(x, ...){
   list(A=A, operator=op, b=b)
 }
 
+get_mr_l_constraint <- function(x, ...){
+  variable <- get_mr_vars(x, ...)
+  # needed for variables sticking together
+  # could need some
+  variable <- sort(variable)
+  # just aesthetics...
+  .delta <- grepl("^.delta|._lin", variable)
+  variable <- c(variable[!.delta], variable[.delta])
+  rule <- get_mr_rules(x, ...)
+  n_rule <- length(rule)
+  n_variable <- length(variable)
+
+  L <- matrix( 0
+             , nrow=n_rule, ncol=n_variable
+             , dimnames = list(rule=rule, variable=variable)
+  )
+
+  for (i in seq_len(n_rule)){
+    a <- x[[i]]$a
+    L[i, names(a)] <- a
+  }
+  dir <- sapply(x, `[[`, 'op')
+  rhs <- unname(sapply(x, `[[`, 'b'))
+
+  names <- colnames(L)
+  ROI::L_constraint( L = L
+              , dir = dir
+              , rhs = rhs
+              , names = names
+              )
+}
+
 get_mr_type <- function(x, ...){
   type <- unlist(sapply(x, function(mr){
     mr$type
@@ -110,7 +142,7 @@ get_mr_numeric_vars <- function(x, ...){
 }
 
 get_mr_expression <- function(x, ...){
-  expr <- parse(text=sapply(x, as.character))
+  expr <- str2expression(text=sapply(x, as.character))
   names(expr) <- get_mr_rules(x, ...)
   expr
 }

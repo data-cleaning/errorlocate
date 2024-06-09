@@ -1,7 +1,7 @@
 Package: errorlocate
 Type: Package
 Title: Locate Errors with Validation Rules
-Version: 1.1.1
+Version: 2.0.0.9000
 Authors@R: c(person("Edwin", "de Jonge", email = "edwindjonge@gmail.com", role = c("aut", "cre"), comment=c(ORCID="0000-0002-6580-4718")),
              person("Mark", "van der Loo", email = "mark.vanderloo@gmail.com", role = c("aut")))
 Description: Errors in data can be located and removed using validation rules from package 
@@ -13,17 +13,21 @@ BugReports: https://github.com/data-cleaning/errorlocate/issues
 Depends:
     validate
 Imports:
+    ROI,
     lpSolveAPI,
     methods,
     parallel
 Suggests:
     testthat (>= 2.1.0),
+    ROI.plugin.highs,
+    ROI.plugin.lpsolve,
     covr,
     knitr,
     rmarkdown
-RoxygenNote: 7.2.0
+RoxygenNote: 7.3.1
 Encoding: UTF-8
 Collate: 
+    'L_constraint.R'
     'MipRules.R'
     'addnoise.R'
     'categorical.R'
@@ -38,6 +42,7 @@ Collate:
     'linear.R'
     'locate-errors.R'
     'log_extract.R'
+    'mip_ROIsolve.R'
     'mip_lpsolve.R'
     'mip_rule.R'
     'replace-errors.R'

@@ -202,7 +202,7 @@ print.dnf <- function(x, as_if = FALSE, ...){
 
 #' @export
 as.expression.dnf <- function(x, as_if = FALSE, ...){
-  parse(text=as.character(x, as_if = as_if, ...))
+  str2expression(text=as.character(x, as_if = as_if, ...))
 }
 
 dnf_to_mip_rule <- function(d, name = "", ...){

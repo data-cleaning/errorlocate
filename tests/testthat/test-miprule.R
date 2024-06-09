@@ -36,3 +36,43 @@ describe("print mr rule", {
   expect_output(print(mr[[1]]), "V1: -age <= -18", fixed = TRUE)
   expect_output(print(mr[[2]]), "V1: age <= 67", fixed = TRUE)
 })
+
+describe("l_constraint",{
+  it("can create an l constraint", {
+    rules <- validator( x < 1, y == 2, x < y
+                      )
+    mr <- to_miprules(rules)
+    l <- get_mr_l_constraint(mr)
+    expect_equal(l$dir, c("<", "==", "<"))
+    expect_equal(l$rhs, c(1,2,0))
+    expect_known_value(as.matrix(l$L), file = "l_constraint_matrix.rds")
+  })
+
+  it("can create an op", {
+    rules <- validator( x <= 1, y == 2, x <= y
+                      , if (A == "a1") B == "b1"
+                      , A %in% c("a1", "a2")
+                      , B %in% c("b1", "b2")
+    )
+    mr <- to_miprules(rules)
+    op <- translate_mip_ROI(rules = mr)
+
+    expect_equal(as.matrix(op$objective$L), matrix(0, nrow=1, ncol=2))
+    expect_equal(op$objective$names, c("x", "y"))
+
+    op$constraints$L |> as.matrix()
+    op$constraints$L$v
+
+
+    sol <- ROI::ROI_solve(op, solver = "lpsolve")
+    sol$status
+
+    sol <- ROI::ROI_solve(op, solver = "highs")
+    sol$status
+
+    # sol <- ROI::ROI_solve(op, solver = "ecos")
+    # sol$status
+
+  })
+})
+

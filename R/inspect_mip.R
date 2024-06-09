@@ -49,7 +49,6 @@ inspect_mip <- function(data, x, weight, ...){
   mip
 }
 
-
 # rules <- validator(x > 1)
 # data <- list(x = 0)
 #
