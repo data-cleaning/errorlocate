@@ -1,13 +1,10 @@
-# provides an interface to mip solvers.
-# currently only lpSolveAPI, should be workable for glpt
-
-#' translate linear rules into an lp problem
-#' @importFrom lpSolveAPI dimnames<-.lpExtPtr
-#' @param  rules mip rules
+#' Translates the problem into an ROI::OP mip problem
+#'
+#' @param rules mip rules
 #' @param objective function
 #' @param eps accuracy for equality/inequality
-#' @param ... additional [lp.control()] parameters that are set for the mip problem
-translate_mip_ROI <- function( rules
+#' @param ...additional parameters that are set for the mip problem
+translate_mip_OP <- function( rules
                              , objective=NULL
                              , eps = 1e-3
                              , ...

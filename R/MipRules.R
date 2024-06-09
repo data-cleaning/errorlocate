@@ -121,8 +121,8 @@ miprules <- setRefClass("MipRules",
      write_lp = function(filename, ...){
         lpSolveAPI::write.lp(to_lp(), filename, ...)
      },
-     to_ROI = function(...){
-       translate_mip_ROI(mip_rules(), objective, ...)
+     to_OP = function(...){
+       translate_mip_OP(mip_rules(), objective, ...)
      },
      execute = function(...){
        lp <- translate_mip_lp(mip_rules(), objective, ...)

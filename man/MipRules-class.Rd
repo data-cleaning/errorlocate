@@ -33,6 +33,7 @@ mr$execute()
 }
 \seealso{
 Other Mixed Integer Problem: 
+\code{\link{inspect_OP}()},
 \code{\link{inspect_mip}()}
 }
 \concept{Mixed Integer Problem}

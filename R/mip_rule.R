@@ -90,7 +90,7 @@ get_mr_matrix <- function(x, ...){
   list(A=A, operator=op, b=b)
 }
 
-get_mr_l_constraint <- function(x, ...){
+get_mr_l_constraint <- function(x, ..., eps_strict = 1e-3){
   variable <- get_mr_vars(x, ...)
   # needed for variables sticking together
   # could need some
@@ -113,6 +113,17 @@ get_mr_l_constraint <- function(x, ...){
   }
   dir <- sapply(x, `[[`, 'op')
   rhs <- unname(sapply(x, `[[`, 'b'))
+
+  # fix strict inequalities
+  lt <- (dir == "<")
+  gt <- (dir == ">")
+
+  rhs[lt] <- rhs[lt] - eps_strict
+  dir[lt] <- "<="
+
+  rhs[gt] <- rhs[gt] + eps_strict
+  dir[gt] <- ">="
+  #
 
   names <- colnames(L)
   ROI::L_constraint( L = L

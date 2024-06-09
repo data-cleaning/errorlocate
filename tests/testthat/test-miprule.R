@@ -55,7 +55,7 @@ describe("l_constraint",{
                       , B %in% c("b1", "b2")
     )
     mr <- to_miprules(rules)
-    op <- translate_mip_ROI(rules = mr)
+    op <- translate_mip_OP(rules = mr)
 
     expect_equal(as.matrix(op$objective$L), matrix(0, nrow=1, ncol=2))
     expect_equal(op$objective$names, c("x", "y"))
@@ -63,10 +63,11 @@ describe("l_constraint",{
     op$constraints$L |> as.matrix()
     op$constraints$L$v
 
-
+    ROI::ROI_require_solver("lpsolve")
     sol <- ROI::ROI_solve(op, solver = "lpsolve")
     sol$status
 
+    ROI::ROI_require_solver("highs")
     sol <- ROI::ROI_solve(op, solver = "highs")
     sol$status
 
