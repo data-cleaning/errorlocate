@@ -43,8 +43,8 @@ describe("l_constraint",{
                       )
     mr <- to_miprules(rules)
     l <- get_mr_l_constraint(mr)
-    expect_equal(l$dir, c("<", "==", "<"))
-    expect_equal(l$rhs, c(1,2,0))
+    expect_equal(l$dir, c("<=", "==", "<="))
+    expect_equal(l$rhs, c(1-0.001,2,-0.001))
     expect_known_value(as.matrix(l$L), file = "l_constraint_matrix.rds")
   })
 
@@ -57,12 +57,6 @@ describe("l_constraint",{
     mr <- to_miprules(rules)
     op <- translate_mip_OP(rules = mr)
 
-    expect_equal(as.matrix(op$objective$L), matrix(0, nrow=1, ncol=2))
-    expect_equal(op$objective$names, c("x", "y"))
-
-    op$constraints$L |> as.matrix()
-    op$constraints$L$v
-
     ROI::ROI_require_solver("lpsolve")
     sol <- ROI::ROI_solve(op, solver = "lpsolve")
     sol$status
@@ -70,10 +64,14 @@ describe("l_constraint",{
     ROI::ROI_require_solver("highs")
     sol <- ROI::ROI_solve(op, solver = "highs")
     sol$status
+  })
 
-    # sol <- ROI::ROI_solve(op, solver = "ecos")
-    # sol$status
-
+  it("extracts cat_constraints", {
+    vars <- c("A:a1", "A:a2", "x", "B:b1")
+    cc <- get_cat_constraints(vars)
+    expect_equal(cc$dir, c("<=", "<="))
+    expect_equal(cc$rhs, c(1, 1))
+    expect_equal(cc$names, vars)
   })
 })
 

@@ -51,6 +51,7 @@ fh_localizer <-
                        , cl = NULL
                        , n = 10
                        , Ncpus = getOption("Ncpus", 1)
+                       , max_time = 20
                        , timeout=60
                        ){
         vars <- ._miprules$._vars
@@ -157,6 +158,7 @@ fh_localizer <-
           })
 
           if (!isTRUE(el$solution)){
+            # browser()
             # test for numerical instability?
             # retry because of numerical instability
             mip$set_values( values = values

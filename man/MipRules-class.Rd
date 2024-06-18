@@ -18,7 +18,7 @@ automatically. This class is provided so users can implement or derive an altern
 The \code{MipRules} class contains the following methods:
 \itemize{
 \item \verb{$execute()} calls the mip solver to execute the rules.
-\item \verb{$to_lp()}: transforms the object into a lp_solve object
+\item \verb{$to_OP()}: transforms the object into a \code{\link[ROI:OP]{ROI::OP()}} object
 \item \verb{$is_infeasible} Checks if the current system of mixed integer rules is feasible.
 \item \verb{$set_values}: set values and weights for variables (determines the objective function).
 }

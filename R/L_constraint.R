@@ -3,40 +3,42 @@
 #' @param types named `character` with types of variables
 set_bounds_from_constraints <- function(x){
   is_c <- (x$types == "C")
-  is_b <- which(x$types == "B")
+  is_b <- (x$types == "B")
 
-  # continous boundaries
+  # continuous boundaries
   L <- x$constraints$L
-  A <- abs(L)
-  is_bound = (apply(A, 1, sum) == 1)
-  s <- sign(apply(L, 1, sum))
+  # select only the constraints with one variable
+  is_bound = (tabulate(L$i, nbins = L$nrow) == 1)
+
+  idx <- is_bound[L$i]
+  # i contains the row numbers of L that are bounds
+  i <- L$i[idx]
+  # j contains the col numbers / vars
+  j <- L$j[idx]
+  # contains the sign/coefficient
+  v <- L$v[idx]
 
   d <- c( "<=" =  1
         , "==" =  0
         , ">=" = -1
-        )[x$constraints$dir]
+        )[x$constraints$dir[i]]
 
-  s <- s*d
+  s <- v*d
+  # boundary value
+  b <- x$constraints$rhs[i] / s
 
   nobj <- x$n_of_variables
 
-  li <- seq_len(nobj)
-  lb <- rep(-Inf, nobj)
+  lb <- ifelse(is_b, 0, -Inf)
+  ub <- ifelse(is_b, 1, Inf)
 
-  i <- is_bound & (s <= 0)
-  lic <- apply(A[i,], 1, function(x){which(is_c & (x > 0))})
-  lb[lic] <- x$constraints$rhs[i]
-  lb[is_b] <- 0
+  lb[j[s < 0]] <- b[s < 0]
+  li <- which(lb != 0)
+  lb <- lb[li]
 
-
-  ui <- seq_len(nobj)
-  ub <- rep(Inf, nobj)
-
-  i <- is_bound & (s >= 0)
-  uic <- apply(A[i,], 1, function(x){which(is_c & (x > 0))})
-  ub[uic] <- x$constraints$rhs[i]
-  ub[is_b] <- 1L
-
+  ub[j[s > 0]] <- b[s > 0]
+  ui <- which(ub < Inf)
+  ub <- ub[ui]
 
   vb <- ROI::V_bound(
     li = li,
@@ -50,3 +52,4 @@ set_bounds_from_constraints <- function(x){
 
   x
 }
+

@@ -1,6 +1,5 @@
 print_OP <- function(op, ...){
   # TODO check if its a linear constraint
-
   x <- op$constraints
   rn <- with(x$L, {
     ds <- data.frame(i, j, v) |> split(i)
@@ -16,10 +15,10 @@ print_OP <- function(op, ...){
         )
       })
   })
+  # some substitution to improve readability
+  rn <- gsub("\\+ \\-", "- ", rn)
+  rn <- gsub("\\b1\\*", "", rn)
+  rn <- gsub("\\-0\\b", "0", rn)
   names(rn) <- rownames(op$constraints$L)
-  rn
-
-  bnds <- op$objective
-  bnds$L |> as.matrix()
-  op$types
+  rn |> writeLines()
 }

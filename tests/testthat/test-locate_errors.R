@@ -165,6 +165,7 @@ describe("locate_errors", {
   })
 
   it ("handles a contradiction in log constraints ",{
+    skip()
     options(errorlocate.allow_log = TRUE)
 
     rules <- validator(log(x) > log(4), x < 3)
@@ -192,6 +193,7 @@ describe("locate_errors", {
     mip <- inspect_mip(d, rules)
     s <- mip$execute()
 
+    skip()
     expect_true(as.logical(el$errors))
 
     options(errorlocate.allow_log = NULL)

@@ -5,10 +5,10 @@
 #' @param eps accuracy for equality/inequality
 #' @param ...additional parameters that are set for the mip problem
 translate_mip_OP <- function( rules
-                             , objective=NULL
-                             , eps = 1e-3
-                             , ...
-                             ){
+                            , objective=NULL
+                            , eps = 1e-3
+                            , ...
+                            ){
 
   constraints <- get_mr_l_constraint(rules)
   nms <- colnames(constraints$L)
@@ -35,11 +35,13 @@ translate_mip_OP <- function( rules
     if (is.null(names(objective))){
       names(objective) <- nms
     }
-    obj <- objective[nms]
+
+    obj <- objective[nms] |> setNames(nms)
 
     # set non items to zero
-    obj[!is.finite(obj)] <- 0
+    obj[is.na(obj)] <- 0
     obj[obj < 0] <- 0
+
   } else {
     obj <- rep(0, length(types)) |> setNames(nms)
   }
@@ -65,8 +67,8 @@ asSOS <- function(vars){
   sapply(sosname, function(sos){
     columns = which(var == sos)
     list( name=sos
-          , columns=columns
-          , weights = rep(1, length(columns))
+        , columns=columns
+        , weights = rep(1, length(columns))
     )
   }, simplify=FALSE)
 }

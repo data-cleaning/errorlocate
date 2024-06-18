@@ -88,10 +88,15 @@ log_constraint_rules <- function( num_var, log_var, logfn, n = 10, r = c(1,1e5)
   # ref rule:
   a <- c(-1, value)
   names(a) <- c(num_var, points)
-  ref_rule <- mip_rule( a = a
-                         , op = "=="
-                         , b = 0
-                         , rule = paste0(log_var, ".", "ref"))
+  type <- c("double", rep("binary", length(points)))
+
+  ref_rule <- mip_rule(
+    a = a,
+    op = "==",
+    b = 0,
+    type = type,
+    rule = paste0(log_var, ".", "ref")
+  )
 
   # convex rule:
   a <- rep(1, length(points))

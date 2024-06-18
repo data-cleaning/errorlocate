@@ -18,6 +18,7 @@ mip_rule <- function(a, op, b, rule, type, weight=Inf, ...){
            )
 }
 
+#' @export
 as.character.mip_rule <- function(x, ...){
   a <- paste0(x$a, "*", names(x$a), collapse= ' + ')
 
@@ -126,12 +127,59 @@ get_mr_l_constraint <- function(x, ..., eps_strict = 1e-3){
   #
 
   names <- colnames(L)
-  ROI::L_constraint( L = L
-              , dir = dir
-              , rhs = rhs
-              , names = names
-              )
+
+  lc <- ROI::L_constraint(
+    L = L,
+    dir = dir,
+    rhs = rhs,
+    names = names
+  )
+
+  # add categorical contraints
+  cc <- get_cat_constraints(names)
+
+  # combine the two
+  c(lc, cc)
 }
+
+get_cat_constraints <- function(vars){
+  #TODO also add log lower boundary as SOS
+  CAT <- ":.+"
+  # CAT <- "(:|\\._).+"
+
+  idx <- grepl(CAT, vars)
+  var <- sub(CAT, "", vars)
+
+  sosname <- unique(var[idx])
+  N <- length(sosname)
+
+  if (N < 1){
+    return(NULL)
+  }
+
+  L <- matrix(
+    0,
+    nrow = N,
+    ncol = length(vars),
+    dimnames = list(
+      rule=paste0(".cat.", sosname),
+      var = vars
+    )
+  )
+
+  for (i in seq_len(N)){
+    cv <- sosname[i]
+    L[i, which(var == cv)] <- 1
+  }
+
+  ROI::L_constraint(
+    L = L,
+    dir = rep("<=", N),
+    rhs = rep(1, N),
+    names = vars
+  )
+}
+
 
 get_mr_type <- function(x, ...){
   type <- unlist(sapply(x, function(mr){

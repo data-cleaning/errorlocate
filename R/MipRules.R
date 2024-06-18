@@ -10,7 +10,7 @@
 #' The `MipRules` class contains the following methods:
 #' \itemize{
 #'   \item `$execute()` calls the mip solver to execute the rules.
-#'   \item `$to_lp()`: transforms the object into a lp_solve object
+#'   \item `$to_OP()`: transforms the object into a [ROI::OP()] object
 #'   \item `$is_infeasible` Checks if the current system of mixed integer rules is feasible.
 #'   \item `$set_values`: set values and weights for variables (determines the objective function).
 #' }
@@ -125,46 +125,54 @@ miprules <- setRefClass("MipRules",
        translate_mip_OP(mip_rules(), objective, ...)
      },
      execute = function(...){
-       lp <- translate_mip_lp(mip_rules(), objective, ...)
+       op <- translate_mip_OP(mip_rules(), objective, ...)
        #TODO set timer, duration etc.
-       s <- solve(lp)
-
-       solution <- switch( as.character(s),
-                           "0" = TRUE,  # optimal solution found (so feasible)
-                           "1" = TRUE,  # sub optimal solution (so feasible)
-                           "2" = FALSE, # infeasible
-                           "3" = TRUE,  # unbounded (so feasible)
-                           "4" = TRUE,  # degenerate (so feasible)
-                           # "5" = NA,    # numerical failure, so unknown
-                           # "6" = NA,    # process aborted
-                           # "7" = NA,    # timeout
-                           "9" = TRUE,  # presolved
-                           "10" = FALSE, # branch and bound failed
-                           "11" = FALSE, # branch and bound stopped
-                           "12" = TRUE,  # a feasible branch and bound found
-                           "13" = FALSE, # no feasible branch and bound found
-                           FALSE
-       )
-       if (isTRUE(solution)){
-          values <- lpSolveAPI::get.variables(lp)
-       } else {
-          values <- rep(1, ncol(lp))
-       }
-       names(values) <- colnames(lp)
-       # browser()
-
-       adapt <- objective[is.finite(objective)] < 0  # trick to create logical with names
-       adapt_nms <- names(adapt)[names(adapt) %in% names(values)]
+       control = list( presolve="rows",
+                       epsint = 1e-15,
+                       epspivot = 1e-15,
+                       epsd = 1e-12
+                    )
+       ROI::ROI_require_solver("lpsolve")
+       s <- ROI::ROI_solve(op, "lpsolve", control = control, ...)
+      # solution <- switch( as.character(s),
+      #                      "0" = TRUE,  # optimal solution found (so feasible)
+      #                      "1" = TRUE,  # sub optimal solution (so feasible)
+      #                      "2" = FALSE, # infeasible
+      #                      "3" = TRUE,  # unbounded (so feasible)
+      #                      "4" = TRUE,  # degenerate (so feasible)
+      #                      # "5" = NA,    # numerical failure, so unknown
+      #                      # "6" = NA,    # process aborted
+      #                      # "7" = NA,    # timeout
+      #                      "9" = TRUE,  # presolved
+      #                      "10" = FALSE, # branch and bound failed
+      #                      "11" = FALSE, # branch and bound stopped
+      #                      "12" = TRUE,  # a feasible branch and bound found
+      #                      "13" = FALSE, # no feasible branch and bound found
+      #                      FALSE
+      #  )
+       # if (isTRUE(solution)){
+       #    values <- lpSolveAPI::get.variables(lp)
+       # } else {
+       #    values <- rep(1, ncol(lp))
+       # }
+       # names(values) <- colnames(lp)
+      if (s$status$code == 0){
+        values <- s$solution
+      } else {
+        values <- sapply(op$objective$names, function(n) {1})
+      }
+      adapt <- objective[is.finite(objective)] < 0  # trick to create logical with names
+      adapt_nms <- names(adapt)[names(adapt) %in% names(values)]
        adapt[adapt_nms] <- values[adapt_nms] == 1
        # issue with lpsolve: it sometimes messes up column names...
        vm <- !names(adapt) %in% names(values)
 
-       if (length(values) == 0){
-          # seems optimalisation of lpSolvAPI when there is only 1 column of data..
-          # adapt <- objective > 0
-          adapt[] <- lpSolveAPI::get.objective(lp) > 0
-          #browser()
-       }
+       # if (length(values) == 0){
+       #    # seems optimalisation of lpSolvAPI when there is only 1 column of data..
+       #    # adapt <- objective > 0
+       #    adapt[] <- lpSolveAPI::get.objective(lp) > 0
+       #    #browser()
+       # }
 
        # remove prefix
        names(adapt) <- gsub(".delta_", "", names(adapt))
@@ -181,10 +189,10 @@ miprules <- setRefClass("MipRules",
 
        adapt <- unlist(adapt)
        list(
-         s = s,
-         solution = solution,
+         s = s$status$msg$code,
+         solution = (s$status$code == 0),
          values = values,
-         lp = lp,
+         op = op,
          adapt = adapt,
          errors = adapt
        )
@@ -196,38 +204,43 @@ miprules <- setRefClass("MipRules",
        obj <- rep(1, length(vars))
        names(obj) <- vars
 
-       lp <- translate_mip_lp( mr
+       op <- translate_mip_OP( mr
                              , obj
-                             , break.at.first = TRUE
                              )
-       i <- lpSolveAPI::solve.lpExtPtr(lp)
-       feasible <- switch( as.character(i),
-          "0" = TRUE,  # optimal solution found (so feasible)
-          "1" = TRUE,  # sub optimal solution (so feasible)
-          "2" = FALSE, # infeasible
-          "3" = TRUE,  # unbounded (so feasible)
-          "4" = TRUE,  # degenerate (so feasible)
-          "5" = NA,    # numerical failure, so unknown
-          "6" = NA,    # process aborted
-          "7" = NA,    # timeout
-          "9" = TRUE,  # presolved
-         "10" = FALSE, # branch and bound failed
-         "11" = FALSE, # branch and bound stopped
-         "12" = TRUE,  # a feasible branch and bound found
-         "13" = FALSE, # no feasible branch and bound found
-         FALSE
+
+       s <- ROI::ROI_solve(
+         op,
+         solver = "lpsolve",
+         control = list(),
+         break.at.first = TRUE
        )
-       !feasible
+       # feasible <- switch( as.character(i),
+       #    "0" = TRUE,  # optimal solution found (so feasible)
+       #    "1" = TRUE,  # sub optimal solution (so feasible)
+       #    "2" = FALSE, # infeasible
+       #    "3" = TRUE,  # unbounded (so feasible)
+       #    "4" = TRUE,  # degenerate (so feasible)
+       #    "5" = NA,    # numerical failure, so unknown
+       #    "6" = NA,    # process aborted
+       #    "7" = NA,    # timeout
+       #    "9" = TRUE,  # presolved
+       #   "10" = FALSE, # branch and bound failed
+       #   "11" = FALSE, # branch and bound stopped
+       #   "12" = TRUE,  # a feasible branch and bound found
+       #   "13" = FALSE, # no feasible branch and bound found
+       #   FALSE
+       # )
+       (s$status$code != 0)
      },
      show = function(){
        mr <- mip_rules()
        cat("Mip rules object:\n")
-       cat("   methods: '$to_lp()', '$execute', '$set_values()'\n")
+       cat("   methods: '$to_OP()', '$execute', '$set_values()'\n")
        cat("   properties: '$mip_rules', '$objective', '$is_infeasible', '$rules'\n")
        # print(mr)
        cat("\n")
        cat("Generates the lp program (see ?inspect_mip) \n\n")
-       print(to_lp())
+       print_OP(to_OP())
        # cat(paste("* " , sapply(head(mr), as.character.mip_rule), collapse = "\n"))
        # if (length(mr) > 6){
        #   cat("\n...\nTotal of ", length(mr), " rules")
