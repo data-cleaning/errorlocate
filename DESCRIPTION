@@ -38,6 +38,7 @@ Collate:
     'errorlocation.R'
     'expand_weights.R'
     'expr_manip.R'
+    'get_solver.R'
     'inspect_OP.R'
     'inspect_mip.R'
     'linear.R'

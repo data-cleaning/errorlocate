@@ -132,8 +132,13 @@ miprules <- setRefClass("MipRules",
                        epspivot = 1e-15,
                        epsd = 1e-12
                     )
-       ROI::ROI_require_solver("lpsolve")
-       s <- ROI::ROI_solve(op, "lpsolve", control = control, ...)
+       solver <- get_solver()
+       s <- ROI::ROI_solve(
+         op,
+         solver = solver,
+         control = control,
+         ...
+      )
       # solution <- switch( as.character(s),
       #                      "0" = TRUE,  # optimal solution found (so feasible)
       #                      "1" = TRUE,  # sub optimal solution (so feasible)
@@ -207,10 +212,10 @@ miprules <- setRefClass("MipRules",
        op <- translate_mip_OP( mr
                              , obj
                              )
-
+       solver <- get_solver()
        s <- ROI::ROI_solve(
          op,
-         solver = "lpsolve",
+         solver = solver,
          control = list(),
          break.at.first = TRUE
        )
