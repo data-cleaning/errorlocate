@@ -132,11 +132,11 @@ miprules <- setRefClass("MipRules",
                        epspivot = 1e-15,
                        epsd = 1e-12
                     )
-       solver <- get_solver()
+       solver_config <- get_solver()
        s <- ROI::ROI_solve(
          op,
-         solver = solver,
-         control = control,
+         solver = solver_config$solver,
+         control = solver_config$control,
          ...
       )
       # solution <- switch( as.character(s),
@@ -212,11 +212,11 @@ miprules <- setRefClass("MipRules",
        op <- translate_mip_OP( mr
                              , obj
                              )
-       solver <- get_solver()
+       solver_config <- get_solver()
        s <- ROI::ROI_solve(
          op,
-         solver = solver,
-         control = list(),
+         solver = solver_config$solver,
+         control = solver_config$control,
          break.at.first = TRUE
        )
        # feasible <- switch( as.character(i),
