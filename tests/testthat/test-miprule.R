@@ -57,9 +57,14 @@ describe("l_constraint",{
     mr <- to_miprules(rules)
     op <- translate_mip_OP(rules = mr)
 
-    solver <- get_solver()
-    sol <- ROI::ROI_solve(op, solver = solver)
+    solver_config <- get_solver_config()
+    sol <- ROI::ROI_solve(
+      op,
+      solver = solver_config$solver,
+      control = solver_config$control
+    )
     sol$status
+
 
     ROI::ROI_require_solver("highs")
     sol <- ROI::ROI_solve(op, solver = "highs")

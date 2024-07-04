@@ -33,7 +33,7 @@ inspect_mip <- function(data, x, weight, ...){
   }
   data <- as.list(data)
 
-  mip <- miprules(rules)
+  mip <- miprules(rules, ...)
 
   vars <- mip$._vars
   missing_vars <- vars[!vars %in% names(data)]

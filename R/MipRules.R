@@ -36,10 +36,13 @@ miprules <- setRefClass("MipRules",
      ._log_transform = "data.frame",
      ._ignored     = "ANY",
      ._lp          = "ANY",
-     ._values      = "ANY"
+     ._values      = "ANY",
+     ._solver_config      = "list"
    ),
    methods = list(
-     initialize = function(rules = NULL, n = 10){
+     initialize = function( rules = NULL
+                          , solver_config = get_solver_config()
+                          , n = 10){
        if (is.null(rules)){ return()}
        rules <<- rules
        objective <<- objective
@@ -60,6 +63,8 @@ miprules <- setRefClass("MipRules",
 
        # make sure original variables are also in _vars_num
        ._vars_num <<- unique(c(._log_transform$num_vars, var_num))
+
+       ._solver_config <<- solver_config
 
      },
      mip_rules = function(){
@@ -126,41 +131,25 @@ miprules <- setRefClass("MipRules",
      },
      execute = function(...){
        op <- translate_mip_OP(mip_rules(), objective, ...)
-       #TODO set timer, duration etc.
-       control = list( presolve="rows",
-                       epsint = 1e-15,
-                       epspivot = 1e-15,
-                       epsd = 1e-12
-                    )
-       solver_config <- get_solver()
-       s <- ROI::ROI_solve(
-         op,
-         solver = solver_config$solver,
-         control = solver_config$control,
-         ...
+       tryCatch({
+         s <- ROI::ROI_solve(
+           op,
+           solver = ._solver_config$solver,
+           control = ._solver_config$control,
+           ...
+        )
+      },
+      error = function(e){
+        warning(e$message, call. = FALSE)
+        s <- list(
+          status = list(
+            code  = 1,
+            msg = list(e)
+          )
+        )
+      }
       )
-      # solution <- switch( as.character(s),
-      #                      "0" = TRUE,  # optimal solution found (so feasible)
-      #                      "1" = TRUE,  # sub optimal solution (so feasible)
-      #                      "2" = FALSE, # infeasible
-      #                      "3" = TRUE,  # unbounded (so feasible)
-      #                      "4" = TRUE,  # degenerate (so feasible)
-      #                      # "5" = NA,    # numerical failure, so unknown
-      #                      # "6" = NA,    # process aborted
-      #                      # "7" = NA,    # timeout
-      #                      "9" = TRUE,  # presolved
-      #                      "10" = FALSE, # branch and bound failed
-      #                      "11" = FALSE, # branch and bound stopped
-      #                      "12" = TRUE,  # a feasible branch and bound found
-      #                      "13" = FALSE, # no feasible branch and bound found
-      #                      FALSE
-      #  )
-       # if (isTRUE(solution)){
-       #    values <- lpSolveAPI::get.variables(lp)
-       # } else {
-       #    values <- rep(1, ncol(lp))
-       # }
-       # names(values) <- colnames(lp)
+
       if (s$status$code == 0){
         values <- s$solution
       } else {
@@ -171,13 +160,6 @@ miprules <- setRefClass("MipRules",
        adapt[adapt_nms] <- values[adapt_nms] == 1
        # issue with lpsolve: it sometimes messes up column names...
        vm <- !names(adapt) %in% names(values)
-
-       # if (length(values) == 0){
-       #    # seems optimalisation of lpSolvAPI when there is only 1 column of data..
-       #    # adapt <- objective > 0
-       #    adapt[] <- lpSolveAPI::get.objective(lp) > 0
-       #    #browser()
-       # }
 
        # remove prefix
        names(adapt) <- gsub(".delta_", "", names(adapt))
@@ -194,7 +176,8 @@ miprules <- setRefClass("MipRules",
 
        adapt <- unlist(adapt)
        list(
-         s = s$status$msg$code,
+         s = s$status$code,
+         solver_msg = s$status$msg,
          solution = (s$status$code == 0),
          values = values,
          op = op,
@@ -202,6 +185,7 @@ miprules <- setRefClass("MipRules",
          errors = adapt
        )
      },
+
      is_infeasible = function(){  # since we only check a subset of the rules,
        mr <- .self$mip_rules()    # we can only detect infeasiblity, not feasiblity
        vars <- get_mr_vars(mr)
@@ -212,44 +196,28 @@ miprules <- setRefClass("MipRules",
        op <- translate_mip_OP( mr
                              , obj
                              )
-       solver_config <- get_solver()
-       s <- ROI::ROI_solve(
-         op,
-         solver = solver_config$solver,
-         control = solver_config$control,
-         break.at.first = TRUE
+
+       tryCatch({
+         s <- ROI::ROI_solve(
+           op,
+           solver = ._solver_config$solver,
+           control = ._solver_config$control
+         )
+         return(s$status$code != 0)
+         },
+         error = function(e){
+           return(TRUE)
+         }
        )
-       # feasible <- switch( as.character(i),
-       #    "0" = TRUE,  # optimal solution found (so feasible)
-       #    "1" = TRUE,  # sub optimal solution (so feasible)
-       #    "2" = FALSE, # infeasible
-       #    "3" = TRUE,  # unbounded (so feasible)
-       #    "4" = TRUE,  # degenerate (so feasible)
-       #    "5" = NA,    # numerical failure, so unknown
-       #    "6" = NA,    # process aborted
-       #    "7" = NA,    # timeout
-       #    "9" = TRUE,  # presolved
-       #   "10" = FALSE, # branch and bound failed
-       #   "11" = FALSE, # branch and bound stopped
-       #   "12" = TRUE,  # a feasible branch and bound found
-       #   "13" = FALSE, # no feasible branch and bound found
-       #   FALSE
-       # )
-       (s$status$code != 0)
      },
      show = function(){
        mr <- mip_rules()
        cat("Mip rules object:\n")
        cat("   methods: '$to_OP()', '$execute', '$set_values()'\n")
        cat("   properties: '$mip_rules', '$objective', '$is_infeasible', '$rules'\n")
-       # print(mr)
        cat("\n")
        cat("Generates the lp program (see ?inspect_mip) \n\n")
        print_OP(to_OP())
-       # cat(paste("* " , sapply(head(mr), as.character.mip_rule), collapse = "\n"))
-       # if (length(mr) > 6){
-       #   cat("\n...\nTotal of ", length(mr), " rules")
-       # }
      }
    )
 )

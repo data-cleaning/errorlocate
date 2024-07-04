@@ -152,13 +152,15 @@ fh_localizer <-
                             # , log_values = as.list(log_data[r,,drop=FALSE])
                             # , delta_names = log_transform$num_vars
                           )
-            mip$execute(timeout=timeout, ...)
+            mip$execute( max_time = timeout
+                       , ...
+                       )
           }, error = function(e){
             list(solution=FALSE, s = NA, adapt = logical())
           })
 
-          if (!isTRUE(el$solution)){
-            # browser()
+          if (!isTRUE(el$solution || mip$._solver_config$solver=="lpsolve")){
+
             # test for numerical instability?
             # retry because of numerical instability
             mip$set_values( values = values

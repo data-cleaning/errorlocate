@@ -38,7 +38,7 @@
 #' @param ... optional parameters that are passed to [lpSolveAPI::lp.control()] (see details)
 #' @param cl optional parallel / cluster.
 #' @param Ncpus number of nodes to use. See details
-#' @param timeout maximum number of seconds that the localizer should use per record.
+#' @param timeout maximum number of seconds that the localizer should use per record (not ROI)
 #' @return [errorlocation-class()] object describing the errors found.
 #'
 #' @example examples/locate_errors.R

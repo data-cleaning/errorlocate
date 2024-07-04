@@ -43,6 +43,6 @@ describe("errorlocation",{
     expect_warning({
       el <- locate_errors(d, rules)
     })
-    expect_equal(el$status, 2)
+    expect_equal(el$status, 1)
   })
 })

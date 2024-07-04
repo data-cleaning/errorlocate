@@ -33,14 +33,14 @@ describe("Solve editrules checks",{
     )
   })
   it('works with single specified weight',{
-    expect_equivalent(locate_errors(
+  expect_equivalent(locate_errors(
       x     = validator(x+y==z),
       data  = data.frame(
         x = c(1,1,1),
         y = c(1,1,1),
         z = c(1,1,1)
       ),
-      weight  = c(1,2,2),
+      weight  = c(1,2,2)
     )$errors,
     matrix(c(
       TRUE , FALSE, FALSE,
@@ -50,6 +50,20 @@ describe("Solve editrules checks",{
       byrow=TRUE
     )
     )
+  })
+
+  it("works with highs", {
+    o <- options(errorlocate.solver = "highs")
+    locate_errors(
+      x     = validator(x+y==z),
+      data  = data.frame(
+        x = c(1,1,1),
+        y = c(1,1,1),
+        z = c(1,1,1)
+      ),
+      weight  = c(1,2,2)
+    )$errors
+
   })
 
   it('works with different weights per record',{
