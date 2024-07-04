@@ -32,7 +32,7 @@ mr$set_values(c(x=0), weights=c(x=1))
 mr$execute()
 }
 \seealso{
-Other Mixed Integer Problem: 
+Other Mixed Integer Problem:
 \code{\link{inspect_OP}()},
 \code{\link{inspect_mip}()}
 }

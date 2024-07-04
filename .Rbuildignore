@@ -15,3 +15,5 @@
 ^\.github$
 ^doc$
 ^Meta$
+^TODO.md$
+^.Rprofile$
