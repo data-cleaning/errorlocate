@@ -1,3 +1,7 @@
+# errorlocate 1.1.1
+
+* Fix for R 4.3.2: `is.atomic(NULL)` was `TRUE`, but now it is `FALSE`.
+
 # errorlocate 1.1
 
 * For values `> 1e7` in combination with another value `NA` `locate_errors` generated an error. Reported and fixed by Ramon Reinders (issue #36)
