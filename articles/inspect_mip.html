@@ -5,67 +5,49 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="errorlocate">
 <title>Inspecting the errorlocate Mixed Integer Program • errorlocate</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Inspecting the errorlocate Mixed Integer Program">
-<meta property="og:description" content="errorlocate">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Inspecting the errorlocate Mixed Integer Program">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
-    
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light"><div class="container">
-    
+
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+
     <a class="navbar-brand me-2" href="../index.html">errorlocate</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.2</small>
 
-    
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="nav-item">
-  <a class="nav-link" href="../articles/errorlocate.html">Get started</a>
-</li>
-<li class="nav-item">
-  <a class="nav-link" href="../reference/index.html">Reference</a>
-</li>
+<li class="nav-item"><a class="nav-link" href="../articles/errorlocate.html">Get started</a></li>
+<li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="active nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/inspect_mip.html">Inspecting the errorlocate Mixed Integer Program</a>
-  </div>
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="../articles/inspect_mip.html">Inspecting the errorlocate Mixed Integer Program</a></li>
+  </ul>
 </li>
-<li class="nav-item">
-  <a class="nav-link" href="../news/index.html">Changelog</a>
-</li>
+<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul>
-<form class="form-inline my-2 my-lg-0" role="search">
-        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
-</form>
-
-      <ul class="navbar-nav">
-<li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/data-cleaning/errorlocate/" aria-label="github">
-    <span class="fab fa fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
+<ul class="navbar-nav">
+<li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
+</form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/data-cleaning/errorlocate/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
 
-    
+
   </div>
 </nav><div class="container template-article">
 
@@ -74,10 +56,11 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="" class="logo" alt=""><h1>Inspecting the errorlocate Mixed Integer Program</h1>
+
+      <h1>Inspecting the errorlocate Mixed Integer Program</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/data-cleaning/errorlocate/blob/HEAD/vignettes/inspect_mip.Rmd" class="external-link"><code>vignettes/inspect_mip.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/data-cleaning/errorlocate/blob/master/vignettes/inspect_mip.Rmd" class="external-link"><code>vignettes/inspect_mip.Rmd</code></a></small>
       <div class="d-none name"><code>inspect_mip.Rmd</code></div>
     </div>
 
@@ -131,28 +114,35 @@ defined.</p>
 <h2 id="formal-description">Formal description<a class="anchor" aria-label="anchor" href="#formal-description"></a>
 </h2>
 <div class="section level3">
-<h3 id="rule-r_imathbfx">Rule <span class="math inline">\(r_i(\mathbf{x})\)</span><a class="anchor" aria-label="anchor" href="#rule-r_imathbfx"></a>
+<h3 id="rule-r_imathbfx">Rule
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>r</mi><mi>i</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐱</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">r_i(\mathbf{x})</annotation></semantics></math><a class="anchor" aria-label="anchor" href="#rule-r_imathbfx"></a>
 </h3>
-<p>Each translatable rule <span class="math inline">\(r_i(\mathbf{x})\)</span> can be written as a
-disjunction of atomic clauses <span class="math inline">\(C_i^j(x)\)</span>: it is a function <span class="math inline">\(r_i\)</span> that operates on (some of) the values
-of record <span class="math inline">\(\mathbf{x} = (x_1, \ldots,
-x_n)\)</span> and is <code>TRUE</code> (valid) or <code>FALSE</code>
-(not valid)</p>
-<p><span class="math display">\[
+<p>Each translatable rule
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>r</mi><mi>i</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐱</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">r_i(\mathbf{x})</annotation></semantics></math>
+can be written as a disjunction of atomic clauses
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>C</mi><mi>i</mi><mi>j</mi></msubsup><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">C_i^j(x)</annotation></semantics></math>:
+it is a function
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>r</mi><mi>i</mi></msub><annotation encoding="application/x-tex">r_i</annotation></semantics></math>
+that operates on (some of) the values of record
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐱</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>x</mi><mi>n</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\mathbf{x} = (x_1, \ldots, x_n)</annotation></semantics></math>
+and is <code>TRUE</code> (valid) or <code>FALSE</code> (not valid)</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>r</mi><mi>i</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐱</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><munder><mo>⋁</mo><mi>j</mi></munder><msubsup><mi>C</mi><mi>i</mi><mi>j</mi></msubsup><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐱</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">
 r_i(\mathbf{x}) = \bigvee_j C_i^j(\mathbf{x})
-\]</span></p>
+</annotation></semantics></math></p>
 <p>with each atomic clause:</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>C</mi><mi>i</mi><mi>j</mi></msubsup><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐱</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mrow><mo stretchy="true" form="prefix">{</mo><mtable><mtr><mtd columnalign="left" style="text-align: left"><msup><mi>𝐚</mi><mi>T</mi></msup><mi>𝐱</mi><mo>≤</mo><mi>b</mi></mtd></mtr><mtr><mtd columnalign="left" style="text-align: left"><msup><mi>𝐚</mi><mi>T</mi></msup><mi>𝐱</mi><mo>=</mo><mi>b</mi></mtd></mtr><mtr><mtd columnalign="left" style="text-align: left"><msub><mi>x</mi><mi>j</mi></msub><mo>∈</mo><msub><mi>F</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mrow><mtext mathvariant="normal">with </mtext><mspace width="0.333em"></mspace></mrow><msub><mi>F</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo>⊆</mo><msub><mi>D</mi><mi>j</mi></msub></mtd></mtr><mtr><mtd columnalign="left" style="text-align: left"><msub><mi>x</mi><mi>j</mi></msub><mo>∉</mo><msub><mi>F</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mrow><mtext mathvariant="normal">with </mtext><mspace width="0.333em"></mspace></mrow><msub><mi>F</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo>⊆</mo><msub><mi>D</mi><mi>j</mi></msub></mtd></mtr><mtr><mtd columnalign="left" style="text-align: left"></mtd></mtr></mtable></mrow></mrow><annotation encoding="application/x-tex">
 C_i^j(\mathbf{x}) = \left\{
   \begin{array}{l}
-\mathbf{a}^T\mathbf{x} \leq b \\
+ \mathbf{a}^T\mathbf{x} \leq b \\
   \mathbf{a}^T\mathbf{x} = b \\
   x_j \in F_{ij}  \textrm{with } F_{ij} \subseteq D_j \\
   x_j \not\in F_{ij} \textrm{with } F_{ij} \subseteq D_j \\
   \end{array}
 \right.
-\]</span></p>
-<p>Each linear, categorical or conditional rule <span class="math inline">\(r_i\)</span> can be written in this form.</p>
+</annotation></semantics></math></p>
+<p>Each linear, categorical or conditional rule
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>r</mi><mi>i</mi></msub><annotation encoding="application/x-tex">r_i</annotation></semantics></math>
+can be written in this form.</p>
 </div>
 <div class="section level3">
 <h3 id="example-1">Example 1<a class="anchor" aria-label="anchor" href="#example-1"></a>
@@ -187,39 +177,49 @@ can be written as (<code>has_house != "yes"</code> OR
 <div class="section level2">
 <h2 id="rule-system">Rule system:<a class="anchor" aria-label="anchor" href="#rule-system"></a>
 </h2>
-<p>The rules form a system <span class="math inline">\(R(\mathbf{x})\)</span>:</p>
-<p><span class="math display">\[
+<p>The rules form a system
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐱</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">R(\mathbf{x})</annotation></semantics></math>:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐱</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><munder><mo>⋀</mo><mi>i</mi></munder><msub><mi>r</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">
 R(\mathbf{x}) = \bigwedge_i r_i
-\]</span> which means that all rules <span class="math inline">\(r_i\)</span> must be valid. If <span class="math inline">\(R(\mathbf{x})\)</span> is true for record <span class="math inline">\(\mathbf{x}\)</span>, then the record is valid,
-otherwise one (or more) of the rules is violated.</p>
+</annotation></semantics></math> which means that all rules
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>r</mi><mi>i</mi></msub><annotation encoding="application/x-tex">r_i</annotation></semantics></math>
+must be valid. If
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐱</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">R(\mathbf{x})</annotation></semantics></math>
+is true for record
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐱</mi><annotation encoding="application/x-tex">\mathbf{x}</annotation></semantics></math>,
+then the record is valid, otherwise one (or more) of the rules is
+violated.</p>
 </div>
 <div class="section level2">
 <h2 id="mixed-integer-programming-to-fh">Mixed Integer Programming to FH<a class="anchor" aria-label="anchor" href="#mixed-integer-programming-to-fh"></a>
 </h2>
-<p>Each rule set <span class="math inline">\(R(\mathbf{x})\)</span> can
-be translated into a mip problem and solved.</p>
-<p><span class="math display">\[
+<p>Each rule set
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐱</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">R(\mathbf{x})</annotation></semantics></math>
+can be translated into a mip problem and solved.</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right"><mrow><mtext mathvariant="normal">Minimize </mtext><mspace width="0.333em"></mspace></mrow><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐱</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>0</mn><mo>;</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"><mrow><mtext mathvariant="normal">s.t. </mtext><mspace width="0.333em"></mspace></mrow><mrow><mi>𝐑</mi><mi>𝐱</mi></mrow><mo>≤</mo><mi>𝐝</mi></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"></mtd></mtr></mtable><annotation encoding="application/x-tex">
 \begin{array}{r}
   \textrm{Minimize } f(\mathbf{x}) = 0; \\
   \textrm{s.t. }\mathbf{Rx} \leq \mathbf{d} \\
 \end{array}
-\]</span> - <span class="math inline">\(f(\mathbf{x})\)</span> is the
-(weighted) number of changed variable: <span class="math inline">\(\delta_i \in {0,1}\)</span></p>
-<p><span class="math display">\[
+</annotation></semantics></math> -
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐱</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">f(\mathbf{x})</annotation></semantics></math>
+is the (weighted) number of changed variable:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>δ</mi><mi>i</mi></msub><mo>∈</mo><mrow><mn>0</mn><mo>,</mo><mn>1</mn></mrow></mrow><annotation encoding="application/x-tex">\delta_i \in {0,1}</annotation></semantics></math></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐱</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>N</mi></munderover><msub><mi>w</mi><mi>i</mi></msub><msub><mi>δ</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">
 f(\mathbf{x}) = \sum_{i=1}^N w_i \delta_i
-\]</span></p>
+</annotation></semantics></math></p>
 <ul>
 <li>
-<p><span class="math inline">\(\mathbf{R}\)</span> contains
-rules:</p>
+<p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐑</mi><annotation encoding="application/x-tex">\mathbf{R}</annotation></semantics></math>
+contains rules:</p>
 <ul>
-<li><p><span class="math inline">\(\mathbf{R}_H(\mathbf{x}) \leq
-\mathbf{d}_H\)</span> that were specified with
+<li><p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>𝐑</mi><mi>H</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐱</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>≤</mo><msub><mi>𝐝</mi><mi>H</mi></msub></mrow><annotation encoding="application/x-tex">\mathbf{R}_H(\mathbf{x}) \leq \mathbf{d}_H</annotation></semantics></math>
+that were specified with
 <code>validate</code>/<code>validator</code></p></li>
-<li><p><span class="math inline">\(\mathbf{R}_0(\mathbf{x},
-\mathbf{\delta}) \leq \mathbf{d}_0\)</span> : soft constraints that try
-fix the current record of <span class="math inline">\(\mathbf{x}\)</span> to the observed
-values.</p></li>
+<li><p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>𝐑</mi><mn>0</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐱</mi><mo>,</mo><mi>𝛅</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>≤</mo><msub><mi>𝐝</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">\mathbf{R}_0(\mathbf{x}, \mathbf{\delta}) \leq \mathbf{d}_0</annotation></semantics></math>
+: soft constraints that try fix the current record of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐱</mi><annotation encoding="application/x-tex">\mathbf{x}</annotation></semantics></math>
+to the observed values.</p></li>
 </ul>
 </li>
 </ul>
@@ -540,7 +540,7 @@ objective function of the mip.</p>
   Lower                  0               0               0               0</code></pre>
 </div>
 </div>
-  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
 
@@ -551,15 +551,15 @@ objective function of the mip.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer>
 </div>
 
-  
 
-  
+
+
 
   </body>
 </html>
