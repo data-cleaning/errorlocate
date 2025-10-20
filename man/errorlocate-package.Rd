@@ -10,7 +10,7 @@ Find errors in data given a set of validation rules.
 The \code{errorlocate} helps to identify obvious errors in raw datasets.
 }
 \details{
-It works in tandem with the package \code{\link[=validate]{validate()}}.
+It works in tandem with the package \code{validate}.
 With \code{validate} you formulate data validation rules to which the data must comply.
 For example:
 

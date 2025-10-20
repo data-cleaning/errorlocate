@@ -10,7 +10,7 @@ LOGS <- c("log", "log1p", "log10", "log2")
 #' categorical and conditional rules to be used in finding errors. Other rule types
 #' are ignored during error finding.
 #' @export
-#' @param x [validator()] object containing data validation rules
+#' @param x [validate::validator()] object containing data validation rules
 #' @param ... not used
 #' @return `logical` indicating which rules are (purely) linear.
  #' @family rule type

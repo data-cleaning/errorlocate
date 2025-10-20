@@ -7,6 +7,7 @@ vignette: >
   %\VignetteIndexEntry{Find errors in data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+bibliography: references.bib
 ---
 
 ```{r, include = FALSE}
@@ -28,12 +29,38 @@ It follows this simple recipe (Felligi-Holt):
 - Check if a record is valid (using supplied validation rules)
 - If not valid then adjust the minimum number of values to make it valid.
 
-`errorlocate` does this by translating this into a mixed integer 
-problem (see `vignette("inspect_mip", package="errorlocate"`) and solving it using
+`errorlocate` does this by translating the validation rules and record values 
+into a mixed integer problem (see `vignette("inspect_mip", package="errorlocate"`) and solving it using the R package
 `lpSolveAPI`.
 
+## Workflow
 
-## Methods
+Locating errors is part of a data cleaning workflow, see e.g. @loo2018statistical, where after locating
+errors, these errors are removed (set to `NA`) and subsequently imputed.
+The input for errorlocate are validation rules, which can be formulated
+using package `validate` [@loo2018validate]. 
+
+A typical workflow for using `errorlocate` is:
+
+1. Formulate validation rules using `validate::validator()`
+2. Check which records are invalid using `validate::confront()`
+3. Use `validate::summary()` to get an overview of invalid records and
+the rules they violate.
+4. (Optional) Correct obvious data errors which correction rules, for example using `dcmodify::modify`
+5. (Optional) Determine `weights` for variables, indicating how likely they are to be faulty.
+   Higher weights indicate more trust in the variable.
+6. Use `locate_errors` to find which values are faulty for the invalid records.
+7. Use `replace_errors` to set faulty values to `NA`.
+8.  Use deductive imputation to fill in missing values that follow from the rules, e.g. `deductive::deduImpute()`
+9. Impute the remaining missing values using your favorite imputation method, e.g. `simputation`
+10. (Optional) Re-validate the data using `validate::confront()` to check if all
+   records are now valid.
+   
+Post hoc:
+
+* Analyze the output of `locate_errors` to get insights in which variables are more often faulty than others, which can be used to improve future data collection processes.
+   
+## Main methods
 
 `errorlocate` has two main functions to be used:
 
@@ -132,7 +159,7 @@ When we have more trust in `age` we can give it more weight so it chooses
 income when it has to decide between the two (record 2):
 
 ```{r}
-set.seed(1) # good practice, although not needed in this example
+set.seed(1) # good practice, see later in this document
 weight <- c(age = 2, income = 1) 
 le <- locate_errors(d, rules, weight)
 le$errors
@@ -142,12 +169,38 @@ Weights can be specified in different ways:
 (see also `errorlocate::expand_weights`):
 
 - not specifying: all variables will have weight 1
-- named `vector`: all records will have same set of weights. Unspeficied columns
+- named `vector`: all records will have same set of weights. Unspecified columns
 will have weight 1.
 - named `matrix` or `data.frame`, same dimension as the data: specify weights per record.
 - Use `Inf` weights to fixate a variable, so it won't be changed.
 
-### Performance / Parallelisation
+## Reproducability (`set.seed`)
+
+The error location procedure can have, in some cases, multiple optimal solutions.
+For example given the rule:
+
+- `if (married == TRUE) age > 16`
+
+and the following data:
+
+```{r, echo=FALSE}
+d <- data.frame(age = 4, married = TRUE)
+d
+```
+Then either `age` or `married` can be considered faulty.
+When no weights are specified, `locate_errors` will randomly choose one of the two.
+It does this by adding a small amount of random noise to the weights internally. 
+To make sure that the results are reproducible, it is good practice to use `set.seed`
+before calling `locate_errors`.
+
+Note that using `set.seed` only makes the exact indentical input reproducible.
+Whenever the input `data.frame` have a different order, different number of rows or columns, 
+the generated noise for the weights of some of the records will be different.
+This level of reproducibility can be achieved by generating the noise beforehand 
+using `errorlocate::add_noise`, storing the weights together with the records
+and supplying the noisy weights to `locate_errors`.
+
+## Performance / Parallelisation
 
 `locate_errors` solves a mixed integer problem. When the number of interactions between validation rules is large, finding an optimal
 solution can become computationally intensive. Both `locate_errors`

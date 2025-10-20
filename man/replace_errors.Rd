@@ -50,7 +50,7 @@ replace_errors(
 \arguments{
 \item{data}{data to be checked}
 
-\item{x}{\code{\link[=validator]{validator()}} or \code{errorlocation} object.
+\item{x}{\code{\link[validate:validator]{validate::validator()}} or \code{errorlocation} object.
 If an \code{errorlocation} is already available (through \code{\link[=locate_errors]{locate_errors()}}) this
 is more efficient.}
 

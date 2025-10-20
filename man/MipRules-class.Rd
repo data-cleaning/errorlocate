@@ -6,7 +6,7 @@
 \alias{miprules}
 \title{Create a mip object from a validator object}
 \description{
-Create a mip object from \code{\link[=validator]{validator()}} object.
+Create a mip object from \code{\link[validate:validator]{validate::validator()}} object.
 This is a utility class that translates a validor object into a mixed integer problem that
 can be solved.
 Most users should use \code{\link[=locate_errors]{locate_errors()}} which will handle all translation and execution

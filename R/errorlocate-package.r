@@ -3,7 +3,7 @@
 #' Find errors in data given a set of validation rules.
 #' The `errorlocate` helps to identify obvious errors in raw datasets.
 #'
-#' It works in tandem with the package [validate()].
+#' It works in tandem with the package `validate`.
 #' With `validate` you formulate data validation rules to which the data must comply.
 #' For example:
 #'
