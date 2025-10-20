@@ -121,7 +121,9 @@ rules <- validator( r1 = age > 0
 With `validate::confront` we can see that rule `r2` is violated (record 2).
 
 ```{r}
-summary(confront(d, rules))
+d |> 
+  confront(rules) |> 
+  summary()
 ```
 
 
@@ -143,7 +145,7 @@ With `replace_errors` we can remove the errors (which still need to be imputed).
 
 ```{r}
 d_fixed <- replace_errors(d, le)
-summary(confront(d_fixed, rules))
+d_fixed |> confront(rules) |>summary()
 ```
 In which `replace_errors` set all faulty values to `NA`. 
 
@@ -153,9 +155,10 @@ d_fixed
 
 ### Weights
 
-`locate_errors` allows for supplying weigths for the variables. 
+`locate_errors` allows for supplying weights for the variables. 
 It is common that the quality of the observed variables differs.
-When we have more trust in `age` we can give it more weight so it chooses
+When we have more trust in `age` because it was retrieved from the
+official population register, we can give it more weight so it chooses
 income when it has to decide between the two (record 2):
 
 ```{r}
@@ -184,12 +187,12 @@ For example given the rule:
 and the following data:
 
 ```{r, echo=FALSE}
-d <- data.frame(age = 4, married = TRUE)
-d
+d2 <- data.frame(age = 4, married = TRUE)
+d2
 ```
 Then either `age` or `married` can be considered faulty.
 When no weights are specified, `locate_errors` will randomly choose one of the two.
-It does this by adding a small amount of random noise to the weights internally. 
+It does this by adding internally a small amount of random noise to the weights. 
 To make sure that the results are reproducible, it is good practice to use `set.seed`
 before calling `locate_errors`.
 
@@ -210,6 +213,8 @@ indicates the time spent to find a solution for each record. This can
 be restricted using the argument `timeout` (s).
 
 ```{r}
-# duration is in seconds. 
+# restrict time per record to max 30 seconds
+le <- locate_errors(d, rules, timeout=30)
+# duration is in seconds.
 le$duration
 ```
