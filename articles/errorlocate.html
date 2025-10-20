@@ -189,7 +189,9 @@ this data set. The complete error listing can be found with:</p>
 <p>With <code><a href="https://rdrr.io/pkg/validate/man/confront.html" class="external-link">validate::confront</a></code> we can see that rule
 <code>r2</code> is violated (record 2).</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/validate/man/validate-summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/validate/man/confront.html" class="external-link">confront</a></span><span class="op">(</span><span class="va">d</span>, <span class="va">rules</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">d</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/validate/man/confront.html" class="external-link">confront</a></span><span class="op">(</span><span class="va">rules</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/validate/man/validate-summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   name items passes fails nNA error warning               expression</span></span>
 <span><span class="co">#&gt; 1   r1     4      2     1   1 FALSE   FALSE                  age &gt; 0</span></span>
 <span><span class="co">#&gt; 2   r2     4      2     1   1 FALSE   FALSE income &lt;= 0 | (age &gt; 16)</span></span></code></pre></div>
@@ -212,7 +214,7 @@ since it violates the second rule. Note that we use
 still need to be imputed).</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">d_fixed</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/replace_errors.html">replace_errors</a></span><span class="op">(</span><span class="va">d</span>, <span class="va">le</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/validate/man/validate-summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/validate/man/confront.html" class="external-link">confront</a></span><span class="op">(</span><span class="va">d_fixed</span>, <span class="va">rules</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">d_fixed</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/validate/man/confront.html" class="external-link">confront</a></span><span class="op">(</span><span class="va">rules</span><span class="op">)</span> <span class="op">|&gt;</span><span class="fu"><a href="https://rdrr.io/pkg/validate/man/validate-summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   name items passes fails nNA error warning               expression</span></span>
 <span><span class="co">#&gt; 1   r1     4      1     0   3 FALSE   FALSE                  age &gt; 0</span></span>
 <span><span class="co">#&gt; 2   r2     4      2     0   2 FALSE   FALSE income &lt;= 0 | (age &gt; 16)</span></span></code></pre></div>
@@ -228,9 +230,10 @@ still need to be imputed).</p>
 <div class="section level3">
 <h3 id="weights">Weights<a class="anchor" aria-label="anchor" href="#weights"></a>
 </h3>
-<p><code>locate_errors</code> allows for supplying weigths for the
+<p><code>locate_errors</code> allows for supplying weights for the
 variables. It is common that the quality of the observed variables
-differs. When we have more trust in <code>age</code> we can give it more
+differs. When we have more trust in <code>age</code> because it was
+retrieved from the official population register, we can give it more
 weight so it chooses income when it has to decide between the two
 (record 2):</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
@@ -270,7 +273,7 @@ optimal solutions. For example given the rule:</p>
 <p>Then either <code>age</code> or <code>married</code> can be
 considered faulty. When no weights are specified,
 <code>locate_errors</code> will randomly choose one of the two. It does
-this by adding a small amount of random noise to the weights internally.
+this by adding internally a small amount of random noise to the weights.
 To make sure that the results are reproducible, it is good practice to
 use <code>set.seed</code> before calling <code>locate_errors</code>.</p>
 <p>Note that using <code>set.seed</code> only makes the exact indentical
@@ -294,9 +297,11 @@ processors. The <code>$duration</code> (s) property of each solution
 indicates the time spent to find a solution for each record. This can be
 restricted using the argument <code>timeout</code> (s).</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># duration is in seconds. </span></span>
+<code class="sourceCode R"><span><span class="co"># restrict time per record to max 30 seconds</span></span>
+<span><span class="va">le</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/locate_errors.html">locate_errors</a></span><span class="op">(</span><span class="va">d</span>, <span class="va">rules</span>, timeout<span class="op">=</span><span class="fl">30</span><span class="op">)</span></span>
+<span><span class="co"># duration is in seconds.</span></span>
 <span><span class="va">le</span><span class="op">$</span><span class="va">duration</span></span>
-<span><span class="co">#&gt; [1] 0.002073288 0.001595259 0.000000000 0.001464605</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 0.002124786 0.001615286 0.000000000 0.001486301</span></span></code></pre></div>
 <div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
 <div id="ref-loo2018statistical" class="csl-entry">
 Loo, Mark van der, and Edwin de Jonge. 2018. <em>Statistical Data
