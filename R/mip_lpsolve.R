@@ -6,7 +6,7 @@
 #' @param  rules mip rules
 #' @param objective function
 #' @param eps accuracy for equality/inequality
-#' @param ... additional [lp.control()] parameters that are set for the mip problem
+#' @param ... additional [lpSolveAPI::lp.control()] parameters that are set for the mip problem
 translate_mip_lp <- function( rules
                             , objective=NULL
                             , eps = 1e-3

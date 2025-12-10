@@ -6,6 +6,9 @@ data <- data.frame( profit   = 755
                   , cost     = 125
                   , turnover = 200
                   )
+
+# use set.seed to maake results reproducible
+set.seed(42)
 le <- locate_errors(data, rules)
 
 print(le)
@@ -29,6 +32,8 @@ v_logical <- validator( citizen %in% c(TRUE, FALSE)
                       )
 
 data <- data.frame(voted = TRUE, citizen = FALSE)
+
+set.seed(42)
 locate_errors(data, v_logical, weight=c(2,1))$errors
 
 # try a condinational rule
@@ -36,6 +41,8 @@ v <- validator( married %in% c(TRUE, FALSE)
               , if (married==TRUE) age >= 17
               )
 data <- data.frame( married = TRUE, age = 16)
+
+set.seed(42)
 locate_errors(data, v, weight=c(married=1, age=2))$errors
 
 
@@ -52,9 +59,12 @@ weight <- read.csv(text=
        2,   1
 ", strip.white = TRUE)
 
+set.seed(42)
 locate_errors(data, v, weight = weight)$errors
 
 # fixate / exclude a variable from error localiziation
 # using an Inf weight
 weight <- c(age = Inf)
+
+set.seed(42)
 locate_errors(data, v, weight = weight)$errors

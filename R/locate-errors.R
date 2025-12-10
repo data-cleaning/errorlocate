@@ -2,7 +2,8 @@
 #'
 #' Find out which fields in a data.frame are "faulty" using validation rules
 #' This method returns found errors, according to the specified method `x`.
-#' Use method [replace_errors()], to automatically remove these errors.
+#' Use method [replace_errors()], to automatically remove these errors. Use
+#' `[base::set.seed()]` beforehand to make the function call reproducible.
 #' `
 #'
 #' Use an `Inf` `weight` specification to fixate variables that can not be changed.

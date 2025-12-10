@@ -13,7 +13,7 @@ translate_mip_lp(rules, objective = NULL, eps = 0.001, ...)
 
 \item{eps}{accuracy for equality/inequality}
 
-\item{...}{additional \code{\link[=lp.control]{lp.control()}} parameters that are set for the mip problem}
+\item{...}{additional \code{\link[lpSolveAPI:lp.control]{lpSolveAPI::lp.control()}} parameters that are set for the mip problem}
 }
 \description{
 translate linear rules into an lp problem

@@ -1,6 +1,6 @@
 #' Create a mip object from a validator object
 #'
-#' Create a mip object from [validator()] object.
+#' Create a mip object from [validate::validator()] object.
 #' This is a utility class that translates a validor object into a mixed integer problem that
 #' can be solved.
 #' Most users should use [locate_errors()] which will handle all translation and execution

@@ -17,11 +17,11 @@ distribution. To correct this error multiple observations or the aggregated numb
 }
 \details{
 Current implementation assumes that errors are record based. The error locations can be retrieved
-using the method \code{\link[=values]{values()}} and are a matrix of
+using the method \code{\link[validate:values]{validate::values()}} and are a matrix of
 rows and columns, with the same dimensions are the \code{data.frame} that was checked.
 For errors that are purely column based, or dataset based, errorlocations will return a matrix with all
 rows or cells set to \code{TRUE}.
-The \code{\link[=values]{values()}} return \code{NA} for missing values.
+The \code{\link[validate:values]{validate::values()}} return \code{NA} for missing values.
 }
 
 \section{Fields}{

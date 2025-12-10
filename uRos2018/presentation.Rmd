@@ -1,161 +1,243 @@
 ---
-title: "Open Data from CBS using R"
-subtitle: "cbsodataR: find and use public open statistics on NL" 
+title: "Data errors, how to find them?"
+subtitle: "Errorlocate: find and replace erroneous fields in data using validation rules" 
 author: "Edwin de Jonge"
-date: "Statistics Netherlands / NSC-R 2022"
+date: "Statistics Netherlands / uRos 2018"
 output:
   beamer_presentation:
     includes:
       in_header: tex/header.tex
     keep_tex: yes
-editor_options: 
-  markdown: 
-    wrap: 72
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(eval = TRUE)
+knitr::opts_chunk$set(eval = FALSE)
+library(errorlocate)
+library(magrittr)
 ```
 
 ## Who am I?
 
--   Data scientist / Methodologist at Statistics Netherlands (aka CBS).
--   Author of several R-packages, including `whisker`, `validate`,
-    `errorlocate`, `docopt`, `daff`, `chunked` , *`cbsodataR`*...
--   Co-author of *Statistical Data Cleaning with applications in
-    R (2018)* (together with @markvdloo)
--   background in theoretical/comptutional physics, now since long a
-    "statistician".
+- Data scientist / Methodologist at Statistics Netherlands (aka CBS).
+- Author of several R-packages, including `whisker`, `validate`, `errorlocate`, `docopt`, `daff`, `tableplot`,  `ffbase`, `chunked`, ...
+- Co-author of _Statistical Data Cleaning with applications in R (2018)_ (together with @markvdloo)
 
-## Daily work:
+## Data cleaning...
 
--   expertise: Statistical Computing, (incl R and Python), Network
-    analysis, Data Visualisation.
--   Complexity Science Research / Population and Enterprise networks.
--   Internal statistical consultant
+A large part of your job is spent in data-cleaning:
 
-## CBS
+- getting your data in the right shape (e.g. `tidyverse`, `dplyr`)
 
--   Centraal Bureau voor de Statistiek = Statistics Netherlands
+- assessing missing data (e.g. `VIM`, `datamaid`)
 
--   Founded in 1899
+- checking validity (e.g. `validate`)
 
--   Governmental Agency ("ZBO" under EZK)
+- locating and removing errors: **`errorlocate`**!
 
--   publishes official statistics on various topics:
+- impute values for missing or erroneous data (e.g. `simputation`, `VIM`, `recipes`)
 
-    -   demographics
-    -   economy, GDP (economic growth),
-    -   education
-    -   agriculture
-    -   environment
-    -   Sustainable Development Goals (sdg)
-    -   **crime**
+## Statistical Value Chain
 
-## CBS open data?
+\begin{center}
+ \includegraphics[width=\textwidth]{img/valuechain.pdf}
+\end{center}
 
-### StatLine, CBS (Statistics Netherlands)
+## {.plain}
 
--   Since 1995, Statistics Netherlands has StatLine, output database:
-    all (tabular) data produced by CBS.
+\begin{center}
+  \includegraphics[height=1\paperheight]{img/keep-calm-and-validate}
+\end{center}
 
--   search, select, view and download data
 
--   statline: open data *avant la lettre* : <https://opendata.cbs.nl>
+## Validation rules?
 
-## What is open data?
+Package `validate` allows to:
 
-Open as in: - free to download and use (with referencing)
-
-But also: - "machine readable" - should be possible to retrieve data and
-meta data "automagically". - implemented with a Web API. (application
-programming interface)
-
-## CBS open data:
-
--   implements *odata3* web api for all StatLine tables (>3500) and
-    their metadata.
--   allows for retrieving data at any time.
-
-### What is `cbsodataR`?
-
--   R wrapper for Web API to facilitate downloading data.
--   Adds metadata easily
--   Allows for finding and searching data
--   Allows for filtering data.
-
-Is used by:
-
--   government agencies: e.g. CPB, SCP, RIVM, etc.
--   data journalists
-
-## cbsodataR Functionality
-
--   Retrieve a list of datasets
--   Find a specific data set
--   Download data
--   Add metadata
--   Filter data
-
-## `cbs_get_datasets()`
-
--   retrieve a list of all open data tables + their publication meta
-    data \tiny
+- formulate explicit data rule that data must conform to:
 
 ```{r}
-library(cbsodataR)
-ds <- cbs_get_datasets() 
-ds[1:4, 1:3]
+library(validate)
+check_that( data.frame(age=160, driver_license=TRUE), 
+  age >= 0, 
+  age < 150,
+  if (driver_license == TRUE) age >= 16
+)
 ```
 
-## `cbs_search`
+## Explicit validation rules:
 
--   retrieve a list of data table containing search words
+- Give a clear overview what the data must conform to.
+- Can be used to reason about.
+- Can be used to fix/correct data!
+- Find error, and when found correct it.
 
-\small
+### Note:
+
+- Manual fix is error prone, not reproducible and not feasible for large data sets.
+- Large rule set have (very) complex behavior, e.g. entangled rules: adjusting one value may 
+invalidate other rules.
+
+## Error localization
+
+> Error localization is a procedure that points out fields in a data set 
+that can be altered or imputed in such a way that all validation rules
+can be satisfied.
+
+## Find the error:
 
 ```{r}
-theft <- cbs_search("diefstal")
-theft[1:4, 2:4]
+library(validate)
+check_that( data.frame(age=160, driver_license=TRUE), 
+  age >= 0, 
+  age < 150,
+  if (driver_license == TRUE) age >= 16
+)
 ```
 
-## `cbs_get_meta()`
+It is clear that `age` has an erroneous value, but for more complex rule sets
+it is less clear.
 
--   Use `Identifier` to retrieve metadata of a table
--   contains all metadata (including borders of table).
--   Each property is a data.frame containing metadata e.g.
+## Multivariate example:
 
 ```{r}
-m <- cbs_get_meta("83648NED") # geregistreerde criminaliteit
-names(m)
-m$SoortMisdrijf[1:5, 1:2]
+check_that( data.frame( age     = 3
+                      , married = TRUE
+                      , attends = "kindergarten"
+                      )
+          , if (married == TRUE) age >= 16
+          , if (attends == "kindergarten") age <= 6
+          )
+```
+Ok, clear that this is a faulty record, but what is the error? 
+
+## Feligi Holt formalism:
+
+> Find the minimal (weighted) number of variables that cause the invalidation of the data rules.
+
+Makes sense! (But there are exceptions...)
+
+Implemented in `errorlocate` (second generation of `editrules`).
+
+## Formal description (1)
+
+### Rule $r_i(x)$
+
+A rule a disjunction of atomic clauses:
+
+$$
+r_i(\la{x}) = \bigvee_j C_i^j(\la{x})
+$$
+with: 
+
+$$
+C_i^j(\la{x}) = \left\{
+  \begin{array}{l}
+ \la{a}^T\la{x} \leq b \\
+  \la{a}^T\la{x} = b \\
+  x_j \in F_{ij}  \textrm{with } F_{ij} \subseteq D_j \\
+  x_j \not\in F_{ij} \textrm{with } F_{ij} \subseteq D_j \\
+  \end{array}
+\right.
+$$
+
+## Rule system:
+
+The rules form a system $R(\la{x})$:
+
+$$
+R_H(\la{x}) = \bigwedge_i r_i
+$$
+If $R_H(\la{x})$ is true for record $\la{x}$, then the record is valid, otherwise one (or more) of the rules is violated.
+
+## Mixed Integer Programming to FH
+
+Each rule set $R(\la{x})$ can be translated into a mip problem and solved.
+$$
+\begin{array}{r}
+  \textrm{Minimize } f(\mathbf{x}) = 0; \\
+  \textrm{s.t. }\mathbf{Rx} \leq \mathbf{d} \\
+\end{array}
+$$
+
+- $f(\la{x})$ is the (weighted) number of changed variable: $\delta_i \in {0,1}$
+
+$$
+f(\la{x}) = \sum_{i=1}^N w_i \delta_i
+$$
+
+- $\la{R}$ contains rules: $\la{R}_H(\la{x}) \leq \la{d}_H$  and soft constraints: $\la{R}_0(\la{x}, \la{\delta}) \leq \la{d}_0$ that
+try fix the values of $\la{x}$ to the measured values.
+
+## `errorlocate`
+
+- translates your rules automatically into a mip form.
+- Uses `lpSolveAPI` to solve the problem.
+- contains a small framework for implementing your own error localization algorithms.
+
+## `errorlocate::locate_errors`
+
+```{r, eval=TRUE}
+locate_errors( data.frame( age     = 3
+                  , married = TRUE
+                  , attends = "kindergarten"
+                  )
+     , validator( if (married == TRUE) age >= 16
+                , if (attends == "kindergarten") age <= 6
+                )
+     )$errors
 ```
 
-## `cbs_get_data`
+## `errorlocate::replace_errors`
 
--   retrieve data using an Identifier
--   returns a `data.frame` with metadata "embedded"
+```{r, eval=TRUE}
+replace_errors( 
+    data.frame( age     = 3
+              , married = TRUE
+              , attends = "kindergarten"
+              )
+  , validator( if (married == TRUE) age >= 16
+             , if (attends == "kindergarten") age <= 6
+             )
+)
+```
+
+
+## Pipe %>%  friendly
+
+The `replace_errors` function is pipe friendly:
 
 ```{r}
-d <- cbs_get_data("83648NED", Perioden="2021JJ00")
+rules <- validator(age < 150)
+
+data_noerrors <- 
+  data.frame(age=160, driver_license = TRUE) %>% 
+  replace_errors(rules)
+
+errors_removed(data_noerrors) # contains errors removed
 ```
 
-## intermezzo: Web API
+## Interested?
 
-\tiny
+\begincols
+  \begincol{0.48\textwidth}
+  \includegraphics[width=0.9\textwidth]{img/SDCR.jpg} 
+  \endcol
+  
+  \begincol{0.48\textwidth}
+  \begin{block}{SDCR}
+M. van der Loo and E. de Jonge (2018)
+\emph{Statistical Data Cleaning with applications in R}
+Wiley, Inc.
+\end{block}
+\begin{block}{errorlocate}
+\begin{itemize}
+\item Available on \href{https://CRAN.R-project.org/package=errorlocate}{\underline{CRAN}}
+\end{itemize}
+\end{block}
+\begin{block}{More theory?}
+$\leftarrow$ See book 
+\end{block}
+\endcol
+\endcols
 
-```{r}
-d <- cbs_get_data("83648NED", Perioden="2021JJ00", verbose=TRUE)
-```
-
-## Live demo
-
-## Toekomst:
-
--   Nieuwere versie van de Web API OData4 (nog in beta / test versie)
-
-# volgende versie van
-
--   <https://statistiekcbs.github.io/cbsodata4>
-
-Thank you for your attention!
+Thank you for your attention (and enjoy The Hague)!

@@ -12,11 +12,11 @@
 #'
 #'
 #' Current implementation assumes that errors are record based. The error locations can be retrieved
-#' using the method [values()] and are a matrix of
+#' using the method [validate::values()] and are a matrix of
 #' rows and columns, with the same dimensions are the `data.frame` that was checked.
 #' For errors that are purely column based, or dataset based, errorlocations will return a matrix with all
 #' rows or cells set to `TRUE`.
-#' The [values()] return `NA` for missing values.
+#' The [validate::values()] return `NA` for missing values.
 
 #' @section Fields:
 #'

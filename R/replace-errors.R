@@ -15,7 +15,7 @@
 #' imputation method. Suggested values from the error localization method may introduce an undesired bias.
 #'
 #' @param data data to be checked
-#' @param x [validator()] or `errorlocation` object.
+#' @param x [validate::validator()] or `errorlocation` object.
 #' If an `errorlocation` is already available (through [locate_errors()]) this
 #' is more efficient.
 #' @param ref optional reference data set
