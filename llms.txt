@@ -72,7 +72,7 @@ print(data_no_error)
 er <- errors_removed(data_no_error)
 
 print(er)
-#> call:  locate_errors(data, x, ref, ..., cl = cl) 
+#> call:  locate_errors(data, x, ref, ..., cl = cl, Ncpus = Ncpus) 
 #> located  1  error(s).
 #> located  0  missing value(s).
 #> Use 'summary', 'values', '$errors' or '$weight', to explore and retrieve the errors.
