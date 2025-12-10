@@ -6,7 +6,7 @@ Errorlocate uses validation rules from package `validate` to locate
 faulty values in observations (or in database slang: erronenous *fields*
 in *records*).
 
-It follows this simple recipe (Felligi-Holt):
+It follows this simple recipe (Fellegi-Holt):
 
 - Check if a record is valid (using supplied validation rules)
 - If not valid then adjust the minimum number of values to make it
@@ -254,7 +254,7 @@ restricted using the argument `timeout` (s).
 le <- locate_errors(d, rules, timeout=30)
 # duration is in seconds.
 le$duration
-#> [1] 0.002070427 0.001604557 0.000000000 0.001434803
+#> [1] 0.002048254 0.001606226 0.000000000 0.001462698
 ```
 
 Loo, Mark van der, and Edwin de Jonge. 2018. *Statistical Data Cleaning

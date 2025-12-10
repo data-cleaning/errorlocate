@@ -19,7 +19,7 @@ of an invalid record to repair for rule 1, may invalidate the record for
 rule 2.
 
 Errorlocate provides a small framework for record based error detection
-and implements the Felligi Holt algorithm. This algorithm assumes there
+and implements the Fellegi Holt algorithm. This algorithm assumes there
 is no other information available then the values of a record and a set
 of validation rules. The algorithm minimizes the (weighted) number of
 values that need to be adjusted to remove the invalidation.

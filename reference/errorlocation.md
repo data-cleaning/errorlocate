@@ -4,7 +4,7 @@ Errorlocation contains the result of a error detection. Errors can
 record based or variable based.
 
 - A record based error is restricted within one observation.
-  [`errorlocate()`](errorlocate-package.md) using the Felligi Holt
+  [`errorlocate()`](errorlocate-package.md) using the Fellegi Holt
   algorithm assumes errors are record based.
 
 - A variable based error is a flaw in uni- or multivariate distribution.
