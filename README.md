@@ -5,7 +5,6 @@
 status](https://github.com/data-cleaning/errorlocate/workflows/R-CMD-check/badge.svg)](https://github.com/data-cleaning/errorlocate/actions)
 [![CRAN](http://www.r-pkg.org/badges/version/errorlocate)](https://CRAN.R-project.org/package=errorlocate)
 [![Downloads](http://cranlogs.r-pkg.org/badges/errorlocate)](http://www.r-pkg.org/pkg/errorlocate)
-[![status](https://tinyverse.netlify.com/badge/errorlocate)](https://CRAN.R-project.org/package=errorlocate)
 [![Codecov test
 coverage](https://codecov.io/gh/data-cleaning/errorlocate/branch/master/graph/badge.svg)](https://codecov.io/gh/data-cleaning/errorlocate?branch=master)
 [![Mentioned in Awesome Official
@@ -21,10 +20,10 @@ formulate data validation rules to which the data must comply.
 
 For example:
 
--   “age cannot be negative”: `age >= 0`.
--   “if a person is married, he must be older then 16 years”:
-    `if (married ==TRUE) age > 16`.
--   “Profit is turnover minus cost”: `profit == turnover - cost`.
+- “age cannot be negative”: `age >= 0`.
+- “if a person is married, he must be older then 16 years”:
+  `if (married ==TRUE) age > 16`.
+- “Profit is turnover minus cost”: `profit == turnover - cost`.
 
 While `validate` can check if a record is valid or not, it does not
 identify which of the variables are responsible for the invalidation.
@@ -85,7 +84,7 @@ print(data_no_error)
 er <- errors_removed(data_no_error)
 
 print(er)
-#> call:  locate_errors(data, x, ref, ..., cl = cl) 
+#> call:  locate_errors(data, x, ref, ..., cl = cl, Ncpus = Ncpus) 
 #> located  1  error(s).
 #> located  0  missing value(s).
 #> Use 'summary', 'values', '$errors' or '$weight', to explore and retrieve the errors.
