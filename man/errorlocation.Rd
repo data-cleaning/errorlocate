@@ -10,7 +10,7 @@ Errorlocation contains the result of a error detection.
 Errors can record based or variable based.
 \itemize{
 \item A record based error is restricted within one observation.
-\code{\link[=errorlocate]{errorlocate()}} using the Felligi Holt algorithm assumes errors are record based.
+\code{\link[=errorlocate]{errorlocate()}} using the Fellegi Holt algorithm assumes errors are record based.
 \item A variable based error is a flaw in  uni- or multivariate
 distribution. To correct this error multiple observations or the aggregated number should be adjusted.
 }

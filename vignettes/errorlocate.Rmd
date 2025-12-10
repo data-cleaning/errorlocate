@@ -24,7 +24,7 @@ options(Ncpus = 1)
 Errorlocate uses validation rules from package `validate` to locate faulty
 values in observations (or in database slang: erronenous _fields_ in _records_).
 
-It follows this simple recipe (Felligi-Holt):
+It follows this simple recipe (Fellegi-Holt):
 
 - Check if a record is valid (using supplied validation rules)
 - If not valid then adjust the minimum number of values to make it valid.
