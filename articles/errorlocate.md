@@ -254,7 +254,7 @@ restricted using the argument `timeout` (s).
 le <- locate_errors(d, rules, timeout=30)
 # duration is in seconds.
 le$duration
-#> [1] 0.002082825 0.001611710 0.000000000 0.001483917
+#> [1] 0.002033949 0.001591921 0.000000000 0.001427174
 ```
 
 Loo, Mark van der, and Edwin de Jonge. 2018. *Statistical Data Cleaning
