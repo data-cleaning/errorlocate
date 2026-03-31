@@ -1,10 +1,9 @@
 # Find errors in data
 
-Find out which fields in a data.frame are "faulty" using validation
-rules This method returns found errors, according to the specified
-method `x`. Use method [`replace_errors()`](replace_errors.md), to
-automatically remove these errors. Use `[base::set.seed()]` beforehand
-to make the function call reproducible. \`
+Locate fields in a data.frame that are likely erroneous under a set of
+validation rules. The method returns an
+[`errorlocation-class()`](errorlocation.md) object, computed with
+localizer `x`.
 
 ## Usage
 
@@ -88,26 +87,29 @@ found.
 
 ## Details
 
-Use an `Inf` `weight` specification to fixate variables that can not be
+Use [`replace_errors()`](replace_errors.md) to remove flagged fields,
+typically by setting them to `NA`. Use
+[`base::set.seed()`](https://rdrr.io/r/base/Random.html) beforehand to
+make calls reproducible.
+
+Use an `Inf` `weight` specification to fix variables that should not be
 changed. See [`expand_weights()`](expand_weights.md) for more details.
 
-`locate_errors` uses lpSolveAPI to formulate and solves a mixed integer
-problem. For details see the vignettes. This solver has many options:
-[lpSolveAPI::lp.control.options](https://rdrr.io/pkg/lpSolveAPI/man/lp.control.options.html).
-Noteworthy options to be used are:
+`locate_errors` uses `lpSolveAPI` to formulate and solve a mixed integer
+problem. See the vignettes for details. The solver has many options, see
+[`lpSolveAPI::lp.control.options()`](https://rdrr.io/pkg/lpSolveAPI/man/lp.control.options.html).
+Noteworthy options include:
 
 - `timeout`: restricts the time the solver spends on a record (seconds)
 
-- `break.at.value`: set this to minimum weight + 1 to improve speed.
+- `break.at.value`: set this to `minimum weight + 1` to improve speed.
 
-- `presolve`: default for errorlocate is "rows". Set to "none" when you
-  have solutions where all variables are deemed wrong.
+- `presolve`: default in `errorlocate` is `"rows"`. Set to `"none"` when
+  you have solutions where all variables are deemed wrong.
 
-`locate_errors` can be run on multiple cores using R package `parallel`.
+`locate_errors` can run on multiple cores using package `parallel`.
 
-- The easiest way to use the parallel option is to set `Ncpus` to the
-  number of desired cores, @seealso
-  [`parallel::detectCores()`](https://rdrr.io/r/parallel/detectCores.html).
+- The easiest option is setting `Ncpus` to the number of desired cores.
 
 - Alternatively one can create a cluster object
   ([`parallel::makeCluster()`](https://rdrr.io/r/parallel/makeCluster.html))
@@ -115,9 +117,11 @@ Noteworthy options to be used are:
 
 - Or set `cl` to an integer which results in
   [`parallel::mclapply()`](https://rdrr.io/r/parallel/mclapply.html),
-  which only works on non-windows.
+  which only works on non-Windows systems.
 
 ## See also
+
+[`parallel::detectCores()`](https://rdrr.io/r/parallel/detectCores.html)
 
 Other error finding: [`errorlocation-class`](errorlocation.md),
 [`errors_removed()`](errors_removed.md),
@@ -129,14 +133,14 @@ Other error finding: [`errorlocation-class`](errorlocation.md),
 ``` r
 rules <- validator( profit + cost == turnover
                   , cost >= 0.6 * turnover # cost should be at least 60% of turnover
-                  , turnover >= 0 # can not be negative.
+                  , turnover >= 0 # cannot be negative.
                   )
 data <- data.frame( profit   = 755
                   , cost     = 125
                   , turnover = 200
                   )
 
-# use set.seed to maake results reproducible
+# use set.seed to make results reproducible
 set.seed(42)
 le <- locate_errors(data, rules)
 
@@ -182,7 +186,7 @@ locate_errors(data, v_logical, weight=c(2,1))$errors
 #>      voted citizen
 #> [1,] FALSE    TRUE
 
-# try a condinational rule
+# try a conditional rule
 v <- validator( married %in% c(TRUE, FALSE)
               , if (married==TRUE) age >= 17
               )
@@ -213,7 +217,7 @@ locate_errors(data, v, weight = weight)$errors
 #> [1,]    TRUE FALSE
 #> [2,]   FALSE  TRUE
 
-# fixate / exclude a variable from error localiziation
+# fixate / exclude a variable from error localization
 # using an Inf weight
 weight <- c(age = Inf)
 

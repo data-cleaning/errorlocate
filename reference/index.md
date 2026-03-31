@@ -17,7 +17,7 @@
 - [`errors_removed()`](errors_removed.md) : Get location of removed
   errors from a 'cleaned' data set
 - [`expand_weights()`](expand_weights.md) : Create a weight matrix
-- [`inspect_mip()`](inspect_mip.md) : inspect the mip problem
+- [`inspect_mip()`](inspect_mip.md) : Inspect the MIP problem
   formulation
 - [`is_categorical()`](is_categorical.md) : Check if rules are
   categorical
@@ -27,5 +27,5 @@
 - [`locate_errors()`](locate_errors.md) : Find errors in data
 - [`replace_errors()`](replace_errors.md) : Replace erroneous fields
   with NA or a suggested value
-- [`translate_mip_lp()`](translate_mip_lp.md) : translate linear rules
-  into an lp problem
+- [`translate_mip_lp()`](translate_mip_lp.md) : Translate linear rules
+  into an LP problem

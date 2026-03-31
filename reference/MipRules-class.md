@@ -1,26 +1,27 @@
 # Create a mip object from a validator object
 
-Create a mip object from
+Create a `MipRules` object from
 [`validate::validator()`](https://rdrr.io/pkg/validate/man/validator.html)
-object. This is a utility class that translates a validor object into a
-mixed integer problem that can be solved. Most users should use
-[`locate_errors()`](locate_errors.md) which will handle all translation
-and execution automatically. This class is provided so users can
-implement or derive an alternative solution.
+rules. This utility class translates rules into a mixed integer problem.
+
+## Details
+
+Most users should use [`locate_errors()`](locate_errors.md), which
+handles translation and execution automatically. `MipRules` is mainly
+for advanced users who want to inspect or customize the optimization
+setup.
 
 ## Methods
 
 The `MipRules` class contains the following methods:
 
-- `$execute()` calls the mip solver to execute the rules.
+- `$execute()` solves the mixed integer problem.
 
-- `$to_lp()`: transforms the object into a lp_solve object
+- `$to_lp()` transforms the object into an `lp_solve` problem object.
 
-- `$is_infeasible` Checks if the current system of mixed integer rules
-  is feasible.
+- `$is_infeasible` checks whether the current rule system is infeasible.
 
-- `$set_values`: set values and weights for variables (determines the
-  objective function).
+- `$set_values()` sets observed values and weights (objective function).
 
 ## See also
 
@@ -55,7 +56,7 @@ mr$execute()
 #> $lp
 #> Model name: errorlocate
 #>                        x        .delta_x       
-#> Minimize               0  1.600760886212       
+#> Minimize               0  1.080750137568       
 #> x_ub                   1          -1e+07  <=  0
 #> Kind                 Std             Std       
 #> Type                Real             Int       

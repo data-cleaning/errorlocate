@@ -10,6 +10,6 @@ combination of variables that are erroneous (if any).
 Most users do not need this class and can use
 [`locate_errors()`](locate_errors.md).
 
-`errorlocalizer` implements Fellegi holt using a MIP-solver. For
+`errorlocalizer` implements Fellegi-Holt using a MIP solver. For
 problems in which coefficients of the validation rules or the data are
 too different, you should consider scaling the data.

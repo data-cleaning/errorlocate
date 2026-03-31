@@ -22,11 +22,11 @@ is_categorical(x, ...)
 
 logical indicating which rules are purely categorical/logical
 
-## Details
+## Note
 
-\#' @note `errorlocate` supports linear, categorical and conditional
-rules to be used in finding errors. Other rule types are ignored during
-error finding.
+`errorlocate` supports linear, categorical and conditional rules to be
+used in finding errors. Other rule types are ignored during error
+finding.
 
 ## See also
 

@@ -1,31 +1,31 @@
 # Error location object
 
-Errorlocation contains the result of a error detection. Errors can
-record based or variable based.
+`errorlocation` contains the result of error localization. It stores,
+per cell, whether a value is flagged as erroneous (`TRUE`), valid
+(`FALSE`), or missing (`NA`).
 
-- A record based error is restricted within one observation.
-  [`errorlocate()`](errorlocate-package.md) using the Fellegi Holt
-  algorithm assumes errors are record based.
+- A record-based error is restricted to one observation.
+  [`errorlocate()`](errorlocate-package.md) using the Fellegi-Holt
+  algorithm assumes errors are record-based.
 
-- A variable based error is a flaw in uni- or multivariate distribution.
-  To correct this error multiple observations or the aggregated number
-  should be adjusted.
+- A variable-based error is a flaw in a uni- or multivariate
+  distribution. Correcting it typically requires changing multiple
+  observations or aggregate totals.
 
 ## Details
 
-Current implementation assumes that errors are record based. The error
-locations can be retrieved using the method
-[`validate::values()`](https://rdrr.io/pkg/validate/man/values.html) and
-are a matrix of rows and columns, with the same dimensions are the
-`data.frame` that was checked. For errors that are purely column based,
-or dataset based, errorlocations will return a matrix with all rows or
-cells set to `TRUE`. The
+Current implementation assumes record-based errors. Retrieve error
+locations with
+[`validate::values()`](https://rdrr.io/pkg/validate/man/values.html),
+which returns a matrix with the same dimensions as the checked
+`data.frame`. For errors that are purely column-based, or dataset-based,
+`errorlocation` returns a matrix with all rows or cells set to `TRUE`.
 [`validate::values()`](https://rdrr.io/pkg/validate/man/values.html)
-return `NA` for missing values.
+returns `NA` for missing values.
 
 ## Fields
 
-- `$errors`: `matrix` indicating which values are erronuous (`TRUE`),
+- `$errors`: `matrix` indicating which values are erroneous (`TRUE`),
   missing (`NA`) or valid (`FALSE`)
 
 - `$weight`: The total weight per record. A weight of 0 means no errors
@@ -33,7 +33,7 @@ return `NA` for missing values.
 
 - `$status`: The
   [status](https://rdrr.io/pkg/lpSolveAPI/man/solve.lpExtPtr.html) of
-  the mip solver for this record.
+  the MIP solver for this record.
 
 - `$duration`: The number of seconds for processing each record.
 

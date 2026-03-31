@@ -1,8 +1,9 @@
-# inspect the mip problem formulation
+# Inspect the MIP problem formulation
 
-Utility function to inspect the mip problem for a record. `inspect_mip`
-can be used as a "drop-in" replacement for
-[`locate_errors()`](locate_errors.md), but works on the first record.
+Utility function to inspect the MIP problem for one record.
+`inspect_mip` can be used as a drop-in replacement for
+[`locate_errors()`](locate_errors.md), but it only uses the first record
+when multiple rows are supplied.
 
 ## Usage
 
@@ -34,10 +35,11 @@ inspect_mip(data, x, weight, ...)
 
 ## Details
 
-It may sometimes be handy to find out what is happening exactly with a
-record. See the example section for finding out what to do with
-inspect_mip. See [`vignette("inspect_mip")`](../articles/inspect_mip.md)
-for more details.
+This is useful for debugging how one record is translated into a mixed
+integer problem, including the generated rules, objective, and LP
+representation. See
+[`vignette("inspect_mip")`](../articles/inspect_mip.md) for more
+details.
 
 ## See also
 
@@ -60,7 +62,7 @@ print(mip)
 #> 
 #> Model name: errorlocate
 #>                        x        .delta_x            
-#> Minimize               0  1.195669834734            
+#> Minimize               0  1.677570635452            
 #> V1                    -1               0  <=  -1.001
 #> x_ub                   1          -1e+07  <=       0
 #> x_lb                  -1          -1e+07  <=       0
@@ -69,12 +71,12 @@ print(mip)
 #> Upper                Inf               1            
 #> Lower               -Inf               0            
 
-# inspect the lp problem (prior to solving it with lpsolveAPI)
+# inspect the LP problem (prior to solving it with lpSolveAPI)
 lp <- mip$to_lp()
 print(lp)
 #> Model name: errorlocate
 #>                        x        .delta_x            
-#> Minimize               0  1.195669834734            
+#> Minimize               0  1.677570635452            
 #> V1                    -1               0  <=  -1.001
 #> x_ub                   1          -1e+07  <=       0
 #> x_lb                  -1          -1e+07  <=       0
@@ -83,10 +85,10 @@ print(lp)
 #> Upper                Inf               1            
 #> Lower               -Inf               0            
 
-# for large problems write the lp problem to disk for inspection
+# for large problems write the LP problem to disk for inspection
 # lpSolveAPI::write.lp(lp, "my_problem.lp")
 
-# solve the mip system / find a solution
+# solve the MIP system / find a solution
 res <- mip$execute()
 names(res)
 #> [1] "s"        "solution" "values"   "lp"       "adapt"    "errors"  
@@ -95,11 +97,11 @@ names(res)
 res$s
 #> [1] 0
 
-# lp problem after solving (often simplified version of first lp)
+# LP problem after solving (often simplified version of first LP)
 res$lp
 #> Model name: errorlocate
 #>                        x        .delta_x       
-#> Minimize               0  1.195669834734       
+#> Minimize               0  1.677570635452       
 #> x_ub                   1          -1e+07  <=  0
 #> Kind                 Std             Std       
 #> Type                Real             Int       
@@ -111,14 +113,14 @@ res$errors
 #>    x 
 #> TRUE 
 
-# values of variables used in the mip formulation. Also contains a valid solution
+# values of variables used in the MIP formulation. Also contains a valid solution
 # for "faulty" variables
 res$values
 #>        x .delta_x 
 #>    1.001    1.000 
 
-# see the derived mip rules and objective function, used in the construction of
-# lp problem
+# see the derived MIP rules and objective function, used in the construction of
+# the LP problem
 mip$mip_rules()
 #> [[1]]
 #> V1: -x < -1
@@ -128,5 +130,5 @@ mip$mip_rules()
 #> x_lb: -x - 1e+07*.delta_x <= 0
 mip$objective
 #> .delta_x 
-#>  1.19567 
+#> 1.677571 
 ```

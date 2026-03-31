@@ -1,32 +1,32 @@
 # Find errors in data given a set of validation rules.
 
-Find errors in data given a set of validation rules. The `errorlocate`
-helps to identify obvious errors in raw datasets.
+`errorlocate` helps identify which cells in a record are likely causing
+rule violations.
 
 ## Details
 
-It works in tandem with the package `validate`. With `validate` you
-formulate data validation rules to which the data must comply. For
-example:
+The package is designed to work with
+[`validate::validator()`](https://rdrr.io/pkg/validate/man/validator.html)
+rules. While `validate` can determine whether a record is valid,
+`errorlocate` tries to identify which fields are most likely erroneous.
 
-"age cannot be negative": `age >= 0`
+This is non-trivial because rules are interdependent: changing one value
+to satisfy one rule may violate another rule.
 
-While `validate` can identify if a record is valid or not, it does not
-identify which of the variables are responsible for the invalidation.
-This may seem a simple task, but is actually quite tricky: a set of
-validation rules form a web of dependent variables: changing the value
-of an invalid record to repair for rule 1, may invalidate the record for
-rule 2.
+`errorlocate` implements record-level error localization based on the
+Fellegi-Holt approach. It translates the localization task into a mixed
+integer optimization problem and uses a MIP solver to find a
+minimum-weight set of fields to change.
 
-Errorlocate provides a small framework for record based error detection
-and implements the Fellegi Holt algorithm. This algorithm assumes there
-is no other information available then the values of a record and a set
-of validation rules. The algorithm minimizes the (weighted) number of
-values that need to be adjusted to remove the invalidation.
+Typical workflow:
 
-The `errorlocate` package translates the validation and error
-localization problem into a mixed integer problem and uses a mip solver
-to find a solution.
+- Define rules with
+  [`validate::validator()`](https://rdrr.io/pkg/validate/man/validator.html).
+
+- Locate likely errors with [`locate_errors()`](locate_errors.md).
+
+- Replace flagged cells with missing values using
+  [`replace_errors()`](replace_errors.md).
 
 ## References
 

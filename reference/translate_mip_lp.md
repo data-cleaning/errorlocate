@@ -1,6 +1,6 @@
-# translate linear rules into an lp problem
+# Translate linear rules into an LP problem
 
-translate linear rules into an lp problem
+Translate linear rules into an LP problem
 
 ## Usage
 
@@ -12,7 +12,7 @@ translate_mip_lp(rules, objective = NULL, eps = 0.001, ...)
 
 - rules:
 
-  mip rules
+  MIP rules
 
 - objective:
 
@@ -26,4 +26,4 @@ translate_mip_lp(rules, objective = NULL, eps = 0.001, ...)
 
   additional
   [`lpSolveAPI::lp.control()`](https://rdrr.io/pkg/lpSolveAPI/man/lp.control.html)
-  parameters that are set for the mip problem
+  parameters that are set for the MIP problem
