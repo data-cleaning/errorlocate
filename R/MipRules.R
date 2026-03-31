@@ -1,18 +1,19 @@
 #' Create a mip object from a validator object
 #'
-#' Create a mip object from [validate::validator()] object.
-#' This is a utility class that translates a validor object into a mixed integer problem that
-#' can be solved.
-#' Most users should use [locate_errors()] which will handle all translation and execution
-#' automatically. This class is provided so users can implement or derive an alternative solution.
+#' Create a `MipRules` object from [validate::validator()] rules.
+#' This utility class translates rules into a mixed integer problem.
+#'
+#' Most users should use [locate_errors()], which handles translation and
+#' execution automatically. `MipRules` is mainly for advanced users who want to
+#' inspect or customize the optimization setup.
 #'
 #' @section Methods:
 #' The `MipRules` class contains the following methods:
 #' \itemize{
-#'   \item `$execute()` calls the mip solver to execute the rules.
-#'   \item `$to_lp()`: transforms the object into a lp_solve object
-#'   \item `$is_infeasible` Checks if the current system of mixed integer rules is feasible.
-#'   \item `$set_values`: set values and weights for variables (determines the objective function).
+#'   \item `$execute()` solves the mixed integer problem.
+#'   \item `$to_lp()` transforms the object into an `lp_solve` problem object.
+#'   \item `$is_infeasible` checks whether the current rule system is infeasible.
+#'   \item `$set_values()` sets observed values and weights (objective function).
 #' }
 #'
 #' @family Mixed Integer Problem

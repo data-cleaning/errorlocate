@@ -2,7 +2,7 @@
 % Please edit documentation in R/inspect_mip.R
 \name{inspect_mip}
 \alias{inspect_mip}
-\title{inspect the mip problem formulation}
+\title{Inspect the MIP problem formulation}
 \usage{
 inspect_mip(data, x, weight, ...)
 }
@@ -18,14 +18,14 @@ error localization (see \code{\link[=expand_weights]{expand_weights()}}).}
 \item{...}{optional parameters that are passed to \code{\link[lpSolveAPI:lp.control]{lpSolveAPI::lp.control()}} (see details)}
 }
 \description{
-Utility function to inspect the mip problem for a record. \code{inspect_mip} can
-be used as a "drop-in" replacement for \code{\link[=locate_errors]{locate_errors()}}, but works on the
-first record.
+Utility function to inspect the MIP problem for one record.
+\code{inspect_mip} can be used as a drop-in replacement for \code{\link[=locate_errors]{locate_errors()}}, but
+it only uses the first record when multiple rows are supplied.
 }
 \details{
-It may sometimes be handy to find out what is happening exactly with a record.
-See the example section for finding out what to do with inspect_mip. See
-\code{vignette("inspect_mip")} for more details.
+This is useful for debugging how one record is translated into a mixed integer
+problem, including the generated rules, objective, and LP representation.
+See \code{vignette("inspect_mip")} for more details.
 }
 \examples{
 rules <- validator(x > 1)
@@ -35,32 +35,32 @@ weight <- c(x = 1)
 mip <- inspect_mip(data, rules)
 print(mip)
 
-# inspect the lp problem (prior to solving it with lpsolveAPI)
+# inspect the LP problem (prior to solving it with lpSolveAPI)
 lp <- mip$to_lp()
 print(lp)
 
-# for large problems write the lp problem to disk for inspection
+# for large problems write the LP problem to disk for inspection
 # lpSolveAPI::write.lp(lp, "my_problem.lp")
 
-# solve the mip system / find a solution
+# solve the MIP system / find a solution
 res <- mip$execute()
 names(res)
 
 # lpSolveAPI status of finding a solution
 res$s
 
-# lp problem after solving (often simplified version of first lp)
+# LP problem after solving (often simplified version of first LP)
 res$lp
 
 # records that are deemed "faulty"
 res$errors
 
-# values of variables used in the mip formulation. Also contains a valid solution
+# values of variables used in the MIP formulation. Also contains a valid solution
 # for "faulty" variables
 res$values
 
-# see the derived mip rules and objective function, used in the construction of
-# lp problem
+# see the derived MIP rules and objective function, used in the construction of
+# the LP problem
 mip$mip_rules()
 mip$objective
 }

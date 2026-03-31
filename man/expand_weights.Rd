@@ -21,7 +21,7 @@ expand_weights(dat, weight = NULL, as.data.frame = FALSE, ...)
 \description{
 Expands a weight specification into a weight matrix to be used
 by \code{locate_errors} and \code{replace_errors}. Weights allow for "guiding" the
-errorlocalization process, so that less reliable values/variables with less
+error localization process, so that less reliable values/variables with lower
 weight are selected first. See details on the specification.
 }
 \details{
@@ -32,11 +32,11 @@ The following specifications for \code{weight} are supported:
 \itemize{
 \item \code{NULL}: generates a weight matrix with \code{1}'s
 \item a named \code{numeric}, unmentioned columns will have weight 1
-\item a unnamed \code{numeric} with a length equal to \code{ncol(dat)}
+\item an unnamed \code{numeric} with a length equal to \code{ncol(dat)}
 \item a \code{data.frame} with same number of rows as \code{dat}
 \item a \code{matrix} with same number of rows as \code{dat}
-\item \code{Inf}, \code{NA} weights will be interpreted as that those variables must not be
-changed and are fixated. \code{Inf} weights perform much better than setting a weight
+\item \code{Inf}, \code{NA} weights are interpreted as variables that must not be
+changed. \code{Inf} weights perform much better than setting a weight
 to a large number.
 }
 }

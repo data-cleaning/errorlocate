@@ -2,9 +2,9 @@
 #'
 #' Utility function to add some small positive noise to weights.
 #' This is mainly done to randomly choose between solutions
-#' of equal weight. Without adding noise to weights lp solvers may return
+#' of equal weight. Without adding noise to weights, LP solvers may return
 #' an identical solution over and over while there are multiple solutions of equal weight.
-#' The generated noise is positive to prevent that weights will be zero or negative.
+#' The generated noise is positive to prevent weights from becoming zero or negative.
 #'
 #' When no `max_delta` is supplied, add_noise will use the minimum difference
 #' larger than zero divided by the `length(x)`.
@@ -14,6 +14,7 @@
 #' otherwise see details
 #' @param ... currently not used
 #' @return `numeric` vector/matrix with noise applied.
+#' @example examples/add_noise.R
 #' @export
 add_noise <- function(x, max_delta = NULL, ...){
   if (is.matrix(x)){

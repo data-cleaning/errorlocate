@@ -21,11 +21,21 @@ otherwise see details}
 \description{
 Utility function to add some small positive noise to weights.
 This is mainly done to randomly choose between solutions
-of equal weight. Without adding noise to weights lp solvers may return
+of equal weight. Without adding noise to weights, LP solvers may return
 an identical solution over and over while there are multiple solutions of equal weight.
-The generated noise is positive to prevent that weights will be zero or negative.
+The generated noise is positive to prevent weights from becoming zero or negative.
 }
 \details{
 When no \code{max_delta} is supplied, add_noise will use the minimum difference
 larger than zero divided by the \code{length(x)}.
+}
+\examples{
+x <- c(1, 1, 3, 8)
+
+set.seed(123)
+add_noise(x)
+
+m <- rbind(c(1, 2, 3), c(1, 2, 3))
+set.seed(123)
+add_noise(m, max_delta = 0.05)
 }

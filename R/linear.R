@@ -13,7 +13,8 @@ LOGS <- c("log", "log1p", "log10", "log2")
 #' @param x [validate::validator()] object containing data validation rules
 #' @param ... not used
 #' @return `logical` indicating which rules are (purely) linear.
- #' @family rule type
+#' @example examples/linear.R
+#' @family rule type
 is_linear <- function(x, ...){
   if (is.expression(x)){
     return(sapply(x, is_lin_))

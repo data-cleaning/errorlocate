@@ -1,13 +1,13 @@
 rules <- validator( profit + cost == turnover
                   , cost >= 0.6 * turnover # cost should be at least 60% of turnover
-                  , turnover >= 0 # can not be negative.
+                  , turnover >= 0 # cannot be negative.
                   )
 data <- data.frame( profit   = 755
                   , cost     = 125
                   , turnover = 200
                   )
 
-# use set.seed to maake results reproducible
+# use set.seed to make results reproducible
 set.seed(42)
 le <- locate_errors(data, rules)
 
@@ -36,7 +36,7 @@ data <- data.frame(voted = TRUE, citizen = FALSE)
 set.seed(42)
 locate_errors(data, v_logical, weight=c(2,1))$errors
 
-# try a condinational rule
+# try a conditional rule
 v <- validator( married %in% c(TRUE, FALSE)
               , if (married==TRUE) age >= 17
               )
@@ -62,7 +62,7 @@ weight <- read.csv(text=
 set.seed(42)
 locate_errors(data, v, weight = weight)$errors
 
-# fixate / exclude a variable from error localiziation
+# fixate / exclude a variable from error localization
 # using an Inf weight
 weight <- c(age = Inf)
 

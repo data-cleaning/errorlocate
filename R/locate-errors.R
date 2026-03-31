@@ -1,34 +1,35 @@
 #' Find errors in data
 #'
-#' Find out which fields in a data.frame are "faulty" using validation rules
-#' This method returns found errors, according to the specified method `x`.
-#' Use method [replace_errors()], to automatically remove these errors. Use
-#' `[base::set.seed()]` beforehand to make the function call reproducible.
-#' `
+#' Locate fields in a data.frame that are likely erroneous under a set of
+#' validation rules. The method returns an [errorlocation-class()] object,
+#' computed with localizer `x`.
 #'
-#' Use an `Inf` `weight` specification to fixate variables that can not be changed.
+#' Use [replace_errors()] to remove flagged fields, typically by setting them to
+#' `NA`. Use [base::set.seed()] beforehand to make calls reproducible.
+#'
+#' Use an `Inf` `weight` specification to fix variables that should not be
+#' changed.
 #' See [expand_weights()] for more details.
 #'
-#' `locate_errors` uses lpSolveAPI to formulate and solves a mixed integer problem.
-#' For details see the vignettes.
-#' This solver has many options:  [lpSolveAPI::lp.control.options]. Noteworthy
-#' options to be used are:
+#' `locate_errors` uses `lpSolveAPI` to formulate and solve a mixed integer
+#' problem. See the vignettes for details.
+#' The solver has many options, see [lpSolveAPI::lp.control.options()].
+#' Noteworthy options include:
 #'
 #' - `timeout`: restricts the time the solver spends on a record (seconds)
-#' - `break.at.value`: set this to minimum weight + 1 to improve speed.
-#' - `presolve`: default for errorlocate is "rows". Set to "none" when you have
+#' - `break.at.value`: set this to `minimum weight + 1` to improve speed.
+#' - `presolve`: default in `errorlocate` is `"rows"`. Set to `"none"` when you have
 #' solutions where all variables are deemed wrong.
 #'
-#' `locate_errors` can be run on multiple cores using R package `parallel`.
+#' `locate_errors` can run on multiple cores using package `parallel`.
 #'
-#'  - The easiest way to use the parallel option is to set `Ncpus` to the number of
-#' desired cores, @seealso [parallel::detectCores()].
+#' - The easiest option is setting `Ncpus` to the number of desired cores.
 #'
 #' - Alternatively one can create a cluster object ([parallel::makeCluster()])
 #' and use `cl` to pass the cluster object.
 #'
 #' - Or set `cl` to an integer which results in [parallel::mclapply()], which only works
-#' on non-windows.
+#' on non-Windows systems.
 #'
 #' @param data data to be checked
 #' @param x validation rules or errorlocalizer object to be used for finding
@@ -42,6 +43,7 @@
 #' @param timeout maximum number of seconds that the localizer should use per record.
 #' @return [errorlocation-class()] object describing the errors found.
 #'
+#' @seealso [parallel::detectCores()]
 #' @example examples/locate_errors.R
 #' @family error finding
 #' @export

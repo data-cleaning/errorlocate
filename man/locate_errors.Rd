@@ -60,48 +60,49 @@ error localization (see \code{\link[=expand_weights]{expand_weights()}}).}
 \code{\link[=errorlocation-class]{errorlocation-class()}} object describing the errors found.
 }
 \description{
-Find out which fields in a data.frame are "faulty" using validation rules
-This method returns found errors, according to the specified method \code{x}.
-Use method \code{\link[=replace_errors]{replace_errors()}}, to automatically remove these errors. Use
-\verb{[base::set.seed()]} beforehand to make the function call reproducible.
-`
+Locate fields in a data.frame that are likely erroneous under a set of
+validation rules. The method returns an \code{\link[=errorlocation-class]{errorlocation-class()}} object,
+computed with localizer \code{x}.
 }
 \details{
-Use an \code{Inf} \code{weight} specification to fixate variables that can not be changed.
+Use \code{\link[=replace_errors]{replace_errors()}} to remove flagged fields, typically by setting them to
+\code{NA}. Use \code{\link[base:Random]{base::set.seed()}} beforehand to make calls reproducible.
+
+Use an \code{Inf} \code{weight} specification to fix variables that should not be
+changed.
 See \code{\link[=expand_weights]{expand_weights()}} for more details.
 
-\code{locate_errors} uses lpSolveAPI to formulate and solves a mixed integer problem.
-For details see the vignettes.
-This solver has many options:  \link[lpSolveAPI:lp.control.options]{lpSolveAPI::lp.control.options}. Noteworthy
-options to be used are:
+\code{locate_errors} uses \code{lpSolveAPI} to formulate and solve a mixed integer
+problem. See the vignettes for details.
+The solver has many options, see \code{\link[lpSolveAPI:lp.control.options]{lpSolveAPI::lp.control.options()}}.
+Noteworthy options include:
 \itemize{
 \item \code{timeout}: restricts the time the solver spends on a record (seconds)
-\item \code{break.at.value}: set this to minimum weight + 1 to improve speed.
-\item \code{presolve}: default for errorlocate is "rows". Set to "none" when you have
+\item \code{break.at.value}: set this to \verb{minimum weight + 1} to improve speed.
+\item \code{presolve}: default in \code{errorlocate} is \code{"rows"}. Set to \code{"none"} when you have
 solutions where all variables are deemed wrong.
 }
 
-\code{locate_errors} can be run on multiple cores using R package \code{parallel}.
+\code{locate_errors} can run on multiple cores using package \code{parallel}.
 \itemize{
-\item The easiest way to use the parallel option is to set \code{Ncpus} to the number of
-desired cores, @seealso \code{\link[parallel:detectCores]{parallel::detectCores()}}.
+\item The easiest option is setting \code{Ncpus} to the number of desired cores.
 \item Alternatively one can create a cluster object (\code{\link[parallel:makeCluster]{parallel::makeCluster()}})
 and use \code{cl} to pass the cluster object.
 \item Or set \code{cl} to an integer which results in \code{\link[parallel:mclapply]{parallel::mclapply()}}, which only works
-on non-windows.
+on non-Windows systems.
 }
 }
 \examples{
 rules <- validator( profit + cost == turnover
                   , cost >= 0.6 * turnover # cost should be at least 60\% of turnover
-                  , turnover >= 0 # can not be negative.
+                  , turnover >= 0 # cannot be negative.
                   )
 data <- data.frame( profit   = 755
                   , cost     = 125
                   , turnover = 200
                   )
 
-# use set.seed to maake results reproducible
+# use set.seed to make results reproducible
 set.seed(42)
 le <- locate_errors(data, rules)
 
@@ -130,7 +131,7 @@ data <- data.frame(voted = TRUE, citizen = FALSE)
 set.seed(42)
 locate_errors(data, v_logical, weight=c(2,1))$errors
 
-# try a condinational rule
+# try a conditional rule
 v <- validator( married \%in\% c(TRUE, FALSE)
               , if (married==TRUE) age >= 17
               )
@@ -156,7 +157,7 @@ weight <- read.csv(text=
 set.seed(42)
 locate_errors(data, v, weight = weight)$errors
 
-# fixate / exclude a variable from error localiziation
+# fixate / exclude a variable from error localization
 # using an Inf weight
 weight <- c(age = Inf)
 
@@ -164,6 +165,8 @@ set.seed(42)
 locate_errors(data, v, weight = weight)$errors
 }
 \seealso{
+\code{\link[parallel:detectCores]{parallel::detectCores()}}
+
 Other error finding: 
 \code{\link{errorlocation-class}},
 \code{\link{errors_removed}()},

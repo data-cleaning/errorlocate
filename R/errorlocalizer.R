@@ -3,7 +3,7 @@
 #' ErrorLocalizer can be used as a base class to implement a new error localization algorithm.
 #' The derived class must implement two methods: `initialize`, which is called
 #' before any error localization is done and `locate` which operates upon data. The
-#' extra parameter `...` can used to supply algorithmic specific parameters.
+#' extra parameter `...` can be used to supply algorithm-specific parameters.
 #' @export
 setRefClass("ErrorLocalizer",
   fields=list(
@@ -29,7 +29,7 @@ setRefClass("ErrorLocalizer",
 #'
 #' @note Most users do not need this class and can use [locate_errors()].
 #'
-#' `errorlocalizer` implements Fellegi holt using a MIP-solver. For problems in which
+#' `errorlocalizer` implements Fellegi-Holt using a MIP solver. For problems in which
 #' coefficients of the validation rules or the data are too different, you should consider scaling
 #' the data.
 #' @include MipRules.R

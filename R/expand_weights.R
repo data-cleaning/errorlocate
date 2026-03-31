@@ -2,7 +2,7 @@
 #'
 #' Expands a weight specification into a weight matrix to be used
 #' by `locate_errors` and `replace_errors`. Weights allow for "guiding" the
-#' errorlocalization process, so that less reliable values/variables with less
+#' error localization process, so that less reliable values/variables with lower
 #' weight are selected first. See details on the specification.
 #'
 #' If weight fine tuning is needed,
@@ -12,11 +12,11 @@
 #'
 #' - `NULL`: generates a weight matrix with `1`'s
 #' - a named `numeric`, unmentioned columns will have weight 1
-#' - a unnamed `numeric` with a length equal to `ncol(dat)`
+#' - an unnamed `numeric` with a length equal to `ncol(dat)`
 #' - a `data.frame` with same number of rows as `dat`
 #' - a `matrix` with same number of rows as `dat`
-#' - `Inf`, `NA` weights will be interpreted as that those variables must not be
-#' changed and are fixated. `Inf` weights perform much better than setting a weight
+#' - `Inf`, `NA` weights are interpreted as variables that must not be
+#' changed. `Inf` weights perform much better than setting a weight
 #' to a large number.
 #' @export
 #' @param dat `data.frame` the data to be checked

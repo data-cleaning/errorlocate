@@ -11,7 +11,7 @@ library(errorlocate)
 #'
 #' ## Intro
 #'
-#' The default execution of errorlocate is sequential. Since solving the mip problem
+#' The default execution of errorlocate is sequential. Since solving the MIP problem
 #' can be time consuming, the total calculation time can be considerable.
 #'
 #' We implemented two parallel methods in `errorlocate` using the `parallel` package.
@@ -25,7 +25,7 @@ library(errorlocate)
 library(errorlocate)
 rules <- validator( profit + cost == turnover
                     , cost >= 0.6 * turnover # cost should be at least 60% of turnover
-                    , turnover >= 0 # can not be negative.
+                    , turnover >= 0 # cannot be negative.
 )
 
 set.seed(1)
@@ -63,7 +63,7 @@ print(time_seq)
 #'
 #' ### Forking (non Windows)
 #'
-#' On non-windows systems it is possible to use the forking functionality of
+#' On non-Windows systems it is possible to use the forking functionality of
 #' `parallel`: `errorlocate` uses the `mclappy`
 #'
 ## -----------------------------------------------------------------------------

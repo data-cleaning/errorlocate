@@ -1,12 +1,12 @@
-#' inspect the mip problem formulation
+#' Inspect the MIP problem formulation
 #'
-#' Utility function to inspect the mip problem for a record. `inspect_mip` can
-#' be used as a "drop-in" replacement for [locate_errors()], but works on the
-#' first record.
+#' Utility function to inspect the MIP problem for one record.
+#' `inspect_mip` can be used as a drop-in replacement for [locate_errors()], but
+#' it only uses the first record when multiple rows are supplied.
 #'
-#' It may sometimes be handy to find out what is happening exactly with a record.
-#' See the example section for finding out what to do with inspect_mip. See
-#' `vignette("inspect_mip")` for more details.
+#' This is useful for debugging how one record is translated into a mixed integer
+#' problem, including the generated rules, objective, and LP representation.
+#' See `vignette("inspect_mip")` for more details.
 #' @example ./examples/inspect_mip.R
 #' @family Mixed Integer Problem
 #' @export

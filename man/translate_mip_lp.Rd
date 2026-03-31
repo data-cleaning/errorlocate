@@ -2,19 +2,19 @@
 % Please edit documentation in R/mip_lpsolve.R
 \name{translate_mip_lp}
 \alias{translate_mip_lp}
-\title{translate linear rules into an lp problem}
+\title{Translate linear rules into an LP problem}
 \usage{
 translate_mip_lp(rules, objective = NULL, eps = 0.001, ...)
 }
 \arguments{
-\item{rules}{mip rules}
+\item{rules}{MIP rules}
 
 \item{objective}{function}
 
 \item{eps}{accuracy for equality/inequality}
 
-\item{...}{additional \code{\link[lpSolveAPI:lp.control]{lpSolveAPI::lp.control()}} parameters that are set for the mip problem}
+\item{...}{additional \code{\link[lpSolveAPI:lp.control]{lpSolveAPI::lp.control()}} parameters that are set for the MIP problem}
 }
 \description{
-translate linear rules into an lp problem
+Translate linear rules into an LP problem
 }

@@ -6,21 +6,23 @@
 \alias{miprules}
 \title{Create a mip object from a validator object}
 \description{
-Create a mip object from \code{\link[validate:validator]{validate::validator()}} object.
-This is a utility class that translates a validor object into a mixed integer problem that
-can be solved.
-Most users should use \code{\link[=locate_errors]{locate_errors()}} which will handle all translation and execution
-automatically. This class is provided so users can implement or derive an alternative solution.
+Create a \code{MipRules} object from \code{\link[validate:validator]{validate::validator()}} rules.
+This utility class translates rules into a mixed integer problem.
+}
+\details{
+Most users should use \code{\link[=locate_errors]{locate_errors()}}, which handles translation and
+execution automatically. \code{MipRules} is mainly for advanced users who want to
+inspect or customize the optimization setup.
 }
 
 \section{Methods}{
 
 The \code{MipRules} class contains the following methods:
 \itemize{
-\item \verb{$execute()} calls the mip solver to execute the rules.
-\item \verb{$to_lp()}: transforms the object into a lp_solve object
-\item \verb{$is_infeasible} Checks if the current system of mixed integer rules is feasible.
-\item \verb{$set_values}: set values and weights for variables (determines the objective function).
+\item \verb{$execute()} solves the mixed integer problem.
+\item \verb{$to_lp()} transforms the object into an \code{lp_solve} problem object.
+\item \verb{$is_infeasible} checks whether the current rule system is infeasible.
+\item \verb{$set_values()} sets observed values and weights (objective function).
 }
 }
 

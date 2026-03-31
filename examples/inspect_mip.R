@@ -5,31 +5,31 @@ weight <- c(x = 1)
 mip <- inspect_mip(data, rules)
 print(mip)
 
-# inspect the lp problem (prior to solving it with lpsolveAPI)
+# inspect the LP problem (prior to solving it with lpSolveAPI)
 lp <- mip$to_lp()
 print(lp)
 
-# for large problems write the lp problem to disk for inspection
+# for large problems write the LP problem to disk for inspection
 # lpSolveAPI::write.lp(lp, "my_problem.lp")
 
-# solve the mip system / find a solution
+# solve the MIP system / find a solution
 res <- mip$execute()
 names(res)
 
 # lpSolveAPI status of finding a solution
 res$s
 
-# lp problem after solving (often simplified version of first lp)
+# LP problem after solving (often simplified version of first LP)
 res$lp
 
 # records that are deemed "faulty"
 res$errors
 
-# values of variables used in the mip formulation. Also contains a valid solution
+# values of variables used in the MIP formulation. Also contains a valid solution
 # for "faulty" variables
 res$values
 
-# see the derived mip rules and objective function, used in the construction of
-# lp problem
+# see the derived MIP rules and objective function, used in the construction of
+# the LP problem
 mip$mip_rules()
 mip$objective
